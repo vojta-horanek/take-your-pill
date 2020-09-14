@@ -1,5 +1,5 @@
 # Take your Pill
-App that reminds you to take your pills. Developed as my long-term graduation work.
+An app that reminds you to take your pills. Developed as my long-term graduation work.
 
 ## Roadmap
 - see progress in GitHub Projects
