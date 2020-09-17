@@ -6,6 +6,7 @@ An app that reminds you to take your pills. Developed as my long-term graduation
 
 ### Planned features
 - remind at specific time of day (multiple times)
+- remind again if user did not confirm taking the pill
 - remind only for n days, then stop reminding
 - resume reminding after m days
 - use a notification or an alarm style alert (fullScreenIntent)
