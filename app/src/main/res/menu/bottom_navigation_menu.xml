@@ -3,18 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_home"
+        android:id="@+id/homescreen"
         android:icon="@drawable/ic_home"
         android:title="@string/home"
         android:enabled="true"/>
     <item
-        android:id="@+id/menu_history"
-        android:icon="@drawable/ic_history"
-        android:title="@string/history"
+        android:id="@+id/upcoming"
+        android:icon="@drawable/ic_time"
+        android:title="@string/upcoming"
         android:enabled="true"/>
     <item
-        android:id="@+id/menu_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings"
+        android:id="@+id/history"
+        android:icon="@drawable/ic_history"
+        android:title="@string/history"
         android:enabled="true"/>
 </menu>

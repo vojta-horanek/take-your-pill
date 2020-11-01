@@ -3,4 +3,9 @@
     <string name="home">Home</string>
     <string name="history">History</string>
     <string name="settings">Settings</string>
+    <string name="fab_add_new_pill">New pill</string>
+    <string name="about">About</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="edit">Edit</string>
+    <string name="details">Details</string>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Take Your Pill</string>
+    <string name="home">Domů</string>
+    <string name="history">Historie</string>
+    <string name="settings">Nastavení</string>
+</resources>

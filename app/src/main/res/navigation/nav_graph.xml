@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homescreen">
+    <fragment
+        android:id="@id/homescreen"
+        android:name="eu.vojtechh.takeyourpill.fragment.HomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/home_fragment">
+        <action
+            android:id="@+id/action_homescreen_to_settingsFragment"
+            app:destination="@id/settings" />
+        <action
+            android:id="@+id/action_homescreen_to_about"
+            app:destination="@id/about" />
+        <action
+            android:id="@+id/action_homescreen_to_editFragment"
+            app:destination="@id/edit" />
+    </fragment>
+    <fragment
+        android:id="@id/history"
+        android:name="eu.vojtechh.takeyourpill.fragment.HistoryFragment"
+        android:label="@string/history"
+        tools:layout="@layout/history_fragment" />
+    <fragment
+        android:id="@id/settings"
+        android:name="eu.vojtechh.takeyourpill.fragment.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/settings_fragment" />
+    <fragment
+        android:id="@+id/about"
+        android:name="eu.vojtechh.takeyourpill.fragment.AboutFragment"
+        android:label="@string/about"
+        tools:layout="@layout/about_fragment" />
+    <fragment
+        android:id="@+id/upcoming"
+        android:name="eu.vojtechh.takeyourpill.fragment.UpcomingFragment"
+        android:label="@string/upcoming"
+        tools:layout="@layout/upcoming_fragment" >
+        <action
+            android:id="@+id/action_upcoming_to_detailsFragment"
+            app:destination="@id/details" />
+    </fragment>
+    <fragment
+        android:id="@+id/edit"
+        android:name="eu.vojtechh.takeyourpill.fragment.EditFragment"
+        android:label="@string/edit"
+        tools:layout="@layout/edit_fragment" />
+    <fragment
+        android:id="@+id/details"
+        android:name="eu.vojtechh.takeyourpill.fragment.DetailsFragment"
+        android:label="@string/details"
+        tools:layout="@layout/details_fragment">
+        <action
+            android:id="@+id/action_detailsFragment_to_editFragment"
+            app:destination="@id/edit" />
+    </fragment>
 </navigation>

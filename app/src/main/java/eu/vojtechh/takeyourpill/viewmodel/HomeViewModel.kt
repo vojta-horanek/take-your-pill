@@ -4,18 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MainActivityViewModel : ViewModel() {
-    private val pillsUnread: MutableLiveData<Int> by lazy {
+class HomeViewModel : ViewModel() {
+    private val pillsRemainingToday: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>().also {
-            loadUnreadPills()
+            loadPillsRemainingToday()
         }
     }
 
-    fun getUsers(): LiveData<Int> {
-        return pillsUnread
+    fun getPillsRemainingToday(): LiveData<Int> {
+        return pillsRemainingToday
     }
 
-    private fun loadUnreadPills(): Int {
+    private fun loadPillsRemainingToday(): Int {
         return 1
         //TODO Use database from Android Components
     }
