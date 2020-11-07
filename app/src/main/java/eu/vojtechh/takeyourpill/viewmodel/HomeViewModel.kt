@@ -1,22 +1,30 @@
 package eu.vojtechh.takeyourpill.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.PillColor
+import eu.vojtechh.takeyourpill.reminder.ReminderOptions
+import eu.vojtechh.takeyourpill.repository.PillRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
-    private val pillsRemainingToday: MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>().also {
-            loadPillsRemainingToday()
-        }
-    }
+class HomeViewModel @ViewModelInject constructor(
+    private val pillRepository: PillRepository
+) : ViewModel() {
+    val allPills = pillRepository.getAllPills()
 
-    fun getPillsRemainingToday(): LiveData<Int> {
-        return pillsRemainingToday
-    }
-
-    private fun loadPillsRemainingToday(): Int {
-        return 1
-        //TODO Use database from Android Components
+    fun addDummyPill() = viewModelScope.launch(Dispatchers.IO) {
+        pillRepository.insertPill(
+            Pill(
+                "DummyPill",
+                "This pill has a long description",
+                null,
+                PillColor.RED,
+                ReminderOptions.Infinite(mutableListOf()),
+                ReminderOptions.Infinite(mutableListOf())
+            )
+        )
     }
 }

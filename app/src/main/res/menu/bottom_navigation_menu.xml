@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/homescreen"
         android:icon="@drawable/ic_home"
         android:title="@string/home"
-        android:enabled="true"/>
+        android:enabled="true" />
     <item
-        android:id="@+id/upcoming"
-        android:icon="@drawable/ic_time"
-        android:title="@string/upcoming"
-        android:enabled="true"/>
+        android:id="@+id/pills"
+        android:icon="@drawable/ic_pill"
+        android:title="@string/pills"
+        android:enabled="true" />
     <item
         android:id="@+id/history"
         android:icon="@drawable/ic_history"

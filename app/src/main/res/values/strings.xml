@@ -8,4 +8,10 @@
     <string name="upcoming">Upcoming</string>
     <string name="edit">Edit</string>
     <string name="details">Details</string>
+    <string name="pills">Pills</string>
+    <string name="alarm_settings">Use alarm-like alert style</string>
+
+
+    <string name="pill_item_transition_name" translatable="false">pill_item_%1$s</string>
+    <string name="pill_details_transition_name" translatable="false">pill_item_detail</string>
 </resources>

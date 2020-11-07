@@ -1,33 +1,19 @@
 package eu.vojtechh.takeyourpill.fragment
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.viewmodel.AboutViewModel
+import eu.vojtechh.takeyourpill.databinding.AboutFragmentBinding
+import eu.vojtechh.takeyourpill.klass.viewBinding
 
-class AboutFragment : Fragment() {
+class AboutFragment : Fragment(R.layout.about_fragment) {
 
-    companion object {
-        fun newInstance() = AboutFragment()
-    }
-
-    private lateinit var viewModel: AboutViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.about_fragment, container, false)
-    }
+    private val model: AboutFragment by viewModels()
+    private val view by viewBinding(AboutFragmentBinding::bind)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AboutViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }
