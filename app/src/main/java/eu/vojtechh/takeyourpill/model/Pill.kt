@@ -20,9 +20,10 @@ data class Pill(
     @Embedded(prefix = "current_") var remindCurrent: ReminderOptions,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 ) {
-    fun photoVisibility() = if (photo != null) View.VISIBLE else View.GONE
-    fun descriptionVisibility() =
-        description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE } ?: View.GONE
+    val photoVisibility
+        get() = if (photo != null) View.VISIBLE else View.GONE
+    val descriptionVisibility
+        get() = description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE } ?: View.GONE
 
     fun photoDrawable(context: Context) = BitmapDrawable(context.resources, photo)
     fun photoDrawableEdit(context: Context) =
