@@ -14,7 +14,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.transition.MaterialElevationScale
-import com.google.android.material.transition.MaterialSharedAxis
+import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.PillAdapter
@@ -31,15 +31,17 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+        enterTransition = MaterialFadeThrough()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
-        view.doOnPreDraw { startPostponedEnterTransition() }
+        // Do not postpone transition if we switch between fragments from the BottomBar
+        if (model.isReturningFromEdit) {
+            postponeEnterTransition()
+            view.doOnPreDraw { startPostponedEnterTransition() }
+            model.isReturningFromEdit = false
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -81,6 +83,7 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
     }
 
     override fun onPillClicked(view: View, pill: Pill) {
+        model.isReturningFromEdit = true
         exitTransition = MaterialElevationScale(false)
         reenterTransition = MaterialElevationScale(true)
         val pillDetailTransitionName = getString(R.string.pill_details_transition_name)

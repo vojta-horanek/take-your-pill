@@ -11,7 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.transition.MaterialElevationScale
-import com.google.android.material.transition.MaterialSharedAxis
+import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
@@ -62,8 +62,7 @@ class MainActivity : AppCompatActivity() {
         view.bottomNavigation.setOnNavigationItemReselectedListener { /* Disables reselection */ }
         view.bottomNavigation.setOnNavigationItemSelectedListener {
             currentNavigationFragment?.apply {
-                exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-                reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+                exitTransition = MaterialFadeThrough()
             }
             true
         }

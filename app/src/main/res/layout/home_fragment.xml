@@ -19,7 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/pill_item_layout"
         android:id="@+id/recyclerHome"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:transitionGroup="true" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

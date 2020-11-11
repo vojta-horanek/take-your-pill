@@ -70,7 +70,7 @@
                     android:layout_marginTop="8dp"
                     android:text="@{pill.description}"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    android:visibility="@{pill.descriptionVisibility()}"
+                    android:visibility="@{pill.descriptionVisibility}"
                     app:layout_constraintBottom_toBottomOf="@+id/pillPhoto"
                     app:layout_constraintEnd_toEndOf="@+id/pillName"
                     app:layout_constraintStart_toStartOf="@+id/pillName"
