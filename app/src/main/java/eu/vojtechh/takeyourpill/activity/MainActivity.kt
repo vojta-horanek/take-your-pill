@@ -15,7 +15,6 @@ import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
-import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 
@@ -63,24 +62,16 @@ class MainActivity : AppCompatActivity() {
         view.bottomNavigation.setOnNavigationItemReselectedListener { /* Disables reselection */ }
         view.bottomNavigation.setOnNavigationItemSelectedListener {
             currentNavigationFragment?.apply {
-                exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-                    duration = Constants.ANIMATION_DURATION
-                }
-                reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-                    duration = Constants.ANIMATION_DURATION
-                }
+                exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+                reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
             }
             true
         }
 
         view.floatingActionButton.setOnClickListener {
             currentNavigationFragment?.apply {
-                exitTransition = MaterialElevationScale(false).apply {
-                    duration = Constants.ANIMATION_DURATION
-                }
-                reenterTransition = MaterialElevationScale(true).apply {
-                    duration = Constants.ANIMATION_DURATION
-                }
+                exitTransition = MaterialElevationScale(false)
+                reenterTransition = MaterialElevationScale(true)
             }
             navController.navigate(R.id.edit)
         }

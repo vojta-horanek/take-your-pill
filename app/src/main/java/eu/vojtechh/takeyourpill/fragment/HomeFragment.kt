@@ -19,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.PillAdapter
 import eu.vojtechh.takeyourpill.databinding.HomeFragmentBinding
-import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
@@ -33,12 +32,8 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-            duration = Constants.ANIMATION_DURATION
-        }
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-            duration = Constants.ANIMATION_DURATION
-        }
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,12 +81,8 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
     }
 
     override fun onPillClicked(view: View, pill: Pill) {
-        exitTransition = MaterialElevationScale(false).apply {
-            duration = Constants.ANIMATION_DURATION
-        }
-        reenterTransition = MaterialElevationScale(true).apply {
-            duration = Constants.ANIMATION_DURATION
-        }
+        exitTransition = MaterialElevationScale(false)
+        reenterTransition = MaterialElevationScale(true)
         val pillDetailTransitionName = getString(R.string.pill_details_transition_name)
         val extras = FragmentNavigatorExtras(view to pillDetailTransitionName)
         val directions = HomeFragmentDirections.actionHomescreenToDetails(pill.id)
