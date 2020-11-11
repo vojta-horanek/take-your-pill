@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -22,7 +23,10 @@ data class Pill(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 ) {
     fun hasPhoto() = photo != null
-    fun drawable(context: Context) = BitmapDrawable(context.resources, photo)
+    fun hasDescription() = description?.isNotBlank() ?: false
+    fun photoDrawable(context: Context) = BitmapDrawable(context.resources, photo)
+
+    // TODO Use just color resource possibly with ShapeableImageView?
     fun colorDrawable(context: Context): Drawable? {
         return when (color) {
             PillColor.RED -> ResourcesCompat.getDrawable(
@@ -31,5 +35,10 @@ data class Pill(
                 context.theme
             )
         }
+    }
+
+    object DiffCallback : DiffUtil.ItemCallback<Pill>() {
+        override fun areItemsTheSame(oldItem: Pill, newItem: Pill) = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: Pill, newItem: Pill) = oldItem == newItem
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,38 +14,35 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.adapter.PillsAdapter
+import eu.vojtechh.takeyourpill.adapter.PillAdapter
 import eu.vojtechh.takeyourpill.databinding.HomeFragmentBinding
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.viewBinding
+import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.home_fragment) {
+class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterListener {
 
     private val model: HomeViewModel by viewModels()
     private val view by viewBinding(HomeFragmentBinding::bind)
 
-    private lateinit var pillsAdapter: PillsAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //FIXME Don't animate FAB
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
             duration = Constants.ANIMATION_DURATION
         }
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
             duration = Constants.ANIMATION_DURATION
         }
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
 
-        pillsAdapter = PillsAdapter(requireContext())
+        val pillsAdapter = PillAdapter(this)
         view.recyclerHome.adapter = pillsAdapter
 
         view.recyclerHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -61,7 +59,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         })
 
         model.allPills.observe(viewLifecycleOwner, {
-            pillsAdapter.setPills(it)
+            pillsAdapter.submitList(it)
         })
 
     }
@@ -76,5 +74,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             item,
             findNavController()
         ) || super.onOptionsItemSelected(item)
+    }
+
+    override fun onPillClicked(view: View, pill: Pill) {
+        TODO("Not yet implemented")
     }
 }

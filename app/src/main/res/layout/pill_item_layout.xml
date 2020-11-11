@@ -8,9 +8,15 @@
 
         <import type="android.content.Context" />
 
+        <import type="android.view.View" />
+
         <variable
             name="pill"
             type="eu.vojtechh.takeyourpill.model.Pill" />
+
+        <variable
+            name="listener"
+            type="eu.vojtechh.takeyourpill.adapter.PillAdapter.PillAdapterListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,33 +25,21 @@
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
+        android:onClick="@{(view) -> listener.onPillClicked(view, pill)"
         android:orientation="horizontal"
         android:transitionName="@{@string/pill_details_transition_name(pill.id)}">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/pillImage"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:scaleType="centerCrop"
+        <ImageView
+            android:id="@+id/pillColor"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="16dp"
+            android:src="@{pill.colorDrawable(context)}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearance="@style/roundedCornersImageView"
             tools:ignore="ContentDescription"
-            tools:src="@drawable/ic_launcher_background"
-            android:src="@{pill.colorDrawable(context)}" />
-
-        <View
-            android:id="@+id/pillSeparator"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            tools:src="@drawable/dot_blue" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -53,8 +47,9 @@
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pillImage"
@@ -67,9 +62,9 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{pill.name}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                tools:text="This is a pill"
-                android:text="@{pill.name}" />
+                tools:text="This is a pill" />
 
             <TextView
                 android:id="@+id/pillDescription"
@@ -77,24 +72,37 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:text="@{pill.description}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                tools:text="This is a pill description\non two lines"
-                android:text="@{pill.description}" />
+                android:visibility="@{pill.hasDescription() ? View.VISIBLE : View.GONE}"
+                tools:text="This is a pill description\non two lines" />
         </LinearLayout>
 
-        <!-- TODO add pill images here -->
-        <ImageView
-            android:id="@+id/pillColor"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="16dp"
-            android:src="@{pill.drawable(context)}"
-            app:goneIf="@{!pill.hasPhoto}"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/pillImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            android:src="@{pill.photoDrawable(context)}"
+            android:visibility="@{pill.hasPhoto() ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
+            app:shapeAppearance="@style/roundedCornersImageView"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_launcher_background" />
 
+        <View
+            android:id="@+id/pillSeparator"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

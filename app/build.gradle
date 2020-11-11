@@ -82,7 +82,6 @@ dependencies {
 
     // End navigation components
 
-
     // Room database
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
