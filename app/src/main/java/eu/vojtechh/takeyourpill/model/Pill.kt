@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
+import androidx.core.util.ObjectsCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -34,6 +35,7 @@ data class Pill(
 
     object DiffCallback : DiffUtil.ItemCallback<Pill>() {
         override fun areItemsTheSame(oldItem: Pill, newItem: Pill) = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: Pill, newItem: Pill) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: Pill, newItem: Pill) =
+            ObjectsCompat.equals(oldItem, newItem)
     }
 }
