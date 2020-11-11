@@ -77,6 +77,6 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
     }
 
     override fun onPillClicked(view: View, pill: Pill) {
-        TODO("Not yet implemented")
+        findNavController().navigate(R.id.details)
     }
 }
