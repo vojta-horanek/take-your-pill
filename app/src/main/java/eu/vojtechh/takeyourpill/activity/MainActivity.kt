@@ -1,6 +1,7 @@
 package eu.vojtechh.takeyourpill.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -43,17 +44,17 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homescreen, R.id.pills -> {
-                    //view.bottomNavigation.visibility = View.VISIBLE
+                    view.bottomNavigation.visibility = View.VISIBLE
                     view.floatingActionButton.show()
                     view.floatingActionButton.extend()
 
                 }
                 R.id.history -> {
-                    //view.bottomNavigation.visibility = View.VISIBLE
+                    view.bottomNavigation.visibility = View.VISIBLE
                     view.floatingActionButton.hide()
                 }
                 else -> {
-                    //view.bottomNavigation.visibility = View.GONE
+                    view.bottomNavigation.visibility = View.GONE
                     view.floatingActionButton.hide()
                 }
             }

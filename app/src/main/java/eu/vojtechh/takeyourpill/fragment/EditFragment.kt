@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.transition.Slide
 import com.google.android.material.transition.MaterialContainerTransform
+import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.EditFragmentBinding
 import eu.vojtechh.takeyourpill.klass.Constants
@@ -13,6 +14,7 @@ import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 
+@AndroidEntryPoint
 class EditFragment : Fragment(R.layout.edit_fragment) {
 
     private val model: EditViewModel by viewModels()
@@ -38,6 +40,7 @@ class EditFragment : Fragment(R.layout.edit_fragment) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        model.addDummyPill()
     }
 
 }

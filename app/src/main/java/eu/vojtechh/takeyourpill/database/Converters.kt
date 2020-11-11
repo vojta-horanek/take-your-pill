@@ -25,13 +25,13 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromPillColor(pillColor: PillColor): String {
-        return pillColor.name
+    fun fromPillColor(pillColor: PillColor): Int {
+        return pillColor.resource
     }
 
     @TypeConverter
-    fun toPillColor(pillColor: String): PillColor {
-        return PillColor.valueOf(pillColor)
+    fun toPillColor(pillColor: Int): PillColor {
+        return PillColor(pillColor)
     }
 
     @TypeConverter

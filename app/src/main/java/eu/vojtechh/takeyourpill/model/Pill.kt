@@ -3,14 +3,11 @@ package eu.vojtechh.takeyourpill.model
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.view.View
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 
 @Entity(tableName = "pill")
@@ -28,17 +25,11 @@ data class Pill(
         description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE } ?: View.GONE
 
     fun photoDrawable(context: Context) = BitmapDrawable(context.resources, photo)
+    fun photoDrawableEdit(context: Context) =
+        BitmapDrawable(context.resources, photo) //TODO Return default image
 
     // TODO Use just color resource possibly with ShapeableImageView?
-    fun colorDrawable(context: Context): Drawable? {
-        return when (color) {
-            PillColor.RED -> ResourcesCompat.getDrawable(
-                context.resources,
-                R.drawable.dot_red,
-                context.theme
-            )
-        }
-    }
+    fun colorDrawable(context: Context) = color.getDrawable(context)
 
     object DiffCallback : DiffUtil.ItemCallback<Pill>() {
         override fun areItemsTheSame(oldItem: Pill, newItem: Pill) = oldItem.id == newItem.id

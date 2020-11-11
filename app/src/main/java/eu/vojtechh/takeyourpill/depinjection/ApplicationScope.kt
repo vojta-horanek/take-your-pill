@@ -23,10 +23,10 @@ object ApplicationScope {
         app,
         PillDatabase::class.java,
         Constants.PILL_DATABASE_NAME
-    ).build()
+    ).fallbackToDestructiveMigration()
+        .build()
 
     @Singleton
     @Provides
     fun providePillDao(db: PillDatabase) = db.getPillDao()
 }
-

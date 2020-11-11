@@ -5,6 +5,7 @@
 
     <data>
 
+        <import type="android.content.Context" />
         <variable
             name="pill"
             type="eu.vojtechh.takeyourpill.model.Pill" />
@@ -31,30 +32,77 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:padding="16dp">
+                android:paddingVertical="16dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{pill.name}"
-                    app:layout_constraintEnd_toEndOf="parent"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/pillPhoto"
+                    android:layout_width="@dimen/photo_size_big"
+                    android:layout_height="@dimen/photo_size_big"
+                    android:layout_marginStart="16dp"
+                    android:src="@{pill.photoDrawableEdit(context)}"
+                    app:layout_constraintBottom_toTopOf="@+id/textView3"
+                    app:layout_constraintEnd_toStartOf="@+id/pillName"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Pill Name"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                    android:id="@+id/pillName" />
+                    tools:src="@drawable/ic_launcher_background" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/pillName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{pill.name}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    app:layout_constraintBottom_toTopOf="@+id/textView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/pillPhoto"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread"
+                    tools:text="Pill Name" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@{pill.description}"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:visibility="@{pill.descriptionVisibility()}"
+                    app:layout_constraintBottom_toBottomOf="@+id/pillPhoto"
+                    app:layout_constraintEnd_toEndOf="@+id/pillName"
+                    app:layout_constraintStart_toStartOf="@+id/pillName"
+                    app:layout_constraintTop_toBottomOf="@+id/pillName"
+                    tools:text="Pill description" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pillPhoto"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pillName"
-                    tools:text="Pill description"
-                    android:visibility="@{pill.descriptionVisibility()}" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/pill_color_layout"
+                    android:orientation="horizontal" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

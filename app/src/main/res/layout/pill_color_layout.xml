@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.content.Context" />
+
+        <variable
+            name="color"
+            type="eu.vojtechh.takeyourpill.model.PillColor" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/color_dot_size_big"
+        android:layout_height="@dimen/color_dot_size_big"
+        android:layout_marginEnd="8dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@{color.getDrawable(context)}"
+            tools:src="@drawable/dot_blue" />
+    </FrameLayout>
+</layout>

@@ -7,7 +7,7 @@ import eu.vojtechh.takeyourpill.model.Pill
 
 @Database(
     entities = [Pill::class],
-    version = 1
+    version = 3
 )
 @TypeConverters(Converters::class)
 abstract class PillDatabase : RoomDatabase() {

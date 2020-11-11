@@ -27,10 +27,10 @@
         android:orientation="horizontal"
         android:transitionName="@{@string/pill_item_transition_name(pill.id)}">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/pillColor"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="@dimen/color_dot_size"
+            android:layout_height="@dimen/color_dot_size"
             android:layout_marginStart="16dp"
             android:src="@{pill.colorDrawable(context)}"
             app:layout_constraintBottom_toBottomOf="parent"
