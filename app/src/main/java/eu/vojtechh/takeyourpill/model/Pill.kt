@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
@@ -22,8 +23,10 @@ data class Pill(
     @Embedded(prefix = "current_") var remindCurrent: ReminderOptions,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 ) {
-    fun hasPhoto() = photo != null
-    fun hasDescription() = description?.isNotBlank() ?: false
+    fun photoVisibility() = if (photo != null) View.VISIBLE else View.GONE
+    fun descriptionVisibility() =
+        description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE } ?: View.GONE
+
     fun photoDrawable(context: Context) = BitmapDrawable(context.resources, photo)
 
     // TODO Use just color resource possibly with ShapeableImageView?

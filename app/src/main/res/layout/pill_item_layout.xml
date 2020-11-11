@@ -8,8 +8,6 @@
 
         <import type="android.content.Context" />
 
-        <import type="android.view.View" />
-
         <variable
             name="pill"
             type="eu.vojtechh.takeyourpill.model.Pill" />
@@ -27,7 +25,7 @@
         android:focusable="true"
         android:onClick="@{(view) -> listener.onPillClicked(view, pill)}"
         android:orientation="horizontal"
-        android:transitionName="@{@string/pill_details_transition_name(pill.id)}">
+        android:transitionName="@{@string/pill_item_transition_name(pill.id)}">
 
         <ImageView
             android:id="@+id/pillColor"
@@ -74,7 +72,7 @@
                 android:maxLines="2"
                 android:text="@{pill.description}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:visibility="@{pill.hasDescription() ? View.VISIBLE : View.GONE}"
+                android:visibility="@{pill.descriptionVisibility()}"
                 tools:text="This is a pill description\non two lines" />
         </LinearLayout>
 
@@ -87,7 +85,7 @@
             android:layout_marginBottom="16dp"
             android:scaleType="centerCrop"
             android:src="@{pill.photoDrawable(context)}"
-            android:visibility="@{pill.hasPhoto() ? View.VISIBLE : View.GONE}"
+            android:visibility="@{pill.photoVisibility()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

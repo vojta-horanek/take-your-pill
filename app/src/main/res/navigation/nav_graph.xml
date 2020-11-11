@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_edit_to_details"
             app:destination="@id/details" />
+        <argument
+            android:name="pillId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/details"
@@ -65,5 +68,8 @@
         <action
             android:id="@+id/action_detailsFragment_to_editFragment"
             app:destination="@id/edit" />
+        <argument
+            android:name="pillId"
+            app:argType="integer" />
     </fragment>
 </navigation>
