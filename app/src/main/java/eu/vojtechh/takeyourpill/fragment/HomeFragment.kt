@@ -77,6 +77,15 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
     }
 
     override fun onPillClicked(view: View, pill: Pill) {
-        findNavController().navigate(R.id.details)
+        exitTransition = MaterialElevationScale(false).apply {
+            duration = Constants.ANIMATION_DURATION
+        }
+        reenterTransition = MaterialElevationScale(true).apply {
+            duration = Constants.ANIMATION_DURATION
+        }
+        val pillDetailTransitionName = getString(R.string.pill_details_transition_name)
+        val extras = FragmentNavigatorExtras(view to pillDetailTransitionName)
+        val directions = HomeFragmentDirections.actionHomescreenToDetails(pill.id)
+        findNavController().navigate(directions, extras)
     }
 }
