@@ -17,91 +17,88 @@
             type="eu.vojtechh.takeyourpill.adapter.PillAdapter.PillAdapterListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="88dp"
-        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{(view) -> listener.onPillClicked(view, pill)}"
-        android:orientation="horizontal"
-        android:transitionName="@{@string/pill_item_transition_name(pill.id)}">
+        android:layout_marginBottom="4dp"
+        android:layout_marginHorizontal="4dp"
+        android:elevation="0dp"
+        android:transitionName="@{@string/pill_item_transition_name(pill.id)}"
+        android:onClick="@{(view) -> listener.onPillClicked(view, pill)}">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/pillColor"
-            android:layout_width="@dimen/color_dot_size"
-            android:layout_height="@dimen/color_dot_size"
-            android:layout_marginStart="16dp"
-            android:src="@{pill.colorDrawable(context)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription"
-            tools:src="@drawable/dot_blue" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/pillImage"
-            app:layout_constraintStart_toEndOf="@+id/pillColor"
-            app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/pillColor"
+                android:layout_width="@dimen/color_dot_size"
+                android:layout_height="@dimen/color_dot_size"
+                android:layout_marginStart="16dp"
+                android:src="@{pill.colorDrawable(context)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/dot_blue" />
 
-            <TextView
-                android:id="@+id/pillTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@{pill.name}"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                tools:text="This is a pill" />
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pillImage"
+                app:layout_constraintStart_toEndOf="@+id/pillColor"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/pillDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@{pill.description}"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                android:visibility="@{pill.descriptionVisibility()}"
-                tools:text="This is a pill description\non two lines" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/pillTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{pill.name}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    tools:text="This is a pill" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/pillImage"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:scaleType="centerCrop"
-            android:src="@{pill.photoDrawable(context)}"
-            android:visibility="@{pill.photoVisibility()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearance="@style/roundedCornersImageView"
-            tools:ignore="ContentDescription"
-            tools:src="@drawable/ic_launcher_background" />
+                <TextView
+                    android:id="@+id/pillDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{pill.description}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:visibility="@{pill.descriptionVisibility}"
+                    tools:text="This is a pill description\non two lines" />
+            </LinearLayout>
 
-        <View
-            android:id="@+id/pillSeparator"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/pillImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:scaleType="centerCrop"
+                android:src="@{pill.photoDrawable(context)}"
+                android:visibility="@{pill.photoVisibility}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/roundedCornersImageView"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/ic_launcher_background" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>
