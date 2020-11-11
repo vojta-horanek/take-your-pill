@@ -1,0 +1,7 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="BaseStyle">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+</resources>
