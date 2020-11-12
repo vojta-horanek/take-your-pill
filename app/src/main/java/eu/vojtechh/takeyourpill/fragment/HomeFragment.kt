@@ -11,12 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.adapter.HeaderAdapter
 import eu.vojtechh.takeyourpill.adapter.PillAdapter
 import eu.vojtechh.takeyourpill.databinding.HomeFragmentBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
@@ -49,25 +51,28 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
         setHasOptionsMenu(true)
 
         val pillsAdapter = PillAdapter(this)
-        view.recyclerHome.adapter = pillsAdapter
+        val concatAdapter =
+            ConcatAdapter(HeaderAdapter(getString(R.string.upcoming_pills)), pillsAdapter)
+        view.recyclerHome.run {
+            adapter = concatAdapter
 
-        view.recyclerHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    activity?.findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton)
-                        ?.shrink()
-                } else {
-                    activity?.findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton)
-                        ?.extend()
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (dy > 0) {
+                        activity?.findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton)
+                            ?.shrink()
+                    } else {
+                        activity?.findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton)
+                            ?.extend()
+                    }
+                    super.onScrolled(recyclerView, dx, dy)
                 }
-                super.onScrolled(recyclerView, dx, dy)
-            }
-        })
+            })
+        }
 
         model.allPills.observe(viewLifecycleOwner, {
             pillsAdapter.submitList(it)
         })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

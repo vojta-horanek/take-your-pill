@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
@@ -34,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(view.root)
-        setSupportActionBar(view.toolbar)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -76,10 +73,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         view.bottomNavigation.setupWithNavController(navController)
-
-        val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.homescreen, R.id.pills, R.id.history))
-        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     override fun onSupportNavigateUp(): Boolean {

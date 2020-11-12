@@ -15,4 +15,5 @@
     <string name="pill_item_transition_name" translatable="false">pill_item_%1$s</string>
     <string name="pill_details_transition_name" translatable="false">pill_item_detail</string>
     <string name="color">Color</string>
+    <string name="upcoming_pills">Upcoming pills</string>
 </resources>
