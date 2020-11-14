@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/homescreen"
-        android:icon="@drawable/ic_home"
-        android:title="@string/home"
-        android:enabled="true" />
-    <item
-        android:id="@+id/pills"
-        android:icon="@drawable/ic_pill"
+        android:icon="@drawable/anim_pill"
         android:title="@string/pills"
         android:enabled="true" />
     <item
         android:id="@+id/history"
-        android:icon="@drawable/ic_history"
+        android:icon="@drawable/anim_history"
         android:title="@string/history"
-        android:enabled="true"/>
+        android:enabled="true" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/anim_settings"
+        android:title="@string/settings"
+        android:enabled="true" />
 </menu>

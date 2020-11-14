@@ -19,7 +19,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
 import eu.vojtechh.takeyourpill.fragment.HistoryFragment
 import eu.vojtechh.takeyourpill.fragment.HomeFragment
-import eu.vojtechh.takeyourpill.fragment.PillsFragment
+import eu.vojtechh.takeyourpill.fragment.SettingsFragment
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 
@@ -58,7 +58,10 @@ class MainActivity : AppCompatActivity() {
                     Slide(Gravity.BOTTOM).excludeTarget(R.id.navHostFragment, true)
                 )
                 when (fragment) {
-                    is HomeFragment, is PillsFragment, is HistoryFragment -> {
+                    is HomeFragment -> {
+                        view.bottomNavigation.visibility = View.VISIBLE
+                    }
+                    is HistoryFragment, is SettingsFragment -> {
                         view.bottomNavigation.visibility = View.VISIBLE
                     }
                     else -> {
@@ -70,12 +73,9 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homescreen, R.id.pills -> {
+                R.id.homescreen -> {
                     view.floatingActionButton.show()
                     view.floatingActionButton.extend()
-                }
-                R.id.history -> {
-                    view.floatingActionButton.hide()
                 }
                 else -> {
                     view.floatingActionButton.hide()

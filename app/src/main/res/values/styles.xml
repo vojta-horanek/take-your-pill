@@ -17,5 +17,34 @@
         <item name="cornerSize">4dp</item>
     </style>
 
+    <style name="PillsHeader4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/jost_medium</item>
+    </style>
+
+    <style name="PillsHeader6" parent="TextAppearance.MaterialComponents.Headline6"></style>
+
+    <style name="FloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="fontFamily">@font/jost_medium</item>
+        <item name="shapeAppearanceOverlay">@style/FabRoundedShape</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
+    <style name="FabRoundedShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/AllCapsText</item>
+        <item name="labelVisibilityMode">selected</item>
+    </style>
+
+    <style name="AllCapsText" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textAllCaps">true</item>
+        <item name="fontFamily">@font/jost_medium</item>
+    </style>
 
 </resources>

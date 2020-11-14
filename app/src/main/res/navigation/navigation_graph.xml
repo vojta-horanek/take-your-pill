@@ -37,18 +37,6 @@
         android:label="@string/about"
         tools:layout="@layout/about_fragment" />
     <fragment
-        android:id="@id/pills"
-        android:name="eu.vojtechh.takeyourpill.fragment.PillsFragment"
-        android:label="@string/pills"
-        tools:layout="@layout/pills_fragment">
-        <action
-            android:id="@+id/action_upcoming_to_detailsFragment"
-            app:destination="@id/details" />
-        <action
-            android:id="@+id/action_pills_to_edit"
-            app:destination="@id/edit" />
-    </fragment>
-    <fragment
         android:id="@+id/edit"
         android:name="eu.vojtechh.takeyourpill.fragment.EditFragment"
         android:label="@string/edit"
