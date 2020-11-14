@@ -12,8 +12,9 @@ class PillViewHolder(
         binding.listener = listener
     }
 
-    fun bind(pill: Pill) {
+    fun bind(pill: Pill, sectionPrefix: String) {
         binding.pill = pill
+        binding.transitionId = "$sectionPrefix${pill.id}"
         binding.executePendingBindings()
     }
 }

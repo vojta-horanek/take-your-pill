@@ -37,7 +37,11 @@ class EditFragment : Fragment(R.layout.edit_fragment) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        model.addDummyPill()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        model.addDummyPill(view.nameInput.text.toString())
     }
 
 }

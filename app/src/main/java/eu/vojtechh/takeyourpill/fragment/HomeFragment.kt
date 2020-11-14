@@ -50,9 +50,20 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
 
-        val pillsAdapter = PillAdapter(this)
+        // The prefixes can be whatever, they just must differ
+        // - it makes the transition animation work even when the items have the same IDs
+        val upcomingPillsAdapter = PillAdapter(this, "upcoming")
+        val pillsAdapter = PillAdapter(this, "all")
+        // Is this the way to do it?
         val concatAdapter =
-            ConcatAdapter(HeaderAdapter(getString(R.string.upcoming_pills)), pillsAdapter)
+            ConcatAdapter(
+                HeaderAdapter(getString(R.string.upcoming_pills)),
+                upcomingPillsAdapter,
+                HeaderAdapter(getString(R.string.all_pills)),
+                pillsAdapter,
+                HeaderAdapter(getString(R.string.history))
+                //TODO Add history adapter
+            )
         view.recyclerHome.run {
             adapter = concatAdapter
 
@@ -72,6 +83,10 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
 
         model.allPills.observe(viewLifecycleOwner, {
             pillsAdapter.submitList(it)
+        })
+
+        model.upcomingPills.observe(viewLifecycleOwner, {
+            upcomingPillsAdapter.submitList(it)
         })
     }
 

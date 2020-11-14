@@ -4,4 +4,13 @@
     <string name="home">Domů</string>
     <string name="history">Historie</string>
     <string name="settings">Nastavení</string>
+    <string name="fab_add_new_pill">Nový prášek</string>
+    <string name="about">O aplikaci</string>
+    <string name="upcoming_pills">Nadcházející</string>
+    <string name="edit">Upravit</string>
+    <string name="details">Detaily</string>
+    <string name="pills">Prášky</string>
+    <string name="alarm_settings">Zobrazovat upozornění jako alarm</string>
+    <string name="color">Barva</string>
+    <string name="all_pills">Všechny prášky</string>
 </resources>

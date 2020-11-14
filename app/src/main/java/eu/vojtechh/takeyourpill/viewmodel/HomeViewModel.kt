@@ -8,5 +8,6 @@ class HomeViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository
 ) : ViewModel() {
     val allPills = pillRepository.getAllPills()
+    val upcomingPills = pillRepository.getUpcomingPills()
     var isReturningFromEdit = false
 }

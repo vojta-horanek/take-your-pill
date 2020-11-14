@@ -5,11 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.content.Context" />
 
         <variable
             name="pill"
             type="eu.vojtechh.takeyourpill.model.Pill" />
+
+        <variable
+            name="transition_id"
+            type="java.lang.String" />
 
         <variable
             name="listener"
@@ -24,7 +29,7 @@
         android:layout_marginBottom="4dp"
         android:layout_marginHorizontal="4dp"
         android:elevation="0dp"
-        android:transitionName="@{@string/pill_item_transition_name(pill.id)}"
+        android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
         android:onClick="@{(view) -> listener.onPillClicked(view, pill)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout

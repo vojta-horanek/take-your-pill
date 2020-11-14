@@ -12,6 +12,10 @@ interface PillDao {
     @Query("SELECT * FROM pill")
     fun getAll(): LiveData<List<Pill>>
 
+    // TODO Actually get upcoming
+    @Query("SELECT * FROM pill LIMIT 3")
+    fun getUpcoming(): LiveData<List<Pill>>
+
     @Query("SELECT * FROM pill WHERE id = (:pillId)")
     fun getById(pillId: Int): LiveData<Pill>
 

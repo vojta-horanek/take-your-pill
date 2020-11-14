@@ -15,10 +15,10 @@ class EditViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository
 ) : ViewModel() {
     // TODO: Implement the ViewModel
-    fun addDummyPill() = viewModelScope.launch(Dispatchers.IO) {
+    fun addDummyPill(name: String) = viewModelScope.launch(Dispatchers.IO) {
         pillRepository.insertPill(
             Pill(
-                "DummyPill",
+                if (name.isBlank()) "DummyPill" else name,
                 "This pill has a long description",
                 null,
                 PillColor(R.drawable.dot_blue),
