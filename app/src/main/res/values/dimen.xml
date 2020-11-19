@@ -4,4 +4,5 @@
     <dimen name="photo_size_big">64dp</dimen>
     <dimen name="color_dot_size">16dp</dimen>
     <dimen name="color_dot_size_big">24dp</dimen>
+    <dimen name="bottom_bar_height">56dp</dimen>
 </resources>

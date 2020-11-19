@@ -8,13 +8,14 @@
     tools:context=".fragment.HomeFragment"
     android:orientation="vertical">
 
+    <!-- padding is Bottom bar height + 68 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        android:paddingBottom="68dp"
+        android:paddingBottom="124dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/pill_item_layout" />

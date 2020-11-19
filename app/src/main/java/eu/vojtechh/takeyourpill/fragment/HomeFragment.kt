@@ -61,8 +61,6 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
                 upcomingPillsAdapter,
                 HeaderAdapter(getString(R.string.all_pills)),
                 pillsAdapter,
-                HeaderAdapter(getString(R.string.history))
-                //TODO Add history adapter
             )
         view.recyclerHome.run {
             adapter = concatAdapter
