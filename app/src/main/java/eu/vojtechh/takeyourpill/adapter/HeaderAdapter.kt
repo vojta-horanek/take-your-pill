@@ -3,7 +3,7 @@ package eu.vojtechh.takeyourpill.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import eu.vojtechh.takeyourpill.databinding.PillHeaderLayoutBinding
+import eu.vojtechh.takeyourpill.databinding.HeaderBinding
 
 class HeaderAdapter(private val title: String) : RecyclerView.Adapter<HeaderAdapter.ViewHolder>() {
 
@@ -13,7 +13,7 @@ class HeaderAdapter(private val title: String) : RecyclerView.Adapter<HeaderAdap
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            PillHeaderLayoutBinding.inflate(
+            HeaderBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -24,7 +24,7 @@ class HeaderAdapter(private val title: String) : RecyclerView.Adapter<HeaderAdap
     override fun getItemCount() = 1
 
     class ViewHolder(
-        private val binding: PillHeaderLayoutBinding,
+        private val binding: HeaderBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(title: String) {
             binding.title = title

@@ -17,11 +17,27 @@
         <item name="cornerSize">4dp</item>
     </style>
 
-    <style name="PillsHeader4" parent="TextAppearance.MaterialComponents.Headline4">
+    <style name="AppTheme.Header4" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="fontFamily">@font/jost_medium</item>
     </style>
 
+    <style name="AppTheme.Header3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="fontFamily">@font/jost_medium</item>
+        <item name="android:textColor">?colorOnSurface</item>
+    </style>
+
     <style name="PillsHeader6" parent="TextAppearance.MaterialComponents.Headline6"></style>
+
+    <style name="AppTheme.Description" parent="TextAppearance.MaterialComponents.Subtitle1"></style>
+
+    <style name="AppTheme.Oval">
+        <item name="cornerSize">50%</item>
+        <item name="android:backgroundTint">?attr/colorSurface</item>
+    </style>
+
+    <style name="AppTheme.BigCorners">
+        <item name="cornerSize">8dp</item>
+    </style>
 
     <style name="FloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
         <item name="fontFamily">@font/jost_medium</item>

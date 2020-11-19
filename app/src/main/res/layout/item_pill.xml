@@ -28,7 +28,6 @@
         android:focusable="true"
         android:layout_marginBottom="4dp"
         android:layout_marginHorizontal="4dp"
-        android:elevation="0dp"
         android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
         android:onClick="@{(view) -> listener.onPillClicked(view, pill)}">
 
@@ -37,7 +36,7 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/pillColor"
+                android:id="@+id/imagePillColor"
                 android:layout_width="@dimen/color_dot_size"
                 android:layout_height="@dimen/color_dot_size"
                 android:layout_marginStart="16dp"
@@ -59,12 +58,12 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/pillImage"
-                app:layout_constraintStart_toEndOf="@+id/pillColor"
+                app:layout_constraintEnd_toStartOf="@+id/imagePillPhoto"
+                app:layout_constraintStart_toEndOf="@+id/imagePillColor"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/pillTitle"
+                    android:id="@+id/textPillName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -86,7 +85,7 @@
             </LinearLayout>
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/pillImage"
+                android:id="@+id/imagePillPhoto"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"

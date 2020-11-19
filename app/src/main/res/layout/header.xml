@@ -24,7 +24,7 @@
             android:paddingHorizontal="52dp"
             android:paddingVertical="18dp"
             android:text="@{title}"
-            android:textAppearance="@style/PillsHeader4"
+            android:textAppearance="@style/AppTheme.Header4"
             android:textColor="?attr/colorOnBackground"
             tools:text="Title" />
     </RelativeLayout>

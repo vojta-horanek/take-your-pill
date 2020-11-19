@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -27,25 +28,22 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.navHostFragment
             scrimColor = Color.TRANSPARENT
             setAllContainerColors(requireContext().themeColor(R.attr.colorSurface))
         }
+        binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val pillId = args.pillId
         model.getPillById(pillId).observe(viewLifecycleOwner, {
             binding.pill = it
         })
-    }
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
+    }
 }

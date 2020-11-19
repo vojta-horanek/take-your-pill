@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import eu.vojtechh.takeyourpill.databinding.PillItemLayoutBinding
+import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
 import eu.vojtechh.takeyourpill.model.Pill
 
 class PillAdapter(
@@ -22,7 +22,7 @@ class PillAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PillViewHolder {
         return PillViewHolder(
-            PillItemLayoutBinding.inflate(
+            ItemPillBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
