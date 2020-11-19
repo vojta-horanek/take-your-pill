@@ -5,13 +5,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.transition.MaterialSharedAxis
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.databinding.AboutFragmentBinding
+import eu.vojtechh.takeyourpill.databinding.FragmentAboutBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
 
-class AboutFragment : Fragment(R.layout.about_fragment) {
+class AboutFragment : Fragment(R.layout.fragment_about) {
 
     private val model: AboutFragment by viewModels()
-    private val view by viewBinding(AboutFragmentBinding::bind)
+    private val view by viewBinding(FragmentAboutBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

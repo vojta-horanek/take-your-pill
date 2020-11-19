@@ -1,16 +1,12 @@
 package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -20,16 +16,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HeaderAdapter
 import eu.vojtechh.takeyourpill.adapter.PillAdapter
-import eu.vojtechh.takeyourpill.databinding.HomeFragmentBinding
+import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterListener {
+class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterListener {
 
     private val model: HomeViewModel by viewModels()
-    private val view by viewBinding(HomeFragmentBinding::bind)
+    private val view by viewBinding(FragmentHomeBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,18 +82,6 @@ class HomeFragment : Fragment(R.layout.home_fragment), PillAdapter.PillAdapterLi
         model.upcomingPills.observe(viewLifecycleOwner, {
             upcomingPillsAdapter.submitList(it)
         })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.toolbar_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(
-            item,
-            findNavController()
-        ) || super.onOptionsItemSelected(item)
     }
 
     override fun onPillClicked(view: View, pill: Pill) {

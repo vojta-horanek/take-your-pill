@@ -101,7 +101,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView3"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/pill_color_layout"
+                    tools:listitem="@layout/pill_color"
                     android:orientation="horizontal" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

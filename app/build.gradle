@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdkVersion 30
@@ -13,7 +13,7 @@ android {
         applicationId "eu.vojtechh.takeyourpill"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 20201029
+        versionCode 20201119
         versionName "alpha build $versionCode"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -108,9 +108,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:2.29.1"
 
     // Dagger Android
-    api 'com.google.dagger:dagger-android:2.23.2'
-    api 'com.google.dagger:dagger-android-support:2.23.2'
-    kapt 'com.google.dagger:dagger-android-processor:2.23.2'
+    api 'com.google.dagger:dagger-android:2.29.1'
+    api 'com.google.dagger:dagger-android-support:2.29.1'
+    kapt 'com.google.dagger:dagger-android-processor:2.29.1'
 
 
     // ViewModel

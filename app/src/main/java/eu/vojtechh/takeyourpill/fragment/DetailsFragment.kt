@@ -11,23 +11,23 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.databinding.DetailsFragmentBinding
+import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 
 @AndroidEntryPoint
-class DetailsFragment : Fragment(R.layout.details_fragment) {
+class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private val model: DetailsViewModel by viewModels()
     val args: DetailsFragmentArgs by navArgs()
-    private lateinit var binding: DetailsFragmentBinding
+    private lateinit var binding: FragmentDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DetailsFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 

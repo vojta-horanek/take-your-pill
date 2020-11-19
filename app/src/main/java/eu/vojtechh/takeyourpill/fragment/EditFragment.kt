@@ -8,16 +8,16 @@ import androidx.transition.Slide
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.databinding.EditFragmentBinding
+import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 
 @AndroidEntryPoint
-class EditFragment : Fragment(R.layout.edit_fragment) {
+class EditFragment : Fragment(R.layout.fragment_edit) {
 
     private val model: EditViewModel by viewModels()
-    private val view by viewBinding(EditFragmentBinding::bind)
+    private val view by viewBinding(FragmentEditBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

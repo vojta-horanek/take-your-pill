@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionGroup="true"
-    tools:context=".fragment.HomeFragment"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.HistoryFragment"
+    android:orientation="vertical"
+    android:transitionGroup="false">
 
-    <!-- padding is Bottom bar height + 68 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        android:paddingBottom="124dp"
+        android:paddingBottom="@dimen/bottom_bar_height"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/pill_item_layout" />
+        tools:listitem="@layout/item_history" />
 
 </LinearLayout>
