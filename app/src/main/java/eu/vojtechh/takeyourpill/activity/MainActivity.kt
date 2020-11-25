@@ -60,12 +60,16 @@ class MainActivity : AppCompatActivity() {
                 when (fragment) {
                     is HomeFragment -> {
                         view.bottomNavigation.visibility = View.VISIBLE
+                        view.floatingActionButton.show()
+                        view.floatingActionButton.visibility = View.VISIBLE
                     }
                     is HistoryFragment, is SettingsFragment -> {
                         view.bottomNavigation.visibility = View.VISIBLE
+                        view.floatingActionButton.visibility = View.VISIBLE
                     }
                     else -> {
                         view.bottomNavigation.visibility = View.INVISIBLE
+                        view.floatingActionButton.visibility = View.GONE
                     }
                 }
             }
@@ -73,11 +77,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homescreen -> {
-                    view.floatingActionButton.show()
-                    view.floatingActionButton.extend()
-                }
-                else -> {
+                R.id.history, R.id.settings -> {
                     view.floatingActionButton.hide()
                 }
             }

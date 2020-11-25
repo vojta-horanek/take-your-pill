@@ -19,6 +19,7 @@
 
     <style name="AppTheme.Header4" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="fontFamily">@font/jost_medium</item>
+        <item name="android:textColor">?colorOnSurface</item>
     </style>
 
     <style name="AppTheme.Header3" parent="TextAppearance.MaterialComponents.Headline3">
@@ -26,9 +27,15 @@
         <item name="android:textColor">?colorOnSurface</item>
     </style>
 
-    <style name="PillsHeader6" parent="TextAppearance.MaterialComponents.Headline6"></style>
+    <style name="AppTheme.ButtonSmall" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/jost_medium</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
+    </style>
 
-    <style name="AppTheme.Description" parent="TextAppearance.MaterialComponents.Subtitle1"></style>
+
+    <style name="PillsHeader6" parent="TextAppearance.MaterialComponents.Headline6" />
+
+    <style name="AppTheme.Description" parent="TextAppearance.MaterialComponents.Subtitle1" />
 
     <style name="AppTheme.Oval">
         <item name="cornerSize">50%</item>

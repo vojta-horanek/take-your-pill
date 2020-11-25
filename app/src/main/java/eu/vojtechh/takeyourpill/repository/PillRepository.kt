@@ -10,6 +10,7 @@ class PillRepository @Inject constructor(
     fun getAllPills() = pillDao.getAll()
     fun getUpcomingPills() = pillDao.getUpcoming()
     fun getPill(pillId: Int) = pillDao.getById(pillId)
+    suspend fun getPillAsync(pillId: Int) = pillDao.getByIdAsync(pillId)
     suspend fun deletePill(pill: Pill) = pillDao.delete(pill)
     suspend fun insertPill(pill: Pill) = pillDao.insert(pill)
 }

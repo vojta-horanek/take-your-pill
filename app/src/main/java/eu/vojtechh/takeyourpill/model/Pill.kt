@@ -15,6 +15,7 @@ import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 data class Pill(
     var name: String,
     var description: String?,
+    // TODO Separate photo to its own entity (table)
     var photo: Bitmap?,
     var color: PillColor,
     @Embedded(prefix = "constant_") var remindConstant: ReminderOptions,

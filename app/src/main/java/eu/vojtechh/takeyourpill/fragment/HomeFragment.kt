@@ -51,6 +51,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterLi
         val upcomingPillsAdapter = PillAdapter(this, "upcoming")
         val pillsAdapter = PillAdapter(this, "all")
         // Is this the way to do it?
+        // TODO Redo with different view types in a single adapter
         val concatAdapter =
             ConcatAdapter(
                 HeaderAdapter(getString(R.string.upcoming_pills)),
@@ -58,6 +59,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterLi
                 HeaderAdapter(getString(R.string.all_pills)),
                 pillsAdapter,
             )
+
         view.recyclerHome.run {
             adapter = concatAdapter
 

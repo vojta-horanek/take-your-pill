@@ -19,6 +19,9 @@ interface PillDao {
     @Query("SELECT * FROM pill WHERE id = (:pillId)")
     fun getById(pillId: Int): LiveData<Pill>
 
+    @Query("SELECT * FROM pill WHERE id = (:pillId)")
+    suspend fun getByIdAsync(pillId: Int): Pill?
+
     @Insert
     suspend fun insert(pill: Pill)
 

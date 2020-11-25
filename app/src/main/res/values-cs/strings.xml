@@ -13,4 +13,6 @@
     <string name="alarm_settings">Zobrazovat upozornění jako alarm</string>
     <string name="color">Barva</string>
     <string name="all_pills">Všechny prášky</string>
+    <string name="more_info">Další info</string>
+    <string name="delete">Smazat</string>
 </resources>
