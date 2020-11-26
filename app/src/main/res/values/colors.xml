@@ -3,7 +3,6 @@
 
     <!-- https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=64ba69&secondary.color=FFC107 -->
     <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryDark">#388E3C</color>
     <color name="colorAccent">#FFC107</color>
 
 
@@ -14,8 +13,6 @@
     <color name="colorYellow">@color/colorAccent</color>
     <color name="colorOrange">#F57C00</color>
     <color name="colorRed">#D32F2F</color>
-
-    <color name="nav_bar">#33000000</color>
 
 
 </resources>
