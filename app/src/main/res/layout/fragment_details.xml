@@ -12,14 +12,13 @@
             type="eu.vojtechh.takeyourpill.model.Pill" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:transitionName="@string/pill_details_transition_name">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/email_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -33,7 +32,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{pill.name}"
-                android:textAppearance="@style/AppTheme.Header4"
+                android:textAppearance="@style/AppTheme.Text.Header4"
                 app:layout_constraintEnd_toStartOf="@+id/imagePillColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -49,7 +48,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textPillName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textPillName"
-                app:shapeAppearanceOverlay="@style/AppTheme.Oval"
+                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
                 tools:background="@color/colorDarkBlue" />
 
             <TextView
@@ -58,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@{pill.description}"
-                android:textAppearance="@style/AppTheme.Description"
+                android:textAppearance="@style/AppTheme.Text.Description"
                 app:layout_constraintEnd_toEndOf="@+id/imagePillColor"
                 app:layout_constraintStart_toStartOf="@+id/textPillName"
                 app:layout_constraintTop_toBottomOf="@+id/textPillName"
@@ -76,21 +75,23 @@
                 app:layout_constraintEnd_toEndOf="@+id/textPillDescription"
                 app:layout_constraintStart_toStartOf="@+id/textPillDescription"
                 app:layout_constraintTop_toBottomOf="@+id/textPillDescription"
-                app:shapeAppearanceOverlay="@style/AppTheme.BigCorners"
+                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Corners.Big"
                 tools:src="@drawable/ic_launcher_background" />
 
             <LinearLayout
+                android:id="@+id/actionsBottomDetails"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginVertical="8dp"
                 android:orientation="horizontal"
                 android:paddingBottom="8dp"
                 android:weightSum="3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagePillPhoto"
+                app:layout_constraintVertical_bias="1.0">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/buttonDelete"
@@ -115,7 +116,7 @@
                         android:gravity="center_horizontal"
                         android:maxLines="2"
                         android:text="@string/delete"
-                        android:textAppearance="@style/AppTheme.ButtonSmall"
+                        android:textAppearance="@style/AppTheme.Text.ButtonSmall"
                         app:drawableTint="?attr/colorControlNormal"
                         app:drawableTopCompat="@drawable/ic_delete" />
                 </com.google.android.material.card.MaterialCardView>
@@ -143,7 +144,7 @@
                         android:gravity="center_horizontal"
                         android:maxLines="2"
                         android:text="@string/more_info"
-                        android:textAppearance="@style/AppTheme.ButtonSmall"
+                        android:textAppearance="@style/AppTheme.Text.ButtonSmall"
                         app:drawableTint="?attr/colorControlNormal"
                         app:drawableTopCompat="@drawable/ic_info" />
                 </com.google.android.material.card.MaterialCardView>
@@ -171,7 +172,7 @@
                         android:gravity="center_horizontal"
                         android:maxLines="2"
                         android:text="@string/edit"
-                        android:textAppearance="@style/AppTheme.ButtonSmall"
+                        android:textAppearance="@style/AppTheme.Text.ButtonSmall"
                         app:drawableTint="?attr/colorControlNormal"
                         app:drawableTopCompat="@drawable/ic_edit" />
                 </com.google.android.material.card.MaterialCardView>
@@ -179,7 +180,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 
 </layout>

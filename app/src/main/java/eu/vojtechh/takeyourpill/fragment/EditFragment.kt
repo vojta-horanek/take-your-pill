@@ -2,52 +2,90 @@ package eu.vojtechh.takeyourpill.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.transition.Slide
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.klass.themeColor
-import eu.vojtechh.takeyourpill.klass.viewBinding
+import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.PillColor
+import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 
 @AndroidEntryPoint
-class EditFragment : Fragment(R.layout.fragment_edit) {
+class EditFragment : Fragment() {
 
     private val model: EditViewModel by viewModels()
-    private val view by viewBinding(FragmentEditBinding::bind)
+    private val args: EditFragmentArgs by navArgs()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialContainerTransform().apply {
-            startView = requireActivity().findViewById(R.id.floatingActionButton)
-            endView = requireActivity().findViewById(R.id.editView)
-            scrimColor = Color.TRANSPARENT
-            containerColor = requireContext().themeColor(R.attr.colorSurface)
-            startContainerColor = requireContext().themeColor(R.attr.colorSecondary)
-            endContainerColor = requireContext().themeColor(R.attr.colorSurface)
+    private lateinit var binding: FragmentEditBinding
+    private lateinit var pill: Pill
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentEditBinding.inflate(inflater, container, false)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+        if (args.pillId == -1L) {
+            enterTransition = MaterialContainerTransform().apply {
+                startView = requireActivity().findViewById(R.id.floatingActionButton)
+                endView = requireActivity().findViewById(R.id.editView)
+                scrimColor = Color.TRANSPARENT
+                containerColor = requireContext().themeColor(R.attr.colorSurface)
+                startContainerColor = requireContext().themeColor(R.attr.colorSecondary)
+                endContainerColor = requireContext().themeColor(R.attr.colorSurface)
+            }
+        } else {
+            enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
+            // Get the pill in a blocking manner, it is only text which should take just a few seconds
+            val pillDb = model.getPillBlocking(args.pillId)
+            if (pillDb != null) {
+                pill = pillDb
+                binding.pill = pill
+            } else {
+                TODO("Implement pill not found")
+            }
         }
-        returnTransition = Slide().apply {
-            addTarget(R.id.editView)
-        }
-
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        binding.buttonSave.setOnClickListener {
+
+            if (args.pillId == -1L) {
+                val newPill = Pill(
+                    binding.inputName.text.toString(),
+                    binding.inputDescription.text.toString(),
+                    null,
+                    PillColor(R.color.colorDarkBlue),
+                    ReminderOptions.Infinite(mutableListOf()),
+                    ReminderOptions.Infinite(mutableListOf())
+                )
+                model.addPill(newPill).observe(viewLifecycleOwner) {
+                    findNavController().popBackStack()
+                    val directions = HomeFragmentDirections.actionHomescreenToDetails(it, true)
+                    findNavController().navigate(directions)
+                }
+            } else {
+                pill.apply {
+                    name = binding.inputName.text.toString()
+                    description = binding.inputDescription.text.toString()
+                    // TODO
+                }
+                model.updatePill(pill)
+                findNavController().popBackStack()
+            }
+        }
     }
-
-    override fun onPause() {
-        super.onPause()
-        val drawable =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_launcher_background)
-        val bitmap = drawable?.toBitmap(width = 1000, height = 1000, config = null)
-
-        model.addDummyPill(view.nameInput.text.toString(), bitmap!!)
-    }
-
 }

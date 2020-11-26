@@ -45,7 +45,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/imagePillPhoto"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription"
-                app:shapeAppearanceOverlay="@style/AppTheme.Oval"
+                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
                 tools:background="@color/colorDarkBlue"
                 android:visibility="@{pill.colorVisibility}" />
 
@@ -70,7 +70,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@{pill.name}"
-                    android:textAppearance="@style/PillsHeader6"
+                    android:textAppearance="@style/AppTheme.Text.PillsHeader6"
                     tools:text="This is a pill" />
 
                 <TextView
@@ -98,7 +98,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearance="@style/roundedCornersImageView"
+                app:shapeAppearance="@style/AppTheme.Shape.roundedCornersImageView"
                 tools:ignore="ContentDescription"
                 tools:src="@drawable/ic_launcher_background"
                 app:strokeColor="@{pill.colorResource(context)}"

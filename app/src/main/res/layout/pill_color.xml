@@ -9,6 +9,12 @@
         <variable
             name="color"
             type="eu.vojtechh.takeyourpill.model.PillColor" />
+
+        <variable
+            name="active"
+            type="java.lang.Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +27,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@{color.getColor(context)}"
-            app:shapeAppearanceOverlay="@style/AppTheme.Oval"
-            tools:background="@color/colorDarkBlue" />
+            app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
+            tools:src="@color/colorDarkBlue" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_check"
+            android:padding="4dp"
+            app:tint="@android:color/white"
+            android:visibility="@{active ? View.VISIBLE : View.GONE}"
+            tools:visibility="visible" />
     </FrameLayout>
 </layout>

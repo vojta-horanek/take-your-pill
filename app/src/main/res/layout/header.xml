@@ -24,7 +24,7 @@
             android:paddingHorizontal="52dp"
             android:paddingVertical="18dp"
             android:text="@{title}"
-            android:textAppearance="@style/AppTheme.Header4"
+            android:textAppearance="@style/AppTheme.Text.Header4"
             tools:text="Title" />
     </RelativeLayout>
 </layout>

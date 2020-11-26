@@ -20,7 +20,7 @@ data class Pill(
     var color: PillColor,
     @Embedded(prefix = "constant_") var remindConstant: ReminderOptions,
     @Embedded(prefix = "current_") var remindCurrent: ReminderOptions,
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
 ) {
     val photoVisibility
         get() = if (photo != null) View.VISIBLE else View.GONE

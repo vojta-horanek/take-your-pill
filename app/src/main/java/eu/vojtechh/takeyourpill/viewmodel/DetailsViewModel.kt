@@ -12,11 +12,11 @@ import kotlinx.coroutines.runBlocking
 class DetailsViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository
 ) : ViewModel() {
-    fun getPillById(pillId: Int) = pillRepository.getPill(pillId)
+    fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
     fun deletePill(pill: Pill) =
         viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePill(pill) }
 
-    fun getPillBlocking(pillId: Int): Pill? {
+    fun getPillBlocking(pillId: Long): Pill? {
         return runBlocking {
             return@runBlocking pillRepository.getPillAsync(pillId)
         }

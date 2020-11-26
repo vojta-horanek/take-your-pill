@@ -20,4 +20,10 @@
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
     <string name="confirm_delete_pill">Do you really want to delete this pill?</string>
+    <string name="description">Description</string>
+    <string name="name">Name</string>
+    <string name="photo">Photo</string>
+    <string name="save">Save</string>
+    <string name="search_online">Search online</string>
+    <string name="pill_saved">Pill saved</string>
 </resources>

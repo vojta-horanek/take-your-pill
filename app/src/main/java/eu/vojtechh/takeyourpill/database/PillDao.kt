@@ -1,10 +1,7 @@
 package eu.vojtechh.takeyourpill.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import eu.vojtechh.takeyourpill.model.Pill
 
 @Dao
@@ -17,13 +14,16 @@ interface PillDao {
     fun getUpcoming(): LiveData<List<Pill>>
 
     @Query("SELECT * FROM pill WHERE id = (:pillId)")
-    fun getById(pillId: Int): LiveData<Pill>
+    fun getById(pillId: Long): LiveData<Pill>
 
     @Query("SELECT * FROM pill WHERE id = (:pillId)")
-    suspend fun getByIdAsync(pillId: Int): Pill?
+    suspend fun getByIdAsync(pillId: Long): Pill?
 
-    @Insert
-    suspend fun insert(pill: Pill)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(pill: Pill): Long
+
+    @Update
+    suspend fun update(pill: Pill)
 
     @Delete
     suspend fun delete(pill: Pill)

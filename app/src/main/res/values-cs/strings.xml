@@ -19,4 +19,10 @@
     <string name="no">Ne</string>
     <string name="cancel">Zrušit</string>
     <string name="confirm_delete_pill">Opravdu chcete prášek smazat?</string>
+    <string name="description">Popis</string>
+    <string name="name">Název</string>
+    <string name="photo">Fotka</string>
+    <string name="save">Uložit</string>
+    <string name="search_online">Hledat online</string>
+    <string name="pill_saved">Prášek uložen</string>
 </resources>

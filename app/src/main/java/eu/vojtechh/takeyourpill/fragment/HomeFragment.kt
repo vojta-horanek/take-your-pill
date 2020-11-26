@@ -77,6 +77,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterLi
             })
         }
 
+        view.floatingActionButton.setOnClickListener {
+            exitTransition = MaterialElevationScale(false)
+            reenterTransition = MaterialElevationScale(true)
+            findNavController().navigate(R.id.edit)
+        }
+
         model.allPills.observe(viewLifecycleOwner, {
             pillsAdapter.submitList(it)
         })

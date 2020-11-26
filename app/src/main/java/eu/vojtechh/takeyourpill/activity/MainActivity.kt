@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
@@ -60,28 +59,19 @@ class MainActivity : AppCompatActivity() {
                 when (fragment) {
                     is HomeFragment -> {
                         view.bottomNavigation.visibility = View.VISIBLE
-                        view.floatingActionButton.show()
-                        view.floatingActionButton.visibility = View.VISIBLE
                     }
                     is HistoryFragment, is SettingsFragment -> {
                         view.bottomNavigation.visibility = View.VISIBLE
-                        view.floatingActionButton.visibility = View.VISIBLE
+
                     }
                     else -> {
                         view.bottomNavigation.visibility = View.INVISIBLE
-                        view.floatingActionButton.visibility = View.GONE
+
                     }
                 }
             }
         }, true)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.history, R.id.settings -> {
-                    view.floatingActionButton.hide()
-                }
-            }
-        }
 
         view.bottomNavigation.setOnNavigationItemReselectedListener { /* Disables reselection */ }
         view.bottomNavigation.setOnNavigationItemSelectedListener {
@@ -89,14 +79,6 @@ class MainActivity : AppCompatActivity() {
                 exitTransition = MaterialFadeThrough()
             }
             true
-        }
-
-        view.floatingActionButton.setOnClickListener {
-            currentNavigationFragment?.apply {
-                exitTransition = MaterialElevationScale(false)
-                reenterTransition = MaterialElevationScale(true)
-            }
-            navController.navigate(R.id.edit)
         }
 
         view.bottomNavigation.setupWithNavController(navController)

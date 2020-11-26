@@ -10,14 +10,9 @@
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homescreen_to_settingsFragment"
-            app:destination="@id/settings" />
-        <action
-            android:id="@+id/action_homescreen_to_about"
-            app:destination="@id/about" />
-        <action
             android:id="@+id/action_homescreen_to_editFragment"
-            app:destination="@id/edit" />
+            app:destination="@id/edit"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_homescreen_to_details"
             app:destination="@id/details" />
@@ -30,7 +25,11 @@
     <fragment
         android:id="@id/settings"
         android:name="eu.vojtechh.takeyourpill.fragment.SettingsFragment"
-        android:label="@string/settings" />
+        android:label="@string/settings">
+        <action
+            android:id="@+id/action_settings_to_about"
+            app:destination="@id/about" />
+    </fragment>
     <fragment
         android:id="@+id/about"
         android:name="eu.vojtechh.takeyourpill.fragment.AboutFragment"
@@ -43,10 +42,13 @@
         tools:layout="@layout/fragment_edit">
         <action
             android:id="@+id/action_edit_to_details"
-            app:destination="@id/details" />
+            app:destination="@id/details"
+            app:popUpTo="@id/details"
+            app:popUpToInclusive="true" />
         <argument
             android:name="pillId"
-            app:argType="integer" />
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
     <fragment
         android:id="@+id/details"
@@ -58,6 +60,10 @@
             app:destination="@id/edit" />
         <argument
             android:name="pillId"
-            app:argType="integer" />
+            app:argType="long" />
+        <argument
+            android:name="saved"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>

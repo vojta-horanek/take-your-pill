@@ -1,38 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/editView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?android:colorBackground"
-    android:clipToPadding="false"
-    android:fillViewport="true"
-    android:paddingHorizontal="4dp"
-    android:paddingTop="8dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/email_card_view"
+    <data>
+
+        <variable
+            name="pill"
+            type="eu.vojtechh.takeyourpill.model.Pill" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/editView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="?attr/colorSurface">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/compose_constraint_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Name"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:hint="@string/name"
+                android:text="@{pill.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/nameInput" />
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/description"
+                android:text="@{pill.description}"
+                app:layout_constraintEnd_toEndOf="@+id/inputName"
+                app:layout_constraintStart_toStartOf="@+id/inputName"
+                app:layout_constraintTop_toBottomOf="@id/inputName" />
+
+            <TextView
+                android:id="@+id/textColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/color"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:layout_constraintEnd_toEndOf="@+id/inputDescription"
+                app:layout_constraintStart_toStartOf="@+id/inputDescription"
+                app:layout_constraintTop_toBottomOf="@id/inputDescription" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/textColor"
+                app:layout_constraintStart_toStartOf="@id/textColor"
+                app:layout_constraintTop_toBottomOf="@id/textColor"
+                tools:listitem="@layout/pill_color" />
+
+            <TextView
+                android:id="@+id/textPhoto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/photo"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerColor"
+                app:layout_constraintStart_toStartOf="@+id/recyclerColor"
+                app:layout_constraintTop_toBottomOf="@id/recyclerColor" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imagePillPhoto"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="8dp"
+                android:elevation="8dp"
+                android:scaleType="center"
+                android:background="?attr/colorSurface"
+                android:src="@{pill.photoDrawable(context)}"
+                app:layout_constraintEnd_toEndOf="@+id/textPhoto"
+                app:layout_constraintStart_toStartOf="@+id/textPhoto"
+                app:layout_constraintTop_toBottomOf="@+id/textPhoto"
+                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Corners.Big"
+                tools:src="@drawable/ic_photo_add" />
+
+            <!--            TODO Add reminder options setting here-->
+
+            <LinearLayout
+                android:id="@+id/actionsBottomEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagePillPhoto"
+                app:layout_constraintVertical_bias="1.0">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/buttonMoreInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardElevation="0dp"
+                    app:strokeColor="?attr/colorControlNormal"
+                    app:strokeWidth="1dp">
+
+                    <TextView
+                        android:id="@+id/textInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="8dp"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_horizontal"
+                        android:maxLines="2"
+                        android:text="@string/search_online"
+                        android:textAppearance="@style/AppTheme.Text.ButtonSmall"
+                        app:drawableTint="?attr/colorControlNormal"
+                        app:drawableTopCompat="@drawable/ic_search" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/buttonSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardElevation="0dp"
+                    app:strokeColor="?attr/colorControlNormal"
+                    app:strokeWidth="1dp">
+
+                    <TextView
+                        android:id="@+id/textSave"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="8dp"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_horizontal"
+                        android:maxLines="2"
+                        android:text="@string/save"
+                        android:textAppearance="@style/AppTheme.Text.ButtonSmall"
+                        app:drawableTint="?attr/colorControlNormal"
+                        app:drawableTopCompat="@drawable/ic_save" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
 
-
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</layout>

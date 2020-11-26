@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -35,10 +34,11 @@
             android:paddingBottom="16dp"
             android:paddingTop="24dp"
             android:text="@{title}"
-            android:textAppearance="@style/AppTheme.BodyNormal"
+            android:textAppearance="@style/AppTheme.Text.BodyNormal"
             tools:text="Are you sure you want to delete?" />
 
         <TextView
+            android:id="@+id/textConfirm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
@@ -51,11 +51,11 @@
             android:paddingHorizontal="24dp"
             android:paddingVertical="16dp"
             android:text="@{yes}"
-            android:textAppearance="@style/AppTheme.BodyNormal"
-            app:drawableStartCompat="@drawable/ic_check"
+            android:textAppearance="@style/AppTheme.Text.BodyNormal"
             tools:text="Yes" />
 
         <TextView
+            android:id="@+id/textCancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
@@ -68,8 +68,7 @@
             android:paddingHorizontal="24dp"
             android:paddingVertical="16dp"
             android:text="@{no}"
-            android:textAppearance="@style/AppTheme.BodyNormal"
-            app:drawableStartCompat="@drawable/ic_cancel"
+            android:textAppearance="@style/AppTheme.Text.BodyNormal"
             tools:text="No" />
 
     </LinearLayout>
