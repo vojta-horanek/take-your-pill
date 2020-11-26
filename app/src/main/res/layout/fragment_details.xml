@@ -25,14 +25,16 @@
 
             <TextView
                 android:id="@+id/textPillName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{pill.name}"
                 android:textAppearance="@style/AppTheme.Header4"
+                app:layout_constraintEnd_toStartOf="@+id/imagePillColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Xyzal" />
@@ -78,9 +80,11 @@
                 tools:src="@drawable/ic_launcher_background" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:orientation="horizontal"
                 android:paddingBottom="8dp"
                 android:weightSum="3"
@@ -101,42 +105,19 @@
                     app:strokeColor="?attr/colorControlNormal"
                     app:strokeWidth="1dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/textDelete"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imageDelete"
-                            android:layout_width="24dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:maxHeight="32dp"
-                            android:src="@drawable/ic_delete"
-                            app:layout_constraintBottom_toTopOf="@+id/textDelete"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="?attr/colorControlNormal" />
-
-                        <TextView
-                            android:id="@+id/textDelete"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:gravity="center"
-                            android:maxLines="2"
-                            android:text="@string/delete"
-                            android:textAppearance="@style/AppTheme.ButtonSmall"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageDelete" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="8dp"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_horizontal"
+                        android:maxLines="2"
+                        android:text="@string/delete"
+                        android:textAppearance="@style/AppTheme.ButtonSmall"
+                        app:drawableTint="?attr/colorControlNormal"
+                        app:drawableTopCompat="@drawable/ic_delete" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -152,42 +133,19 @@
                     app:strokeColor="?attr/colorControlNormal"
                     app:strokeWidth="1dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/textInfo"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imageInfo"
-                            android:layout_width="24dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:maxHeight="32dp"
-                            android:src="@drawable/ic_info"
-                            app:layout_constraintBottom_toTopOf="@+id/textInfo"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="?attr/colorControlNormal" />
-
-                        <TextView
-                            android:id="@+id/textInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:gravity="center"
-                            android:maxLines="2"
-                            android:text="@string/more_info"
-                            android:textAppearance="@style/AppTheme.ButtonSmall"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageInfo" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="8dp"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_horizontal"
+                        android:maxLines="2"
+                        android:text="@string/more_info"
+                        android:textAppearance="@style/AppTheme.ButtonSmall"
+                        app:drawableTint="?attr/colorControlNormal"
+                        app:drawableTopCompat="@drawable/ic_info" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -203,42 +161,19 @@
                     app:strokeColor="?attr/colorControlNormal"
                     app:strokeWidth="1dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/textEdit"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imageEdit"
-                            android:layout_width="24dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:maxHeight="32dp"
-                            android:src="@drawable/ic_edit"
-                            app:layout_constraintBottom_toTopOf="@+id/textEdit"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="?attr/colorControlNormal" />
-
-                        <TextView
-                            android:id="@+id/textEdit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:gravity="center"
-                            android:maxLines="2"
-                            android:text="@string/edit"
-                            android:textAppearance="@style/AppTheme.ButtonSmall"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageEdit" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="8dp"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_horizontal"
+                        android:maxLines="2"
+                        android:text="@string/edit"
+                        android:textAppearance="@style/AppTheme.ButtonSmall"
+                        app:drawableTint="?attr/colorControlNormal"
+                        app:drawableTopCompat="@drawable/ic_edit" />
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 

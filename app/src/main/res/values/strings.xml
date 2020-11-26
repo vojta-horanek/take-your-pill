@@ -16,4 +16,8 @@
     <string name="all_pills">All Pills</string>
     <string name="more_info">More info</string>
     <string name="delete">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_delete_pill">Do you really want to delete this pill?</string>
 </resources>

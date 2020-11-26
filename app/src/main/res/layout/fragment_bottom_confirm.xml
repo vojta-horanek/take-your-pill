@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="java.lang.String" />
+
+        <variable
+            name="yes"
+            type="java.lang.String" />
+
+        <variable
+            name="no"
+            type="java.lang.String" />
+
+        <variable
+            name="listener"
+            type="eu.vojtechh.takeyourpill.fragment.BottomSheetFragmentConfirmation.ConfirmListener" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:paddingBottom="16dp"
+            android:paddingTop="24dp"
+            android:text="@{title}"
+            android:textAppearance="@style/AppTheme.BodyNormal"
+            tools:text="Are you sure you want to delete?" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:checkable="true"
+            android:clickable="true"
+            android:drawablePadding="16dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:onClick="@{(view) -> listener.onConfirmClicked(view)}"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:text="@{yes}"
+            android:textAppearance="@style/AppTheme.BodyNormal"
+            app:drawableStartCompat="@drawable/ic_check"
+            tools:text="Yes" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:checkable="true"
+            android:clickable="true"
+            android:drawablePadding="16dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:onClick="@{(view) -> listener.onCancelClicked(view)}"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:text="@{no}"
+            android:textAppearance="@style/AppTheme.BodyNormal"
+            app:drawableStartCompat="@drawable/ic_cancel"
+            tools:text="No" />
+
+    </LinearLayout>
+
+</layout>

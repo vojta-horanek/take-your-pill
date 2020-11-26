@@ -15,4 +15,8 @@
     <string name="all_pills">Všechny prášky</string>
     <string name="more_info">Další info</string>
     <string name="delete">Smazat</string>
+    <string name="yes">Ano</string>
+    <string name="no">Ne</string>
+    <string name="cancel">Zrušit</string>
+    <string name="confirm_delete_pill">Opravdu chcete prášek smazat?</string>
 </resources>
