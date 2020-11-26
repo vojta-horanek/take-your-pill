@@ -24,6 +24,8 @@ data class Pill(
 ) {
     val photoVisibility
         get() = if (photo != null) View.VISIBLE else View.GONE
+    val colorVisibility
+        get() = if (photo != null) View.GONE else View.VISIBLE
     val descriptionVisibility
         get() = description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE } ?: View.GONE
 
@@ -31,8 +33,7 @@ data class Pill(
     fun photoDrawableEdit(context: Context) =
         BitmapDrawable(context.resources, photo) //TODO Return default image
 
-    // TODO Use just color resource possibly with ShapeableImageView?
-    fun colorDrawable(context: Context) = color.getDrawable(context)
+    fun colorResource(context: Context) = color.getColor(context)
 
     object DiffCallback : DiffUtil.ItemCallback<Pill>() {
         override fun areItemsTheSame(oldItem: Pill, newItem: Pill) = oldItem.id == newItem.id

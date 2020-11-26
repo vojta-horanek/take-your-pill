@@ -7,14 +7,14 @@ import eu.vojtechh.takeyourpill.R
 class PillColor(
     val resource: Int
 ) {
-    fun getDrawable(context: Context) = ContextCompat.getDrawable(context, resource)
+    fun getColor(context: Context) = ContextCompat.getColor(context, resource)
     fun getAllColorsList() = listOf(
-        R.drawable.dot_blue,
-        R.drawable.dot_dark_blue,
-        R.drawable.dot_green,
-        R.drawable.dot_orange,
-        R.drawable.dot_red,
-        R.drawable.dot_teal,
-        R.drawable.dot_yellow
+        R.color.colorBlue,
+        R.color.colorDarkBlue,
+        R.color.colorGreen,
+        R.color.colorOrange,
+        R.color.colorRed,
+        R.color.colorTeal,
+        R.color.colorYellow,
     )
 }

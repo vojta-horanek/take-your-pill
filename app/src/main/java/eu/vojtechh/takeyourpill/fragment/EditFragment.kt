@@ -2,6 +2,8 @@ package eu.vojtechh.takeyourpill.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.transition.Slide
@@ -41,7 +43,11 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
     override fun onPause() {
         super.onPause()
-        model.addDummyPill(view.nameInput.text.toString())
+        val drawable =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_launcher_background)
+        val bitmap = drawable?.toBitmap(width = 1000, height = 1000, config = null)
+
+        model.addDummyPill(view.nameInput.text.toString(), bitmap!!)
     }
 
 }
