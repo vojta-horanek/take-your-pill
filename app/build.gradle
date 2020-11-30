@@ -99,18 +99,18 @@ dependencies {
 
     // Hilt
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
-    implementation 'com.google.dagger:hilt-android:2.29.1-alpha'
-    kapt 'com.google.dagger:hilt-android-compiler:2.29.1-alpha'
+    implementation 'com.google.dagger:hilt-android:2.30.1-alpha'
+    kapt 'com.google.dagger:hilt-android-compiler:2.30.1-alpha'
     kapt "androidx.hilt:hilt-compiler:1.0.0-alpha02"
 
     // Dagger Core
-    implementation "com.google.dagger:dagger:2.29.1"
-    kapt "com.google.dagger:dagger-compiler:2.29.1"
+    implementation 'com.google.dagger:dagger:2.30.1'
+    kapt 'com.google.dagger:dagger-compiler:2.30.1'
 
     // Dagger Android
-    api 'com.google.dagger:dagger-android:2.29.1'
-    api 'com.google.dagger:dagger-android-support:2.29.1'
-    kapt 'com.google.dagger:dagger-android-processor:2.29.1'
+    api 'com.google.dagger:dagger-android:2.30.1'
+    api 'com.google.dagger:dagger-android-support:2.30.1'
+    kapt 'com.google.dagger:dagger-android-processor:2.30.1'
 
 
     // ViewModel
@@ -144,6 +144,6 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha06" // TODO Stable for release, now using because of ConcatAdapter
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
 
 }

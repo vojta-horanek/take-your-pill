@@ -70,6 +70,8 @@ class ReminderOptions(
                 breakDays = breakDays,
                 repeatCount = repeatCount
             )
+
+        fun Empty() = ReminderOptions(remindTimes = mutableListOf())
     }
 
     // TODO Very much not finished and broken

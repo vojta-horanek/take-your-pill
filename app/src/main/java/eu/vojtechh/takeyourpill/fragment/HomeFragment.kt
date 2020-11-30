@@ -7,14 +7,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.adapter.HeaderAdapter
 import eu.vojtechh.takeyourpill.adapter.PillAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
@@ -34,7 +32,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterLi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Do not postpone transition if we switch between fragments from the BottomBar
+        // Only postpone when returning from EditFragment
         if (model.isReturningFromEdit) {
             postponeEnterTransition()
             view.doOnPreDraw { startPostponedEnterTransition() }
@@ -46,22 +44,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterLi
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
 
-        // The prefixes can be whatever, they just must differ
-        // - it makes the transition animation work even when the items have the same IDs
-        val upcomingPillsAdapter = PillAdapter(this, "upcoming")
-        val pillsAdapter = PillAdapter(this, "all")
-        // Is this the way to do it?
-        // TODO Redo with different view types in a single adapter
-        val concatAdapter =
-            ConcatAdapter(
-                HeaderAdapter(getString(R.string.upcoming_pills)),
-                upcomingPillsAdapter,
-                HeaderAdapter(getString(R.string.all_pills)),
-                pillsAdapter,
-            )
+        val pillsAdapter = PillAdapter(this, getString(R.string.pills))
 
         view.recyclerHome.run {
-            adapter = concatAdapter
+            adapter = pillsAdapter
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -85,10 +71,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterLi
 
         model.allPills.observe(viewLifecycleOwner, {
             pillsAdapter.submitList(it)
-        })
-
-        model.upcomingPills.observe(viewLifecycleOwner, {
-            upcomingPillsAdapter.submitList(it)
         })
     }
 

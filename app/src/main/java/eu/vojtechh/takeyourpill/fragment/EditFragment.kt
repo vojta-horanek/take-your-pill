@@ -52,9 +52,8 @@ class EditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
-
         if (args.pillId != -1L) {
+            postponeEnterTransition()
             model.getPillById(args.pillId).observe(viewLifecycleOwner, {
                 pill = it
                 binding.pill = pill
@@ -63,7 +62,6 @@ class EditFragment : Fragment() {
         }
 
         binding.buttonSave.setOnClickListener {
-
             if (args.pillId == -1L) {
                 val newPill = Pill(
                     binding.inputName.text.toString(),
