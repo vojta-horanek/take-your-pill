@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.Slide
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,15 +45,18 @@ class DetailsFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
         if (args.saved) {
-            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+            enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+        } else {
+            postponeEnterTransition()
         }
 
         model.getPillById(args.pillId).observe(viewLifecycleOwner, {
-            pill = it
-            binding.pill = pill
-            startPostponedEnterTransition()
+            if (it != null) {
+                pill = it
+                binding.pill = pill
+                startPostponedEnterTransition()
+            }
         })
 
         binding.buttonDelete.setOnClickListener {
@@ -68,6 +72,7 @@ class DetailsFragment : Fragment(),
         }
 
         binding.buttonEdit.setOnClickListener {
+            // TODO Edit title in EditFragment.kt
             exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
             val directions = DetailsFragmentDirections.actionDetailsFragmentToEditFragment(pill.id)
             findNavController().navigate(directions)
@@ -77,6 +82,10 @@ class DetailsFragment : Fragment(),
 
     override fun onConfirmClicked(view: View) {
         model.deletePill(pill)
+        exitTransition = Slide().apply {
+            addTarget(R.id.detailsView)
+        }
+        sharedElementEnterTransition = null
         findNavController().navigateUp()
     }
 

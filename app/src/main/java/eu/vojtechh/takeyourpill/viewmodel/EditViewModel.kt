@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.PillColor
+import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,4 +26,7 @@ class EditViewModel @ViewModelInject constructor(
             return@runBlocking pillRepository.getPillAsync(pillId)
         }
     }
+
+    var pill =
+        Pill("", "", null, PillColor.default(), ReminderOptions.Empty(), ReminderOptions.Empty())
 }

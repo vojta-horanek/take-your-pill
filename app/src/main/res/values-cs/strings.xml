@@ -4,7 +4,7 @@
     <string name="home">Domů</string>
     <string name="history">Historie</string>
     <string name="settings">Nastavení</string>
-    <string name="fab_add_new_pill">Nový prášek</string>
+    <string name="new_pill">Nový prášek</string>
     <string name="about">O aplikaci</string>
     <string name="upcoming_pills">Nadcházející</string>
     <string name="edit">Upravit</string>

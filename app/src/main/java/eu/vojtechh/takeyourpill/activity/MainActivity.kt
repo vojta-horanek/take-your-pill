@@ -62,11 +62,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     is HistoryFragment, is SettingsFragment -> {
                         view.bottomNavigation.visibility = View.VISIBLE
-
                     }
                     else -> {
                         view.bottomNavigation.visibility = View.INVISIBLE
-
                     }
                 }
             }

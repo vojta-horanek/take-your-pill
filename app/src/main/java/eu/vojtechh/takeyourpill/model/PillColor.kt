@@ -17,4 +17,8 @@ class PillColor(
         R.color.colorTeal,
         R.color.colorYellow,
     )
+
+    companion object {
+        fun default() = PillColor(R.color.colorBlue)
+    }
 }

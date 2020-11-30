@@ -15,36 +15,66 @@
         android:id="@+id/editView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:background="?attr/colorSurface">
+        android:background="?attr/colorSurface"
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputName"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textNewPill"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:hint="@string/name"
-                android:text="@{pill.name}"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center_vertical"
+                android:text="@string/new_pill"
+                android:textAppearance="@style/AppTheme.Text.Header4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputDescription"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputNameLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:hint="@string/name"
+                app:layout_constraintEnd_toEndOf="@+id/textNewPill"
+                app:layout_constraintStart_toStartOf="@+id/textNewPill"
+                app:layout_constraintTop_toBottomOf="@id/textNewPill"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{pill.name}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputDescriptionLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/description"
-                android:text="@{pill.description}"
-                app:layout_constraintEnd_toEndOf="@+id/inputName"
-                app:layout_constraintStart_toStartOf="@+id/inputName"
-                app:layout_constraintTop_toBottomOf="@id/inputName" />
+                app:layout_constraintEnd_toEndOf="@+id/inputNameLayout"
+                app:layout_constraintStart_toStartOf="@+id/inputNameLayout"
+                app:layout_constraintTop_toBottomOf="@id/inputNameLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{pill.description}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/textColor"
@@ -53,9 +83,9 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/color"
                 android:textAppearance="@style/AppTheme.Text.BodyNormal"
-                app:layout_constraintEnd_toEndOf="@+id/inputDescription"
-                app:layout_constraintStart_toStartOf="@+id/inputDescription"
-                app:layout_constraintTop_toBottomOf="@id/inputDescription" />
+                app:layout_constraintEnd_toEndOf="@+id/inputDescriptionLayout"
+                app:layout_constraintStart_toStartOf="@+id/inputDescriptionLayout"
+                app:layout_constraintTop_toBottomOf="@id/inputDescriptionLayout" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerColor"
@@ -85,9 +115,9 @@
                 android:layout_width="0dp"
                 android:layout_height="180dp"
                 android:layout_marginTop="8dp"
+                android:background="?attr/colorSurface"
                 android:elevation="8dp"
                 android:scaleType="center"
-                android:background="?attr/colorSurface"
                 android:src="@{pill.photoDrawable(context)}"
                 app:layout_constraintEnd_toEndOf="@+id/textPhoto"
                 app:layout_constraintStart_toStartOf="@+id/textPhoto"
