@@ -38,20 +38,22 @@ class DetailsFragment : Fragment(),
         }
 
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        // Get the pill in a blocking manner, it is only text which should take just a few seconds
-        model.getPillBlocking(args.pillId)?.let {
-            pill = it
-        } ?: run {
-            TODO("Implement pill not found")
-        }
-        binding.pill = pill
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
         if (args.saved) {
             reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
         }
+
+        model.getPillById(args.pillId).observe(viewLifecycleOwner, {
+            pill = it
+            binding.pill = pill
+            startPostponedEnterTransition()
+        })
 
         binding.buttonDelete.setOnClickListener {
             val confirmSheet = BottomSheetFragmentConfirmation.newInstance(

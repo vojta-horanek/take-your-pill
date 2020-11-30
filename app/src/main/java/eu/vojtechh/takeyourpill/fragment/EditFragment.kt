@@ -46,20 +46,21 @@ class EditFragment : Fragment() {
             }
         } else {
             enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
-            // Get the pill in a blocking manner, it is only text which should take just a few seconds
-            val pillDb = model.getPillBlocking(args.pillId)
-            if (pillDb != null) {
-                pill = pillDb
-                binding.pill = pill
-            } else {
-                TODO("Implement pill not found")
-            }
         }
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+
+        if (args.pillId != -1L) {
+            model.getPillById(args.pillId).observe(viewLifecycleOwner, {
+                pill = it
+                binding.pill = pill
+                startPostponedEnterTransition()
+            })
+        }
 
         binding.buttonSave.setOnClickListener {
 

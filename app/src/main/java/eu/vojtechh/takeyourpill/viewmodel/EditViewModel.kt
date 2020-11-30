@@ -17,6 +17,8 @@ class EditViewModel @ViewModelInject constructor(
     fun updatePill(pill: Pill) =
         viewModelScope.launch(Dispatchers.IO) { pillRepository.updatePill(pill) }
 
+    fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
+
     fun getPillBlocking(pillId: Long): Pill? {
         return runBlocking {
             return@runBlocking pillRepository.getPillAsync(pillId)
