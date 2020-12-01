@@ -230,6 +230,37 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkCycleCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/cycle_forever"
+                app:layout_constraintEnd_toEndOf="@+id/inputRestoreLayout"
+                app:layout_constraintStart_toStartOf="@+id/inputRestoreLayout"
+                app:layout_constraintTop_toBottomOf="@+id/inputRestoreLayout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputCycleCountLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/num_of_cycles"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="@+id/checkCycleCount"
+                app:layout_constraintStart_toStartOf="@+id/checkCycleCount"
+                app:layout_constraintTop_toBottomOf="@id/checkCycleCount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputCycleCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{pill.description}"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <LinearLayout
                 android:id="@+id/actionsBottomEdit"
                 android:layout_width="0dp"
