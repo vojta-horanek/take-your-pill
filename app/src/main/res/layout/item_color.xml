@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import type="android.content.Context" />
+
+        <import type="android.view.View" />
 
         <variable
             name="color"
             type="eu.vojtechh.takeyourpill.model.PillColor" />
 
         <variable
-            name="active"
-            type="java.lang.Boolean" />
+            name="listener"
+            type="eu.vojtechh.takeyourpill.adapter.ColorAdapter.ColorAdapterListener" />
 
-        <import type="android.view.View" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="@dimen/color_dot_size_big"
         android:layout_height="@dimen/color_dot_size_big"
-        android:layout_marginEnd="8dp"
-        android:background="?attr/colorSurface">
+        android:layout_marginEnd="16dp"
+        android:background="?attr/colorSurface"
+        android:onClick="@{(view) -> listener.onColorClicked(view, color)}">
 
         <View
             android:id="@+id/imagePillColor"
@@ -33,10 +35,10 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_check"
             android:padding="4dp"
+            android:src="@drawable/ic_check"
+            android:visibility="@{color.checked ? View.VISIBLE : View.GONE}"
             app:tint="@android:color/white"
-            android:visibility="@{active ? View.VISIBLE : View.GONE}"
             tools:visibility="visible" />
     </FrameLayout>
 </layout>

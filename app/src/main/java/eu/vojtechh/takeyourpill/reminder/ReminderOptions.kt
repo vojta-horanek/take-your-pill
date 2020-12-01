@@ -49,16 +49,16 @@ class ReminderOptions(
         const val NO_BREAK = -1
         const val REPEAT_FOREVER = -1
 
-        fun Infinite(remindTimes: MutableList<Calendar>) =
+        fun infinite(remindTimes: MutableList<Calendar>) =
             ReminderOptions(remindTimes = remindTimes)
 
-        fun Finite(remindTimes: MutableList<Calendar>, limitDays: Int) =
+        fun finite(remindTimes: MutableList<Calendar>, limitDays: Int) =
             ReminderOptions(remindTimes = remindTimes, limitDays = limitDays)
 
-        fun InfiniteBreak(remindTimes: MutableList<Calendar>, limitDays: Int, breakDays: Int) =
+        fun infiniteBreak(remindTimes: MutableList<Calendar>, limitDays: Int, breakDays: Int) =
             ReminderOptions(remindTimes = remindTimes, limitDays = limitDays, breakDays = breakDays)
 
-        fun FiniteRepeating(
+        fun finiteRepeating(
             remindTimes: MutableList<Calendar>,
             limitDays: Int,
             breakDays: Int,
@@ -73,6 +73,16 @@ class ReminderOptions(
 
         fun Empty() = ReminderOptions(remindTimes = mutableListOf())
     }
+
+    val displayLimit: Int
+        get() = if (limitDays == NO_DAY_LIMIT) 21 else limitDays
+
+    val displayBreak: Int
+        get() = if (breakDays == NO_BREAK) 7 else breakDays
+
+    val displayRepeat: Int
+        get() = if (repeatCount == REPEAT_FOREVER) 3 else repeatCount
+
 
     // TODO Very much not finished and broken
     val nextReminder: Calendar?

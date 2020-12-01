@@ -1,9 +1,7 @@
 package eu.vojtechh.takeyourpill.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
@@ -35,6 +33,26 @@ class EditViewModel @ViewModelInject constructor(
         ReminderOptions.Empty(),
         ReminderOptions.Empty()
     )
+
+
+    private val _activeColor: MutableLiveData<PillColor> by lazy {
+        MutableLiveData<PillColor>(PillColor.default())
+    }
+
+    val pillColors: LiveData<List<PillColor>> = Transformations.map(_activeColor) {
+        val colors = PillColor.getAllPillColorList()
+        for (color in colors) {
+            color.checked = (color.resource == it.resource)
+        }
+        colors
+    }
+
+    fun setActivePillColor(pillColor: PillColor) {
+        _activeColor.value = pillColor
+        pill?.color = pillColor
+    }
+
+    fun getActivePillColor() = _activeColor.value!!
 
     var pill: Pill? = null
 }

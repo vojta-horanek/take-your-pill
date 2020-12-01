@@ -14,267 +14,247 @@
         android:id="@+id/editView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="?attr/colorSurface"
         android:fillViewport="true"
-        android:overScrollMode="never"
-        android:animateLayoutChanges="true">
+        android:overScrollMode="never">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textNewPill"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginTop="24dp"
-                android:gravity="center_vertical"
-                android:text="@string/new_pill"
-                android:textAppearance="@style/AppTheme.Text.Header4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                android:paddingHorizontal="32dp"
+                android:id="@+id/wrapperNewPill">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputNameLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:hint="@string/name"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="@+id/textNewPill"
-                app:layout_constraintStart_toStartOf="@+id/textNewPill"
-                app:layout_constraintTop_toBottomOf="@id/textNewPill">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputName"
+                <TextView
+                    android:id="@+id/textNewPill"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{pill.name}" />
+                    android:layout_marginTop="24dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/new_pill"
+                    android:textAppearance="@style/AppTheme.Text.Header4" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputDescriptionLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="@string/description"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="@+id/inputNameLayout"
-                app:layout_constraintStart_toStartOf="@+id/inputNameLayout"
-                app:layout_constraintTop_toBottomOf="@id/inputNameLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputDescription"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputNameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{pill.description}" />
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/name">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{pill.name}" />
 
-            <TextView
-                android:id="@+id/textColor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/color"
-                android:textAppearance="@style/AppTheme.Text.BodyNormal"
-                app:layout_constraintEnd_toEndOf="@+id/inputDescriptionLayout"
-                app:layout_constraintStart_toStartOf="@+id/inputDescriptionLayout"
-                app:layout_constraintTop_toBottomOf="@id/inputDescriptionLayout" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerColor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="@id/textColor"
-                app:layout_constraintStart_toStartOf="@id/textColor"
-                app:layout_constraintTop_toBottomOf="@id/textColor"
-                tools:listitem="@layout/pill_color" />
 
-            <TextView
-                android:id="@+id/textPhoto"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/photo"
-                android:textAppearance="@style/AppTheme.Text.BodyNormal"
-                app:layout_constraintEnd_toEndOf="@+id/recyclerColor"
-                app:layout_constraintStart_toStartOf="@+id/recyclerColor"
-                app:layout_constraintTop_toBottomOf="@id/recyclerColor" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imagePillPhoto"
-                android:layout_width="0dp"
-                android:layout_height="180dp"
-                android:layout_marginTop="8dp"
-                android:background="?attr/colorBackgroundFloating"
-                android:elevation="8dp"
-                android:scaleType="center"
-                android:src="@{pill.photoDrawable(context)}"
-                app:layout_constraintEnd_toEndOf="@+id/textPhoto"
-                app:layout_constraintStart_toStartOf="@+id/textPhoto"
-                app:layout_constraintTop_toBottomOf="@+id/textPhoto"
-                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Corners.Big"
-                tools:src="@drawable/ic_photo_add" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/reminder_times"
-                android:textAppearance="@style/AppTheme.Text.BodyNormal"
-                app:layout_constraintEnd_toEndOf="@+id/imagePillPhoto"
-                app:layout_constraintStart_toStartOf="@+id/imagePillPhoto"
-                app:layout_constraintTop_toBottomOf="@+id/imagePillPhoto" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewReminderTimes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/textView"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/checkDayLimit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/limit_to_x_days"
-                app:layout_constraintEnd_toEndOf="@+id/recyclerViewReminderTimes"
-                app:layout_constraintStart_toStartOf="@+id/recyclerViewReminderTimes"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerViewReminderTimes" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputDayNumberLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/number_of_days"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="@+id/checkDayLimit"
-                app:layout_constraintStart_toStartOf="@+id/checkDayLimit"
-                app:layout_constraintTop_toBottomOf="@id/checkDayLimit">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputDayNumber"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputDescriptionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{pill.description}"
-                    android:inputType="number" />
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/description">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{pill.description}" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputCycleTodayLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/start_from_day"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="@+id/inputDayNumberLayout"
-                app:layout_constraintStart_toStartOf="@+id/inputDayNumberLayout"
-                app:layout_constraintTop_toBottomOf="@id/inputDayNumberLayout">
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputCycleToday"
+                <TextView
+                    android:id="@+id/textColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{pill.description}"
-                    android:inputType="number" />
+                    android:layout_marginTop="16dp"
+                    android:text="@string/color"
+                    android:textAppearance="@style/AppTheme.Text.BodyNormal" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/checkRestoreAfter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/restore_after"
-                app:layout_constraintEnd_toEndOf="@+id/inputCycleTodayLayout"
-                app:layout_constraintStart_toStartOf="@+id/inputCycleTodayLayout"
-                app:layout_constraintTop_toBottomOf="@+id/inputCycleTodayLayout" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputRestoreLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/how_many_days_to_restore"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="@+id/checkRestoreAfter"
-                app:layout_constraintStart_toStartOf="@+id/checkRestoreAfter"
-                app:layout_constraintTop_toBottomOf="@id/checkRestoreAfter">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputRestore"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{pill.description}"
-                    android:inputType="number" />
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_color" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/checkCycleCount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/cycle_forever"
-                app:layout_constraintEnd_toEndOf="@+id/inputRestoreLayout"
-                app:layout_constraintStart_toStartOf="@+id/inputRestoreLayout"
-                app:layout_constraintTop_toBottomOf="@+id/inputRestoreLayout" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputCycleCountLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/num_of_cycles"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="@+id/checkCycleCount"
-                app:layout_constraintStart_toStartOf="@+id/checkCycleCount"
-                app:layout_constraintTop_toBottomOf="@id/checkCycleCount">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputCycleCount"
+                <TextView
+                    android:id="@+id/textPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{pill.description}"
-                    android:inputType="number" />
+                    android:layout_marginTop="16dp"
+                    android:text="@string/photo"
+                    android:textAppearance="@style/AppTheme.Text.BodyNormal" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imagePillPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="8dp"
+                    android:background="?attr/colorBackgroundFloating"
+                    android:elevation="8dp"
+                    android:scaleType="center"
+                    android:src="@{pill.photoDrawable(context)}"
+                    app:shapeAppearanceOverlay="@style/AppTheme.Shape.Corners.Big" />
+
+                <TextView
+                    android:id="@+id/textReminderTimes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/reminder_times"
+                    android:textAppearance="@style/AppTheme.Text.BodyNormal" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewReminderTimes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonAddReminder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/add_reminder"
+                    app:icon="@drawable/ic_add" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkDayLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/limit_to_x_days" />
+
+                <LinearLayout
+                    android:id="@+id/groupLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputDayNumberLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/number_of_days">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputDayNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="@{Integer.toString(pill.remindConstant.displayLimit)}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputCycleTodayLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/start_from_day">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputCycleToday"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="@{Integer.toString(pill.remindCurrent.displayLimit)}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkRestoreAfter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/restore_after" />
+
+                <LinearLayout
+                    android:id="@+id/groupRestore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputRestoreLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/how_many_days_to_restore">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputRestore"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="@{Integer.toString(pill.remindConstant.displayBreak)}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkCycleCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/cycle_forever" />
+
+                <LinearLayout
+                    android:id="@+id/groupCycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputCycleCountLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/num_of_cycles">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputCycleCount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="@{Integer.toString(pill.remindConstant.displayRepeat)}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/actionsBottomEdit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="4dp"
-                android:layout_marginVertical="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:animateLayoutChanges="true"
+                android:gravity="bottom"
                 android:orientation="horizontal"
+                android:paddingHorizontal="4dp"
                 android:paddingBottom="8dp"
-                android:weightSum="2"
-                app:layout_constraintVertical_bias="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputCycleCountLayout">
+                android:weightSum="2">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/buttonMoreInfo"
@@ -332,7 +312,7 @@
                         app:drawableTopCompat="@drawable/ic_save" />
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 </layout>

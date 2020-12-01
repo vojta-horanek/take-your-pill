@@ -2,23 +2,44 @@ package eu.vojtechh.takeyourpill.model
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import eu.vojtechh.takeyourpill.R
 
 class PillColor(
-    val resource: Int
+    val resource: Int,
+    var checked: Boolean = false
 ) {
     fun getColor(context: Context) = ContextCompat.getColor(context, resource)
-    fun getAllColorsList() = listOf(
-        R.color.colorBlue,
-        R.color.colorDarkBlue,
-        R.color.colorGreen,
-        R.color.colorOrange,
-        R.color.colorRed,
-        R.color.colorTeal,
-        R.color.colorYellow,
-    )
 
     companion object {
         fun default() = PillColor(R.color.colorBlue)
+
+        fun getAllColorsList() = listOf(
+            R.color.colorBlue,
+            R.color.colorDarkBlue,
+            R.color.colorGreen,
+            R.color.colorOrange,
+            R.color.colorRed,
+            R.color.colorTeal,
+            R.color.colorYellow,
+        )
+
+        fun getAllPillColorList() = mutableListOf(
+            PillColor(R.color.colorBlue, false),
+            PillColor(R.color.colorDarkBlue, false),
+            PillColor(R.color.colorGreen, false),
+            PillColor(R.color.colorOrange, false),
+            PillColor(R.color.colorRed, false),
+            PillColor(R.color.colorTeal, false),
+            PillColor(R.color.colorYellow, false),
+        )
+    }
+
+    object DiffCallback : DiffUtil.ItemCallback<PillColor>() {
+        override fun areItemsTheSame(oldItem: PillColor, newItem: PillColor) =
+            oldItem.resource == newItem.resource
+
+        override fun areContentsTheSame(oldItem: PillColor, newItem: PillColor) =
+            oldItem.checked == newItem.checked
     }
 }
