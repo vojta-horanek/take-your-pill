@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="pill"
             type="eu.vojtechh.takeyourpill.model.Pill" />
@@ -13,11 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorSurface"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:animateLayoutChanges="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
             <TextView
                 android:id="@+id/textNewPill"
@@ -34,15 +39,15 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputNameLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:hint="@string/name"
+                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="@+id/textNewPill"
                 app:layout_constraintStart_toStartOf="@+id/textNewPill"
-                app:layout_constraintTop_toBottomOf="@id/textNewPill"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:errorEnabled="true">
+                app:layout_constraintTop_toBottomOf="@id/textNewPill">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputName"
@@ -55,15 +60,15 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputDescriptionLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/description"
+                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="@+id/inputNameLayout"
                 app:layout_constraintStart_toStartOf="@+id/inputNameLayout"
-                app:layout_constraintTop_toBottomOf="@id/inputNameLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:errorEnabled="true">
+                app:layout_constraintTop_toBottomOf="@id/inputNameLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputDescription"
@@ -112,7 +117,7 @@
                 android:layout_width="0dp"
                 android:layout_height="180dp"
                 android:layout_marginTop="8dp"
-                android:background="?attr/colorSurface"
+                android:background="?attr/colorBackgroundFloating"
                 android:elevation="8dp"
                 android:scaleType="center"
                 android:src="@{pill.photoDrawable(context)}"
@@ -122,7 +127,108 @@
                 app:shapeAppearanceOverlay="@style/AppTheme.Shape.Corners.Big"
                 tools:src="@drawable/ic_photo_add" />
 
-            <!--            TODO Add reminder options setting here-->
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/reminder_times"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:layout_constraintEnd_toEndOf="@+id/imagePillPhoto"
+                app:layout_constraintStart_toStartOf="@+id/imagePillPhoto"
+                app:layout_constraintTop_toBottomOf="@+id/imagePillPhoto" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewReminderTimes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkDayLimit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/limit_to_x_days"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerViewReminderTimes"
+                app:layout_constraintStart_toStartOf="@+id/recyclerViewReminderTimes"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewReminderTimes" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputDayNumberLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/number_of_days"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="@+id/checkDayLimit"
+                app:layout_constraintStart_toStartOf="@+id/checkDayLimit"
+                app:layout_constraintTop_toBottomOf="@id/checkDayLimit">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputDayNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{pill.description}"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputCycleTodayLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/start_from_day"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="@+id/inputDayNumberLayout"
+                app:layout_constraintStart_toStartOf="@+id/inputDayNumberLayout"
+                app:layout_constraintTop_toBottomOf="@id/inputDayNumberLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputCycleToday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{pill.description}"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkRestoreAfter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/restore_after"
+                app:layout_constraintEnd_toEndOf="@+id/inputCycleTodayLayout"
+                app:layout_constraintStart_toStartOf="@+id/inputCycleTodayLayout"
+                app:layout_constraintTop_toBottomOf="@+id/inputCycleTodayLayout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputRestoreLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/how_many_days_to_restore"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="@+id/checkRestoreAfter"
+                app:layout_constraintStart_toStartOf="@+id/checkRestoreAfter"
+                app:layout_constraintTop_toBottomOf="@id/checkRestoreAfter">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputRestore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{pill.description}"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/actionsBottomEdit"
@@ -133,11 +239,11 @@
                 android:orientation="horizontal"
                 android:paddingBottom="8dp"
                 android:weightSum="2"
+                app:layout_constraintVertical_bias="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imagePillPhoto"
-                app:layout_constraintVertical_bias="1.0">
+                app:layout_constraintTop_toBottomOf="@+id/inputRestoreLayout">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/buttonMoreInfo"

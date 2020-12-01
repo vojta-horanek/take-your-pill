@@ -28,4 +28,10 @@
     <string name="pill_saved">Pill saved</string>
     <string name="enter_field">Please enter a value</string>
     <string name="edit_pill">Edit pill</string>
+    <string name="reminder_times">Reminder times</string>
+    <string name="limit_to_x_days">Limit to X days</string>
+    <string name="number_of_days">Number of days to limit to</string>
+    <string name="start_from_day">Start from day</string>
+    <string name="restore_after">Restore after X days</string>
+    <string name="how_many_days_to_restore">How many days to restore</string>
 </resources>
