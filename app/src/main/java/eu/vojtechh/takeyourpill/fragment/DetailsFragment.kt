@@ -72,7 +72,6 @@ class DetailsFragment : Fragment(),
         }
 
         binding.buttonEdit.setOnClickListener {
-            // TODO Edit title in EditFragment.kt
             exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
             val directions = DetailsFragmentDirections.actionDetailsFragmentToEditFragment(pill.id)
             findNavController().navigate(directions)

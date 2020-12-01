@@ -27,6 +27,14 @@ class EditViewModel @ViewModelInject constructor(
         }
     }
 
-    var pill =
-        Pill("", "", null, PillColor.default(), ReminderOptions.Empty(), ReminderOptions.Empty())
+    fun getNewEmptyPill() = Pill(
+        "",
+        "",
+        null,
+        PillColor.default(),
+        ReminderOptions.Empty(),
+        ReminderOptions.Empty()
+    )
+
+    var pill: Pill? = null
 }

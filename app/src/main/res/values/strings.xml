@@ -27,4 +27,5 @@
     <string name="search_online">Search online</string>
     <string name="pill_saved">Pill saved</string>
     <string name="enter_field">Please enter a value</string>
+    <string name="edit_pill">Edit pill</string>
 </resources>

@@ -25,4 +25,6 @@
     <string name="save">Uložit</string>
     <string name="search_online">Hledat online</string>
     <string name="pill_saved">Prášek uložen</string>
+    <string name="edit_pill">Upravit prášek</string>
+    <string name="enter_field">Prosím, zadejte hodnotu</string>
 </resources>

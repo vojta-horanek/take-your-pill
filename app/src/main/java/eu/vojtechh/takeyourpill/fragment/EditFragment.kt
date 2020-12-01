@@ -54,43 +54,54 @@ class EditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Opened with existing pill
         if (args.pillId != -1L) {
+            binding.textNewPill.text = getString(R.string.edit_pill)
             postponeEnterTransition()
-            model.getPillById(args.pillId).observe(viewLifecycleOwner, {
-                model.pill = it
-                binding.pill = it
+            if (model.pill == null) {
+                model.getPillById(args.pillId).observe(viewLifecycleOwner, {
+                    model.pill = it
+                    binding.pill = model.pill
+                    startPostponedEnterTransition()
+                })
+            } else {
+                binding.pill = model.pill
                 startPostponedEnterTransition()
-            })
+            }
+        } // Opened with new pill
+        else {
+            binding.textNewPill.text = getString(R.string.new_pill)
+            if (model.pill == null) {
+                model.pill = model.getNewEmptyPill()
+            }
+            binding.pill = model.pill
         }
-        // TODO Saving does not work with rotation
-        binding.inputName.setText(model.pill.name)
-        binding.inputDescription.setText(model.pill.description)
 
-        binding.inputName.doOnTextChanged { text, start, before, count ->
+        binding.inputName.doOnTextChanged { text, _, _, _ ->
             binding.inputNameLayout.error =
                 if (text.isNullOrBlank()) getString(R.string.enter_field) else null
-            text?.let { model.pill.name = it.trim().toString() }
+            text?.let { model.pill?.name = it.trim().toString() }
         }
 
         binding.buttonSave.setOnClickListener {
-            if (model.pill.name.isBlank()) {
+            if (model.pill?.name.isNullOrBlank()) {
                 binding.inputNameLayout.error = getString(R.string.enter_field)
                 return@setOnClickListener
             }
             returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
             if (args.pillId == -1L) {
-                model.addPill(model.pill).observe(viewLifecycleOwner) {
+                model.addPill(model.pill!!).observe(viewLifecycleOwner) {
                     findNavController().popBackStack()
                     val directions = HomeFragmentDirections.actionHomescreenToDetails(it, true)
                     findNavController().navigate(directions)
                 }
             } else {
-                model.pill.apply {
+                model.pill!!.apply {
                     name = binding.inputName.text.toString()
                     description = binding.inputDescription.text.toString()
                     // TODO
                 }
-                model.updatePill(model.pill)
+                model.updatePill(model.pill!!)
                 findNavController().popBackStack()
             }
         }
