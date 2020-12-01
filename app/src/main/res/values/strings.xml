@@ -34,4 +34,6 @@
     <string name="start_from_day">Start from day</string>
     <string name="restore_after">Restore after X days</string>
     <string name="how_many_days_to_restore">How many days to restore</string>
+    <string name="cycle_forever">Cycle forever</string>
+    <string name="num_of_cycles">Number of cycles</string>
 </resources>
