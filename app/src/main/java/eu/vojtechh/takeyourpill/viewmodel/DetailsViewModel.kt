@@ -7,7 +7,6 @@ import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class DetailsViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository
@@ -15,10 +14,4 @@ class DetailsViewModel @ViewModelInject constructor(
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
     fun deletePill(pill: Pill) =
         viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePill(pill) }
-
-    fun getPillBlocking(pillId: Long): Pill? {
-        return runBlocking {
-            return@runBlocking pillRepository.getPillAsync(pillId)
-        }
-    }
 }

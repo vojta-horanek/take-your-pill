@@ -37,4 +37,6 @@
     <string name="num_of_cycles">Počet opakování cyklu</string>
     <string name="add_reminder">Přidat připomínku</string>
     <string name="storage_perm_rationale">Aplikace potřebuje opravnění na čtení úložiště, aby přečetla fotku</string>
+    <string name="no_reminders_set">Prosím, přidejte alespoň jednu připomínku</string>
+    <string name="add_photo">Přidat fotku</string>
 </resources>

@@ -67,7 +67,7 @@ class DetailsFragment : Fragment(),
                 R.drawable.ic_delete,
                 R.drawable.ic_cancel,
             )
-                .setListener(this) // TODO the listener get deleted when BottomS.. open and theme is changed
+                .setListener(this) // FIXME the listener get deleted when BottomS.. open and theme is changed
             confirmSheet.show(childFragmentManager, "confirm_delete")
         }
 

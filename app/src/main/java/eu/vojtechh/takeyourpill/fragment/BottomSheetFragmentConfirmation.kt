@@ -34,7 +34,6 @@ class BottomSheetFragmentConfirmation :
 
     private var listener: ConfirmListener? = null
 
-
     fun setListener(listener: ConfirmListener): BottomSheetFragmentConfirmation {
         this.listener = listener
         return this

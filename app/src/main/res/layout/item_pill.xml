@@ -24,16 +24,16 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:elevation="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardPreventCornerOverlap="true"
-        android:layout_marginBottom="16dp"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
         android:background="?attr/colorBackgroundFloating"
+        android:clickable="true"
+        android:elevation="8dp"
+        android:focusable="true"
+        android:onClick="@{(view) -> listener.onPillClicked(view, pill)}"
         android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
-        android:onClick="@{(view) -> listener.onPillClicked(view, pill)}">
+        app:cardCornerRadius="8dp"
+        app:cardPreventCornerOverlap="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -30,8 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@{color.getColor(context)}"
-            tools:background="@color/colorDarkBlue"
-            app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval" />
+            app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
+            tools:background="@color/colorDarkBlue" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -40,6 +40,7 @@
             android:src="@drawable/ic_check"
             android:visibility="@{color.checked ? View.VISIBLE : View.GONE}"
             app:tint="@android:color/white"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            tools:ignore="ContentDescription" />
     </FrameLayout>
 </layout>

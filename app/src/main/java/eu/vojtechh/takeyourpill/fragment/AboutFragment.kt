@@ -19,8 +19,4 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
 }

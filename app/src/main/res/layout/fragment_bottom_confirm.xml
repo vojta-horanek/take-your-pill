@@ -31,8 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="24dp"
-            android:paddingBottom="16dp"
             android:paddingTop="24dp"
+            android:paddingBottom="16dp"
             android:text="@{title}"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
             tools:text="Are you sure you want to delete?" />

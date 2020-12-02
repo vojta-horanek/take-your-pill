@@ -19,8 +19,4 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         enterTransition = MaterialFadeThrough()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
 }

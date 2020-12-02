@@ -5,9 +5,8 @@ import androidx.lifecycle.ViewModel
 import eu.vojtechh.takeyourpill.repository.PillRepository
 
 class HomeViewModel @ViewModelInject constructor(
-    private val pillRepository: PillRepository
+    pillRepository: PillRepository
 ) : ViewModel() {
     val allPills = pillRepository.getAllPills()
-    val upcomingPills = pillRepository.getUpcomingPills()
     var isReturningFromEdit = false
 }

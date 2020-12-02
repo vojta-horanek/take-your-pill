@@ -13,7 +13,6 @@ import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.io.InputStream
 
 class EditViewModel @ViewModelInject constructor(
@@ -24,12 +23,6 @@ class EditViewModel @ViewModelInject constructor(
         viewModelScope.launch(Dispatchers.IO) { pillRepository.updatePill(pill) }
 
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
-
-    fun getPillBlocking(pillId: Long): Pill? {
-        return runBlocking {
-            return@runBlocking pillRepository.getPillAsync(pillId)
-        }
-    }
 
     fun getNewEmptyPill() = Pill(
         "",
@@ -102,7 +95,7 @@ class EditViewModel @ViewModelInject constructor(
     fun setImage(data: Uri, context: Context) = viewModelScope.launch(Dispatchers.IO) {
         val inputStream: InputStream? =
             context.contentResolver.openInputStream(data)
-        // TODO Fix rotation
+        // FIXME Fix rotation
         val userBitmap = BitmapFactory.decodeStream(inputStream)
         val scaledBitmap = Bitmap.createScaledBitmap(
             userBitmap,

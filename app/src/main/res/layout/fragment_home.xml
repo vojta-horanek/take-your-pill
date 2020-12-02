@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:transitionGroup="true"
-    tools:context=".fragment.HomeFragment"
-    android:orientation="vertical">
+    tools:context=".fragment.HomeFragment">
 
     <!-- padding is Bottom bar height + fab + padding -->
     <androidx.recyclerview.widget.RecyclerView
@@ -24,13 +24,13 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="72dp"
         android:clickable="true"
         android:contentDescription="@string/new_pill"
         android:focusable="true"
         android:text="@string/new_pill"
-        app:icon="@drawable/ic_add"
-        android:layout_gravity="bottom|end" />
+        app:icon="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
