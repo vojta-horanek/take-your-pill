@@ -27,4 +27,13 @@
     <string name="pill_saved">Prášek uložen</string>
     <string name="edit_pill">Upravit prášek</string>
     <string name="enter_field">Prosím, zadejte hodnotu</string>
+    <string name="reminders">Připomínky</string>
+    <string name="limit_to_x_days">Omezit na počet dní</string>
+    <string name="number_of_days">Počet dní na který omezit</string>
+    <string name="start_from_day">Začit ode dne</string>
+    <string name="restore_after">Obnovit po počtu dní</string>
+    <string name="how_many_days_to_restore">Po kolika dne obnovit</string>
+    <string name="cycle_forever">Opakovat donekonečna</string>
+    <string name="num_of_cycles">Počet opakování cyklu</string>
+    <string name="add_reminder">Přidat připomínku</string>
 </resources>
