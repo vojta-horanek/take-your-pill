@@ -45,11 +45,7 @@ class DetailsFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (args.saved) {
-            enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-        } else {
-            postponeEnterTransition()
-        }
+        postponeEnterTransition()
 
         model.getPillById(args.pillId).observe(viewLifecycleOwner, {
             if (it != null) {
@@ -60,15 +56,15 @@ class DetailsFragment : Fragment(),
         })
 
         binding.buttonDelete.setOnClickListener {
-            val confirmSheet = BottomSheetFragmentConfirmation.newInstance(
+            BottomSheetFragmentConfirmation.newInstance(
                 getString(R.string.confirm_delete_pill),
                 getString(R.string.delete),
                 getString(R.string.cancel),
                 R.drawable.ic_delete,
                 R.drawable.ic_cancel,
-            )
-                .setListener(this) // FIXME the listener get deleted when BottomS.. open and theme is changed
-            confirmSheet.show(childFragmentManager, "confirm_delete")
+            ).apply {
+                setListener(this@DetailsFragment) // FIXME the listener get deleted when BottomS.. open and theme is changed
+            }.show(childFragmentManager, "confirm_delete")
         }
 
         binding.buttonEdit.setOnClickListener {

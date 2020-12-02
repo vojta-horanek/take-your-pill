@@ -83,8 +83,8 @@ class EditViewModel @ViewModelInject constructor(
         return _reminders.value!!.toMutableList()
     }
 
-    private val _photoBitmap: MutableLiveData<Bitmap> by lazy {
-        MutableLiveData<Bitmap>()
+    private val _photoBitmap: MutableLiveData<Bitmap?> by lazy {
+        MutableLiveData<Bitmap?>()
     }
 
     val photoBitmap = Transformations.map(_photoBitmap) {
@@ -104,6 +104,10 @@ class EditViewModel @ViewModelInject constructor(
             false
         )
         _photoBitmap.postValue(scaledBitmap)
+    }
+
+    fun deleteImage() {
+        _photoBitmap.value = null
     }
 
 }

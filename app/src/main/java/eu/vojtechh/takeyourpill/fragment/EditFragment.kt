@@ -49,7 +49,6 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     private val isPillNew
         get() = args.pillId == -1L
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,11 +64,12 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 startContainerColor = requireContext().themeColor(R.attr.colorSecondary)
                 endContainerColor = requireContext().themeColor(R.attr.colorSurface)
             }
+            returnTransition = Slide().apply {
+                addTarget(R.id.editView)
+            }
         } else {
             enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
-        }
-        returnTransition = Slide().apply {
-            addTarget(R.id.editView)
+            returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
         }
         return binding.root
     }
@@ -114,7 +114,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         })
 
         model.photoBitmap.observe(viewLifecycleOwner, {
-            binding.imagePillPhoto.setImageBitmap(it)
+            binding.imagePillPhoto.setImageDrawable(model.pill.photoDrawable(requireContext()))
         })
 
         binding.run {
@@ -132,7 +132,8 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
             buttonSave.setOnClickListener { savePill() }
             buttonAddReminder.setOnClickListener { showTimeDialog() }
-            layoutPhoto.setOnClickListener { pickImage() }
+            imagePillPhoto.setOnClickListener { pickImage() }
+            imageDeletePhoto.setOnClickListener { model.deleteImage() }
         }
     }
 
@@ -298,6 +299,9 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             // Is pill new?
             if (isPillNew) {
                 model.addPill(model.pill).observe(viewLifecycleOwner) {
+                    exitTransition = Slide().apply {
+                        addTarget(R.id.editView)
+                    }
                     val directions = EditFragmentDirections.actionEditToHomescreen()
                     findNavController().navigate(directions)
                 }

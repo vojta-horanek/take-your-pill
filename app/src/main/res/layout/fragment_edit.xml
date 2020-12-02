@@ -131,6 +131,16 @@
                         android:elevation="5dp"
                         android:src="@drawable/ic_photo_add" />
 
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="8dp"
+                        android:contentDescription="@string/delete"
+                        android:elevation="5dp"
+                        android:id="@+id/imageDeletePhoto"
+                        android:src="@drawable/ic_delete" />
+
                 </FrameLayout>
 
                 <TextView

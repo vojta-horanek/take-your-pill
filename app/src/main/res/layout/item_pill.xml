@@ -99,7 +99,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:shapeAppearance="@style/AppTheme.Shape.roundedCornersImageView"
-                app:strokeWidth="4dp"
                 tools:ignore="ContentDescription"
                 tools:src="@drawable/ic_launcher_background" />
 
