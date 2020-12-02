@@ -35,7 +35,9 @@ class EditViewModel @ViewModelInject constructor(
         ReminderOptions.empty()
     )
 
-    var pill: Pill? = null
+    lateinit var pill: Pill
+    val isPillInitialized
+        get() = ::pill.isInitialized
 
     private val _activeColor: MutableLiveData<PillColor> by lazy {
         MutableLiveData<PillColor>()

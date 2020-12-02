@@ -70,7 +70,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         if (args.pillId != -1L) {
             binding.textNewPill.text = getString(R.string.edit_pill)
             postponeEnterTransition()
-            if (model.pill == null) {
+            if (!model.isPillInitialized) {
                 model.getPillById(args.pillId).observe(viewLifecycleOwner, {
                     model.pill = it
                     binding.pill = model.pill
@@ -85,7 +85,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         } // Opened with new pill
         else {
             binding.textNewPill.text = getString(R.string.new_pill)
-            if (model.pill == null) {
+            if (!model.isPillInitialized) {
                 model.pill = model.getNewEmptyPill()
             }
             binding.pill = model.pill
@@ -97,9 +97,9 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         model.pillColors.observe(viewLifecycleOwner, {
             colorAdapter.submitList(it)
         })
-        model.setActivePillColor(model.pill!!.color)
+        model.setActivePillColor(model.pill.color)
 
-        model.setReminders(model.pill!!.remindConstant.remindTimes)
+        model.setReminders(model.pill.remindConstant.remindTimes)
         model.reminders.observe(viewLifecycleOwner, {
             reminderAdapter.submitList(it)
         })
@@ -114,7 +114,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 inputNameLayout.showError(
                     if (text.isNullOrBlank()) getString(R.string.enter_field) else null
                 )
-                text?.let { model.pill!!.name = it.trim().toString() }
+                text?.let { model.pill.name = it.trim().toString() }
             }
 
             buttonSave.setOnClickListener { savePill() }
@@ -144,7 +144,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     private fun setReminderViews() {
         binding.run {
-            with(model.pill!!.remindConstant) {
+            with(model.pill.remindConstant) {
                 checkDayLimit.isChecked = limitDays != ReminderOptions.NO_DAY_LIMIT
                 checkRestoreAfter.isChecked = breakDays != ReminderOptions.NO_BREAK
                 checkCycleCount.isChecked = repeatCount == ReminderOptions.REPEAT_FOREVER
@@ -211,26 +211,26 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     private fun savePill() {
         binding.run {
-            if (model.pill!!.name.isBlank()) {
+            if (model.pill.name.isBlank()) {
                 inputNameLayout.error = getString(R.string.enter_field)
                 return
             }
             returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
 
             val reminderOptions = getReminderOptions()
-            model.pill!!.apply {
+            model.pill.apply {
                 remindConstant = reminderOptions
                 description = inputDescription.getString()
             }
 
             if (args.pillId == -1L) {
-                model.addPill(model.pill!!).observe(viewLifecycleOwner) {
+                model.addPill(model.pill).observe(viewLifecycleOwner) {
                     findNavController().popBackStack()
                     val directions = HomeFragmentDirections.actionHomescreenToDetails(it, true)
                     findNavController().navigate(directions)
                 }
             } else {
-                model.updatePill(model.pill!!)
+                model.updatePill(model.pill)
                 findNavController().popBackStack()
             }
         }
