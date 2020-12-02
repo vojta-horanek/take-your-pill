@@ -38,7 +38,7 @@ class EditViewModel @ViewModelInject constructor(
     var pill: Pill? = null
 
     private val _activeColor: MutableLiveData<PillColor> by lazy {
-        MutableLiveData<PillColor>(PillColor.default())
+        MutableLiveData<PillColor>()
     }
 
     val pillColors = Transformations.map(_activeColor) {
@@ -57,7 +57,7 @@ class EditViewModel @ViewModelInject constructor(
     fun getActivePillColor() = _activeColor.value!!
 
     private val _reminders: MutableLiveData<List<Reminder>> by lazy {
-        MutableLiveData<List<Reminder>>(listOf())
+        MutableLiveData<List<Reminder>>()
     }
 
     val reminders = Transformations.map(_reminders) {
