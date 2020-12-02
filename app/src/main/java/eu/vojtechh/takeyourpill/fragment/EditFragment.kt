@@ -2,23 +2,20 @@ package eu.vojtechh.takeyourpill.fragment
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.media.ExifInterface
-import android.net.Uri
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.postDelayed
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.android.material.transition.MaterialContainerTransform
@@ -35,7 +32,6 @@ import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import java.io.InputStream
 import java.util.*
 
 
@@ -43,19 +39,24 @@ import java.util.*
 class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     ReminderAdapter.ReminderAdapterListener {
 
+    private lateinit var binding: FragmentEditBinding
     private val model: EditViewModel by viewModels()
     private val args: EditFragmentArgs by navArgs()
+
     private val colorAdapter = ColorAdapter(this)
     private val reminderAdapter = ReminderAdapter(this)
 
-    private lateinit var binding: FragmentEditBinding
+    private val isPillNew
+        get() = args.pillId == -1L
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditBinding.inflate(inflater, container, false)
-        if (args.pillId == -1L) {
+        if (isPillNew) {
             enterTransition = MaterialContainerTransform().apply {
                 startView = requireActivity().findViewById(R.id.floatingActionButton)
                 endView = requireActivity().findViewById(R.id.editView)
@@ -64,21 +65,26 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 startContainerColor = requireContext().themeColor(R.attr.colorSecondary)
                 endContainerColor = requireContext().themeColor(R.attr.colorSurface)
             }
-            returnTransition = Slide().apply {
-                addTarget(R.id.editView)
-            }
         } else {
             enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
-            returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-
+        }
+        returnTransition = Slide().apply {
+            addTarget(R.id.editView)
         }
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Opened with existing pill
-        if (args.pillId != -1L) {
+        if (isPillNew) {
+            binding.textNewPill.text = getString(R.string.new_pill)
+            if (!model.isPillInitialized) {
+                model.pill = model.getNewEmptyPill()
+            }
+            binding.pill = model.pill
+            initViews()
+        } else {
             binding.textNewPill.text = getString(R.string.edit_pill)
             postponeEnterTransition()
             if (!model.isPillInitialized) {
@@ -93,14 +99,6 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 initViews()
                 startPostponedEnterTransition()
             }
-        } // Opened with new pill
-        else {
-            binding.textNewPill.text = getString(R.string.new_pill)
-            if (!model.isPillInitialized) {
-                model.pill = model.getNewEmptyPill()
-            }
-            binding.pill = model.pill
-            initViews()
         }
     }
 
@@ -115,11 +113,15 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             reminderAdapter.submitList(it)
         })
 
+        model.photoBitmap.observe(viewLifecycleOwner, {
+            binding.imagePillPhoto.setImageBitmap(it)
+        })
+
         binding.run {
             recyclerColor.adapter = colorAdapter
-            recyclerViewReminderTimes.adapter = reminderAdapter
+            recyclerReminders.adapter = reminderAdapter
 
-            setReminderViews()
+            setReminderOptionsViews()
 
             inputName.doOnTextChanged { text, _, _, _ ->
                 inputNameLayout.showError(
@@ -151,19 +153,17 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 getString(R.string.storage_perm_rationale),
                 1,
                 Manifest.permission.READ_EXTERNAL_STORAGE
-            );
+            )
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.PICK_PHOTO_FOR_PILL && resultCode == AppCompatActivity.RESULT_OK) {
-            if (data != null) {
-                data.data?.let {
-                    setImage(it)
-                } ?: TODO("")
-            } else {
-                TODO("No data")
+            data?.let {
+                it.data?.let { uri ->
+                    model.setImage(uri, requireContext())
+                }
             }
         }
     }
@@ -177,57 +177,34 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    private fun setImage(data: Uri) {
-        val inputStream: InputStream? =
-            requireContext().contentResolver.openInputStream(data)
-        // TODO Fix rotation and also shoul be async
-        val userBitmap = BitmapFactory.decodeStream(inputStream)
-        val scaledBitmap = Bitmap.createScaledBitmap(
-            userBitmap,
-            (userBitmap.width.toFloat() * 0.4).toInt(),
-            (userBitmap.height.toFloat() * 0.4).toInt(),
-            false
-        )
-        model.pill.photo = scaledBitmap
-        binding.imagePillPhoto.setImageBitmap(model.pill.photo)
-    }
-
-    private fun exifToDegrees(exifOrientation: Int): Float {
-        return when (exifOrientation) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> {
-                90F
-            }
-            ExifInterface.ORIENTATION_ROTATE_180 -> {
-                180F
-            }
-            ExifInterface.ORIENTATION_ROTATE_270 -> {
-                270F
-            }
-            else -> 0F
-        }
-    }
 
     private fun showTimeDialog() {
         val format =
-            if (android.text.format.DateFormat.is24HourFormat(requireContext())) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+            if (DateFormat.is24HourFormat(requireContext()))
+                TimeFormat.CLOCK_24H
+            else
+                TimeFormat.CLOCK_12H
+
         val materialTimePicker = MaterialTimePicker.Builder()
             .setTimeFormat(format)
             .build()
+
         materialTimePicker.addOnPositiveButtonClickListener {
             addRemindTime(materialTimePicker.hour, materialTimePicker.minute)
         }
+
         materialTimePicker.show(childFragmentManager, "time_picker")
     }
 
     private fun addRemindTime(hour: Int, minute: Int) {
         val calendar = Calendar.getInstance()
+        calendar.clear()
         calendar.set(Calendar.HOUR_OF_DAY, hour)
         calendar.set(Calendar.MINUTE, minute)
-        val reminder = Reminder(calendar, 1)
-        model.addReminder(reminder)
+        model.addReminder(Reminder(calendar, 1))
     }
 
-    private fun setReminderViews() {
+    private fun setReminderOptionsViews() {
         binding.run {
             with(model.pill.remindConstant) {
                 checkDayLimit.isChecked = limitDays != ReminderOptions.NO_DAY_LIMIT
@@ -255,7 +232,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     }
 
     private fun scrollToBottom() {
-        binding.editView.postDelayed(300) {
+        binding.editView.post {
             binding.editView.scrollToBottom()
         }
     }
@@ -296,11 +273,21 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     private fun savePill() {
         binding.run {
+            // Does Pill have name?
             if (model.pill.name.isBlank()) {
                 inputNameLayout.error = getString(R.string.enter_field)
                 return
             }
-            returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+
+            // Does Pill have at leas one reminder?
+            if (model.pill.remindConstant.remindTimes.isEmpty()) {
+                Snackbar.make(
+                    this.root,
+                    getString(R.string.no_reminders_set),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                return
+            }
 
             val reminderOptions = getReminderOptions()
             model.pill.apply {
@@ -308,14 +295,15 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 description = inputDescription.getString()
             }
 
-            if (args.pillId == -1L) {
+            // Is pill new?
+            if (isPillNew) {
                 model.addPill(model.pill).observe(viewLifecycleOwner) {
-                    findNavController().popBackStack()
-                    val directions = HomeFragmentDirections.actionHomescreenToDetails(it, true)
+                    val directions = EditFragmentDirections.actionEditToHomescreen()
                     findNavController().navigate(directions)
                 }
             } else {
                 model.updatePill(model.pill)
+                returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
                 findNavController().popBackStack()
             }
         }
@@ -358,4 +346,5 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     override fun onReminderDelete(view: View, reminder: Reminder) {
         model.removerReminder(reminder)
     }
+
 }

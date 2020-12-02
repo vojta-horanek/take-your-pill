@@ -1,5 +1,9 @@
 package eu.vojtechh.takeyourpill.viewmodel
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import eu.vojtechh.takeyourpill.model.Pill
@@ -10,6 +14,7 @@ import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.io.InputStream
 
 class EditViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository
@@ -56,8 +61,6 @@ class EditViewModel @ViewModelInject constructor(
         _activeColor.value = pillColor
     }
 
-    fun getActivePillColor() = _activeColor.value!!
-
     private val _reminders: MutableLiveData<List<Reminder>> by lazy {
         MutableLiveData<List<Reminder>>()
     }
@@ -85,6 +88,29 @@ class EditViewModel @ViewModelInject constructor(
 
     fun getReminderTimes(): MutableList<Reminder> {
         return _reminders.value!!.toMutableList()
+    }
+
+    private val _photoBitmap: MutableLiveData<Bitmap> by lazy {
+        MutableLiveData<Bitmap>()
+    }
+
+    val photoBitmap = Transformations.map(_photoBitmap) {
+        pill.photo = it
+        it
+    }
+
+    fun setImage(data: Uri, context: Context) = viewModelScope.launch(Dispatchers.IO) {
+        val inputStream: InputStream? =
+            context.contentResolver.openInputStream(data)
+        // TODO Fix rotation
+        val userBitmap = BitmapFactory.decodeStream(inputStream)
+        val scaledBitmap = Bitmap.createScaledBitmap(
+            userBitmap,
+            (userBitmap.width.toFloat() * 0.4).toInt(),
+            (userBitmap.height.toFloat() * 0.4).toInt(),
+            false
+        )
+        _photoBitmap.postValue(scaledBitmap)
     }
 
 }

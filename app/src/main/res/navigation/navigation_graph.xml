@@ -49,6 +49,9 @@
             android:name="pillId"
             app:argType="long"
             android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_edit_to_homescreen"
+            app:destination="@id/homescreen" />
     </fragment>
     <fragment
         android:id="@+id/details"
@@ -61,9 +64,5 @@
         <argument
             android:name="pillId"
             app:argType="long" />
-        <argument
-            android:name="saved"
-            app:argType="boolean"
-            android:defaultValue="false" />
     </fragment>
 </navigation>
