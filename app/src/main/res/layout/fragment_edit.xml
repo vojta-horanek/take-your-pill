@@ -122,7 +122,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_reminder"
+                    tools:itemCount="3"
+                    android:overScrollMode="never" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonAddReminder"
@@ -130,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/add_reminder"
-                    app:icon="@drawable/ic_add" />
+                    app:icon="@drawable/ic_add_alert" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/checkDayLimit"

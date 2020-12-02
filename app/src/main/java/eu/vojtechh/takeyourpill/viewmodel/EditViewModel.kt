@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
+import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
@@ -34,12 +35,13 @@ class EditViewModel @ViewModelInject constructor(
         ReminderOptions.Empty()
     )
 
+    var pill: Pill? = null
 
     private val _activeColor: MutableLiveData<PillColor> by lazy {
         MutableLiveData<PillColor>(PillColor.default())
     }
 
-    val pillColors: LiveData<List<PillColor>> = Transformations.map(_activeColor) {
+    val pillColors = Transformations.map(_activeColor) {
         val colors = PillColor.getAllPillColorList()
         for (color in colors) {
             color.checked = (color.resource == it.resource)
@@ -54,5 +56,24 @@ class EditViewModel @ViewModelInject constructor(
 
     fun getActivePillColor() = _activeColor.value!!
 
-    var pill: Pill? = null
+    private val _reminders: MutableLiveData<List<Reminder>> by lazy {
+        MutableLiveData<List<Reminder>>(listOf())
+    }
+
+    val reminders = Transformations.map(_reminders) {
+        it
+    }
+
+    fun addReminder(reminder: Reminder) {
+        val newList = _reminders.value?.toMutableList()
+        newList?.add(reminder)
+        _reminders.value = newList
+    }
+
+    fun removerReminder(reminder: Reminder) {
+        val newList = _reminders.value?.toMutableList()
+        newList?.remove(reminder)
+        _reminders.value = newList
+    }
+
 }

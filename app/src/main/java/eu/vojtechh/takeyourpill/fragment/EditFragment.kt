@@ -12,24 +12,30 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ColorAdapter
+import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.PillColor
+import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import java.util.*
 
 @AndroidEntryPoint
-class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener {
+class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
+    ReminderAdapter.ReminderAdapterListener {
 
     private val model: EditViewModel by viewModels()
     private val args: EditFragmentArgs by navArgs()
     private val colorAdapter = ColorAdapter(this)
+    private val reminderAdapter = ReminderAdapter(this)
 
     private lateinit var binding: FragmentEditBinding
     override fun onCreateView(
@@ -93,8 +99,13 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener {
         })
         model.setActivePillColor(model.pill!!.color)
 
+        model.reminders.observe(viewLifecycleOwner, {
+            reminderAdapter.submitList(it)
+        })
+
         binding.run {
             recyclerColor.adapter = colorAdapter
+            recyclerViewReminderTimes.adapter = reminderAdapter
 
             setReminderViews()
 
@@ -106,7 +117,28 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener {
             }
 
             buttonSave.setOnClickListener { savePill() }
+            buttonAddReminder.setOnClickListener { showTimeDialog() }
         }
+    }
+
+    private fun showTimeDialog() {
+        val format =
+            if (android.text.format.DateFormat.is24HourFormat(requireContext())) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+        val materialTimePicker = MaterialTimePicker.Builder()
+            .setTimeFormat(format)
+            .build()
+        materialTimePicker.addOnPositiveButtonClickListener {
+            addRemindTime(materialTimePicker.hour, materialTimePicker.minute)
+        }
+        materialTimePicker.show(childFragmentManager, "time_picker")
+    }
+
+    private fun addRemindTime(hour: Int, minute: Int) {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+        val reminder = Reminder(calendar, 1)
+        model.addReminder(reminder)
     }
 
     private fun setReminderViews() {
@@ -237,5 +269,9 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener {
 
     override fun onColorClicked(view: View, color: PillColor) {
         model.setActivePillColor(color)
+    }
+
+    override fun onReminderDelete(view: View, reminder: Reminder) {
+        model.removerReminder(reminder)
     }
 }
