@@ -4,18 +4,19 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.util.ObjectsCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 
 @Entity(tableName = "pill")
 data class Pill(
     var name: String,
     var description: String?,
-    // TODO Separate photo to its own entity (table)
     var photo: Bitmap?,
     var color: PillColor,
     @Embedded(prefix = "constant_") var remindConstant: ReminderOptions,
@@ -29,9 +30,9 @@ data class Pill(
     val descriptionVisibility
         get() = description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE } ?: View.GONE
 
-    fun photoDrawable(context: Context) = BitmapDrawable(context.resources, photo)
-    fun photoDrawableEdit(context: Context) =
-        BitmapDrawable(context.resources, photo) //TODO Return default image
+    fun photoDrawable(context: Context) =
+        if (photo != null) BitmapDrawable(context.resources, photo)
+        else ContextCompat.getDrawable(context, R.drawable.photo_default)
 
     fun colorResource(context: Context) = color.getColor(context)
 

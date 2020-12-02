@@ -1,10 +1,17 @@
 package eu.vojtechh.takeyourpill.fragment
 
+import android.Manifest
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.ExifInterface
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.postDelayed
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -26,7 +33,11 @@ import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
+import java.io.InputStream
 import java.util.*
+
 
 @AndroidEntryPoint
 class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
@@ -119,6 +130,80 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
             buttonSave.setOnClickListener { savePill() }
             buttonAddReminder.setOnClickListener { showTimeDialog() }
+            layoutPhoto.setOnClickListener { pickImage() }
+        }
+    }
+
+    @AfterPermissionGranted(1)
+    private fun pickImage() {
+
+        if (EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            startActivityForResult(intent, Constants.PICK_PHOTO_FOR_PILL)
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.storage_perm_rationale),
+                1,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            );
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.PICK_PHOTO_FOR_PILL && resultCode == AppCompatActivity.RESULT_OK) {
+            if (data != null) {
+                data.data?.let {
+                    setImage(it)
+                } ?: TODO("")
+            } else {
+                TODO("No data")
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    private fun setImage(data: Uri) {
+        val inputStream: InputStream? =
+            requireContext().contentResolver.openInputStream(data)
+        // TODO Fix rotation and also shoul be async
+        val userBitmap = BitmapFactory.decodeStream(inputStream)
+        val scaledBitmap = Bitmap.createScaledBitmap(
+            userBitmap,
+            (userBitmap.width.toFloat() * 0.4).toInt(),
+            (userBitmap.height.toFloat() * 0.4).toInt(),
+            false
+        )
+        model.pill.photo = scaledBitmap
+        binding.imagePillPhoto.setImageBitmap(model.pill.photo)
+    }
+
+    private fun exifToDegrees(exifOrientation: Int): Float {
+        return when (exifOrientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> {
+                90F
+            }
+            ExifInterface.ORIENTATION_ROTATE_180 -> {
+                180F
+            }
+            ExifInterface.ORIENTATION_ROTATE_270 -> {
+                270F
+            }
+            else -> 0F
         }
     }
 

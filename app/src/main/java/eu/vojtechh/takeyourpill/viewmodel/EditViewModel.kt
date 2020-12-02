@@ -44,7 +44,7 @@ class EditViewModel @ViewModelInject constructor(
     }
 
     val pillColors = Transformations.map(_activeColor) {
-        pill?.color = it
+        pill.color = it
         val colors = PillColor.getAllPillColorList()
         for (color in colors) {
             color.checked = (color.resource == it.resource)
@@ -63,7 +63,7 @@ class EditViewModel @ViewModelInject constructor(
     }
 
     val reminders = Transformations.map(_reminders) {
-        pill?.remindConstant?.remindTimes = it.toMutableList()
+        pill.remindConstant.remindTimes = it.toMutableList()
         it
     }
 

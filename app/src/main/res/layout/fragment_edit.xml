@@ -15,21 +15,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorSurface"
+        android:clipToPadding="false"
         android:fillViewport="true"
         android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:clipToPadding="false"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/wrapperNewPill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
+                android:background="?attr/colorSurface"
+                android:clipChildren="false"
+                android:clipToPadding="false"
                 android:orientation="vertical"
-                android:paddingHorizontal="32dp"
-                android:id="@+id/wrapperNewPill">
+                android:paddingHorizontal="32dp">
 
                 <TextView
                     android:id="@+id/textNewPill"
@@ -96,22 +102,41 @@
                     android:text="@string/photo"
                     android:textAppearance="@style/AppTheme.Text.BodyNormal" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imagePillPhoto"
+                <FrameLayout
+                    android:id="@+id/layoutPhoto"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:layout_marginTop="8dp"
-                    android:background="?attr/colorBackgroundFloating"
-                    android:elevation="8dp"
-                    android:scaleType="center"
-                    android:src="@{pill.photoDrawable(context)}"
-                    app:shapeAppearanceOverlay="@style/AppTheme.Shape.Corners.Big" />
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:focusable="true"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="16dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imagePillPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:elevation="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@{pill.photoDrawable(context)}"
+                        app:shapeAppearanceOverlay="@style/AppTheme.Shape.Corners.Big"
+                        tools:src="@drawable/photo_default"
+                        android:foreground="?selectableItemBackground" />
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:elevation="5dp"
+                        android:src="@drawable/ic_photo_add" />
+
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/textReminderTimes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:text="@string/reminders"
                     android:textAppearance="@style/AppTheme.Text.BodyNormal" />
 
@@ -120,10 +145,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_reminder"
                     tools:itemCount="3"
-                    android:overScrollMode="never" />
+                    tools:listitem="@layout/item_reminder" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonAddReminder"

@@ -23,6 +23,8 @@
     <style name="AppTheme.Shape.roundedCornersImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">4dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
     </style>
 
 
@@ -58,7 +60,7 @@
     </style>
 
     <style name="AppTheme.Shape.Corners.Big" parent="">
-        <item name="cornerSize">8dp</item>
+        <item name="cornerSize">4dp</item>
     </style>
 
     <style name="AppTheme.Widgets.FloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">

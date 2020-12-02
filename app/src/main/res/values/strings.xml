@@ -37,4 +37,5 @@
     <string name="cycle_forever">Cycle forever</string>
     <string name="num_of_cycles">Number of cycles</string>
     <string name="add_reminder">Add reminder</string>
+    <string name="storage_perm_rationale">This app needs the storage permission to load a photo</string>
 </resources>
