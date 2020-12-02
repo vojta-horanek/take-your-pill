@@ -45,7 +45,7 @@ class EditViewModel @ViewModelInject constructor(
         pill?.color = it
         val colors = PillColor.getAllPillColorList()
         for (color in colors) {
-            color.checked = (color.color == it.color)
+            color.checked = (color.resource == it.resource)
         }
         colors
     }

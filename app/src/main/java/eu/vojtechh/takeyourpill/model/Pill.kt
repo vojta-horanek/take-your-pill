@@ -33,8 +33,7 @@ data class Pill(
     fun photoDrawableEdit(context: Context) =
         BitmapDrawable(context.resources, photo) //TODO Return default image
 
-    val colorString: String
-        get() = color.color
+    fun colorResource(context: Context) = color.getColor(context)
 
     object DiffCallback : DiffUtil.ItemCallback<Pill>() {
         override fun areItemsTheSame(oldItem: Pill, newItem: Pill) = oldItem.id == newItem.id

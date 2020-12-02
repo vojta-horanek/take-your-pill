@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.content.Context" />
+
         <import type="android.view.View" />
 
         <variable
@@ -27,7 +29,7 @@
             android:id="@+id/imagePillColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@{context.resources.getIdentifier(color.color, `color`, context.packageName)}"
+            android:background="@{color.getColor(context)}"
             tools:background="@color/colorDarkBlue" />
 
         <ImageView
