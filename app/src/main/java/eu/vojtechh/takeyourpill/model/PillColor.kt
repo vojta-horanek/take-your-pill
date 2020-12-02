@@ -1,43 +1,39 @@
 package eu.vojtechh.takeyourpill.model
 
-import android.content.Context
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
-import eu.vojtechh.takeyourpill.R
 
 class PillColor(
-    val resource: Int,
+    val color: String,
     var checked: Boolean = false
 ) {
-    fun getColor(context: Context) = ContextCompat.getColor(context, resource)
 
     companion object {
-        fun default() = PillColor(R.color.colorBlue)
+        fun default() = PillColor("#1976D2")
 
-        fun getAllColorsList() = listOf(
-            R.color.colorBlue,
-            R.color.colorDarkBlue,
-            R.color.colorGreen,
-            R.color.colorOrange,
-            R.color.colorRed,
-            R.color.colorTeal,
-            R.color.colorYellow,
-        )
+
+        const val colorBlue = "#1976D2"
+        const val colorDarkBlue = "#303F9F"
+        const val colorTeal = "#00796B"
+        const val colorGreen = "#388E3C"
+        const val colorYellow = "#FFC107"
+        const val colorOrange = "#F57C00"
+        const val colorRed = "#D32F2F"
+
 
         fun getAllPillColorList() = mutableListOf(
-            PillColor(R.color.colorBlue, false),
-            PillColor(R.color.colorDarkBlue, false),
-            PillColor(R.color.colorGreen, false),
-            PillColor(R.color.colorOrange, false),
-            PillColor(R.color.colorRed, false),
-            PillColor(R.color.colorTeal, false),
-            PillColor(R.color.colorYellow, false),
+            PillColor(colorBlue, false),
+            PillColor(colorDarkBlue, false),
+            PillColor(colorTeal, false),
+            PillColor(colorGreen, false),
+            PillColor(colorYellow, false),
+            PillColor(colorOrange, false),
+            PillColor(colorRed, false),
         )
     }
 
     object DiffCallback : DiffUtil.ItemCallback<PillColor>() {
         override fun areItemsTheSame(oldItem: PillColor, newItem: PillColor) =
-            oldItem.resource == newItem.resource
+            oldItem.color == newItem.color
 
         override fun areContentsTheSame(oldItem: PillColor, newItem: PillColor) =
             oldItem.checked == newItem.checked

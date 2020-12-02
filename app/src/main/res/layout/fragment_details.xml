@@ -45,13 +45,13 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="32dp"
-                android:background="@{pill.colorResource(context)}"
+                android:src="@{pill.colorString}"
                 android:elevation="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textPillName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textPillName"
                 app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
-                tools:background="@color/colorDarkBlue" />
+                tools:src="#444444" />
 
             <TextView
                 android:id="@+id/textPillDescription"

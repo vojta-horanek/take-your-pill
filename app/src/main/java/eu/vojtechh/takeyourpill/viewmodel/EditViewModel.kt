@@ -31,8 +31,8 @@ class EditViewModel @ViewModelInject constructor(
         "",
         null,
         PillColor.default(),
-        ReminderOptions.Empty(),
-        ReminderOptions.Empty()
+        ReminderOptions.empty(),
+        ReminderOptions.empty()
     )
 
     var pill: Pill? = null
@@ -42,16 +42,16 @@ class EditViewModel @ViewModelInject constructor(
     }
 
     val pillColors = Transformations.map(_activeColor) {
+        pill?.color = it
         val colors = PillColor.getAllPillColorList()
         for (color in colors) {
-            color.checked = (color.resource == it.resource)
+            color.checked = (color.color == it.color)
         }
         colors
     }
 
     fun setActivePillColor(pillColor: PillColor) {
         _activeColor.value = pillColor
-        pill?.color = pillColor
     }
 
     fun getActivePillColor() = _activeColor.value!!
@@ -61,7 +61,12 @@ class EditViewModel @ViewModelInject constructor(
     }
 
     val reminders = Transformations.map(_reminders) {
+        pill?.remindConstant?.remindTimes = it.toMutableList()
         it
+    }
+
+    fun setReminders(reminders: List<Reminder>) {
+        _reminders.value = reminders
     }
 
     fun addReminder(reminder: Reminder) {
@@ -74,6 +79,10 @@ class EditViewModel @ViewModelInject constructor(
         val newList = _reminders.value?.toMutableList()
         newList?.remove(reminder)
         _reminders.value = newList
+    }
+
+    fun getReminderTimes(): MutableList<Reminder> {
+        return _reminders.value!!.toMutableList()
     }
 
 }

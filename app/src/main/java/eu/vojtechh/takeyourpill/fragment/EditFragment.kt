@@ -99,6 +99,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         })
         model.setActivePillColor(model.pill!!.color)
 
+        model.setReminders(model.pill!!.remindConstant.remindTimes)
         model.reminders.observe(viewLifecycleOwner, {
             reminderAdapter.submitList(it)
         })
@@ -241,30 +242,28 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 if (checkRestoreAfter.isChecked) {
                     return if (!checkCycleCount.isChecked) {
                         ReminderOptions.finiteRepeating(
-                            getReminderTimes(),
+                            model.getReminderTimes(),
                             inputDayNumber.getNumber(),
                             inputRestore.getNumber(),
                             inputCycleCount.getNumber()
                         )
                     } else {
                         ReminderOptions.infiniteBreak(
-                            getReminderTimes(),
+                            model.getReminderTimes(),
                             inputDayNumber.getNumber(),
                             inputRestore.getNumber()
                         )
                     }
                 } else {
-                    return ReminderOptions.finite(getReminderTimes(), inputDayNumber.getNumber())
+                    return ReminderOptions.finite(
+                        model.getReminderTimes(),
+                        inputDayNumber.getNumber()
+                    )
                 }
             } else {
-                return ReminderOptions.infinite(getReminderTimes())
+                return ReminderOptions.infinite(model.getReminderTimes())
             }
         }
-    }
-
-    private fun getReminderTimes(): MutableList<Calendar> {
-        // TODO
-        return mutableListOf()
     }
 
     override fun onColorClicked(view: View, color: PillColor) {

@@ -40,7 +40,7 @@
                 android:layout_width="@dimen/color_dot_size"
                 android:layout_height="@dimen/color_dot_size"
                 android:layout_marginEnd="16dp"
-                android:src="@{pill.colorResource(context)}"
+                android:src="@{pill.colorString}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imagePillPhoto"
                 app:layout_constraintTop_toTopOf="parent"
@@ -101,7 +101,7 @@
                 app:shapeAppearance="@style/AppTheme.Shape.roundedCornersImageView"
                 tools:ignore="ContentDescription"
                 tools:src="@drawable/ic_launcher_background"
-                app:strokeColor="@{pill.colorResource(context)}"
+                app:strokeColor="@{context.resources.getIdentifier(pill.colorString, `color`, context.packageName)}"
                 app:strokeWidth="4dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

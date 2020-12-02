@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ItemHeaderBinding
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
 import eu.vojtechh.takeyourpill.model.Pill
@@ -64,9 +63,9 @@ class PillAdapter(
                     "HEADER",
                     null,
                     null,
-                    PillColor(R.color.colorBlue),
-                    ReminderOptions.Empty(),
-                    ReminderOptions.Empty()
+                    PillColor(PillColor.colorBlue),
+                    ReminderOptions.empty(),
+                    ReminderOptions.empty()
                 )
             )
             super.submitList(newList)

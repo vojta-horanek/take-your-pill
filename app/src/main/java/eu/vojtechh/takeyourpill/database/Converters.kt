@@ -6,8 +6,8 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import eu.vojtechh.takeyourpill.model.PillColor
+import eu.vojtechh.takeyourpill.model.Reminder
 import java.io.ByteArrayOutputStream
-import java.util.*
 
 
 class Converters {
@@ -25,25 +25,25 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromPillColor(pillColor: PillColor): Int {
-        return pillColor.resource
+    fun fromPillColor(pillColor: PillColor): String {
+        return pillColor.color
     }
 
     @TypeConverter
-    fun toPillColor(pillColor: Int): PillColor {
+    fun toPillColor(pillColor: String): PillColor {
         return PillColor(pillColor)
     }
 
     @TypeConverter
-    fun jsonToList(listOfCalendar: String): MutableList<Calendar> {
+    fun jsonToList(listOfCReminder: String): MutableList<Reminder> {
         return Gson().fromJson(
-            listOfCalendar,
-            object : TypeToken<MutableList<Calendar>>() {}.type
+            listOfCReminder,
+            object : TypeToken<MutableList<Reminder>>() {}.type
         )
     }
 
     @TypeConverter
-    fun listToJson(listOfString: MutableList<Calendar>): String {
+    fun listToJson(listOfString: MutableList<Reminder>): String {
         return Gson().toJson(listOfString)
     }
 }
