@@ -28,12 +28,14 @@
         android:layout_marginBottom="16dp"
         android:background="?attr/colorBackgroundFloating"
         android:clickable="true"
-        android:elevation="8dp"
+        app:cardElevation="8dp"
         android:focusable="true"
         android:onClick="@{(view) -> listener.onPillClicked(view, pill)}"
         android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
         app:cardCornerRadius="8dp"
-        app:cardPreventCornerOverlap="true">
+        app:cardPreventCornerOverlap="true"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
