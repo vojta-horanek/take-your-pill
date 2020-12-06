@@ -25,13 +25,13 @@
         android:background="?attr/colorSurface"
         android:onClick="@{(view) -> listener.onColorClicked(view, color)}">
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <View
             android:id="@+id/imagePillColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@{color.getColor(context)}"
-            app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
-            tools:background="@color/colorDarkBlue" />
+            android:background="@drawable/shape_oval"
+            app:background_color_shaped="@{color.getColor(context)}"
+            app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval" />
 
         <ImageView
             android:layout_width="match_parent"

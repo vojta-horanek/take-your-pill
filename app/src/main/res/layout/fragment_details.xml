@@ -40,18 +40,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Xyzal" />
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <View
                 android:id="@+id/imagePillColor"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="32dp"
-                android:background="@{pill.colorResource(context)}"
-                android:elevation="8dp"
+                android:background="@drawable/shape_oval"
+                app:background_color_shaped="@{pill.colorResource(context)}"
                 app:layout_constraintBottom_toBottomOf="@+id/textPillName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textPillName"
-                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
-                tools:background="@color/colorBlue" />
+                android:elevation="8dp" />
 
             <TextView
                 android:id="@+id/textPillDescription"
@@ -65,22 +64,40 @@
                 app:layout_constraintTop_toBottomOf="@+id/textPillName"
                 tools:text="2 times a day, every 12 hours\nlast taken on Friday at 2:00 PM" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imagePillPhoto"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPhoto"
                 android:layout_width="0dp"
                 android:layout_height="180dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:elevation="8dp"
-                android:scaleType="centerCrop"
-                android:src="@{pill.photoDrawable(context)}"
+                android:background="?attr/colorBackgroundFloating"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
                 android:visibility="@{pill.photoVisibility, default=gone}"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textPillDescription"
-                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Corners.Big"
-                tools:src="@drawable/ic_launcher_background"
-                tools:visibility="visible" />
+                tools:visibility="visible">
+
+
+                <ImageView
+                    android:id="@+id/imagePillPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:scaleType="centerCrop"
+                    android:src="@{pill.photoDrawable(context)}"
+                    tools:ignore="ContentDescription"
+                    tools:src="@drawable/photo_default" />
+
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:id="@+id/actionsBottomDetails"
@@ -94,7 +111,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imagePillPhoto"
+                app:layout_constraintTop_toBottomOf="@+id/cardPhoto"
                 app:layout_constraintVertical_bias="1.0">
 
                 <com.google.android.material.card.MaterialCardView

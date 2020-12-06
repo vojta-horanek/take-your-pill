@@ -115,6 +115,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
         model.photoBitmap.observe(viewLifecycleOwner, {
             binding.imagePillPhoto.setImageDrawable(model.pill.photoDrawable(requireContext()))
+            binding.imageDeletePhoto.visibility = model.pill.photoVisibility
         })
 
         binding.run {
@@ -139,7 +140,6 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     @AfterPermissionGranted(1)
     private fun pickImage() {
-
         if (EasyPermissions.hasPermissions(
                 requireContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE
@@ -188,6 +188,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
         val materialTimePicker = MaterialTimePicker.Builder()
             .setTimeFormat(format)
+            .setHour(8)
             .build()
 
         materialTimePicker.addOnPositiveButtonClickListener {
@@ -302,8 +303,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                     exitTransition = Slide().apply {
                         addTarget(R.id.editView)
                     }
-                    val directions = EditFragmentDirections.actionEditToHomescreen()
-                    findNavController().navigate(directions)
+                    findNavController().popBackStack()
                 }
             } else {
                 model.updatePill(model.pill)

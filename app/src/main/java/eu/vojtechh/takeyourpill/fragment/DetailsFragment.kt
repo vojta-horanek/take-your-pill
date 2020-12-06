@@ -19,6 +19,7 @@ import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 
+
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
     BottomSheetFragmentConfirmation.ConfirmListener {
@@ -51,10 +52,13 @@ class DetailsFragment : Fragment(),
             if (it != null) {
                 pill = it
                 binding.pill = pill
+                initViews()
                 startPostponedEnterTransition()
             }
         })
+    }
 
+    private fun initViews() {
         binding.buttonDelete.setOnClickListener {
             BottomSheetFragmentConfirmation.newInstance(
                 getString(R.string.confirm_delete_pill),

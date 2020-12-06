@@ -41,18 +41,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <View
                 android:id="@+id/imagePillColor"
                 android:layout_width="@dimen/color_dot_size"
                 android:layout_height="@dimen/color_dot_size"
                 android:layout_marginEnd="16dp"
-                android:src="@{pill.colorResource(context)}"
+                android:background="@drawable/shape_oval"
+                app:background_color_shaped="@{pill.colorResource(context)}"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/linearLayout"
-                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
-                tools:background="@color/colorDarkBlue"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"

@@ -34,7 +34,7 @@
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:orientation="vertical"
-                android:paddingHorizontal="32dp">
+                android:paddingHorizontal="16dp">
 
                 <TextView
                     android:id="@+id/textNewPill"
@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
                     android:text="@string/new_pill"
                     android:textAppearance="@style/AppTheme.Text.Header4" />
 
@@ -101,47 +102,63 @@
                     android:text="@string/photo"
                     android:textAppearance="@style/AppTheme.Text.BodyNormal" />
 
-                <FrameLayout
-                    android:id="@+id/layoutPhoto"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPhoto"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="?attr/colorBackgroundFloating"
                     android:clickable="true"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:focusable="true"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="16dp">
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
+                    app:cardPreventCornerOverlap="true">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/imagePillPhoto"
+                    <FrameLayout
+                        android:id="@+id/layoutPhoto"
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
-                        android:elevation="4dp"
-                        android:foreground="?selectableItemBackground"
-                        android:scaleType="centerCrop"
-                        android:src="@{pill.photoDrawable(context)}"
-                        app:shapeAppearanceOverlay="@style/AppTheme.Shape.Corners.Big"
-                        tools:src="@drawable/photo_default" />
+                        android:layout_height="match_parent"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
 
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/add_photo"
-                        android:elevation="5dp"
-                        android:src="@drawable/ic_photo_add" />
+                        <ImageView
+                            android:id="@+id/imagePillPhoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:scaleType="centerCrop"
+                            android:src="@{pill.photoDrawable(context)}"
+                            tools:ignore="ContentDescription"
+                            tools:src="@drawable/photo_default" />
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="8dp"
-                        android:contentDescription="@string/delete"
-                        android:elevation="5dp"
-                        android:id="@+id/imageDeletePhoto"
-                        android:src="@drawable/ic_delete" />
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/add_photo"
+                            android:elevation="5dp"
+                            android:src="@drawable/ic_photo_add" />
 
-                </FrameLayout>
+                        <ImageView
+                            android:id="@+id/imageDeletePhoto"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="8dp"
+                            android:contentDescription="@string/delete"
+                            android:elevation="5dp"
+                            android:src="@drawable/ic_delete"
+                            android:visibility="@{pill.photoVisibility, default=gone}"
+                            tools:visibility="visible" />
+
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
+
 
                 <TextView
                     android:id="@+id/textReminderTimes"
