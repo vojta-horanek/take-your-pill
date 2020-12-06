@@ -25,11 +25,11 @@ class PillColor(
         fun getAllPillColorList() = mutableListOf(
             PillColor(R.color.colorBlue, false),
             PillColor(R.color.colorDarkBlue, false),
+            PillColor(R.color.colorTeal, false),
             PillColor(R.color.colorGreen, false),
+            PillColor(R.color.colorYellow, false),
             PillColor(R.color.colorOrange, false),
             PillColor(R.color.colorRed, false),
-            PillColor(R.color.colorTeal, false),
-            PillColor(R.color.colorYellow, false),
         )
     }
 

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="color_dot_size">16dp</dimen>
     <dimen name="color_dot_size_big">32dp</dimen>
+    <dimen name="bottom_bar_height">56dp</dimen>
+    <dimen name="elevation_color">8dp</dimen>
 </resources>
