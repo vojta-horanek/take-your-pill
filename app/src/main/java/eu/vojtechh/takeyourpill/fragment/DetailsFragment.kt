@@ -15,20 +15,21 @@ import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.klass.themeColor
-import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
-    BottomSheetFragmentConfirmation.ConfirmListener {
+    BottomSheetFragmentConfirmation.ConfirmListener, ReminderAdapter.ReminderAdapterListener {
 
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
     private lateinit var binding: FragmentDetailsBinding
-    private lateinit var pill: Pill
+    private val reminderAdapter = ReminderAdapter(this, showDelete = false, showRipple = false)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,15 +52,24 @@ class DetailsFragment : Fragment(),
 
         model.getPillById(args.pillId).observe(viewLifecycleOwner, {
             if (it != null) {
-                pill = it
-                binding.pill = pill
+                model.pill = it
+                binding.pill = model.pill
                 initViews()
                 startPostponedEnterTransition()
             }
         })
+
     }
 
     private fun initViews() {
+
+        model.setReminders(model.pill.remindConstant.remindTimes)
+        model.reminders.observe(viewLifecycleOwner, {
+            reminderAdapter.submitList(it)
+        })
+
+        binding.recyclerReminders.adapter = reminderAdapter
+
         binding.buttonDelete.setOnClickListener {
             BottomSheetFragmentConfirmation.newInstance(
                 getString(R.string.confirm_delete_pill),
@@ -74,14 +84,15 @@ class DetailsFragment : Fragment(),
 
         binding.buttonEdit.setOnClickListener {
             exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-            val directions = DetailsFragmentDirections.actionDetailsFragmentToEditFragment(pill.id)
+            val directions =
+                DetailsFragmentDirections.actionDetailsFragmentToEditFragment(model.pill.id)
             findNavController().navigate(directions)
         }
 
     }
 
     override fun onConfirmClicked(view: View) {
-        model.deletePill(pill)
+        model.deletePill(model.pill)
         exitTransition = Slide().apply {
             addTarget(R.id.detailsView)
         }

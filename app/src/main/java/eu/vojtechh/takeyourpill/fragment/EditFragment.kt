@@ -138,14 +138,17 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     }
 
     override fun onReminderClicked(view: View, reminder: Reminder) {
-        showReminderDialog(reminder)
+        showReminderDialog(reminder, true)
     }
 
-    private fun showReminderDialog(reminder: Reminder = Reminder.create()) {
+    private fun showReminderDialog(
+        reminder: Reminder = Reminder.create(),
+        editing: Boolean = false
+    ) {
         BottomSheetFragmentNewReminder()
             .setListener(this)
             .setReminder(reminder)
-            .setEditing(true)
+            .setEditing(editing)
             .show(childFragmentManager, "new_reminder")
     }
 

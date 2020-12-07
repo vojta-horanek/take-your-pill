@@ -98,6 +98,32 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:layout_marginHorizontal="16dp"
+
+                android:id="@+id/textReminders"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/reminders"
+                android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardPhoto" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerReminders"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@+id/textReminders"
+                app:layout_constraintStart_toStartOf="@+id/textReminders"
+                app:layout_constraintTop_toBottomOf="@+id/textReminders"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_reminder" />
+
             <LinearLayout
                 android:id="@+id/actionsBottomDetails"
                 android:layout_width="0dp"
@@ -110,7 +136,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardPhoto"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerReminders"
                 app:layout_constraintVertical_bias="1.0">
 
                 <com.google.android.material.card.MaterialCardView

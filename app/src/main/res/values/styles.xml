@@ -60,10 +60,16 @@
     <style name="AppTheme.Text.ButtonSmall" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/jost_medium</item>
         <item name="android:textColor">?attr/colorControlNormal</item>
+        <item name="textAllCaps">true</item>
     </style>
 
     <style name="AppTheme.Text.BodyNormal" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="AppTheme.Text.BodyTitle" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="fontFamily">@font/jost_medium</item>
     </style>
 
 

@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/color"
-                    android:textAppearance="@style/AppTheme.Text.BodyNormal" />
+                    android:textAppearance="@style/AppTheme.Text.BodyTitle" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerColor"
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/photo"
-                    android:textAppearance="@style/AppTheme.Text.BodyNormal" />
+                    android:textAppearance="@style/AppTheme.Text.BodyTitle" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardPhoto"
@@ -165,7 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/reminders"
-                    android:textAppearance="@style/AppTheme.Text.BodyNormal" />
+                    android:textAppearance="@style/AppTheme.Text.BodyTitle" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerReminders"
@@ -183,7 +183,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/add_reminder"
-                    app:icon="@drawable/ic_add_alert" />
+                    app:icon="@drawable/ic_add_alert"
+                    android:textAppearance="@style/AppTheme.Text.ButtonSmall" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/checkDayLimit"
