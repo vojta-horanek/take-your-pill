@@ -13,7 +13,7 @@ android {
         applicationId "eu.vojtechh.takeyourpill"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 20201119
+        versionCode 20201207
         versionName "alpha build $versionCode"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -146,5 +146,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     implementation 'pub.devrel:easypermissions:3.0.0'
+    implementation 'com.github.dhaval2404:imagepicker:1.7.5'
 
 }

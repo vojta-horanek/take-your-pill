@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -145,9 +146,13 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/*"
-            startActivityForResult(intent, Constants.PICK_PHOTO_FOR_PILL)
+            ImagePicker.with(this)
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start()
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "image/*"
+//            startActivityForResult(intent, Constants.PICK_PHOTO_FOR_PILL)
         } else {
             EasyPermissions.requestPermissions(
                 this,
@@ -160,12 +165,9 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Constants.PICK_PHOTO_FOR_PILL && resultCode == AppCompatActivity.RESULT_OK) {
-            data?.let {
-                it.data?.let { uri ->
-                    model.setImage(uri, requireContext())
-                }
-            }
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            val fileUri = data?.data!!
+            model.setImage(fileUri, requireContext())
         }
     }
 
