@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.content.Context" />
         <variable
             name="reminder"
             type="eu.vojtechh.takeyourpill.model.Reminder" />
@@ -17,20 +17,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:orientation="horizontal">
+        android:background="?attr/selectableItemBackground"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal"
+        android:onClick="@{(view) -> listener.onReminderClicked(view, reminder)}">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:maxLines="1"
-            android:text="@{reminder.timeString}"
+            android:text="@{reminder.formattedString(context)}"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonDeleteReminder"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="12:23" />
+            tools:text="at 12:23: 3 pills" />
 
         <ImageButton
             android:id="@+id/buttonDeleteReminder"

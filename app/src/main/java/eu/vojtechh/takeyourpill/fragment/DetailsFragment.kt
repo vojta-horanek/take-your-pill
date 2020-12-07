@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,6 +90,6 @@ class DetailsFragment : Fragment(),
     }
 
     override fun onCancelClicked(view: View) {
-        (childFragmentManager.findFragmentByTag("confirm_delete") as BottomSheetFragmentConfirmation).dismiss()
+        (childFragmentManager.findFragmentByTag("confirm_delete") as BottomSheetDialogFragment).dismiss()
     }
 }

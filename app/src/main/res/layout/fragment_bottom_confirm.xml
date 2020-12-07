@@ -37,6 +37,12 @@
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
             tools:text="Are you sure you want to delete?" />
 
+        <View
+            android:layout_marginVertical="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
         <TextView
             android:id="@+id/textConfirm"
             android:layout_width="match_parent"

@@ -39,4 +39,19 @@
     <string name="storage_perm_rationale">Aplikace potřebuje opravnění na čtení úložiště, aby přečetla fotku</string>
     <string name="no_reminders_set">Prosím, přidejte alespoň jednu připomínku</string>
     <string name="add_photo">Přidat fotku</string>
+    <string name="select_image">Vybrat fotku</string>
+    <string name="set_time">Nastavit čas</string>
+    <string name="set_time_format">Připomenout v %1$s</string>
+    <string name="save_reminder">Uložit připomínku</string>
+    <string name="set_a_reminder">Nastavit připomínku</string>
+    <plurals name="set_amount_format">
+        <item quantity="one">Vzít si %1$d prášek</item>
+        <item quantity="few">Vzít si %1$d prášky</item>
+        <item quantity="other">Vzít si %1$d prášků</item>
+    </plurals>
+    <plurals name="reminder_text">
+        <item quantity="one">%1$s: %2$d prášek</item>
+        <item quantity="few">%1$s: %2$d prášky</item>
+        <item quantity="other">%1$s: %2$d prášků</item>
+    </plurals>
 </resources>

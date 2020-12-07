@@ -4,7 +4,6 @@ import android.Manifest
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import com.kroegerama.imgpicker.BottomSheetImagePicker
@@ -33,12 +31,12 @@ import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import java.util.*
 
 
 @AndroidEntryPoint
 class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
-    ReminderAdapter.ReminderAdapterListener, BottomSheetImagePicker.OnImagesSelectedListener {
+    ReminderAdapter.ReminderAdapterListener, BottomSheetImagePicker.OnImagesSelectedListener,
+    BottomSheetFragmentNewReminder.ConfirmListener {
 
     private lateinit var binding: FragmentEditBinding
     private val model: EditViewModel by viewModels()
@@ -133,10 +131,31 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             }
 
             buttonSave.setOnClickListener { savePill() }
-            buttonAddReminder.setOnClickListener { showTimeDialog() }
+            buttonAddReminder.setOnClickListener { showReminderDialog() }
             imagePillPhoto.setOnClickListener { pickImage() }
             imageDeletePhoto.setOnClickListener { model.deleteImage() }
         }
+    }
+
+    override fun onReminderClicked(view: View, reminder: Reminder) {
+        showReminderDialog(reminder)
+    }
+
+    private fun showReminderDialog(reminder: Reminder = Reminder.create()) {
+        BottomSheetFragmentNewReminder()
+            .setListener(this)
+            .setReminder(reminder)
+            .setEditing(true)
+            .show(childFragmentManager, "new_reminder")
+    }
+
+    override fun onNewPillConfirmClicked(reminder: Reminder, editing: Boolean) {
+        if (editing) {
+            model.editReminder(reminder)
+        } else {
+            model.addReminder(reminder)
+        }
+        (childFragmentManager.findFragmentByTag("new_reminder") as BottomSheetDialogFragment).dismiss()
     }
 
     @AfterPermissionGranted(1)
@@ -176,33 +195,6 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-
-    private fun showTimeDialog() {
-        val format =
-            if (DateFormat.is24HourFormat(requireContext()))
-                TimeFormat.CLOCK_24H
-            else
-                TimeFormat.CLOCK_12H
-
-        val materialTimePicker = MaterialTimePicker.Builder()
-            .setTimeFormat(format)
-            .setHour(8)
-            .build()
-
-        materialTimePicker.addOnPositiveButtonClickListener {
-            addRemindTime(materialTimePicker.hour, materialTimePicker.minute)
-        }
-
-        materialTimePicker.show(childFragmentManager, "time_picker")
-    }
-
-    private fun addRemindTime(hour: Int, minute: Int) {
-        val calendar = Calendar.getInstance()
-        calendar.clear()
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
-        model.addReminder(Reminder(calendar, 1))
-    }
 
     private fun setReminderOptionsViews() {
         binding.run {

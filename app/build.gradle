@@ -111,5 +111,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "pub.devrel:easypermissions:3.0.0"
     implementation "com.kroegerama:bottomsheet-imagepicker:1.1.2"
+    implementation 'com.shawnlin:number-picker:2.4.11'
 
 }

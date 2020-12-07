@@ -71,12 +71,19 @@ class EditViewModel @ViewModelInject constructor(
     fun addReminder(reminder: Reminder) {
         val newList = _reminders.value?.toMutableList()
         newList?.add(reminder)
+        newList?.sortBy { it.time.time }
         _reminders.value = newList
     }
 
     fun removerReminder(reminder: Reminder) {
         val newList = _reminders.value?.toMutableList()
         newList?.remove(reminder)
+        _reminders.value = newList
+    }
+
+    fun editReminder(reminder: Reminder) {
+        val newList = _reminders.value?.toMutableList()
+        // TODO Edit reminder
         _reminders.value = newList
     }
 
@@ -114,5 +121,6 @@ class EditViewModel @ViewModelInject constructor(
     fun deleteImage() {
         _photoBitmap.value = null
     }
+
 
 }

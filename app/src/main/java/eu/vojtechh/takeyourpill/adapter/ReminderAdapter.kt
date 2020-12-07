@@ -13,6 +13,7 @@ class ReminderAdapter(
 
     interface ReminderAdapterListener {
         fun onReminderDelete(view: View, reminder: Reminder)
+        fun onReminderClicked(view: View, reminder: Reminder)
     }
 
     override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {

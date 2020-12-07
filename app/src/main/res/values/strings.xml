@@ -40,6 +40,18 @@
     <string name="storage_perm_rationale">This app needs the storage permission to load a photo</string>
     <string name="no_reminders_set">Please add at least one reminder</string>
     <string name="add_photo">Add photo</string>
-    <string name="file_provider">eu.vojtechh.takeyourpill.fileprovider</string>
+    <string name="file_provider" translatable="false">eu.vojtechh.takeyourpill.fileprovider</string>
     <string name="select_image">Select an image</string>
+    <string name="set_time">Set time</string>
+    <string name="set_time_format">Remind at %1$s</string>
+    <string name="save_reminder">Save reminder</string>
+    <string name="set_a_reminder">Set a reminder</string>
+    <plurals name="set_amount_format">
+        <item quantity="one">Take %1$d pill</item>
+        <item quantity="other">Take %1$d pills</item>
+    </plurals>
+    <plurals name="reminder_text">
+        <item quantity="one">%1$s: %2$d pill</item>
+        <item quantity="other">%1$s: %2$d pills</item>
+    </plurals>
 </resources>
