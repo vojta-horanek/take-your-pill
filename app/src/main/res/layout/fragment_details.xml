@@ -49,8 +49,7 @@
                 app:background_color_shaped="@{pill.colorResource(context)}"
                 app:layout_constraintBottom_toBottomOf="@+id/textPillName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textPillName"
-                android:elevation="8dp" />
+                app:layout_constraintTop_toTopOf="@+id/textPillName" />
 
             <TextView
                 android:id="@+id/textPillDescription"
