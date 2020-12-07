@@ -13,6 +13,7 @@ import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.FileNotFoundException
 import java.io.InputStream
 
 class EditViewModel @ViewModelInject constructor(
@@ -93,17 +94,21 @@ class EditViewModel @ViewModelInject constructor(
     }
 
     fun setImage(data: Uri, context: Context) = viewModelScope.launch(Dispatchers.IO) {
-        val inputStream: InputStream? =
-            context.contentResolver.openInputStream(data)
-        // FIXME Fix rotation
-        val userBitmap = BitmapFactory.decodeStream(inputStream)
-        val scaledBitmap = Bitmap.createScaledBitmap(
-            userBitmap,
-            (userBitmap.width.toFloat() * 0.4).toInt(),
-            (userBitmap.height.toFloat() * 0.4).toInt(),
-            false
-        )
-        _photoBitmap.postValue(scaledBitmap)
+        try {
+            val inputStream: InputStream? =
+                context.contentResolver.openInputStream(data)
+            // FIXME Fix rotation
+            val userBitmap = BitmapFactory.decodeStream(inputStream)
+            val scaledBitmap = Bitmap.createScaledBitmap(
+                userBitmap,
+                (userBitmap.width.toFloat() * 0.8).toInt(), // Downscale image
+                (userBitmap.height.toFloat() * 0.8).toInt(),
+                false
+            )
+            _photoBitmap.postValue(scaledBitmap)
+        } catch (e: FileNotFoundException) {
+            // Ignore
+        }
     }
 
     fun deleteImage() {

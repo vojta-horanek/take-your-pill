@@ -10,8 +10,27 @@
         <item name="colorPrimaryDark">?attr/colorSurface</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorSecondary">@color/colorAccent</item>
-        <item name="bottomSheetDialogTheme">@style/AppTheme.Overlay.BottomSheetDialog</item>
+        <item name="bottomSheetDialogTheme">@style/AppTheme.Theme.CustomBottomSheetDialog</item>
     </style>
+
+    <style name="AppTheme.Theme.CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppTheme.Widget.CustomBottomSheet</item>
+    </style>
+
+    <style name="AppTheme.Widget.CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">
+            @style/AppTheme.Theme.CustomShapeAppearanceBottomSheetDialog
+        </item>
+    </style>
+
+    <style name="AppTheme.Theme.CustomShapeAppearanceBottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">8dp</item>
+        <item name="cornerSizeTopLeft">8dp</item>
+        <item name="cornerSizeBottomRight">8dp</item>
+        <item name="cornerSizeBottomLeft">8dp</item>
+    </style>
+
 
     <style name="AppTheme.Overlay.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.MaterialComponents.BottomSheet</item>

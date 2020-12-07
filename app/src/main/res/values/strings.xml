@@ -40,4 +40,6 @@
     <string name="storage_perm_rationale">This app needs the storage permission to load a photo</string>
     <string name="no_reminders_set">Please add at least one reminder</string>
     <string name="add_photo">Add photo</string>
+    <string name="file_provider">eu.vojtechh.takeyourpill.fileprovider</string>
+    <string name="select_image">Select an image</string>
 </resources>

@@ -1,26 +1,26 @@
 package eu.vojtechh.takeyourpill.fragment
 
 import android.Manifest
-import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
-import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
+import com.kroegerama.imgpicker.BottomSheetImagePicker
+import com.kroegerama.imgpicker.ButtonType
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ColorAdapter
@@ -38,7 +38,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
-    ReminderAdapter.ReminderAdapterListener {
+    ReminderAdapter.ReminderAdapterListener, BottomSheetImagePicker.OnImagesSelectedListener {
 
     private lateinit var binding: FragmentEditBinding
     private val model: EditViewModel by viewModels()
@@ -146,13 +146,11 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-            ImagePicker.with(this)
-                .compress(1024)
-                .maxResultSize(1080, 1080)
-                .start()
-//            val intent = Intent(Intent.ACTION_GET_CONTENT)
-//            intent.type = "image/*"
-//            startActivityForResult(intent, Constants.PICK_PHOTO_FOR_PILL)
+            BottomSheetImagePicker.Builder(getString(R.string.file_provider))
+                .cameraButton(ButtonType.Tile)
+                .galleryButton(ButtonType.Tile)
+                .singleSelectTitle(R.string.select_image)
+                .show(childFragmentManager)
         } else {
             EasyPermissions.requestPermissions(
                 this,
@@ -163,11 +161,9 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == AppCompatActivity.RESULT_OK) {
-            val fileUri = data?.data!!
-            model.setImage(fileUri, requireContext())
+    override fun onImagesSelected(uris: List<Uri>, tag: String?) {
+        uris.forEach { uri ->
+            model.setImage(uri, requireContext())
         }
     }
 
