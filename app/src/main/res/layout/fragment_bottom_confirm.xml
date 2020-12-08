@@ -27,15 +27,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="24dp"
-            android:paddingTop="24dp"
-            android:paddingBottom="16dp"
-            android:text="@{title}"
-            android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            tools:text="Are you sure you want to delete?" />
+            android:orientation="vertical"
+            android:background="@drawable/darker_surface">
+
+            <View style="@style/AppTheme.Widget.Handle" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="24dp"
+                android:text="@{title}"
+                android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                tools:text="Are you sure you want to delete?" />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textConfirm"

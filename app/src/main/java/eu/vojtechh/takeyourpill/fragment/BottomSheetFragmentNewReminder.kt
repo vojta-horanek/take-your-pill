@@ -58,7 +58,7 @@ class BottomSheetFragmentNewReminder :
             setTexts()
         }
 
-        binding.buttonSetTime.setOnClickListener {
+        binding.textTime.setOnClickListener {
             showTimeDialog()
         }
 

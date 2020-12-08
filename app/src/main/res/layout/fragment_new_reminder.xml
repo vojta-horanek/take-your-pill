@@ -8,15 +8,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="24dp"
-            android:paddingTop="24dp"
-            android:paddingBottom="16dp"
-            android:text="@string/set_a_reminder"
-            android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            tools:text="Set a new reminder" />
+            android:orientation="vertical"
+            android:background="@drawable/darker_surface">
+
+            <View style="@style/AppTheme.Widget.Handle" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="24dp"
+                android:text="@string/set_a_reminder"
+                android:textAppearance="@style/AppTheme.Text.BodyTitle" />
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,28 +36,23 @@
                 android:id="@+id/textTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:checkable="true"
+                android:clickable="true"
                 android:drawablePadding="16dp"
+                android:focusable="true"
                 android:gravity="center_vertical"
                 android:paddingVertical="16dp"
-                android:textAppearance="@style/AppTheme.Text.BodyNormal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSetTime"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
                 android:text="@string/set_time_format"
-                app:drawableStartCompat="@drawable/ic_alarm" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonSetTime"
-                android:layout_width="132dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="24dp"
-                android:text="@string/set_time"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:drawableStartCompat="@drawable/ic_alarm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:drawableEndCompat="@drawable/ic_next" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -66,38 +70,34 @@
                 android:gravity="center_vertical"
                 android:paddingVertical="16dp"
                 android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:drawableStartCompat="@drawable/ic_pill"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/numberPickerAmount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="1 pill"
-                app:drawableStartCompat="@drawable/ic_pill" />
+                tools:text="1 pill" />
 
             <com.shawnlin.numberpicker.NumberPicker
-                app:np_dividerType="underline"
-                app:np_height="48dp"
                 android:id="@+id/numberPickerAmount"
                 android:layout_width="180dp"
                 android:layout_height="56dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:np_dividerColor="@color/colorPrimary"
+                app:np_dividerType="underline"
+                app:np_height="48dp"
                 app:np_max="20"
                 app:np_min="1"
                 app:np_orientation="horizontal"
-                app:np_value="1"
-                app:np_dividerColor="@color/colorPrimary"
                 app:np_selectedTextColor="@color/colorPrimary"
-                app:np_textColor="?attr/colorOnSurface" />
+                app:np_textColor="?attr/colorOnSurface"
+                app:np_value="1" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+        <View style="@style/AppTheme.Widget.Divider" />
 
 
         <TextView
@@ -114,7 +114,7 @@
             android:paddingVertical="16dp"
             android:text="@string/save_reminder"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            app:drawableStartCompat="@drawable/ic_check" />
+            app:drawableStartCompat="@drawable/ic_save" />
 
     </LinearLayout>
 

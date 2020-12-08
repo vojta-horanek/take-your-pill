@@ -41,7 +41,7 @@
     <string name="add_photo">Přidat fotku</string>
     <string name="select_image">Vybrat fotku</string>
     <string name="set_time">Nastavit čas</string>
-    <string name="set_time_format">Připomenout v %1$s</string>
+    <string name="set_time_format">Nastavit čas připomínky (%1$s)</string>
     <string name="save_reminder">Uložit připomínku</string>
     <string name="set_a_reminder">Nastavit připomínku</string>
     <plurals name="set_amount_format">

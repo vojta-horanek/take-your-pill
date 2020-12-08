@@ -77,10 +77,15 @@
     </style>
 
     <style name="AppTheme.Text.BodyTitle" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">22sp</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="fontFamily">@font/jost_medium</item>
     </style>
 
+    <style name="AppTheme.Text.BodyTitleSmall" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="fontFamily">@font/jost_medium</item>
+    </style>
 
     <style name="AppTheme.Text.Header6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">?attr/colorOnSurface</item>
@@ -123,5 +128,22 @@
         <item name="android:textAllCaps">false</item>
         <item name="fontFamily">@font/jost_medium</item>
     </style>
+
+    <style name="AppTheme.Widget.Handle" parent="">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">6dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:background">@drawable/shape_handle</item>
+    </style>
+
+    <style name="AppTheme.Widget.Divider" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
 
 </resources>

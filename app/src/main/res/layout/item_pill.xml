@@ -133,7 +133,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:textAppearance="@style/AppTheme.Text.BodyTitle" />
+                    android:textAppearance="@style/AppTheme.Text.BodyTitleSmall" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonTaken"
