@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
@@ -91,17 +90,20 @@ class DetailsFragment : Fragment(),
     }
 
     override fun onConfirmClicked(view: View) {
-        // TODO Delete only pill -> mark it as deleted
-        model.deletePill(model.pill)
+        model.deletePill(model.pill.pill)
+        exitOnDelete()
+    }
+
+    override fun onCancelClicked(view: View) {
+        model.deletePillWithHistory(model.pill)
+        exitOnDelete()
+    }
+
+    private fun exitOnDelete() {
         exitTransition = Slide().apply {
             addTarget(R.id.detailsView)
         }
         sharedElementEnterTransition = null
         findNavController().navigateUp()
-    }
-
-    override fun onCancelClicked(view: View) {
-        // TODO Delete pill and history
-        (childFragmentManager.findFragmentByTag("confirm_delete") as BottomSheetDialogFragment).dismiss()
     }
 }

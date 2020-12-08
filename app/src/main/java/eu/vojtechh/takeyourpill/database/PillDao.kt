@@ -9,7 +9,7 @@ import eu.vojtechh.takeyourpill.model.Reminder
 @Dao
 interface PillDao {
     @Transaction
-    @Query("SELECT * FROM pill")
+    @Query("SELECT * FROM pill WHERE deleted = 0")
     fun getAll(): LiveData<List<Pill>>
 
     @Transaction

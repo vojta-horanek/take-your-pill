@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import eu.vojtechh.takeyourpill.model.BasePill
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.repository.PillRepository
@@ -15,8 +16,11 @@ class DetailsViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository
 ) : ViewModel() {
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
-    fun deletePill(pill: Pill) =
+    fun deletePillWithHistory(pill: Pill) =
         viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePillAndReminder(pill) }
+
+    fun deletePill(pill: BasePill) =
+        viewModelScope.launch(Dispatchers.IO) { pillRepository.markPillDeleted(pill) }
 
     lateinit var pill: Pill
 
