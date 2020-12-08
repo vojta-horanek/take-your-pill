@@ -31,7 +31,7 @@ data class Pill(
         get() = description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE } ?: View.GONE
 
     val remindersString
-        get() = remindConstant.remindTimes.joinToString { it.timeString }
+        get() = remindConstant.remindTimes.joinToString { "${it.amount} ‒ ${it.timeString}" }
 
     fun photoDrawable(context: Context) =
         if (photo != null) BitmapDrawable(context.resources, photo)
