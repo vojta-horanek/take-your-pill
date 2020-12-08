@@ -107,7 +107,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         })
         model.setActivePillColor(model.pill.color)
 
-        model.setReminders(model.pill.remindConstant.remindTimes)
+        model.setReminders(model.pill.reminders)
         model.reminders.observe(viewLifecycleOwner, {
             reminderAdapter.submitList(it)
         })
@@ -138,17 +138,17 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     }
 
     override fun onReminderClicked(view: View, reminder: Reminder) {
-        showReminderDialog(reminder, true)
+        showReminderDialog(reminder, editing = true)
     }
 
     private fun showReminderDialog(
-        reminder: Reminder = Reminder.create(),
+        reminder: Reminder = Reminder.create(pillId = model.pill.id),
         editing: Boolean = false
     ) {
         BottomSheetFragmentNewReminder()
             .setListener(this)
-            .setReminder(reminder)
             .setEditing(editing)
+            .setReminder(reminder)
             .show(childFragmentManager, "new_reminder")
     }
 
@@ -201,7 +201,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     private fun setReminderOptionsViews() {
         binding.run {
-            with(model.pill.remindConstant) {
+            with(model.pill.options) {
                 checkDayLimit.isChecked = limitDays != ReminderOptions.NO_DAY_LIMIT
                 checkRestoreAfter.isChecked = breakDays != ReminderOptions.NO_BREAK
                 checkCycleCount.isChecked = repeatCount == ReminderOptions.REPEAT_FOREVER
@@ -275,7 +275,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             }
 
             // Does Pill have at leas one reminder?
-            if (model.pill.remindConstant.remindTimes.isEmpty()) {
+            if (model.pill.reminders.isEmpty()) {
                 Snackbar.make(
                     this.root,
                     getString(R.string.no_reminders_set),
@@ -286,7 +286,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
             val reminderOptions = getReminderOptions()
             model.pill.apply {
-                remindConstant = reminderOptions
+                options = reminderOptions
                 description = inputDescription.getString()
             }
 

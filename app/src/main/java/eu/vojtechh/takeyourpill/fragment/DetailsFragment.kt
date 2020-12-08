@@ -20,7 +20,6 @@ import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 
-
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
     BottomSheetFragmentConfirmation.ConfirmListener, ReminderAdapter.ReminderAdapterListener {
@@ -63,7 +62,7 @@ class DetailsFragment : Fragment(),
 
     private fun initViews() {
 
-        model.setReminders(model.pill.remindConstant.remindTimes)
+        model.setReminders(model.pill.reminders)
         model.reminders.observe(viewLifecycleOwner, {
             reminderAdapter.submitList(it)
         })

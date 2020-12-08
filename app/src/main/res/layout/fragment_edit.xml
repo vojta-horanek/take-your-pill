@@ -213,7 +213,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:text="@{Integer.toString(pill.remindConstant.displayLimit)}" />
+                            android:text="@{Integer.toString(pill.options.displayLimit)}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -229,7 +229,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:text="@{Integer.toString(pill.remindCurrent.displayLimit)}" />
+                            android:text="@{Integer.toString(pill.optionsChanging.displayLimit)}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -260,7 +260,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:text="@{Integer.toString(pill.remindConstant.displayBreak)}" />
+                            android:text="@{Integer.toString(pill.options.displayBreak)}" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
@@ -290,7 +290,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:text="@{Integer.toString(pill.remindConstant.displayRepeat)}" />
+                            android:text="@{Integer.toString(pill.options.displayRepeat)}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>

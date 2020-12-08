@@ -3,11 +3,12 @@ package eu.vojtechh.takeyourpill.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.BasePill
+import eu.vojtechh.takeyourpill.model.Reminder
 
 @Database(
-    entities = [Pill::class],
-    version = 6
+    entities = [BasePill::class, Reminder::class],
+    version = 15
 )
 @TypeConverters(Converters::class)
 abstract class PillDatabase : RoomDatabase() {

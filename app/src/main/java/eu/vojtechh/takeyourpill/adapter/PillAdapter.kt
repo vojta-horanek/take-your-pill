@@ -5,12 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ItemHeaderBinding
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
 import eu.vojtechh.takeyourpill.model.Pill
-import eu.vojtechh.takeyourpill.model.PillColor
-import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 
 class PillAdapter(
     private val listener: PillAdapterListener,
@@ -55,19 +52,12 @@ class PillAdapter(
     }
 
     override fun submitList(list: List<Pill>?) {
-        // Yes, this is for the header, yes it is awful
+        // Yes, this is for the header, yes it is awful FIXME probably
         list?.let {
             val newList = list.toMutableList()
             newList.add(
                 0,
-                Pill(
-                    "HEADER",
-                    null,
-                    null,
-                    PillColor(R.color.colorBlue),
-                    ReminderOptions.empty(),
-                    ReminderOptions.empty()
-                )
+                Pill.getEmpty().apply { name = "HEADER" }
             )
             super.submitList(newList)
         } ?: super.submitList(list)

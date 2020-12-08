@@ -9,7 +9,25 @@ class PillRepository @Inject constructor(
 ) {
     fun getAllPills() = pillDao.getAll()
     fun getPill(pillId: Long) = pillDao.getById(pillId)
-    suspend fun deletePill(pill: Pill) = pillDao.delete(pill)
-    suspend fun insertPill(pill: Pill) = pillDao.insert(pill)
-    suspend fun updatePill(pill: Pill) = pillDao.update(pill)
+    suspend fun deletePillAndReminder(pill: Pill) {
+        pillDao.deletePill(pill.pill)
+        pillDao.deleteReminders(pill.reminders)
+    }
+
+    suspend fun insertPill(pill: Pill): Long {
+        val id = pillDao.insertPill(pill.pill)
+        pill.reminders.forEach {
+            it.pillId = id
+        }
+        pillDao.insertReminders(pill.reminders)
+        return id
+    }
+
+    suspend fun updatePill(pill: Pill) {
+        // Delete all reminders based on pill (removes orphaned)
+        pillDao.deleteRemindersByPillId(pill.id)
+        // Add all reminders (new, updated)
+        pillDao.insertReminders(pill.reminders)
+        pillDao.updatePill(pill.pill)
+    }
 }

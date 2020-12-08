@@ -9,6 +9,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 
 class Converters {
@@ -66,5 +67,17 @@ class Converters {
     @TypeConverter
     fun listToJson(listOfString: MutableList<Reminder>): String {
         return Gson().toJson(listOfString)
+    }
+
+    @TypeConverter
+    fun toCalendar(l: Long): Calendar {
+        val c: Calendar = Calendar.getInstance()
+        c.timeInMillis = l
+        return c
+    }
+
+    @TypeConverter
+    fun fromCalendar(c: Calendar): Long {
+        return c.time.time
     }
 }

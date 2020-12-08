@@ -16,7 +16,7 @@ class DetailsViewModel @ViewModelInject constructor(
 ) : ViewModel() {
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
     fun deletePill(pill: Pill) =
-        viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePill(pill) }
+        viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePillAndReminder(pill) }
 
     lateinit var pill: Pill
 
@@ -25,7 +25,7 @@ class DetailsViewModel @ViewModelInject constructor(
     }
 
     val reminders = Transformations.map(_reminders) {
-        pill.remindConstant.remindTimes = it.toMutableList()
+        pill.reminders = it.toMutableList()
         it
     }
 

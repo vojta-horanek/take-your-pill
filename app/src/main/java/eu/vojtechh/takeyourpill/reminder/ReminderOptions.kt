@@ -1,7 +1,6 @@
 package eu.vojtechh.takeyourpill.reminder
 
 import eu.vojtechh.takeyourpill.model.Reminder
-import java.util.*
 
 /*
     A class used for setting all the possible options
@@ -42,8 +41,6 @@ class ReminderOptions(
      */
     var repeatCount: Int = REPEAT_FOREVER,
 
-    /* List of times that the reminder will fire each day */
-    var remindTimes: MutableList<Reminder>
 ) {
     companion object {
         const val NO_DAY_LIMIT = -1
@@ -51,13 +48,13 @@ class ReminderOptions(
         const val REPEAT_FOREVER = -1
 
         fun infinite(remindTimes: MutableList<Reminder>) =
-            ReminderOptions(remindTimes = remindTimes)
+            ReminderOptions()
 
         fun finite(remindTimes: MutableList<Reminder>, limitDays: Int) =
-            ReminderOptions(remindTimes = remindTimes, limitDays = limitDays)
+            ReminderOptions(limitDays = limitDays)
 
         fun infiniteBreak(remindTimes: MutableList<Reminder>, limitDays: Int, breakDays: Int) =
-            ReminderOptions(remindTimes = remindTimes, limitDays = limitDays, breakDays = breakDays)
+            ReminderOptions(limitDays = limitDays, breakDays = breakDays)
 
         fun finiteRepeating(
             remindTimes: MutableList<Reminder>,
@@ -66,13 +63,12 @@ class ReminderOptions(
             repeatCount: Int
         ) =
             ReminderOptions(
-                remindTimes = remindTimes,
                 limitDays = limitDays,
                 breakDays = breakDays,
                 repeatCount = repeatCount
             )
 
-        fun empty() = ReminderOptions(remindTimes = mutableListOf())
+        fun empty() = ReminderOptions()
     }
 
     val displayLimit: Int
@@ -83,40 +79,4 @@ class ReminderOptions(
 
     val displayRepeat: Int
         get() = if (repeatCount == REPEAT_FOREVER) 3 else repeatCount
-
-
-    // TODO Very much not finished and broken
-    val nextReminder: Calendar?
-        get() {
-            val nextReminder = remindTimes.firstOrNull() ?: return null
-            val today = Calendar.getInstance()
-
-            // Infinite reminder or finite reminder that is still alive
-            if (limitDays == NO_DAY_LIMIT || limitDays != 0) {
-                nextReminder.time.set(
-                    today.get(Calendar.YEAR),
-                    today.get(Calendar.MONTH),
-                    today.get(Calendar.DATE)
-                )
-                return nextReminder.time
-
-            }
-            // A reminder that is dead but only has a break
-            else if (limitDays == 0 && breakDays != NO_BREAK) {
-                nextReminder.time.set(
-                    today.get(Calendar.YEAR),
-                    today.get(Calendar.MONTH),
-                    today.get(Calendar.DATE)
-                )
-                // add the break day count to the calendar
-                nextReminder.time.add(Calendar.DATE, breakDays)
-                return nextReminder.time
-            }
-            // Reminder that is both dead and does not have a break => completely dead
-            else if (limitDays == 0 && breakDays == NO_BREAK) {
-                return null
-            }
-            // FIXME Just a placeholder for the compiler
-            return null
-        }
 }

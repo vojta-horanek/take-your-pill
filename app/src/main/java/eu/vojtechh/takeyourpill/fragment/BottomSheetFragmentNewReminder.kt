@@ -22,7 +22,7 @@ class BottomSheetFragmentNewReminder :
 
     private var listener: ConfirmListener? = null
 
-    private var reminder = Reminder.create(8, 0, 1)
+    private lateinit var reminder: Reminder
 
     fun setListener(listener: ConfirmListener): BottomSheetFragmentNewReminder {
         this.listener = listener

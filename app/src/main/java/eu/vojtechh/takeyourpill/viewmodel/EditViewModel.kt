@@ -9,7 +9,6 @@ import androidx.lifecycle.*
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
-import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,14 +24,7 @@ class EditViewModel @ViewModelInject constructor(
 
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
 
-    fun getNewEmptyPill() = Pill(
-        "",
-        "",
-        null,
-        PillColor.default(),
-        ReminderOptions.empty(),
-        ReminderOptions.empty()
-    )
+    fun getNewEmptyPill() = Pill.getEmpty()
 
     lateinit var pill: Pill
     val isPillInitialized
@@ -60,8 +52,8 @@ class EditViewModel @ViewModelInject constructor(
     }
 
     val reminders = Transformations.map(_reminders) {
-        pill.remindConstant.remindTimes = it.toMutableList()
-        it
+        pill.reminders = it.sortedBy { rem -> rem.time.time }.toMutableList()
+        pill.reminders
     }
 
     fun setReminders(reminders: List<Reminder>) {
@@ -71,7 +63,6 @@ class EditViewModel @ViewModelInject constructor(
     fun addReminder(reminder: Reminder) {
         val newList = _reminders.value?.toMutableList()
         newList?.add(reminder)
-        newList?.sortBy { it.time.time }
         _reminders.value = newList
     }
 
@@ -83,7 +74,12 @@ class EditViewModel @ViewModelInject constructor(
 
     fun editReminder(reminder: Reminder) {
         val newList = _reminders.value?.toMutableList()
-        // TODO Edit reminder
+        if (reminder.reminderId != 0L) {
+            newList?.removeAll { r -> r.reminderId == reminder.reminderId }
+        } else {
+            newList?.remove(reminder)
+        }
+        newList?.add(reminder)
         _reminders.value = newList
     }
 
