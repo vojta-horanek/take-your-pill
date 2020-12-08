@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,11 +51,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterLi
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     if (dy > 0) {
-                        activity?.findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton)
-                            ?.shrink()
+                        view.floatingActionButton.shrink()
                     } else {
-                        activity?.findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton)
-                            ?.extend()
+                        view.floatingActionButton.extend()
                     }
                     super.onScrolled(recyclerView, dx, dy)
                 }

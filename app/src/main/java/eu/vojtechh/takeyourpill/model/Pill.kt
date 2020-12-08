@@ -30,6 +30,9 @@ data class Pill(
     val descriptionVisibility
         get() = description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE } ?: View.GONE
 
+    val remindersString
+        get() = remindConstant.remindTimes.joinToString { it.timeString }
+
     fun photoDrawable(context: Context) =
         if (photo != null) BitmapDrawable(context.resources, photo)
         else ContextCompat.getDrawable(context, R.drawable.photo_default)

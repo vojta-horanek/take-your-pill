@@ -50,7 +50,7 @@
                     android:id="@+id/inputNameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:hint="@string/name">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -136,15 +136,15 @@
                             tools:ignore="ContentDescription"
                             tools:src="@drawable/photo_default" />
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:contentDescription="@string/add_photo"
                             android:elevation="5dp"
-                            android:src="@drawable/ic_photo_add" />
+                            app:srcCompat="@drawable/ic_photo_add" />
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/imageDeletePhoto"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
@@ -152,7 +152,7 @@
                             android:layout_margin="8dp"
                             android:contentDescription="@string/delete"
                             android:elevation="5dp"
-                            android:src="@drawable/ic_delete"
+                            app:srcCompat="@drawable/ic_delete"
                             android:visibility="@{pill.photoVisibility, default=gone}"
                             tools:visibility="visible" />
 
@@ -179,12 +179,14 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonAddReminder"
+                    app:strokeColor="@color/colorPrimary"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/add_reminder"
-                    app:icon="@drawable/ic_add_alert"
-                    android:textAppearance="@style/AppTheme.Text.ButtonSmall" />
+                    android:textAppearance="@style/AppTheme.Text.ButtonSmall"
+                    app:icon="@drawable/ic_add_alert" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/checkDayLimit"
