@@ -306,9 +306,10 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="4dp"
                 android:paddingBottom="8dp"
-                android:weightSum="2">
+                android:weightSum="1">
 
                 <com.google.android.material.card.MaterialCardView
+                    android:visibility="gone"
                     android:id="@+id/buttonMoreInfo"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
