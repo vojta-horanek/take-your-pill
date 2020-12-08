@@ -72,11 +72,11 @@ class DetailsFragment : Fragment(),
 
         binding.buttonDelete.setOnClickListener {
             BottomSheetFragmentConfirmation.newInstance(
-                getString(R.string.confirm_delete_pill),
-                getString(R.string.delete),
-                getString(R.string.cancel),
+                getString(R.string.delete_pill),
+                getString(R.string.delete_only_pil),
+                getString(R.string.delete_pill_and_history),
                 R.drawable.ic_delete,
-                R.drawable.ic_cancel,
+                R.drawable.ic_delete_history,
             ).apply {
                 setListener(this@DetailsFragment) // FIXME the listener get deleted when BottomS.. open and theme is changed
             }.show(childFragmentManager, "confirm_delete")
@@ -92,6 +92,7 @@ class DetailsFragment : Fragment(),
     }
 
     override fun onConfirmClicked(view: View) {
+        // TODO Delete only pill -> mark it as deleted
         model.deletePill(model.pill)
         exitTransition = Slide().apply {
             addTarget(R.id.detailsView)
@@ -101,6 +102,7 @@ class DetailsFragment : Fragment(),
     }
 
     override fun onCancelClicked(view: View) {
+        // TODO Delete pill and history
         (childFragmentManager.findFragmentByTag("confirm_delete") as BottomSheetDialogFragment).dismiss()
     }
 }
