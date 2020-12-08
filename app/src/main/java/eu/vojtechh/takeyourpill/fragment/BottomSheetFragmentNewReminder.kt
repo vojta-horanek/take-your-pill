@@ -47,6 +47,7 @@ class BottomSheetFragmentNewReminder :
         binding = FragmentNewReminderBinding.inflate(inflater, container, false)
 
         setTexts()
+        binding.numberPickerAmount.value = reminder.amount
 
         binding.textConfirm.setOnClickListener {
             listener?.onNewPillConfirmClicked(reminder, editing)
