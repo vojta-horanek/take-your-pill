@@ -15,6 +15,9 @@
 
     <style name="AppTheme.Theme.CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppTheme.Widget.CustomBottomSheet</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?colorSurface</item>
     </style>
 
     <style name="AppTheme.Widget.CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
@@ -29,14 +32,6 @@
         <item name="cornerSizeTopLeft">8dp</item>
         <item name="cornerSizeBottomRight">8dp</item>
         <item name="cornerSizeBottomLeft">8dp</item>
-    </style>
-
-
-    <style name="AppTheme.Overlay.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/Widget.MaterialComponents.BottomSheet</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">?colorSurface</item>
     </style>
 
     <style name="AppTheme.Shape.roundedCornersImageView" parent="">
