@@ -14,7 +14,6 @@ import com.google.android.material.timepicker.TimeFormat
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.FragmentNewReminderBinding
 import eu.vojtechh.takeyourpill.model.Reminder
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -97,8 +96,8 @@ class BottomSheetFragmentNewReminder :
             val error = reminder.hour == materialTimePicker.hour &&
                     reminder.minute == materialTimePicker.minute &&
                     binding.textTime.textColors != binding.textConfirm.textColors
-            reminder.time.set(Calendar.HOUR_OF_DAY, materialTimePicker.hour)
-            reminder.time.set(Calendar.MINUTE, materialTimePicker.minute)
+            reminder.calendar.set(Calendar.HOUR_OF_DAY, materialTimePicker.hour)
+            reminder.calendar.set(Calendar.MINUTE, materialTimePicker.minute)
             setTexts(error)
         }
 
@@ -122,7 +121,7 @@ class BottomSheetFragmentNewReminder :
                 )
             textTime.text = resources.getString(
                 R.string.set_time_format,
-                SimpleDateFormat("HH:mm", Locale.getDefault()).format(reminder.time.time)
+                reminder.timeString
             )
 
         }

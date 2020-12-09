@@ -10,6 +10,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
+import java.util.*
 
 data class Pill(
     @Embedded val pill: BasePill,
@@ -115,6 +116,27 @@ data class Pill(
     val descriptionVisibility
         get() = pill.description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE }
             ?: View.GONE
+
+    fun getCloseReminder(): Reminder? {
+        // TODO Also include if user confirmed already
+        reminders.forEach {
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+            calendar.clear()
+            calendar.set(Calendar.HOUR_OF_DAY, hour)
+            calendar.set(Calendar.MINUTE, minute)
+            val timeOffset = (10 /* minutes */ * 60 * 1000)
+            if (LongRange(
+                    calendar.timeInMillis - timeOffset,
+                    calendar.timeInMillis + timeOffset
+                ).contains(it.calendar.timeInMillis)
+            ) {
+                return it
+            }
+        }
+        return null
+    }
 
     fun getRemindersString(context: Context) = reminders.joinToString {
         context.resources.getString(

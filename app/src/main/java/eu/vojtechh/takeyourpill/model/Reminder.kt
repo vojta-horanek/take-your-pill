@@ -7,7 +7,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import eu.vojtechh.takeyourpill.R
-import java.text.SimpleDateFormat
+import java.text.DateFormat
 import java.util.*
 
 @Entity(
@@ -21,15 +21,15 @@ import java.util.*
 )
 data class Reminder(
     @PrimaryKey(autoGenerate = true) val reminderId: Long = 0,
-    var time: Calendar,
+    var calendar: Calendar,
     var amount: Int,
     @ColumnInfo(index = true) var pillId: Long
 ) {
     val hour
-        get() = time.get(Calendar.HOUR_OF_DAY)
+        get() = calendar.get(Calendar.HOUR_OF_DAY)
 
     val minute
-        get() = time.get(Calendar.MINUTE)
+        get() = calendar.get(Calendar.MINUTE)
 
     companion object {
         fun create(hour: Int = 8, minute: Int = 0, amount: Int = 1, pillId: Long): Reminder {
@@ -37,12 +37,12 @@ data class Reminder(
             calendar.clear()
             calendar.set(Calendar.HOUR_OF_DAY, hour)
             calendar.set(Calendar.MINUTE, minute)
-            return Reminder(time = calendar, amount = amount, pillId = pillId)
+            return Reminder(calendar = calendar, amount = amount, pillId = pillId)
         }
     }
 
     val timeString: String
-        get() = SimpleDateFormat("HH:mm", Locale.getDefault()).format(time.time)
+        get() = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)
 
     fun formattedString(context: Context) =
         context.resources.getQuantityString(R.plurals.reminder_text, amount, timeString, amount)
