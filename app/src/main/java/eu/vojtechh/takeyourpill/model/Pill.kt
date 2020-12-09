@@ -111,8 +111,6 @@ data class Pill(
 
     val photoVisibility
         get() = if (pill.photo != null) View.VISIBLE else View.GONE
-    val colorVisibility
-        get() = if (pill.photo != null) View.GONE else View.VISIBLE
     val descriptionVisibility
         get() = pill.description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE }
             ?: View.GONE
