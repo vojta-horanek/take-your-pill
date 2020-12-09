@@ -10,7 +10,7 @@ import androidx.databinding.BindingAdapter
 
 object BindingAdapters {
     @JvmStatic
-    @BindingAdapter("app:background_color_shaped")
+    @BindingAdapter("background_color_shaped")
     fun setBackgroundColorShaped(view: View, color: Int) {
         if (VERSION.SDK_INT >= VERSION_CODES.Q) {
             view.background.colorFilter = BlendModeColorFilter(
@@ -24,6 +24,4 @@ object BindingAdapters {
             )
         }
     }
-
-
 }

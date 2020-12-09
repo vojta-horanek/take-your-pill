@@ -15,7 +15,7 @@
     <string name="upcoming_pills">Upcoming pills</string>
     <string name="all_pills">All Pills</string>
     <string name="more_info">More info</string>
-    <string name="delete_only_pil">Delete only pill</string>
+    <string name="delete_only_pil">Only delete pill</string>
     <string name="delete">Delete</string>
     <string name="delete_pill_and_history">Delete pill and history</string>
     <string name="yes">Yes</string>
@@ -46,6 +46,7 @@
     <string name="select_image">Select an image</string>
     <string name="set_time">Set time</string>
     <string name="set_time_format">Set remind time (%1$s)</string>
+    <string name="pill_time_reminders_format">%1$d at %2$s</string>
     <string name="save_reminder">Save reminder</string>
     <string name="set_a_reminder">Set a reminder</string>
     <string name="delete_pill">Delete pill</string>
@@ -57,4 +58,5 @@
         <item quantity="one">%1$s: %2$d pill</item>
         <item quantity="other">%1$s: %2$d pills</item>
     </plurals>
+    <string name="pill_taken_question">Have you taken this pill at %1$s</string>
 </resources>

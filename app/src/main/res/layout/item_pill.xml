@@ -129,7 +129,7 @@
                     android:id="@+id/textQuestionTake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Have you taken this pill at 8:00?"
+                    android:text="@string/pill_taken_question"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

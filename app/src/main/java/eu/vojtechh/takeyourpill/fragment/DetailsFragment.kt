@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -53,7 +54,6 @@ class DetailsFragment : Fragment(),
                 model.pill = it
                 binding.pill = model.pill
                 initViews()
-                startPostponedEnterTransition()
             }
         })
 
@@ -61,11 +61,7 @@ class DetailsFragment : Fragment(),
 
     private fun initViews() {
 
-        model.setReminders(model.pill.reminders)
-        model.reminders.observe(viewLifecycleOwner, {
-            reminderAdapter.submitList(it)
-        })
-
+        binding.cardPhoto.visibility = model.pill.photoVisibility
         binding.recyclerReminders.adapter = reminderAdapter
 
         binding.buttonDelete.setOnClickListener {
@@ -86,6 +82,14 @@ class DetailsFragment : Fragment(),
                 DetailsFragmentDirections.actionDetailsFragmentToEditFragment(model.pill.id)
             findNavController().navigate(directions)
         }
+
+        model.setReminders(model.pill.reminders)
+        model.reminders.observe(viewLifecycleOwner, {
+            reminderAdapter.submitList(it)
+            (binding.root.parent as? ViewGroup)?.doOnPreDraw {
+                startPostponedEnterTransition()
+            }
+        })
 
     }
 

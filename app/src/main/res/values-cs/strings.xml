@@ -54,4 +54,9 @@
         <item quantity="few">%1$s: %2$d prášky</item>
         <item quantity="other">%1$s: %2$d prášků</item>
     </plurals>
+    <string name="delete_pill_and_history">Vymazat prášek a historii</string>
+    <string name="delete_only_pil">Pouze vymazat prášek</string>
+    <string name="pill_time_reminders_format">%1$d v %2$s</string>
+    <string name="delete_pill">Smazat prášek</string>
+    <string name="pill_taken_question">Vzali jste si v %1$s tento prášek?</string>
 </resources>

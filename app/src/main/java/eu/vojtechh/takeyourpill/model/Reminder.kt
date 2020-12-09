@@ -2,6 +2,7 @@ package eu.vojtechh.takeyourpill.model
 
 import android.content.Context
 import androidx.recyclerview.widget.DiffUtil
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -22,7 +23,7 @@ data class Reminder(
     @PrimaryKey(autoGenerate = true) val reminderId: Long = 0,
     var time: Calendar,
     var amount: Int,
-    var pillId: Long
+    @ColumnInfo(index = true) var pillId: Long
 ) {
     val hour
         get() = time.get(Calendar.HOUR_OF_DAY)
