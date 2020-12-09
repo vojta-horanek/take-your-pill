@@ -60,4 +60,6 @@
     </plurals>
     <string name="pill_taken_question">Have you taken this pill at %1$s</string>
     <string name="two_reminders_same_time">There can only be one reminder with the same time. Please set a different time.</string>
+    <string name="nothing_to_see_here">Nothing to see here… 🧐</string>
+    <string name="try_to_add_a_pill_first">Try to add a pill first!</string>
 </resources>

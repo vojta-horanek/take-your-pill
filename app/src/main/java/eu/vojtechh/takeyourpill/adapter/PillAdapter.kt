@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.databinding.ItemHeaderBinding
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
+import eu.vojtechh.takeyourpill.databinding.LayoutPillViewEmptyBinding
 import eu.vojtechh.takeyourpill.model.Pill
 
 class PillAdapter(
@@ -19,33 +20,36 @@ class PillAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder.itemViewType == 1) {
-            if (holder is HeaderViewHolder) {
-                holder.bind(sectionPrefix)
-            }
-        } else if (holder.itemViewType == 2) {
-            if (holder is PillViewHolder) {
-                holder.bind(getItem(position))
-            }
+        when (holder.itemViewType) {
+            Pill.VIEW_TYPE_ITEM -> if (holder is PillViewHolder) holder.bind(getItem(position))
+            Pill.VIEW_TYPE_HEADER -> if (holder is HeaderViewHolder) holder.bind(sectionPrefix)
+            Pill.VIEW_TYPE_EMPTY -> if (holder is EmptyViewHolder) holder.bind()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            1 -> HeaderViewHolder(
-                ItemHeaderBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-            )
-            2 -> PillViewHolder(
+            Pill.VIEW_TYPE_ITEM -> PillViewHolder(
                 ItemPillBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 ),
                 listener
+            )
+            Pill.VIEW_TYPE_HEADER -> HeaderViewHolder(
+                ItemHeaderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            Pill.VIEW_TYPE_EMPTY -> EmptyViewHolder(
+                LayoutPillViewEmptyBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
             )
             else -> throw RuntimeException("Unknown view holder")
         }
@@ -57,14 +61,17 @@ class PillAdapter(
             val newList = list.toMutableList()
             newList.add(
                 0,
-                Pill.getEmpty().apply { name = "HEADER" }
+                Pill.withHeaderViewType()
             )
+
+            if (it.isEmpty()) {
+                newList.add(Pill.withEmptyViewType())
+            }
+
             super.submitList(newList)
         } ?: super.submitList(list)
 
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (position == 0) 1 else 2
-    }
+    override fun getItemViewType(position: Int) = getItem(position).pill.viewType
 }

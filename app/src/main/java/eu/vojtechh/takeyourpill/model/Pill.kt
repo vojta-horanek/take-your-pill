@@ -21,6 +21,11 @@ data class Pill(
 ) {
 
     companion object {
+
+        const val VIEW_TYPE_ITEM = 0
+        const val VIEW_TYPE_HEADER = 1
+        const val VIEW_TYPE_EMPTY = 2
+
         fun getEmpty() = Pill(
             BasePill(
                 "",
@@ -31,6 +36,30 @@ data class Pill(
                 ReminderOptions.empty(),
                 ReminderOptions.empty()
             ), listOf()
+        )
+
+        fun withHeaderViewType() = Pill(
+            BasePill(
+                "",
+                "",
+                null,
+                PillColor.default(),
+                false,
+                ReminderOptions.empty(),
+                ReminderOptions.empty(),
+            ).apply { viewType = VIEW_TYPE_HEADER }, listOf()
+        )
+
+        fun withEmptyViewType() = Pill(
+            BasePill(
+                "",
+                "",
+                null,
+                PillColor.default(),
+                false,
+                ReminderOptions.empty(),
+                ReminderOptions.empty(),
+            ).apply { viewType = VIEW_TYPE_EMPTY }, listOf()
         )
     }
 
