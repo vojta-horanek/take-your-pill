@@ -119,14 +119,14 @@ data class Pill(
 
     fun getCloseReminder(): Reminder? {
         // TODO Also include if user confirmed already
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+        calendar.clear()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+        val timeOffset = (10 /* minutes */ * 60 * 1000)
         reminders.forEach {
-            val calendar = Calendar.getInstance()
-            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
-            calendar.clear()
-            calendar.set(Calendar.HOUR_OF_DAY, hour)
-            calendar.set(Calendar.MINUTE, minute)
-            val timeOffset = (10 /* minutes */ * 60 * 1000)
             if (LongRange(
                     calendar.timeInMillis - timeOffset,
                     calendar.timeInMillis + timeOffset
