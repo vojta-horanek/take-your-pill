@@ -5,11 +5,13 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
+import eu.vojtechh.takeyourpill.klass.slideUp
 import eu.vojtechh.takeyourpill.model.Pill
+
 
 class PillViewHolder(
     private val binding: ItemPillBinding,
-    listener: PillAdapter.PillAdapterListener
+    private val listener: PillAdapter.PillAdapterListener
 ) : RecyclerView.ViewHolder(binding.root) {
     init {
         binding.listener = listener
@@ -29,9 +31,22 @@ class PillViewHolder(
                 R.string.pill_taken_question,
                 it.timeString
             )
+            binding.nextReminder = it
+            binding.buttonTaken.setOnClickListener { v ->
+                listener.onPillConfirmClicked(v, it)
+                hideConfirmCard()
+            }
+            binding.buttonNotTaken.setOnClickListener { v ->
+                listener.onPillNotConfirmClicked(v, it)
+                hideConfirmCard()
+            }
         } ?: run {
             binding.cardConfirmTake.visibility = View.GONE
         }
+    }
+
+    private fun hideConfirmCard() {
+        binding.cardConfirmTake.slideUp()
     }
 
     private fun getFormattedDescription(pill: Pill, context: Context): CharSequence {

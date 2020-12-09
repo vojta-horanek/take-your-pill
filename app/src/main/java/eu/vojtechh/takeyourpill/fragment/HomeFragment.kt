@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,6 +17,7 @@ import eu.vojtechh.takeyourpill.adapter.PillAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
 
 @AndroidEntryPoint
@@ -79,5 +81,18 @@ class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterLi
         val extras = FragmentNavigatorExtras(view to pillDetailTransitionName)
         val directions = HomeFragmentDirections.actionHomescreenToDetails(pill.id)
         findNavController().navigate(directions, extras)
+    }
+
+    // TODO
+    override fun onPillConfirmClicked(view: View, reminder: Reminder) {
+        Snackbar.make(view, reminder.timeString, Snackbar.LENGTH_SHORT)
+            .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
+    }
+
+    // TODO
+    override fun onPillNotConfirmClicked(view: View, reminder: Reminder) {
+        Snackbar.make(view, "DISMISS" + reminder.timeString, Snackbar.LENGTH_SHORT)
+            .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
+
     }
 }

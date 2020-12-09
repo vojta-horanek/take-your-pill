@@ -9,6 +9,7 @@ import eu.vojtechh.takeyourpill.databinding.ItemHeaderBinding
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
 import eu.vojtechh.takeyourpill.databinding.LayoutPillViewEmptyBinding
 import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.Reminder
 
 class PillAdapter(
     private val listener: PillAdapterListener,
@@ -17,6 +18,8 @@ class PillAdapter(
 
     interface PillAdapterListener {
         fun onPillClicked(view: View, pill: Pill)
+        fun onPillConfirmClicked(view: View, reminder: Reminder)
+        fun onPillNotConfirmClicked(view: View, reminder: Reminder)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

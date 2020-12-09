@@ -13,6 +13,10 @@
             type="eu.vojtechh.takeyourpill.model.Pill" />
 
         <variable
+            name="nextReminder"
+            type="eu.vojtechh.takeyourpill.model.Reminder" />
+
+        <variable
             name="transition_id"
             type="java.lang.String" />
 
@@ -28,7 +32,8 @@
         android:paddingBottom="16dp"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -116,7 +121,8 @@
             android:layout_height="wrap_content"
             app:shapeAppearanceOverlay="@style/AppTheme.Shape.roundedCornersConfirmCard"
             app:cardElevation="4dp"
-            android:id="@+id/cardConfirmTake">
+            android:id="@+id/cardConfirmTake"
+            android:animateLayoutChanges="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
