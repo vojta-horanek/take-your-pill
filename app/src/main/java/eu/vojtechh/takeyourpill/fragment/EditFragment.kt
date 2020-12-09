@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
@@ -153,12 +152,25 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     }
 
     override fun onNewPillConfirmClicked(reminder: Reminder, editing: Boolean) {
+        val sheet =
+            (childFragmentManager.findFragmentByTag("new_reminder") as BottomSheetFragmentNewReminder)
+        val potentialMatch =
+            model.pill.reminders.find { it.hour == reminder.hour && it.minute == reminder.minute }
         if (editing) {
+            if (potentialMatch != null && potentialMatch != reminder) {
+                sheet.showError(getString(R.string.two_reminders_same_time))
+                return
+            }
             model.editReminder(reminder)
         } else {
+            if (potentialMatch != null) {
+                sheet.showError(getString(R.string.two_reminders_same_time))
+                return
+            }
             model.addReminder(reminder)
+
         }
-        (childFragmentManager.findFragmentByTag("new_reminder") as BottomSheetDialogFragment).dismiss()
+        sheet.dismiss()
     }
 
     @AfterPermissionGranted(1)

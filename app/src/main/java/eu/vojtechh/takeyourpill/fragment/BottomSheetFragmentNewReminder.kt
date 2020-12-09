@@ -1,11 +1,14 @@
 package eu.vojtechh.takeyourpill.fragment
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.TextViewCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import eu.vojtechh.takeyourpill.R
@@ -18,6 +21,7 @@ import java.util.*
 class BottomSheetFragmentNewReminder :
     BottomSheetDialogFragment() {
     private var editing = false
+    private lateinit var snackbar: Snackbar
     private lateinit var binding: FragmentNewReminderBinding
 
     private var listener: ConfirmListener? = null
@@ -39,6 +43,15 @@ class BottomSheetFragmentNewReminder :
         return this
     }
 
+    fun showError(msg: String) {
+        snackbar.apply { setText(msg) }.show()
+        val redColor = resources.getColor(R.color.colorRed, requireContext().theme)
+        binding.textTime.apply {
+            setTextColor(redColor)
+            TextViewCompat.setCompoundDrawableTintList(this, ColorStateList.valueOf(redColor))
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,6 +59,7 @@ class BottomSheetFragmentNewReminder :
     ): View {
         binding = FragmentNewReminderBinding.inflate(inflater, container, false)
 
+        snackbar = Snackbar.make(binding.coordinatorNewReminder, "", Snackbar.LENGTH_SHORT)
         setTexts()
         binding.numberPickerAmount.value = reminder.amount
 
@@ -59,6 +73,7 @@ class BottomSheetFragmentNewReminder :
         }
 
         binding.textTime.setOnClickListener {
+            snackbar.dismiss()
             showTimeDialog()
         }
 
@@ -79,16 +94,26 @@ class BottomSheetFragmentNewReminder :
             .build()
 
         materialTimePicker.addOnPositiveButtonClickListener {
+            val error = reminder.hour == materialTimePicker.hour &&
+                    reminder.minute == materialTimePicker.minute &&
+                    binding.textTime.textColors != binding.textConfirm.textColors
             reminder.time.set(Calendar.HOUR_OF_DAY, materialTimePicker.hour)
             reminder.time.set(Calendar.MINUTE, materialTimePicker.minute)
-            setTexts()
+            setTexts(error)
         }
 
         materialTimePicker.show(childFragmentManager, "time_picker")
     }
 
-    private fun setTexts() {
+    private fun setTexts(error: Boolean = false) {
         binding.run {
+            if (!error) {
+                val normalColor = binding.textConfirm.textColors
+                binding.textTime.apply {
+                    setTextColor(normalColor)
+                    TextViewCompat.setCompoundDrawableTintList(this, normalColor)
+                }
+            }
             textAmount.text =
                 resources.getQuantityString(
                     R.plurals.set_amount_format,

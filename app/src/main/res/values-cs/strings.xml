@@ -59,4 +59,5 @@
     <string name="pill_time_reminders_format">%1$d v %2$s</string>
     <string name="delete_pill">Smazat prášek</string>
     <string name="pill_taken_question">Vzali jste si v %1$s tento prášek?</string>
+    <string name="two_reminders_same_time">Může existovat pouze jedna připomínka se stejným časem. Prosím změnte čas.</string>
 </resources>

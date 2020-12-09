@@ -59,4 +59,5 @@
         <item quantity="other">%1$s: %2$d pills</item>
     </plurals>
     <string name="pill_taken_question">Have you taken this pill at %1$s</string>
+    <string name="two_reminders_same_time">There can only be one reminder with the same time. Please set a different time.</string>
 </resources>
