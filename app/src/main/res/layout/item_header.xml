@@ -9,7 +9,7 @@
             type="java.lang.String" />
     </data>
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSurface">
@@ -17,11 +17,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="32dp"
-            android:paddingVertical="24dp"
             android:text="@{title}"
-            android:textAppearance="@style/AppTheme.Text.Header4"
-            tools:text="Title" />
-    </RelativeLayout>
+            tools:text="Title"
+            style="@style/AppTheme.Widget.Header" />
+    </FrameLayout>
 </layout>

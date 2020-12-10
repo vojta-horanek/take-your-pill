@@ -35,16 +35,15 @@
 
             <View style="@style/AppTheme.Widget.Handle" />
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="24dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="24dp"
+                android:layout_marginStart="@dimen/appbar_margin_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="@dimen/appbar_margin_vertical"
                 android:text="@{title}"
                 android:textAppearance="@style/AppTheme.Text.BodyTitle"
-                tools:text="Are you sure you want to delete?" />
+                tools:text="Are you sure you want to do this?" />
 
         </LinearLayout>
 
@@ -64,7 +63,8 @@
             android:paddingVertical="16dp"
             android:text="@{yes}"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            tools:text="Yes" />
+            tools:text="Yes"
+            tools:drawableStart="@drawable/ic_check" />
 
         <TextView
             android:id="@+id/textCancel"
@@ -81,7 +81,8 @@
             android:paddingVertical="16dp"
             android:text="@{no}"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            tools:text="No" />
+            tools:text="No"
+            tools:drawableStart="@drawable/ic_cancel" />
 
     </LinearLayout>
 

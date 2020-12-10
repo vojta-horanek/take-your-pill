@@ -45,8 +45,8 @@
             android:focusable="true"
             android:onClick="@{(view) -> listener.onPillClicked(view, pill)}"
             android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
+            app:cardCornerRadius="@dimen/standard_corner_radius"
+            app:cardElevation="@dimen/standard_card_elevation"
             app:cardPreventCornerOverlap="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,7 +85,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@{pill.name}"
-                        android:textAppearance="@style/AppTheme.Text.Header6"
+                        android:textAppearance="@style/AppTheme.Text.BodyTitle"
                         tools:text="Xyzal" />
 
                     <TextView
@@ -98,7 +98,7 @@
                         tools:text="For certain issues\n8:00, 14:00" />
                 </LinearLayout>
 
-                <com.google.android.material.imageview.ShapeableImageView
+                <ImageView
                     android:id="@+id/imagePillPhoto"
                     android:layout_width="0dp"
                     android:layout_height="180dp"
@@ -108,7 +108,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:shapeAppearance="@style/AppTheme.Shape.roundedCornersImageView"
                     tools:ignore="ContentDescription"
                     tools:src="@drawable/ic_launcher_background" />
 
@@ -120,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:shapeAppearanceOverlay="@style/AppTheme.Shape.roundedCornersConfirmCard"
-            app:cardElevation="4dp"
+            app:cardElevation="@dimen/minimal_card_elevation"
             android:id="@+id/cardConfirmTake"
             android:animateLayoutChanges="true">
 

@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         // if (firstRun)
-        val intent = Intent(this, AppIntroActivity::class.java)
-        startActivityForResult(intent, REQUEST_CODE_INTRO)
+        //val intent = Intent(this, AppIntroActivity::class.java)
+        //startActivityForResult(intent, REQUEST_CODE_INTRO)
 
         /* We must have two "hiders" since if I show the FAB in this registerFragmentLifecycleCallbacks it slides up */
         supportFragmentManager.registerFragmentLifecycleCallbacks(object :

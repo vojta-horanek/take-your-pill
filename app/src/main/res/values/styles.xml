@@ -140,5 +140,15 @@
         <item name="android:background">@android:color/darker_gray</item>
     </style>
 
+    <style name="AppTheme.Widget.Header" parent="">
+        <item name="android:layout_marginTop">@dimen/appbar_margin_vertical</item>
+        <item name="android:layout_marginBottom">@dimen/appbar_margin_vertical</item>
+        <item name="android:layout_marginStart">@dimen/appbar_margin_horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">@style/AppTheme.Text.Header4</item>
+        <item name="maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
 
 </resources>

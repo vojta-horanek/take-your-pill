@@ -25,6 +25,13 @@
             android:clipToPadding="false"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textNewPill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_pill"
+                style="@style/AppTheme.Widget.Header" />
+
             <LinearLayout
                 android:id="@+id/wrapperNewPill"
                 android:layout_width="match_parent"
@@ -35,21 +42,11 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="16dp">
 
-                <TextView
-                    android:id="@+id/textNewPill"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/new_pill"
-                    android:textAppearance="@style/AppTheme.Text.Header4" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputNameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:hint="@string/name">
 
                     <com.google.android.material.textfield.TextInputEditText
