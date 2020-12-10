@@ -151,7 +151,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             .show(childFragmentManager, "new_reminder")
     }
 
-    override fun onNewPillConfirmClicked(reminder: Reminder, editing: Boolean) {
+    override fun onNewReminderClicked(reminder: Reminder, editing: Boolean) {
         val sheet =
             (childFragmentManager.findFragmentByTag("new_reminder") as BottomSheetFragmentNewReminder)
         val potentialMatch =

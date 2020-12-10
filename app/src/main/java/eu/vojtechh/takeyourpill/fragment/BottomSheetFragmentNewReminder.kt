@@ -63,7 +63,7 @@ class BottomSheetFragmentNewReminder :
         binding.numberPickerAmount.value = reminder.amount
 
         binding.textConfirm.setOnClickListener {
-            listener?.onNewPillConfirmClicked(reminder, editing)
+            listener?.onNewReminderClicked(reminder, editing)
         }
 
         binding.numberPickerAmount.setOnValueChangedListener { _, _, value ->
@@ -128,6 +128,6 @@ class BottomSheetFragmentNewReminder :
     }
 
     interface ConfirmListener {
-        fun onNewPillConfirmClicked(reminder: Reminder, editing: Boolean)
+        fun onNewReminderClicked(reminder: Reminder, editing: Boolean)
     }
 }

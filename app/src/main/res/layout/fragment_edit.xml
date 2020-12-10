@@ -24,7 +24,8 @@
             android:clipToPadding="false"
             android:fillViewport="true"
             android:overScrollMode="never"
-            android:id="@+id/scrollEdit">
+            android:id="@+id/scrollEdit"
+            android:paddingBottom="@dimen/list_with_fab_padding">
 
 
             <LinearLayout
