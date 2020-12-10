@@ -6,10 +6,11 @@
     <dimen name="elevation_color">8dp</dimen>
     <dimen name="appbar_margin_horizontal">24dp</dimen>
     <dimen name="appbar_margin_vertical">24dp</dimen>
-    <dimen name="details_margin_horizontal">@dimen/appbar_margin_horizontal</dimen>
-    <dimen name="details_margin_vertical">16dp</dimen>
-    <dimen name="details_margin_vertical_small">8dp</dimen>
-    <dimen name="details_margin_vertical_little">4dp</dimen>
+    <dimen name="screen_margin_horizontal">@dimen/appbar_margin_horizontal</dimen>
+    <dimen name="screen_margin_vertical">16dp</dimen>
+    <dimen name="fab_margins">16dp</dimen>
+    <dimen name="screen_margin_vertical_small">8dp</dimen>
+    <dimen name="screen_margin_vertical_little">4dp</dimen>
     <dimen name="standard_corner_radius">8dp</dimen>
     <dimen name="standard_card_elevation">8dp</dimen>
     <dimen name="minimal_card_elevation">4dp</dimen>

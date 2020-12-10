@@ -4,369 +4,317 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="pill"
             type="eu.vojtechh.takeyourpill.model.Pill" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/editView"
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorSurface"
         android:clipToPadding="false"
-        android:fillViewport="true"
-        android:overScrollMode="never">
+        android:id="@+id/layoutEdit"
+        android:background="?attr/colorSurface">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorSurface"
+            android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:orientation="vertical">
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:id="@+id/scrollEdit">
 
-            <TextView
-                android:id="@+id/textNewPill"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/new_pill"
-                style="@style/AppTheme.Widget.Header" />
 
             <LinearLayout
-                android:id="@+id/wrapperNewPill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorSurface"
-                android:clipChildren="false"
                 android:clipToPadding="false"
-                android:orientation="vertical"
-                android:paddingHorizontal="16dp">
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputNameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/name"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{pill.name}" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputDescriptionLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical_little"
-                    android:hint="@string/description"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{pill.description}" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textColor"
+                    android:id="@+id/textNewPill"
+                    style="@style/AppTheme.Widget.Header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical"
-                    android:text="@string/color"
-                    android:textAppearance="@style/AppTheme.Text.BodyTitle" />
+                    android:text="@string/new_pill" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerColor"
+                <LinearLayout
+                    android:id="@+id/wrapperNewPill"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical_small"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_color" />
-
-                <TextView
-                    android:id="@+id/textPhoto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical"
-                    android:text="@string/photo"
-                    android:textAppearance="@style/AppTheme.Text.BodyTitle" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardPhoto"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:layout_marginTop="@dimen/details_margin_vertical_small"
-                    android:layout_marginBottom="@dimen/details_margin_vertical"
-                    android:background="?attr/colorBackgroundFloating"
-                    android:clickable="true"
+                    android:background="?attr/colorSurface"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    android:focusable="true"
-                    app:cardCornerRadius="8dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="@color/stroke_color"
-                    app:cardElevation="0dp"
-                    app:cardPreventCornerOverlap="true">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
 
-                    <FrameLayout
-                        android:id="@+id/layoutPhoto"
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputNameLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:clipChildren="false"
-                        android:clipToPadding="false">
+                        android:layout_height="wrap_content"
+                        android:hint="@string/name">
 
-                        <ImageView
-                            android:id="@+id/imagePillPhoto"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{pill.name}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputDescriptionLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/screen_margin_vertical_little"
+                        android:hint="@string/description">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{pill.description}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/textColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/screen_margin_vertical"
+                        android:text="@string/color"
+                        android:textAppearance="@style/AppTheme.Text.BodyTitle" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_color" />
+
+                    <TextView
+                        android:id="@+id/textPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/screen_margin_vertical"
+                        android:text="@string/photo"
+                        android:textAppearance="@style/AppTheme.Text.BodyTitle" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                        android:layout_marginBottom="@dimen/screen_margin_vertical"
+                        android:background="?attr/colorBackgroundFloating"
+                        android:clickable="true"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:focusable="true"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="true"
+                        app:strokeColor="@color/stroke_color"
+                        app:strokeWidth="1dp">
+
+                        <FrameLayout
+                            android:id="@+id/layoutPhoto"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:scaleType="centerCrop"
-                            android:src="@{pill.photoDrawable(context)}"
-                            tools:ignore="ContentDescription"
-                            tools:src="@drawable/photo_default" />
+                            android:clipChildren="false"
+                            android:clipToPadding="false">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/add_photo"
-                            android:elevation="5dp"
-                            app:srcCompat="@drawable/ic_photo_add" />
+                            <ImageView
+                                android:id="@+id/imagePillPhoto"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="?attr/selectableItemBackground"
+                                android:scaleType="centerCrop"
+                                android:src="@{pill.photoDrawable(context)}"
+                                tools:ignore="ContentDescription"
+                                tools:src="@drawable/photo_default" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imageDeletePhoto"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="top|end"
-                            android:layout_margin="8dp"
-                            android:contentDescription="@string/delete"
-                            android:elevation="5dp"
-                            app:srcCompat="@drawable/ic_delete"
-                            android:visibility="@{pill.photoVisibility, default=gone}"
-                            tools:visibility="visible" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@string/add_photo"
+                                android:elevation="5dp"
+                                app:srcCompat="@drawable/ic_photo_add" />
 
-                    </FrameLayout>
-                </com.google.android.material.card.MaterialCardView>
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/imageDeletePhoto"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="top|end"
+                                android:layout_margin="8dp"
+                                android:contentDescription="@string/delete"
+                                android:elevation="5dp"
+                                android:visibility="@{pill.photoVisibility, default=gone}"
+                                app:srcCompat="@drawable/ic_delete"
+                                tools:visibility="visible" />
 
+                        </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    android:id="@+id/textReminderTimes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reminders"
-                    android:textAppearance="@style/AppTheme.Text.BodyTitle" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerReminders"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical_small"
-                    android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_reminder" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonAddReminder"
-                    app:strokeColor="@color/colorPrimary"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical_small"
-                    android:text="@string/add_reminder"
-                    android:textAppearance="@style/AppTheme.Text.ButtonSmall"
-                    app:icon="@drawable/ic_add_alert" />
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/checkDayLimit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical"
-                    android:text="@string/limit_to_x_days" />
-
-                <LinearLayout
-                    android:id="@+id/groupLimit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputDayNumberLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/number_of_days"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/inputDayNumber"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:text="@{Integer.toString(pill.options.displayLimit)}" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputCycleTodayLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/details_margin_vertical_little"
-                        android:hint="@string/start_from_day"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/inputCycleToday"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:text="@{Integer.toString(pill.optionsChanging.displayLimit)}" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/checkRestoreAfter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical_small"
-                    android:text="@string/restore_after" />
-
-                <LinearLayout
-                    android:id="@+id/groupRestore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputRestoreLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/how_many_days_to_restore"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/inputRestore"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:text="@{Integer.toString(pill.options.displayBreak)}" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/checkCycleCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical_small"
-                    android:text="@string/cycle_forever" />
-
-                <LinearLayout
-                    android:id="@+id/groupCycle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputCycleCountLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/num_of_cycles"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/inputCycleCount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:text="@{Integer.toString(pill.options.displayRepeat)}" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/actionsBottomEdit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="bottom"
-                android:orientation="horizontal"
-                android:paddingHorizontal="4dp"
-                android:paddingBottom="8dp"
-                android:weightSum="1">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:visibility="gone"
-                    android:id="@+id/buttonMoreInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginHorizontal="4dp"
-                    android:layout_weight="1"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardElevation="0dp"
-                    app:strokeColor="?attr/colorControlNormal"
-                    app:strokeWidth="1dp">
 
                     <TextView
-                        android:id="@+id/textInfo"
+                        android:id="@+id/textReminderTimes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="8dp"
-                        android:drawablePadding="4dp"
-                        android:gravity="center_horizontal"
-                        android:maxLines="2"
-                        android:text="@string/search_online"
-                        android:textAppearance="@style/AppTheme.Text.ButtonSmall"
-                        app:drawableTint="?attr/colorControlNormal"
-                        app:drawableTopCompat="@drawable/ic_search" />
-                </com.google.android.material.card.MaterialCardView>
+                        android:text="@string/reminders"
+                        android:textAppearance="@style/AppTheme.Text.BodyTitle" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/buttonSave"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginHorizontal="4dp"
-                    android:layout_weight="1"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardElevation="0dp"
-                    app:strokeColor="?attr/colorControlNormal"
-                    app:strokeWidth="1dp">
-
-                    <TextView
-                        android:id="@+id/textSave"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerReminders"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="8dp"
-                        android:drawablePadding="4dp"
-                        android:gravity="center_horizontal"
-                        android:maxLines="2"
-                        android:text="@string/save"
+                        android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_reminder" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonAddReminder"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                        android:text="@string/add_reminder"
                         android:textAppearance="@style/AppTheme.Text.ButtonSmall"
-                        app:drawableTint="?attr/colorControlNormal"
-                        app:drawableTopCompat="@drawable/ic_save" />
-                </com.google.android.material.card.MaterialCardView>
+                        app:icon="@drawable/ic_add_alert"
+                        app:strokeColor="@color/colorPrimary" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkDayLimit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/screen_margin_vertical"
+                        android:text="@string/limit_to_x_days" />
+
+                    <LinearLayout
+                        android:id="@+id/groupLimit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inputDayNumberLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/number_of_days">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/inputDayNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:text="@{Integer.toString(pill.options.displayLimit)}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inputCycleTodayLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/screen_margin_vertical_little"
+                            android:hint="@string/start_from_day">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/inputCycleToday"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:text="@{Integer.toString(pill.optionsChanging.displayLimit)}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkRestoreAfter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                        android:text="@string/restore_after" />
+
+                    <LinearLayout
+                        android:id="@+id/groupRestore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inputRestoreLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/how_many_days_to_restore">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/inputRestore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:text="@{Integer.toString(pill.options.displayBreak)}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkCycleCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                        android:text="@string/cycle_forever" />
+
+                    <LinearLayout
+                        android:id="@+id/groupCycle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inputCycleCountLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/num_of_cycles">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/inputCycleCount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:text="@{Integer.toString(pill.options.displayRepeat)}" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-    </androidx.core.widget.NestedScrollView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/ic_save"
+            tools:ignore="ContentDescription"
+            android:layout_margin="@dimen/fab_margins"
+            android:id="@+id/buttonSave" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

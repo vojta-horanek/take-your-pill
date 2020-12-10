@@ -56,14 +56,14 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         if (isPillNew) {
             enterTransition = MaterialContainerTransform().apply {
                 startView = requireActivity().findViewById(R.id.floatingActionButton)
-                endView = requireActivity().findViewById(R.id.editView)
+                endView = requireActivity().findViewById(R.id.layoutEdit)
                 scrimColor = Color.TRANSPARENT
                 containerColor = requireContext().themeColor(R.attr.colorSurface)
                 startContainerColor = requireContext().themeColor(R.attr.colorSecondary)
                 endContainerColor = requireContext().themeColor(R.attr.colorSurface)
             }
             returnTransition = Slide().apply {
-                addTarget(R.id.editView)
+                addTarget(R.id.layoutEdit)
             }
         } else {
             enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
@@ -239,8 +239,8 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     }
 
     private fun scrollToBottom() {
-        binding.editView.post {
-            binding.editView.scrollToBottom()
+        binding.layoutEdit.post {
+            binding.scrollEdit.scrollToBottom()
         }
     }
 
@@ -306,7 +306,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             if (isPillNew) {
                 model.addPill(model.pill).observe(viewLifecycleOwner) {
                     exitTransition = Slide().apply {
-                        addTarget(R.id.editView)
+                        addTarget(R.id.layoutEdit)
                     }
                     findNavController().popBackStack()
                 }
