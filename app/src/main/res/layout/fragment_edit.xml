@@ -63,7 +63,7 @@
                     android:id="@+id/inputDescriptionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/details_margin_vertical_small"
+                    android:layout_marginTop="@dimen/details_margin_vertical_little"
                     android:hint="@string/description"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -112,7 +112,9 @@
                     android:clipToPadding="false"
                     android:focusable="true"
                     app:cardCornerRadius="8dp"
-                    app:cardElevation="4dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/stroke_color"
+                    app:cardElevation="0dp"
                     app:cardPreventCornerOverlap="true">
 
                     <FrameLayout

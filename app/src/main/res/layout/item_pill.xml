@@ -85,7 +85,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@{pill.name}"
-                        android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                        android:textAppearance="@style/AppTheme.Text.Header6"
                         tools:text="Xyzal" />
 
                     <TextView
