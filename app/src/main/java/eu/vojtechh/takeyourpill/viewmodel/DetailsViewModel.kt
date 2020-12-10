@@ -29,8 +29,8 @@ class DetailsViewModel @ViewModelInject constructor(
     }
 
     val reminders = Transformations.map(_reminders) {
-        pill.reminders = it.toMutableList()
-        it
+        pill.reminders = it.sortedBy { rem -> rem.calendar.time }.toMutableList()
+        pill.reminders
     }
 
     fun setReminders(reminders: List<Reminder>) {

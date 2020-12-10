@@ -136,11 +136,14 @@ data class Pill(
         return null
     }
 
-    fun getRemindersString(context: Context) = reminders.joinToString {
-        context.resources.getString(
-            R.string.pill_time_reminders_format,
-            it.amount, it.timeString
-        )
+    fun getRemindersString(context: Context): String {
+        val sorted = reminders.sortedBy { rem -> rem.calendar.time }.toMutableList()
+        return sorted.joinToString {
+            context.resources.getString(
+                R.string.pill_time_reminders_format,
+                it.amount, it.timeString
+            )
+        }
     }
 
     fun photoDrawable(context: Context) =
