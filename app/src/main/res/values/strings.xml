@@ -62,4 +62,13 @@
     <string name="two_reminders_same_time">There can only be one reminder with the same time. Please set a different time.</string>
     <string name="nothing_to_see_here">Nothing to see here… 🧐</string>
     <string name="try_to_add_a_pill_first">Try to add a pill first!</string>
+    <string name="intro_welome">Welcome!</string>
+    <string name="intro_welome_description">Take Your Pill reminds you about yor pills so that you never forget</string>
+    <string name="intro_new_pill">Start by adding a pill</string>
+    <string name="intro_new_pill_description">Click the \"New Pill\" button</string>
+    <string name="intro_reminder">Get reminder</string>
+    <string name="intro_reminder_description">Set reminders for your pills and record your taking habbits</string>
+    <string name="intro_history">See history</string>
+    <string name="intro_history_description">Look at the history of your pill taking and get data on your accuracy</string>
+    <string name="intro">Intro</string>
 </resources>

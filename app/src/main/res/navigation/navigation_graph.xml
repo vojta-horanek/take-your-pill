@@ -65,4 +65,13 @@
             android:name="pillId"
             app:argType="long" />
     </fragment>
+    <activity
+        android:id="@+id/introActivity"
+        android:name="eu.vojtechh.takeyourpill.activity.AppIntroActivity"
+        android:label="IntroActivity" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="eu.vojtechh.takeyourpill.activity.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

@@ -1,5 +1,6 @@
 package eu.vojtechh.takeyourpill.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.transition.Slide
 import android.transition.TransitionManager
@@ -22,6 +23,8 @@ import eu.vojtechh.takeyourpill.fragment.SettingsFragment
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 
+const val REQUEST_CODE_INTRO = 22
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
+
+        // if (firstRun)
+        val intent = Intent(this, AppIntroActivity::class.java)
+        startActivityForResult(intent, REQUEST_CODE_INTRO)
 
         /* We must have two "hiders" since if I show the FAB in this registerFragmentLifecycleCallbacks it slides up */
         supportFragmentManager.registerFragmentLifecycleCallbacks(object :
@@ -85,6 +92,15 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.navHostFragment)
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_INTRO) {
+            if (resultCode != RESULT_OK) {
+                finish()
+            }
+        }
     }
 
 }

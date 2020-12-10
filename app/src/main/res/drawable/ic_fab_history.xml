@@ -1,0 +1,29 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp"/>
+            <size android:height="256dp" android:width="256dp"/>
+            <solid android:color="@color/colorTeal" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_history"
+        android:end="24dp"
+        android:start="24dp"
+        android:top="24dp"
+        android:bottom="24dp"
+        android:width="100dp"
+        android:height="100dp"
+        android:gravity="start"/>
+
+    <item android:drawable="@drawable/ic_pill"
+        android:end="24dp"
+        android:start="24dp"
+        android:top="24dp"
+        android:bottom="24dp"
+        android:width="100dp"
+        android:height="100dp"
+        android:gravity="bottom|end"/>
+
+</layer-list>
+
+

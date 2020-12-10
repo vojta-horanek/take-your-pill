@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:alpha="0.8"
             android:paddingHorizontal="16dp"
-            android:paddingTop="128dp"
+            android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:src="@drawable/ic_empty_view"
             app:layout_constraintBottom_toTopOf="@id/textEmptyTitle"
