@@ -3,7 +3,6 @@ package eu.vojtechh.takeyourpill.model
 import android.graphics.Bitmap
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 
@@ -17,7 +16,4 @@ data class BasePill(
     @Embedded(prefix = "constant_") var options: ReminderOptions,
     @Embedded(prefix = "current_") var optionsChanging: ReminderOptions,
     @PrimaryKey(autoGenerate = true) val pillId: Long = 0
-) {
-    @Ignore
-    var viewType: Int = Pill.VIEW_TYPE_ITEM
-}
+)

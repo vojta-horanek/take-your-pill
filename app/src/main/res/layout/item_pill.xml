@@ -22,7 +22,7 @@
 
         <variable
             name="listener"
-            type="eu.vojtechh.takeyourpill.adapter.PillAdapter.PillAdapterListener" />
+            type="eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter.PillAdapterListener" />
     </data>
 
     <LinearLayout

@@ -13,7 +13,7 @@ import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.adapter.PillAdapter
+import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.Pill
@@ -21,7 +21,7 @@ import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterListener {
+class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.PillAdapterListener {
 
     private val model: HomeViewModel by viewModels()
     private val view by viewBinding(FragmentHomeBinding::bind)
@@ -45,7 +45,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), PillAdapter.PillAdapterLi
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
 
-        val pillsAdapter = PillAdapter(this, getString(R.string.pills))
+        val pillsAdapter = AppRecyclerAdapter(this, getString(R.string.pills))
 
         view.recyclerHome.run {
             adapter = pillsAdapter

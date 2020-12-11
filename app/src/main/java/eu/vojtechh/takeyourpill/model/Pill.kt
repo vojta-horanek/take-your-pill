@@ -4,9 +4,8 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.util.ObjectsCompat
-import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
+import androidx.room.Ignore
 import androidx.room.Relation
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
@@ -19,13 +18,12 @@ data class Pill(
         entityColumn = "pillId"
     )
     var reminders: List<Reminder>
-) {
+) : GeneralRecyclerItem() {
+
+    @Ignore
+    override val itemType: ItemTypes = ItemTypes.PILL
 
     companion object {
-
-        const val VIEW_TYPE_ITEM = 0
-        const val VIEW_TYPE_HEADER = 1
-        const val VIEW_TYPE_EMPTY = 2
 
         fun getEmpty() = Pill(
             BasePill(
@@ -37,30 +35,6 @@ data class Pill(
                 ReminderOptions.empty(),
                 ReminderOptions.empty()
             ), listOf()
-        )
-
-        fun withHeaderViewType() = Pill(
-            BasePill(
-                "",
-                "",
-                null,
-                PillColor.default(),
-                false,
-                ReminderOptions.empty(),
-                ReminderOptions.empty(),
-            ).apply { viewType = VIEW_TYPE_HEADER }, listOf()
-        )
-
-        fun withEmptyViewType() = Pill(
-            BasePill(
-                "",
-                "",
-                null,
-                PillColor.default(),
-                false,
-                ReminderOptions.empty(),
-                ReminderOptions.empty(),
-            ).apply { viewType = VIEW_TYPE_EMPTY }, listOf()
         )
     }
 
@@ -152,11 +126,4 @@ data class Pill(
 
     fun colorResource(context: Context) = pill.color.getColor(context)
 
-    object DiffCallback : DiffUtil.ItemCallback<Pill>() {
-        override fun areItemsTheSame(oldItem: Pill, newItem: Pill) =
-            oldItem.pill.pillId == newItem.pill.pillId
-
-        override fun areContentsTheSame(oldItem: Pill, newItem: Pill) =
-            ObjectsCompat.equals(oldItem, newItem)
-    }
 }
