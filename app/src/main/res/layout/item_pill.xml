@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.content.Context" />
+
+        <variable
+            name="pill"
+            type="eu.vojtechh.takeyourpill.model.Pill" />
+
+        <variable
+            name="nextReminder"
+            type="eu.vojtechh.takeyourpill.model.Reminder" />
+
+        <variable
+            name="transition_id"
+            type="java.lang.String" />
+
+        <variable
+            name="listener"
+            type="eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter.PillAdapterListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorBackgroundFloating"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:onClick="@{(view) -> listener.onPillClicked(view, pill)}"
+            android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
+            app:cardCornerRadius="@dimen/standard_corner_radius"
+            app:cardElevation="@dimen/standard_card_elevation"
+            app:cardPreventCornerOverlap="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/imagePillColor"
+                    android:layout_width="@dimen/color_dot_size"
+                    android:layout_height="@dimen/color_dot_size"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/shape_oval"
+                    app:background_color_shaped="@{pill.colorResource(context)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/imagePillPhoto"
+                    app:layout_constraintEnd_toStartOf="@+id/imagePillColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textPillName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{pill.name}"
+                        android:textAppearance="@style/AppTheme.Text.Header6"
+                        tools:text="Xyzal" />
+
+                    <TextView
+                        android:id="@+id/pillDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        tools:text="For certain issues\n8:00, 14:00" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imagePillPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    android:src="@{pill.photoDrawable(context)}"
+                    android:visibility="@{pill.photoVisibility}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="ContentDescription"
+                    tools:src="@drawable/ic_launcher_background" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_marginTop="-8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:shapeAppearanceOverlay="@style/AppTheme.Shape.roundedCornersConfirmCard"
+            app:cardElevation="@dimen/minimal_card_elevation"
+            android:id="@+id/cardConfirmTake"
+            android:animateLayoutChanges="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <TextView
+                    android:id="@+id/textQuestionTake"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pill_taken_question"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textAppearance="@style/AppTheme.Text.BodyTitleSmall" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonTaken"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonNotTaken"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textQuestionTake"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/yes"
+                    app:icon="@drawable/ic_check"
+                    app:strokeColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimary"
+                    app:iconTint="@color/colorPrimary"
+                    app:rippleColor="@color/colorPrimary"
+                    android:textAppearance="@style/AppTheme.Text.ButtonSmall" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="4dp"
+                    android:id="@+id/buttonNotTaken"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/buttonTaken"
+                    app:layout_constraintTop_toBottomOf="@+id/textQuestionTake"
+                    android:text="@string/no"
+                    app:icon="@drawable/ic_cancel"
+                    app:strokeColor="@color/colorRed"
+                    android:textColor="@color/colorRed"
+                    app:iconTint="@color/colorRed"
+                    app:rippleColor="@color/colorRed"
+                    android:textAppearance="@style/AppTheme.Text.ButtonSmall" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Take Your Pill</string>
+    <string name="home">Domů</string>
+    <string name="history">Historie</string>
+    <string name="settings">Nastavení</string>
+    <string name="new_pill">Nový prášek</string>
+    <string name="about">O aplikaci</string>
+    <string name="upcoming_pills">Nadcházející</string>
+    <string name="edit">Upravit</string>
+    <string name="details">Detaily</string>
+    <string name="pills">Prášky</string>
+    <string name="alarm_settings">Zobrazovat upozornění jako alarm</string>
+    <string name="color">Barva</string>
+    <string name="all_pills">Všechny prášky</string>
+    <string name="more_info">Další info</string>
+    <string name="delete">Smazat</string>
+    <string name="yes">Ano</string>
+    <string name="no">Ne</string>
+    <string name="cancel">Zrušit</string>
+    <string name="confirm_delete_pill">Opravdu chcete prášek smazat?</string>
+    <string name="description">Popis</string>
+    <string name="name">Název</string>
+    <string name="photo">Fotka</string>
+    <string name="save">Uložit</string>
+    <string name="search_online">Hledat online</string>
+    <string name="pill_saved">Prášek uložen</string>
+    <string name="edit_pill">Upravit prášek</string>
+    <string name="enter_field">Prosím, zadejte hodnotu</string>
+    <string name="reminders">Připomínky</string>
+    <string name="limit_to_x_days">Omezit na počet dní</string>
+    <string name="number_of_days">Počet dní na který omezit</string>
+    <string name="start_from_day">Začit ode dne</string>
+    <string name="restore_after">Obnovit po počtu dní</string>
+    <string name="how_many_days_to_restore">Po kolika dnech obnovit</string>
+    <string name="cycle_forever">Opakovat donekonečna</string>
+    <string name="num_of_cycles">Počet opakování cyklu</string>
+    <string name="add_reminder">Přidat připomínku</string>
+    <string name="storage_perm_rationale">Aplikace potřebuje opravnění na čtení úložiště, aby přečetla fotku</string>
+    <string name="no_reminders_set">Prosím, přidejte alespoň jednu připomínku</string>
+    <string name="add_photo">Přidat fotku</string>
+    <string name="select_image">Vybrat fotku</string>
+    <string name="set_time">Nastavit čas</string>
+    <string name="set_time_format">Nastavit čas připomínky (%1$s)</string>
+    <string name="save_reminder">Uložit připomínku</string>
+    <string name="set_a_reminder">Nastavit připomínku</string>
+    <plurals name="set_amount_format">
+        <item quantity="one">Vzít si %1$d prášek</item>
+        <item quantity="few">Vzít si %1$d prášky</item>
+        <item quantity="other">Vzít si %1$d prášků</item>
+    </plurals>
+    <plurals name="reminder_text">
+        <item quantity="one">%1$s: %2$d prášek</item>
+        <item quantity="few">%1$s: %2$d prášky</item>
+        <item quantity="other">%1$s: %2$d prášků</item>
+    </plurals>
+    <string name="delete_pill_and_history">Smazat prášek a historii</string>
+    <string name="delete_only_pil">Smazat pouze prášek</string>
+    <string name="pill_time_reminders_format">%1$d v %2$s</string>
+    <string name="delete_pill">Smazat prášek</string>
+    <string name="pill_taken_question">Vzali jste si v %1$s tento prášek?</string>
+    <string name="two_reminders_same_time">Může existovat pouze jedna připomínka se stejným časem. Prosím změnte čas.</string>
+    <string name="nothing_to_see_here">Nic tu není… 🧐</string>
+    <string name="try_to_add_a_pill_first">Zkuste nejdříve přidat prášek!</string>
+</resources>

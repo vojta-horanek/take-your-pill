@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true">
+
+    <data>
+
+        <import type="android.content.Context" />
+
+        <variable
+            name="pill"
+            type="eu.vojtechh.takeyourpill.model.Pill" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:transitionName="@string/pill_details_transition_name">
+
+        <ScrollView
+            android:id="@+id/detailsView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true">
+
+                <TextView
+                    android:id="@+id/textPillName"
+                    style="@style/AppTheme.Widget.Header"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{pill.name}"
+                    app:layout_constraintEnd_toStartOf="@+id/imagePillColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Xyzal" />
+
+                <View
+                    android:id="@+id/imagePillColor"
+                    android:layout_width="@dimen/color_dot_size_big"
+                    android:layout_height="@dimen/color_dot_size_big"
+                    android:layout_marginEnd="@dimen/appbar_margin_horizontal"
+                    android:background="@drawable/shape_oval"
+                    app:background_color_shaped="@{pill.colorResource(context)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textPillName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textPillName" />
+
+                <TextView
+                    android:id="@+id/textPillDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                    android:layout_marginTop="@dimen/appbar_margin_vertical"
+                    android:text="@{pill.description}"
+                    android:textAppearance="@style/AppTheme.Text.Description"
+                    android:visibility="@{pill.descriptionVisibility}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textPillName"
+                    tools:text="This is a pill description"
+                    tools:visibility="gone" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="256dp"
+                    android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                    android:layout_marginTop="@dimen/screen_margin_vertical"
+                    android:background="?attr/colorBackgroundFloating"
+                    android:clickable="true"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/standard_corner_radius"
+                    app:cardElevation="0dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textPillDescription"
+                    app:layout_goneMarginTop="@dimen/appbar_margin_vertical"
+                    app:strokeColor="@color/stroke_color"
+                    app:strokeWidth="1dp"
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/imagePillPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@{pill.photoDrawable(context)}"
+                        tools:ignore="ContentDescription"
+                        tools:src="@drawable/photo_default" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/textReminders"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                    android:layout_marginTop="@dimen/screen_margin_vertical"
+                    android:text="@string/reminders"
+                    android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardPhoto" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerReminders"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@+id/textReminders"
+                    app:layout_constraintStart_toStartOf="@+id/textReminders"
+                    app:layout_constraintTop_toBottomOf="@+id/textReminders"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_reminder" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonDelete"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                    android:layout_marginVertical="@dimen/screen_margin_vertical"
+                    android:text="@string/delete"
+                    android:textColor="@color/colorRed"
+                    app:icon="@drawable/ic_delete"
+                    app:iconTint="@color/colorRed"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerReminders"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:rippleColor="@color/colorRed"
+                    app:strokeColor="@color/colorRed" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margins"
+            android:src="@drawable/ic_edit"
+            tools:ignore="ContentDescription" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</layout>

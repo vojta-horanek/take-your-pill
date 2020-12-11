@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homescreen">
+    <fragment
+        android:id="@id/homescreen"
+        android:name="eu.vojtechh.takeyourpill.fragment.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homescreen_to_editFragment"
+            app:destination="@id/edit"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_homescreen_to_details"
+            app:destination="@id/details" />
+    </fragment>
+    <fragment
+        android:id="@id/history"
+        android:name="eu.vojtechh.takeyourpill.fragment.HistoryFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@id/settings"
+        android:name="eu.vojtechh.takeyourpill.fragment.SettingsFragment"
+        android:label="@string/settings">
+        <action
+            android:id="@+id/action_settings_to_about"
+            app:destination="@id/about" />
+    </fragment>
+    <fragment
+        android:id="@+id/about"
+        android:name="eu.vojtechh.takeyourpill.fragment.AboutFragment"
+        android:label="@string/about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/edit"
+        android:name="eu.vojtechh.takeyourpill.fragment.EditFragment"
+        android:label="@string/edit"
+        tools:layout="@layout/fragment_edit">
+        <action
+            android:id="@+id/action_edit_to_details"
+            app:destination="@id/details"
+            app:popUpTo="@id/details"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="pillId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_edit_to_homescreen"
+            app:destination="@id/homescreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/details"
+        android:name="eu.vojtechh.takeyourpill.fragment.DetailsFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_details">
+        <action
+            android:id="@+id/action_detailsFragment_to_editFragment"
+            app:destination="@id/edit" />
+        <argument
+            android:name="pillId"
+            app:argType="long" />
+    </fragment>
+    <activity
+        android:id="@+id/introActivity"
+        android:name="eu.vojtechh.takeyourpill.activity.AppIntroActivity"
+        android:label="IntroActivity" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="eu.vojtechh.takeyourpill.activity.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+</navigation>

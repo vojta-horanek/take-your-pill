@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homescreen"
+        android:enabled="true"
+        android:icon="@drawable/anim_pill"
+        android:title="@string/pills" />
+    <item
+        android:id="@+id/history"
+        android:enabled="true"
+        android:icon="@drawable/anim_history"
+        android:title="@string/history" />
+    <item
+        android:id="@+id/settings"
+        android:enabled="true"
+        android:icon="@drawable/anim_settings"
+        android:title="@string/settings" />
+</menu>
