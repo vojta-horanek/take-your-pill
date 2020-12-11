@@ -10,7 +10,7 @@
         <ImageView
             android:id="@+id/imageEmpty"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="256dp"
             android:alpha="0.8"
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
