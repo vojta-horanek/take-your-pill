@@ -137,6 +137,8 @@
                     android:layout_marginVertical="@dimen/screen_margin_vertical"
                     android:text="@string/delete"
                     android:textColor="@color/colorRed"
+                    app:icon="@drawable/ic_delete"
+                    app:iconTint="@color/colorRed"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerReminders"
@@ -152,9 +154,9 @@
             android:id="@+id/buttonEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margins"
             android:src="@drawable/ic_edit"
-            android:layout_gravity="bottom|end"
             tools:ignore="ContentDescription" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
