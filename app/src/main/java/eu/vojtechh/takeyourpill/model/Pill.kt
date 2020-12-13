@@ -50,6 +50,9 @@ data class Pill(
             pill.description = value
         }
 
+    val notificationDescription
+        get() = pill.description ?: ""
+
     var photo
         get() = pill.photo
         set(value) {

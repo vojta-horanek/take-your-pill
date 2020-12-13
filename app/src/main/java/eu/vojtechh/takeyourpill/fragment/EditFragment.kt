@@ -26,6 +26,7 @@ import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
+import eu.vojtechh.takeyourpill.reminder.ReminderFactory
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -305,15 +306,18 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             // Is pill new?
             if (isPillNew) {
                 model.addPill(model.pill).observe(viewLifecycleOwner) {
+                    ReminderFactory.planRemindersForPill(requireContext(), model.pill.reminders)
                     exitTransition = Slide().apply {
                         addTarget(R.id.layoutEdit)
                     }
                     findNavController().popBackStack()
                 }
             } else {
-                model.updatePill(model.pill)
-                returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-                findNavController().popBackStack()
+                model.updatePill(model.pill).observe(viewLifecycleOwner) {
+                    ReminderFactory.planRemindersForPill(requireContext(), model.pill.reminders)
+                    returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+                    findNavController().popBackStack()
+                }
             }
         }
     }

@@ -16,6 +16,12 @@ interface PillDao {
     @Query("SELECT * FROM pill WHERE pillId = (:pillId)")
     fun getById(pillId: Long): LiveData<Pill>
 
+    @Query("SELECT * FROM reminder WHERE reminderId = (:reminderId)")
+    fun getReminderById(reminderId: Long): Reminder
+
+    @Query("SELECT * FROM pill WHERE pill.pillId = (SELECT reminder.pillId FROM reminder WHERE reminder.reminderId = (:reminderId))")
+    fun getPillByReminderId(reminderId: Long): Pill
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPill(pill: BasePill): Long
 
@@ -45,4 +51,6 @@ interface PillDao {
 
     @Query("DELETE FROM reminder WHERE pillId = :pillId")
     suspend fun deleteRemindersByPillId(pillId: Long)
+
+
 }

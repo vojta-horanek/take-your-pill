@@ -5,26 +5,40 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
 object ReminderFactory {
-
-    private lateinit var context: Context
-    private lateinit var alarmMgr: AlarmManager
-
-    fun init(context: Context) {
-        if (!this::context.isInitialized) this.context = context
-        if (!this::alarmMgr.isInitialized) alarmMgr =
+    fun createReminder(context: Context, reminder: Reminder) {
+        val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    }
-
-    fun createReminder(pillId: Int, time: Calendar) {
-        if (!this::context.isInitialized || !this::alarmMgr.isInitialized) return
         val alarmIntent = Intent(context, ReminderAlarmReceiver::class.java).let { intent ->
-            intent.putExtra(Constants.INTENT_EXTRA_PILL_ID, pillId)
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminder.reminderId)
             PendingIntent.getBroadcast(context, 0, intent, 0)
         }
-        alarmMgr.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time.timeInMillis, alarmIntent)
+        val time = Calendar.getInstance()
+        time.set(Calendar.HOUR_OF_DAY, reminder.hour)
+        time.set(Calendar.MINUTE, reminder.minute)
+        time.set(Calendar.SECOND, 0)
+        time.set(Calendar.MILLISECOND, 0)
+        alarmMgr.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time.timeInMillis,
+            alarmIntent
+        )
+    }
 
+    fun planRemindersForPill(context: Context, reminders: List<Reminder>) {
+        reminders.forEach {
+            val time = Calendar.getInstance()
+            time.set(Calendar.HOUR_OF_DAY, it.hour)
+            time.set(Calendar.MINUTE, it.minute)
+            time.set(Calendar.SECOND, 0)
+            time.set(Calendar.MILLISECOND, 0)
+            val calendar = Calendar.getInstance()
+            if (time.timeInMillis >= calendar.timeInMillis) {
+                createReminder(context, it)
+            }
+        }
     }
 }

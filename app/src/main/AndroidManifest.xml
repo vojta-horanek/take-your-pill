@@ -19,9 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".activity.AppIntroActivity" android:label="@string/intro"
-            android:theme="@style/Theme.Intro"/>
+
+        <activity
+            android:name=".activity.AppIntroActivity"
+            android:label="@string/intro"
+            android:theme="@style/Theme.Intro" />
+
+        <receiver android:name=".reminder.ReminderAlarmReceiver" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
