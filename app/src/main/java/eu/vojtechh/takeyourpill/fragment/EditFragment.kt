@@ -24,6 +24,7 @@ import eu.vojtechh.takeyourpill.adapter.ColorAdapter
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.klass.*
+import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
@@ -305,7 +306,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             }
 
             if (isPillNew) {
-                model.addPill(model.pill).observe(viewLifecycleOwner) {
+                model.addPillReturn(model.pill).observe(viewLifecycleOwner) {
                     setReminding(it)
                     exitTransition = Slide().apply {
                         addTarget(R.id.layoutEdit)
@@ -313,7 +314,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                     findNavController().popBackStack()
                 }
             } else {
-                model.updatePill(model.pill).observe(viewLifecycleOwner) {
+                model.updatePillReturn(model.pill).observe(viewLifecycleOwner) {
                     setReminding(it)
                     returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
                     findNavController().popBackStack()
@@ -322,13 +323,13 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         }
     }
 
-    private fun setReminding(pillId: Long) {
+    private fun setReminding(pill: Pill) {
         NotificationManager.createNotificationChannel(
             requireContext(),
-            pillId.toString(),
-            model.pill.name
+            pill.id.toString(),
+            pill.name
         )
-        ReminderManager.planNextReminder(requireContext(), model.pill.reminders)
+        ReminderManager.planNextReminder(requireContext(), pill.reminders)
     }
 
     private fun getReminderOptions(): ReminderOptions {

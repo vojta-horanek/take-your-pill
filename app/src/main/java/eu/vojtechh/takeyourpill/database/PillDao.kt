@@ -16,7 +16,7 @@ interface PillDao {
     @Query("SELECT * FROM pill WHERE pillId = (:pillId)")
     fun getById(pillId: Long): LiveData<Pill>
 
-    @Query("SELECT * FROM reminder")
+    @Query("SELECT reminder.pillId, reminder.reminderId, reminder.amount, reminder.calendar FROM reminder INNER JOIN pill ON reminder.pillId = pill.pillId WHERE deleted = 0 ORDER BY calendar ASC")
     fun getAllReminders(): List<Reminder>
 
     @Query("SELECT * FROM reminder WHERE reminderId = (:reminderId)")

@@ -21,6 +21,8 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
+        // Currently only supports one reminder at a time, move to
+        // getting from db and not relying on intent extra TODO
         intent.let {
             val reminderId = it.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1)
             if (reminderId == -1L) return

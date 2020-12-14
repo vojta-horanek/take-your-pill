@@ -31,9 +31,10 @@ object NotificationManager {
             .setContentText(description)
             .setColor(color)
             .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setGroup(channelId)
 
-        // set notification style to BigPicture if the pill has aq photo
+        // set notification style to BigPicture if the pill has a photo
         bitmap?.let {
             builder.setLargeIcon(bitmap)
             builder.setStyle(
@@ -41,8 +42,6 @@ object NotificationManager {
                     .bigPicture(it)
                     .bigLargeIcon(null)
             )
-        } ?: run {
-            builder.setStyle(NotificationCompat.BigTextStyle().bigText(description))
         }
 
         // show notification to the user
