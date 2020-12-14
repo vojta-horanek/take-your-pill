@@ -54,8 +54,7 @@ data class Pill(
         context.resources.getQuantityString(
             R.plurals.it_is_time_to_take,
             reminder.amount,
-            reminder.amount,
-            reminder.timeString
+            reminder.amount
         )
 
     var photo

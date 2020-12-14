@@ -59,8 +59,8 @@
         <item quantity="other">%1$s: %2$d pills</item>
     </plurals>
     <plurals name="it_is_time_to_take">
-        <item quantity="one">It is time to take $1$d pill at %2$s</item>
-        <item quantity="other">It is time to take $1$d pills at %2$s</item>
+        <item quantity="one">It is time to take $1$d pill!</item>
+        <item quantity="other">It is time to take $1$d pills!</item>
     </plurals>
 
     <plurals name="pill_taken_question">
