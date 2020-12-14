@@ -14,7 +14,6 @@ object ReminderManager {
         val sortedByTime = reminders.sortedBy { rem -> rem.calendar.time }
         val calendar = Calendar.getInstance()
 
-        // TODO Consider next day
         sortedByTime.forEach {
             // Only plan if the reminder time is past the current time
             if (it.getMillisWithTodayDate() > calendar.timeInMillis) {

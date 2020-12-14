@@ -62,18 +62,15 @@ class AppRecyclerAdapter(
     }
 
     override fun submitList(list: List<GeneralRecyclerItem>?) {
-        // Yes, this is for the header, yes it is awful FIXME probably
         list?.let {
             val newList = list.toMutableList()
             newList.add(
                 0,
                 HeaderItem(sectionPrefix)
             )
-
             if (it.isEmpty()) {
                 newList.add(EmptyItem())
             }
-
             super.submitList(newList)
         } ?: super.submitList(list)
 
