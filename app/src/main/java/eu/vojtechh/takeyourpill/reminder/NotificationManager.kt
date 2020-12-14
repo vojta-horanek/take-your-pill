@@ -24,6 +24,7 @@ object NotificationManager {
     ) {
 
         // create notification
+        // TODO addAction for pill confirmation
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_pill)
             .setContentTitle(title)

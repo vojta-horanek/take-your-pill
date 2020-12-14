@@ -9,7 +9,20 @@ import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
 object ReminderManager {
-    fun createReminder(context: Context, reminder: Reminder) {
+
+    fun planNextReminder(context: Context, reminders: List<Reminder>) {
+        val sortedByTime = reminders.sortedBy { rem -> rem.calendar.time }
+        val calendar = Calendar.getInstance()
+        sortedByTime.forEach {
+            // Only plan if the reminder time is past the current time
+            if (it.getMillisWithTodayDate() > calendar.timeInMillis) {
+                createReminder(context, it)
+                return@forEach
+            }
+        }
+    }
+
+    private fun createReminder(context: Context, reminder: Reminder) {
         val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(context, ReminderAlarmReceiver::class.java).let { intent ->
@@ -21,14 +34,5 @@ object ReminderManager {
             reminder.getMillisWithTodayDate(),
             alarmIntent
         )
-    }
-
-    fun planReminders(context: Context, reminders: List<Reminder>) {
-        reminders.forEach {
-            val calendar = Calendar.getInstance()
-            if (it.getMillisWithTodayDate() >= calendar.timeInMillis) {
-                createReminder(context, it)
-            }
-        }
     }
 }

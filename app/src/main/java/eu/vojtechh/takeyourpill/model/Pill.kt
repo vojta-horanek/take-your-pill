@@ -50,8 +50,13 @@ data class Pill(
             pill.description = value
         }
 
-    val notificationDescription
-        get() = pill.description ?: ""
+    fun getNotificationDescription(context: Context, reminder: Reminder) =
+        context.resources.getQuantityString(
+            R.plurals.it_is_time_to_take,
+            reminder.amount,
+            reminder.amount,
+            reminder.timeString
+        )
 
     var photo
         get() = pill.photo

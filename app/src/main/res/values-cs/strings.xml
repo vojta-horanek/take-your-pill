@@ -54,11 +54,20 @@
         <item quantity="few">%1$s: %2$d prášky</item>
         <item quantity="other">%1$s: %2$d prášků</item>
     </plurals>
+    <plurals name="it_is_time_to_take">
+        <item quantity="one">Je čas si vzít %1$d prášek v %2$s</item>
+        <item quantity="few">Je čas si vzít %1$d prášky v %2$s</item>
+        <item quantity="other">Je čas si vzít %1$d prášků v %2$s</item>
+    </plurals>
     <string name="delete_pill_and_history">Smazat prášek a historii</string>
     <string name="delete_only_pil">Smazat pouze prášek</string>
     <string name="pill_time_reminders_format">%1$d v %2$s</string>
     <string name="delete_pill">Smazat prášek</string>
-    <string name="pill_taken_question">Vzali jste si v %1$s tento prášek?</string>
+    <plurals name="pill_taken_question">
+        <item quantity="one">Vzali jste si v %2$s %1$d tento prášek?</item>
+        <item quantity="few">Vzali jste si v %2$s %1$d tyto prášky?</item>
+        <item quantity="other">Vzali jste si v %2$s %1$d těchto prášků?</item>
+    </plurals>
     <string name="two_reminders_same_time">Může existovat pouze jedna připomínka se stejným časem. Prosím změnte čas.</string>
     <string name="nothing_to_see_here">Nic tu není… 🧐</string>
     <string name="try_to_add_a_pill_first">Zkuste nejdříve přidat prášek!</string>

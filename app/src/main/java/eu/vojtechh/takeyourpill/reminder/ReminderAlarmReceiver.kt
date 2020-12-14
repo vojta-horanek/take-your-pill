@@ -27,6 +27,7 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
 
             GlobalScope.launch(Dispatchers.IO) {
                 val pill = pillRepository.getPillByReminderId(reminderId)
+                val reminder = pillRepository.getReminder(reminderId)
 
                 val notificationIntent = Intent(context, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -38,7 +39,7 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
                 NotificationManager.createAndShowNotification(
                     context,
                     title = pill.name,
-                    description = pill.notificationDescription,
+                    description = pill.getNotificationDescription(context, reminder),
                     color = pill.color.getColor(context),
                     bitmap = pill.photo,
                     pendingIntent = pendingIntent,
@@ -46,6 +47,7 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
                     channelId = pill.id.toString()
                 )
 
+                ReminderManager.planNextReminder(context, pillRepository.getAllReminders())
             }
         }
     }

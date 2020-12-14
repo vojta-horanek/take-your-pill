@@ -4,7 +4,6 @@ import android.Manifest
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -324,13 +323,12 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     }
 
     private fun setReminding(pillId: Long) {
-        Log.e("pillID Edit", pillId.toString())
         NotificationManager.createNotificationChannel(
             requireContext(),
             pillId.toString(),
             model.pill.name
         )
-        ReminderManager.planReminders(requireContext(), model.pill.reminders)
+        ReminderManager.planNextReminder(requireContext(), model.pill.reminders)
     }
 
     private fun getReminderOptions(): ReminderOptions {
