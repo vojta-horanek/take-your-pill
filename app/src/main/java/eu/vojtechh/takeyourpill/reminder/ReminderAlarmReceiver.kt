@@ -42,14 +42,15 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
                 val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, int, 0)
 
 
-                NotificationFactory.createAndShowNotification(
+                NotificationManager.createAndShowNotification(
                     context,
-                    pill.name,
-                    reminderId.toString(),
-                    pill.color.getColor(context),
-                    pill.photo,
-                    pendingIntent,
-                    reminderId
+                    title = pill.name,
+                    description = pill.notificationDescription,
+                    color = pill.color.getColor(context),
+                    bitmap = pill.photo,
+                    pendingIntent = pendingIntent,
+                    notificationId = reminderId,
+                    channelId = pill.id.toString()
                 )
 
                 // TODO Plan next reminder for this pill, display alert

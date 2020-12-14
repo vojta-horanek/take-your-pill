@@ -4,6 +4,7 @@ import android.Manifest
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,8 @@ import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
-import eu.vojtechh.takeyourpill.reminder.ReminderFactory
+import eu.vojtechh.takeyourpill.reminder.NotificationManager
+import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -303,10 +305,9 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 description = inputDescription.getString()
             }
 
-            // Is pill new?
             if (isPillNew) {
                 model.addPill(model.pill).observe(viewLifecycleOwner) {
-                    ReminderFactory.planRemindersForPill(requireContext(), model.pill.reminders)
+                    setReminding(it)
                     exitTransition = Slide().apply {
                         addTarget(R.id.layoutEdit)
                     }
@@ -314,12 +315,22 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 }
             } else {
                 model.updatePill(model.pill).observe(viewLifecycleOwner) {
-                    ReminderFactory.planRemindersForPill(requireContext(), model.pill.reminders)
+                    setReminding(it)
                     returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
                     findNavController().popBackStack()
                 }
             }
         }
+    }
+
+    private fun setReminding(pillId: Long) {
+        Log.e("pillID Edit", pillId.toString())
+        NotificationManager.createNotificationChannel(
+            requireContext(),
+            pillId.toString(),
+            model.pill.name
+        )
+        ReminderManager.planReminders(requireContext(), model.pill.reminders)
     }
 
     private fun getReminderOptions(): ReminderOptions {

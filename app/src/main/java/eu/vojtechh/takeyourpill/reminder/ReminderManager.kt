@@ -8,7 +8,7 @@ import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
-object ReminderFactory {
+object ReminderManager {
     fun createReminder(context: Context, reminder: Reminder) {
         val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -16,27 +16,17 @@ object ReminderFactory {
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminder.reminderId)
             PendingIntent.getBroadcast(context, 0, intent, 0)
         }
-        val time = Calendar.getInstance()
-        time.set(Calendar.HOUR_OF_DAY, reminder.hour)
-        time.set(Calendar.MINUTE, reminder.minute)
-        time.set(Calendar.SECOND, 0)
-        time.set(Calendar.MILLISECOND, 0)
         alarmMgr.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            time.timeInMillis,
+            reminder.getMillisWithTodayDate(),
             alarmIntent
         )
     }
 
-    fun planRemindersForPill(context: Context, reminders: List<Reminder>) {
+    fun planReminders(context: Context, reminders: List<Reminder>) {
         reminders.forEach {
-            val time = Calendar.getInstance()
-            time.set(Calendar.HOUR_OF_DAY, it.hour)
-            time.set(Calendar.MINUTE, it.minute)
-            time.set(Calendar.SECOND, 0)
-            time.set(Calendar.MILLISECOND, 0)
             val calendar = Calendar.getInstance()
-            if (time.timeInMillis >= calendar.timeInMillis) {
+            if (it.getMillisWithTodayDate() >= calendar.timeInMillis) {
                 createReminder(context, it)
             }
         }

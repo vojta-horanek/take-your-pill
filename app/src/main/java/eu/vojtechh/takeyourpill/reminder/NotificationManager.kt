@@ -6,14 +6,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.klass.Constants
 
-object NotificationFactory {
+object NotificationManager {
 
-    // TODO Create channel ID for each pill
     fun createAndShowNotification(
         context: Context,
         title: String,
@@ -21,11 +20,11 @@ object NotificationFactory {
         color: Int,
         bitmap: Bitmap?,
         pendingIntent: PendingIntent,
-        id: Long
+        notificationId: Long,
+        channelId: String
     ) {
 
-        createNotificationChannel(context)
-        val builder = NotificationCompat.Builder(context, Constants.CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_pill)
             .setContentTitle(title)
             .setContentText(description)
@@ -45,24 +44,30 @@ object NotificationFactory {
         }
 
         with(NotificationManagerCompat.from(context)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(id.toInt(), builder.build())
+            notify(notificationId.toInt(), builder.build())
         }
 
     }
 
-    private fun createNotificationChannel(context: Context) {
+    fun createNotificationChannel(context: Context, id: String, name: String) {
+        Log.e("pillId Create", id)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = Constants.CHANNEL_ID
-            val descriptionText = Constants.CHANNEL_ID
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(Constants.CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system
+            val channel = NotificationChannel(id, name, importance)
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    fun removeNotificationChannel(context: Context, id: String) {
+        Log.e("pillId Remove", id)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager: NotificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.deleteNotificationChannel(id)
         }
     }
 

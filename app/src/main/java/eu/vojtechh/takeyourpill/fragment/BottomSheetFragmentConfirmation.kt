@@ -32,9 +32,9 @@ class BottomSheetFragmentConfirmation :
         }
     }
 
-    private var listener: ConfirmListener? = null
+    private var listener: DeleteListener? = null
 
-    fun setListener(listener: ConfirmListener): BottomSheetFragmentConfirmation {
+    fun setListener(listener: DeleteListener): BottomSheetFragmentConfirmation {
         this.listener = listener
         return this
     }
@@ -59,8 +59,8 @@ class BottomSheetFragmentConfirmation :
         return binding.root
     }
 
-    interface ConfirmListener {
-        fun onConfirmClicked(view: View)
-        fun onCancelClicked(view: View)
+    interface DeleteListener {
+        fun onDeletePill(view: View)
+        fun onDeletePillHistory(view: View)
     }
 }

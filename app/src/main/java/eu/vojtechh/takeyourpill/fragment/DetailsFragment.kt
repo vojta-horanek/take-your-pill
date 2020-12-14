@@ -18,11 +18,12 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.klass.themeColor
+import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
-    BottomSheetFragmentConfirmation.ConfirmListener, ReminderAdapter.ReminderAdapterListener {
+    BottomSheetFragmentConfirmation.DeleteListener, ReminderAdapter.ReminderAdapterListener {
 
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
@@ -93,17 +94,18 @@ class DetailsFragment : Fragment(),
 
     }
 
-    override fun onConfirmClicked(view: View) {
+    override fun onDeletePill(view: View) {
         model.deletePill(model.pill.pill)
-        exitOnDelete()
+        doOnDelete()
     }
 
-    override fun onCancelClicked(view: View) {
+    override fun onDeletePillHistory(view: View) {
         model.deletePillWithHistory(model.pill)
-        exitOnDelete()
+        doOnDelete()
     }
 
-    private fun exitOnDelete() {
+    private fun doOnDelete() {
+        NotificationManager.removeNotificationChannel(requireContext(), model.pill.id.toString())
         exitTransition = Slide().apply {
             addTarget(R.id.detailsView)
         }
