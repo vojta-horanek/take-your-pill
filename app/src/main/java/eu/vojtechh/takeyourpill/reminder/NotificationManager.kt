@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import eu.vojtechh.takeyourpill.R
@@ -24,6 +23,7 @@ object NotificationManager {
         channelId: String
     ) {
 
+        // create notification
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_pill)
             .setContentTitle(title)
@@ -32,6 +32,7 @@ object NotificationManager {
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
+        // set notification style to BigPicture if the pill has aq photo
         bitmap?.let {
             builder.setLargeIcon(bitmap)
             builder.setStyle(
@@ -43,6 +44,7 @@ object NotificationManager {
             builder.setStyle(NotificationCompat.BigTextStyle().bigText(description))
         }
 
+        // show notification to the user
         with(NotificationManagerCompat.from(context)) {
             notify(notificationId.toInt(), builder.build())
         }
@@ -50,8 +52,6 @@ object NotificationManager {
     }
 
     fun createNotificationChannel(context: Context, id: String, name: String) {
-        Log.e("pillId Create", id)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(id, name, importance)
@@ -62,8 +62,6 @@ object NotificationManager {
     }
 
     fun removeNotificationChannel(context: Context, id: String) {
-        Log.e("pillId Remove", id)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
