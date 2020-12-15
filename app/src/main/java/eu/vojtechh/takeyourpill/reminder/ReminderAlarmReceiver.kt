@@ -50,6 +50,7 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
                     )
                     ReminderManager.setCheckForConfirmation(context, reminder.reminderId)
                 }
+
                 ReminderManager.planNextReminder(context, pillRepository.getAllReminders())
             }
         }

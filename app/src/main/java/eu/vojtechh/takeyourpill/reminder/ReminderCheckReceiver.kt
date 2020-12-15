@@ -1,6 +1,5 @@
 package eu.vojtechh.takeyourpill.reminder
 
-import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -12,6 +11,7 @@ import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,25 +24,14 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
         super.onReceive(context, intent)
         intent.let {
 
-            val reminderId = intent.getLongExtra(Constants.INTENT_EXTRA_PILL_ID, -1L)
+            val reminderId = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1L)
             if (reminderId == -1L) return
+
+            Timber.d("Reminder check run id: %d", reminderId)
 
             GlobalScope.launch(Dispatchers.IO) {
 
-                // TODO Check if the reminder is confirmed, if so, cancel alarm
-                if (true) {
-                    val alarmMgr =
-                        context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    val alarmIntent =
-                        Intent(context, ReminderCheckReceiver::class.java).let { intent ->
-                            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
-                            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, 0)
-                        }
-                    alarmMgr.cancel(alarmIntent)
-                }
-
                 val reminder = pillRepository.getReminder(reminderId)
-
                 val pill = pillRepository.getPillSync(reminder.pillId)
 
                 val notificationIntent = Intent(context, MainActivity::class.java).apply {
@@ -50,7 +39,7 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
                     putExtra(Constants.INTENT_EXTRA_PILL_ID, pill.id)
                 }
                 val pendingIntent: PendingIntent =
-                    PendingIntent.getActivity(context, 0, notificationIntent, 0)
+                    PendingIntent.getActivity(context, reminderId.toInt(), notificationIntent, 0)
 
                 NotificationManager.createAndShowNotification(
                     context,
@@ -62,6 +51,11 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
                     notificationId = reminder.reminderId,
                     channelId = pill.id.toString()
                 )
+
+                // TODO Check if the reminder is confirmed, if so, don't alarm again
+                if (false) {
+                    ReminderManager.setCheckForConfirmation(context, reminderId)
+                }
             }
         }
     }

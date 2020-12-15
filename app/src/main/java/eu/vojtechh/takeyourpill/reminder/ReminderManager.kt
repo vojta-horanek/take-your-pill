@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.SystemClock
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.model.Reminder
+import timber.log.Timber
 import java.util.*
 
 object ReminderManager {
@@ -15,6 +16,8 @@ object ReminderManager {
         val sortedByTime = reminders.sortedBy { rem -> rem.calendar.time }
         val calendar = Calendar.getInstance()
 
+        Timber.d("Planning next reminder")
+
         sortedByTime.forEach {
             // Only plan if the reminder time is past the current time
             if (it.getMillisWithTodayDate() > calendar.timeInMillis) {
@@ -22,6 +25,8 @@ object ReminderManager {
                 return@planNextReminder
             }
         }
+
+        Timber.d("Next reminder is tommorow")
         // no reminder for today if we get here, plan the first one for tomorrow
         val firstTomorrow = sortedByTime[0]
         calendar.timeInMillis = firstTomorrow.getMillisWithTodayDate()
@@ -43,15 +48,22 @@ object ReminderManager {
         }
         // Trigger after 15 minutes, then repeat every 15 minutes
         // TODO Make the interval configurable
-        alarmMgr.setRepeating(
+        val triggerAt = SystemClock.elapsedRealtime() + 1000 * 60 * 1
+        Timber.d("Setting check alarm at %d", triggerAt)
+        alarmMgr.setExactAndAllowWhileIdle(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-            AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+            triggerAt,
             alarmIntent
         )
     }
 
-    private fun createReminder(context: Context, id: Long, millis: Long, reminderTime: Long) {
+    private fun createReminder(
+        context: Context,
+        id: Long,
+        triggerMillis: Long,
+        reminderTime: Long
+    ) {
+        Timber.d("Creating a reminder for AlarmReceiver at %d", triggerMillis)
         val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(context, ReminderAlarmReceiver::class.java).let { intent ->
@@ -60,7 +72,7 @@ object ReminderManager {
         }
         alarmMgr.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            millis,
+            triggerMillis,
             alarmIntent
         )
     }

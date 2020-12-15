@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import eu.vojtechh.takeyourpill.R
+import timber.log.Timber
 
 object NotificationManager {
 
@@ -23,6 +24,8 @@ object NotificationManager {
         channelId: String
     ) {
 
+        Timber.d("Creating notification for reminderId %d", notificationId)
+
         // create notification
         // TODO addAction for pill confirmation
         val builder = NotificationCompat.Builder(context, channelId)
@@ -32,7 +35,6 @@ object NotificationManager {
             .setColor(color)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setGroup(channelId)
 
         // set notification style to BigPicture if the pill has a photo
         bitmap?.let {

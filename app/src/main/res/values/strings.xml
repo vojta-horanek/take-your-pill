@@ -79,4 +79,5 @@
     <string name="intro_history">See history</string>
     <string name="intro_history_description">Look at the history of your pill taking and get data on your accuracy</string>
     <string name="intro">Intro</string>
+    <string name="x_new_reminders">$1%d new reminders</string>
 </resources>
