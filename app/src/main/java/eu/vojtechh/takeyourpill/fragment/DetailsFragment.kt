@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
+import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
@@ -35,6 +36,7 @@ class DetailsFragment : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.navHostFragment
             scrimColor = Color.TRANSPARENT
@@ -50,7 +52,12 @@ class DetailsFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
-        model.getPillById(args.pillId).observe(viewLifecycleOwner, {
+        var pillId = requireArguments().getLong(Constants.INTENT_EXTRA_PILL_ID, -1L)
+        if (pillId == -1L) {
+            pillId = args.pillId
+        }
+
+        model.getPillById(pillId).observe(viewLifecycleOwner, {
             if (it != null) {
                 model.pill = it
                 binding.pill = model.pill

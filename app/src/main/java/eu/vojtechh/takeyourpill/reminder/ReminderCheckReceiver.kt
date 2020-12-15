@@ -1,10 +1,8 @@
 package eu.vojtechh.takeyourpill.reminder
 
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
-import eu.vojtechh.takeyourpill.activity.MainActivity
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.HiltBroadcastReceiver
 import eu.vojtechh.takeyourpill.repository.PillRepository
@@ -38,20 +36,13 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
                 val reminder = reminderRepository.getReminder(reminderId)
                 val pill = pillRepository.getPillSync(reminder.pillId)
 
-                val notificationIntent = Intent(context, MainActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    putExtra(Constants.INTENT_EXTRA_PILL_ID, pill.id)
-                }
-                val pendingIntent: PendingIntent =
-                    PendingIntent.getActivity(context, reminderId.toInt(), notificationIntent, 0)
-
                 NotificationManager.createAndShowNotification(
                     context,
                     title = pill.name,
                     description = pill.getNotificationDescription(context, reminder),
                     color = pill.color.getColor(context),
                     bitmap = pill.photo,
-                    pendingIntent = pendingIntent,
+                    pendingIntent = ReminderUtil.getNotificationPendingIntent(context, pill.id),
                     notificationId = reminder.reminderId,
                     channelId = pill.id.toString()
                 )

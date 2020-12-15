@@ -28,7 +28,7 @@ const val REQUEST_CODE_INTRO = 22
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val view by viewBinding(ActivityMainBinding::inflate)
+    private val binding by viewBinding(ActivityMainBinding::inflate)
     private val model: MainViewModel by viewModels()
 
     private val currentNavigationFragment: Fragment?
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(view.root)
+        setContentView(binding.root)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         //val intent = Intent(this, AppIntroActivity::class.java)
         //startActivityForResult(intent, REQUEST_CODE_INTRO)
 
-        /* We must have two "hiders" since if I show the FAB in this registerFragmentLifecycleCallbacks it slides up */
         supportFragmentManager.registerFragmentLifecycleCallbacks(object :
             FragmentManager.FragmentLifecycleCallbacks() {
             override fun onFragmentViewCreated(
@@ -60,33 +59,29 @@ class MainActivity : AppCompatActivity() {
                 savedInstanceState: Bundle?
             ) {
                 TransitionManager.beginDelayedTransition(
-                    view.root,
+                    binding.root,
                     Slide(Gravity.BOTTOM).excludeTarget(R.id.navHostFragment, true)
                 )
                 when (fragment) {
-                    is HomeFragment -> {
-                        view.bottomNavigation.visibility = View.VISIBLE
-                    }
-                    is HistoryFragment, is SettingsFragment -> {
-                        view.bottomNavigation.visibility = View.VISIBLE
+                    is HomeFragment, is HistoryFragment, is SettingsFragment -> {
+                        binding.bottomNavigation.visibility = View.VISIBLE
                     }
                     else -> {
-                        view.bottomNavigation.visibility = View.INVISIBLE
+                        binding.bottomNavigation.visibility = View.INVISIBLE
                     }
                 }
             }
         }, true)
 
-
-        view.bottomNavigation.setOnNavigationItemReselectedListener { /* Disables reselection */ }
-        view.bottomNavigation.setOnNavigationItemSelectedListener {
+        binding.bottomNavigation.setOnNavigationItemReselectedListener { /* Disables reselection */ }
+        binding.bottomNavigation.setOnNavigationItemSelectedListener {
             currentNavigationFragment?.apply {
                 exitTransition = MaterialFadeThrough()
             }
             true
         }
 
-        view.bottomNavigation.setupWithNavController(navController)
+        binding.bottomNavigation.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
