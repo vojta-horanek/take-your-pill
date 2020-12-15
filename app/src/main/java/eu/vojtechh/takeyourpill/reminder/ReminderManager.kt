@@ -25,14 +25,14 @@ object ReminderManager {
         val firstTomorrow = sortedByTime[0]
         calendar.timeInMillis = firstTomorrow.getMillisWithTodayDate()
         calendar.add(Calendar.DAY_OF_YEAR, 1)
-        createReminder(context, firstTomorrow.reminderId, calendar.timeInMillis)
+        createReminder(context, firstTomorrow.reminderId, calendar.timeInMillis, firstTomorrow.calendar.timeInMillis)
     }
 
-    private fun createReminder(context: Context, id: Long, millis: Long) {
+    private fun createReminder(context: Context, id: Long, millis: Long, reminderTime: Long) {
         val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(context, ReminderAlarmReceiver::class.java).let { intent ->
-            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_TIME, millis)
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_TIME, reminderTime)
             PendingIntent.getBroadcast(context, id.toInt(), intent, 0)
         }
         alarmMgr.setExactAndAllowWhileIdle(
@@ -43,5 +43,5 @@ object ReminderManager {
     }
 
     private fun createReminder(context: Context, reminder: Reminder) =
-        createReminder(context, reminder.reminderId, reminder.getMillisWithTodayDate())
+        createReminder(context, reminder.reminderId, reminder.getMillisWithTodayDate(), reminder.calendar.timeInMillis)
 }

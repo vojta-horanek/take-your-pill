@@ -26,7 +26,7 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
             val reminderTime = it.getLongExtra(Constants.INTENT_EXTRA_REMINDER_TIME, -1L)
             if (reminderTime == -1L) return
 
-            val reminders = pillRepository.getRemindersBasedOnTime(getFormattedMillis(reminderTime))
+            val reminders = pillRepository.getRemindersBasedOnTime(reminderTime)
 
             GlobalScope.launch(Dispatchers.IO) {
                 for (reminder in reminders) {
@@ -50,22 +50,9 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
                         channelId = pill.id.toString()
                     )
 
-                    ReminderManager.planNextReminder(context, pillRepository.getAllReminders())
                 }
+                ReminderManager.planNextReminder(context, pillRepository.getAllReminders())
             }
         }
-    }
-
-    // Sets the calendar to have the same value as in the reminders table
-    // -> stripping of the year, month, day
-    private fun getFormattedMillis(millis: Long): Long {
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = millis
-        val hour = calendar.get(Calendar.HOUR)
-        val minute = calendar.get(Calendar.MINUTE)
-        calendar.clear()
-        calendar.set(Calendar.HOUR, hour)
-        calendar.set(Calendar.MINUTE, minute)
-        return  calendar.timeInMillis
     }
 }
