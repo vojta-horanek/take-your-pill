@@ -11,7 +11,6 @@ import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -26,9 +25,9 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
             val reminderTime = it.getLongExtra(Constants.INTENT_EXTRA_REMINDER_TIME, -1L)
             if (reminderTime == -1L) return
 
-            val reminders = pillRepository.getRemindersBasedOnTime(reminderTime)
-
             GlobalScope.launch(Dispatchers.IO) {
+                val reminders = pillRepository.getRemindersBasedOnTime(reminderTime)
+
                 for (reminder in reminders) {
                     val pill = pillRepository.getPillSync(reminder.pillId)
 
@@ -49,7 +48,7 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
                         notificationId = reminder.reminderId,
                         channelId = pill.id.toString()
                     )
-
+                    ReminderManager.setCheckForConfirmation(context, reminder.reminderId)
                 }
                 ReminderManager.planNextReminder(context, pillRepository.getAllReminders())
             }

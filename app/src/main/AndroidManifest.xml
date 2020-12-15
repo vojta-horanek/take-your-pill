@@ -28,12 +28,13 @@
             android:theme="@style/Theme.Intro" />
 
         <receiver android:name=".reminder.ReminderAlarmReceiver" />
+        <receiver android:name=".reminder.ReminderCheckReceiver" />
 
         <receiver
             android:name=".klass.BootReceiver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
