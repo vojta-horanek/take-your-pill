@@ -8,6 +8,7 @@ import eu.vojtechh.takeyourpill.activity.MainActivity
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.HiltBroadcastReceiver
 import eu.vojtechh.takeyourpill.repository.PillRepository
+import eu.vojtechh.takeyourpill.repository.ReminderRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,6 +20,9 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
     @Inject
     lateinit var pillRepository: PillRepository
 
+    @Inject
+    lateinit var reminderRepository: ReminderRepository
+
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         intent.let {
@@ -26,7 +30,7 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
             if (reminderTime == -1L) return
 
             GlobalScope.launch(Dispatchers.IO) {
-                val reminders = pillRepository.getRemindersBasedOnTime(reminderTime)
+                val reminders = reminderRepository.getRemindersBasedOnTime(reminderTime)
 
                 for (reminder in reminders) {
                     val pill = pillRepository.getPillSync(reminder.pillId)
@@ -51,7 +55,7 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
                     ReminderManager.setCheckForConfirmation(context, reminder.reminderId)
                 }
 
-                ReminderManager.planNextReminder(context, pillRepository.getAllReminders())
+                ReminderManager.planNextReminder(context, reminderRepository.getAllReminders())
             }
         }
     }

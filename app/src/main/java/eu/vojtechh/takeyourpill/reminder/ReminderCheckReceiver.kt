@@ -8,6 +8,7 @@ import eu.vojtechh.takeyourpill.activity.MainActivity
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.HiltBroadcastReceiver
 import eu.vojtechh.takeyourpill.repository.PillRepository
+import eu.vojtechh.takeyourpill.repository.ReminderRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,6 +21,9 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
     @Inject
     lateinit var pillRepository: PillRepository
 
+    @Inject
+    lateinit var reminderRepository: ReminderRepository
+
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         intent.let {
@@ -31,7 +35,7 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
 
             GlobalScope.launch(Dispatchers.IO) {
 
-                val reminder = pillRepository.getReminder(reminderId)
+                val reminder = reminderRepository.getReminder(reminderId)
                 val pill = pillRepository.getPillSync(reminder.pillId)
 
                 val notificationIntent = Intent(context, MainActivity::class.java).apply {
