@@ -1,7 +1,5 @@
 package eu.vojtechh.takeyourpill.reminder
 
-import eu.vojtechh.takeyourpill.model.Reminder
-
 /*
     A class used for setting all the possible options
     to a pill reminder. This can be used to store
@@ -47,17 +45,16 @@ class ReminderOptions(
         const val NO_BREAK = -1
         const val REPEAT_FOREVER = -1
 
-        fun infinite(remindTimes: MutableList<Reminder>) =
+        fun infinite() =
             ReminderOptions()
 
-        fun finite(remindTimes: MutableList<Reminder>, limitDays: Int) =
+        fun finite(limitDays: Int) =
             ReminderOptions(limitDays = limitDays)
 
-        fun infiniteBreak(remindTimes: MutableList<Reminder>, limitDays: Int, breakDays: Int) =
+        fun infiniteBreak(limitDays: Int, breakDays: Int) =
             ReminderOptions(limitDays = limitDays, breakDays = breakDays)
 
         fun finiteRepeating(
-            remindTimes: MutableList<Reminder>,
             limitDays: Int,
             breakDays: Int,
             repeatCount: Int

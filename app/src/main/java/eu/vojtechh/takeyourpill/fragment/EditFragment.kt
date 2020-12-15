@@ -338,26 +338,23 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 if (checkRestoreAfter.isChecked) {
                     return if (!checkCycleCount.isChecked) {
                         ReminderOptions.finiteRepeating(
-                            model.getReminderTimes(),
                             inputDayNumber.getNumber(),
                             inputRestore.getNumber(),
                             inputCycleCount.getNumber()
                         )
                     } else {
                         ReminderOptions.infiniteBreak(
-                            model.getReminderTimes(),
                             inputDayNumber.getNumber(),
                             inputRestore.getNumber()
                         )
                     }
                 } else {
                     return ReminderOptions.finite(
-                        model.getReminderTimes(),
                         inputDayNumber.getNumber()
                     )
                 }
             } else {
-                return ReminderOptions.infinite(model.getReminderTimes())
+                return ReminderOptions.infinite()
             }
         }
     }
