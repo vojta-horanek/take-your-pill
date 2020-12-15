@@ -32,7 +32,7 @@ object ReminderManager {
         val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(context, ReminderAlarmReceiver::class.java).let { intent ->
-            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, id)
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_TIME, millis)
             PendingIntent.getBroadcast(context, id.toInt(), intent, 0)
         }
         alarmMgr.setExactAndAllowWhileIdle(
@@ -44,5 +44,4 @@ object ReminderManager {
 
     private fun createReminder(context: Context, reminder: Reminder) =
         createReminder(context, reminder.reminderId, reminder.getMillisWithTodayDate())
-
 }
