@@ -58,7 +58,15 @@
         <item quantity="one">%1$s: %2$d pill</item>
         <item quantity="other">%1$s: %2$d pills</item>
     </plurals>
-    <string name="pill_taken_question">Have you taken this pill at %1$s?</string>
+    <plurals name="it_is_time_to_take">
+        <item quantity="one">It is time to take $1$d pill!</item>
+        <item quantity="other">It is time to take $1$d pills!</item>
+    </plurals>
+
+    <plurals name="pill_taken_question">
+        <item quantity="one">Have you taken %1$d pill at %2$s?</item>
+        <item quantity="other">Have you taken %1$d of these pills at %2$s?</item>
+    </plurals>
     <string name="two_reminders_same_time">There can only be one reminder with the same time. Please set a different time.</string>
     <string name="nothing_to_see_here">Nothing to see here… 🧐</string>
     <string name="try_to_add_a_pill_first">Try to add a pill first!</string>
@@ -71,4 +79,5 @@
     <string name="intro_history">See history</string>
     <string name="intro_history_description">Look at the history of your pill taking and get data on your accuracy</string>
     <string name="intro">Intro</string>
+    <string name="x_new_reminders">$1%d new reminders</string>
 </resources>

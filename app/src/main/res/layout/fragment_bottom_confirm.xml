@@ -18,7 +18,7 @@
 
         <variable
             name="listener"
-            type="eu.vojtechh.takeyourpill.fragment.BottomSheetFragmentConfirmation.ConfirmListener" />
+            type="eu.vojtechh.takeyourpill.fragment.BottomSheetFragmentConfirmation.DeleteListener" />
     </data>
 
 
@@ -58,7 +58,7 @@
             android:drawablePadding="16dp"
             android:focusable="true"
             android:gravity="center_vertical"
-            android:onClick="@{(view) -> listener.onConfirmClicked(view)}"
+            android:onClick="@{(view) -> listener.onDeletePill(view)}"
             android:paddingHorizontal="24dp"
             android:paddingVertical="16dp"
             android:text="@{yes}"
@@ -76,7 +76,7 @@
             android:drawablePadding="16dp"
             android:focusable="true"
             android:gravity="center_vertical"
-            android:onClick="@{(view) -> listener.onCancelClicked(view)}"
+            android:onClick="@{(view) -> listener.onDeletePillHistory(view)}"
             android:paddingHorizontal="24dp"
             android:paddingVertical="16dp"
             android:text="@{no}"

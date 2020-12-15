@@ -24,8 +24,11 @@ import eu.vojtechh.takeyourpill.adapter.ColorAdapter
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.klass.*
+import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
+import eu.vojtechh.takeyourpill.reminder.NotificationManager
+import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -302,20 +305,31 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 description = inputDescription.getString()
             }
 
-            // Is pill new?
             if (isPillNew) {
-                model.addPill(model.pill).observe(viewLifecycleOwner) {
+                model.addPillReturn(model.pill).observe(viewLifecycleOwner) {
+                    setReminding(it)
                     exitTransition = Slide().apply {
                         addTarget(R.id.layoutEdit)
                     }
                     findNavController().popBackStack()
                 }
             } else {
-                model.updatePill(model.pill)
-                returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-                findNavController().popBackStack()
+                model.updatePillReturn(model.pill).observe(viewLifecycleOwner) {
+                    setReminding(it)
+                    returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+                    findNavController().popBackStack()
+                }
             }
         }
+    }
+
+    private fun setReminding(pill: Pill) {
+        NotificationManager.createNotificationChannel(
+            requireContext(),
+            pill.id.toString(),
+            pill.name
+        )
+        ReminderManager.planNextReminder(requireContext(), pill.reminders)
     }
 
     private fun getReminderOptions(): ReminderOptions {
@@ -324,26 +338,23 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 if (checkRestoreAfter.isChecked) {
                     return if (!checkCycleCount.isChecked) {
                         ReminderOptions.finiteRepeating(
-                            model.getReminderTimes(),
                             inputDayNumber.getNumber(),
                             inputRestore.getNumber(),
                             inputCycleCount.getNumber()
                         )
                     } else {
                         ReminderOptions.infiniteBreak(
-                            model.getReminderTimes(),
                             inputDayNumber.getNumber(),
                             inputRestore.getNumber()
                         )
                     }
                 } else {
                     return ReminderOptions.finite(
-                        model.getReminderTimes(),
                         inputDayNumber.getNumber()
                     )
                 }
             } else {
-                return ReminderOptions.infinite(model.getReminderTimes())
+                return ReminderOptions.infinite()
             }
         }
     }

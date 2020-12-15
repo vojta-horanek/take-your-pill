@@ -3,6 +3,8 @@
     package="eu.vojtechh.takeyourpill">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -19,9 +21,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".activity.AppIntroActivity" android:label="@string/intro"
-            android:theme="@style/Theme.Intro"/>
+
+        <activity
+            android:name=".activity.AppIntroActivity"
+            android:label="@string/intro"
+            android:theme="@style/Theme.Intro" />
+
+        <receiver android:name=".reminder.ReminderAlarmReceiver" />
+        <receiver android:name=".reminder.ReminderCheckReceiver" />
+
+        <receiver
+            android:name=".klass.BootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -19,8 +19,13 @@ class EditViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository
 ) : ViewModel() {
     fun addPill(pill: Pill) = liveData { emit(pillRepository.insertPill(pill)) }
-    fun updatePill(pill: Pill) =
-        viewModelScope.launch(Dispatchers.IO) { pillRepository.updatePill(pill) }
+
+    fun addPillReturn(pill: Pill) = liveData { emitSource(pillRepository.insertPillReturn(pill)) }
+
+    fun updatePill(pill: Pill) = liveData { emit(pillRepository.updatePill(pill)) }
+
+    fun updatePillReturn(pill: Pill) =
+        liveData { emitSource(pillRepository.updatePillReturn(pill)) }
 
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
 

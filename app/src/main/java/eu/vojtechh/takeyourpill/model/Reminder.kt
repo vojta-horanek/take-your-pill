@@ -31,6 +31,15 @@ data class Reminder(
     val minute
         get() = calendar.get(Calendar.MINUTE)
 
+    fun getMillisWithTodayDate(): Long {
+        val time = Calendar.getInstance()
+        time.set(Calendar.HOUR_OF_DAY, hour)
+        time.set(Calendar.MINUTE, minute)
+        time.set(Calendar.SECOND, 0)
+        time.set(Calendar.MILLISECOND, 0)
+        return time.timeInMillis
+    }
+
     companion object {
         fun create(hour: Int = 8, minute: Int = 0, amount: Int = 1, pillId: Long): Reminder {
             val calendar = Calendar.getInstance()

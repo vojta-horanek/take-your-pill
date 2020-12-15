@@ -1,4 +1,4 @@
-package eu.vojtechh.takeyourpill.depinjection
+package eu.vojtechh.takeyourpill.di
 
 import android.content.Context
 import androidx.room.Room
@@ -29,4 +29,8 @@ object ApplicationScope {
     @Singleton
     @Provides
     fun providePillDao(db: PillDatabase) = db.getPillDao()
+
+    @Singleton
+    @Provides
+    fun provideReminderDao(db: PillDatabase) = db.getReminderDao()
 }
