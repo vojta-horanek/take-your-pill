@@ -134,7 +134,7 @@
                             android:clipChildren="false"
                             android:clipToPadding="false">
 
-                            <ImageView
+                            <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/imagePillPhoto"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -144,7 +144,9 @@
                                 android:scaleType="centerCrop"
                                 android:src="@{pill.photoDrawable(context)}"
                                 tools:ignore="ContentDescription"
-                                tools:src="@drawable/photo_default" />
+                                tools:src="@drawable/photo_default"
+                                app:tint="#8C000000"
+                                app:tintMode="src_over" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="48dp"
@@ -152,7 +154,8 @@
                                 android:layout_gravity="center"
                                 android:contentDescription="@string/add_photo"
                                 android:elevation="5dp"
-                                app:srcCompat="@drawable/ic_photo_add_outline" />
+                                app:srcCompat="@drawable/ic_photo_add"
+                                app:tint="@android:color/white" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/imageDeletePhoto"
@@ -163,7 +166,8 @@
                                 android:contentDescription="@string/delete"
                                 android:elevation="5dp"
                                 android:visibility="@{pill.photoVisibility, default=gone}"
-                                app:srcCompat="@drawable/ic_delete_outline"
+                                app:srcCompat="@drawable/ic_delete"
+                                app:tint="@android:color/white"
                                 tools:visibility="visible" />
 
                         </FrameLayout>
