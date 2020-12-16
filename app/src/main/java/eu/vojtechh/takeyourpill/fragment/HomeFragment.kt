@@ -33,11 +33,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.PillAd
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Only postpone when returning from EditFragment
-        if (model.isReturningFromEdit) {
+        // Only postpone when returning from Details
+        if (model.isReturningFromPillDetails) {
+            exitTransition = MaterialFadeThrough()
             postponeEnterTransition()
             view.doOnPreDraw { startPostponedEnterTransition() }
-            model.isReturningFromEdit = false
+            model.isReturningFromPillDetails = false
         }
     }
 
@@ -74,7 +75,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.PillAd
     }
 
     override fun onPillClicked(view: View, pill: Pill) {
-        model.isReturningFromEdit = true
+        model.isReturningFromPillDetails = true
         exitTransition = MaterialElevationScale(false)
         reenterTransition = MaterialElevationScale(true)
         val pillDetailTransitionName = getString(R.string.pill_details_transition_name)
