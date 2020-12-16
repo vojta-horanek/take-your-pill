@@ -3,9 +3,11 @@ package eu.vojtechh.takeyourpill.fragment
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
@@ -108,9 +110,16 @@ class BottomSheetFragmentNewReminder :
         binding.run {
             if (!error) {
                 val normalColor = binding.textConfirm.textColors
+                val typedValue = TypedValue()
+                requireContext().theme.resolveAttribute(
+                    R.attr.colorControlNormal,
+                    typedValue,
+                    true
+                );
+                val color = ContextCompat.getColor(requireContext(), typedValue.resourceId)
                 binding.textTime.apply {
                     setTextColor(normalColor)
-                    TextViewCompat.setCompoundDrawableTintList(this, normalColor)
+                    TextViewCompat.setCompoundDrawableTintList(this, ColorStateList.valueOf(color))
                 }
             }
             textAmount.text =
