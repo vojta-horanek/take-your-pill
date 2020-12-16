@@ -21,7 +21,8 @@ object NotificationManager {
         bitmap: Bitmap?,
         pendingIntent: PendingIntent,
         notificationId: Long,
-        channelId: String
+        channelId: String,
+        whenMillis: Long
     ) {
 
         Timber.d("Creating notification for reminderId %d", notificationId)
@@ -35,6 +36,8 @@ object NotificationManager {
             .setColor(color)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setShowWhen(true)
+            .setWhen(whenMillis)
 
         // set notification style to BigPicture if the pill has a photo
         bitmap?.let {

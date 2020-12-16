@@ -41,7 +41,8 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
                         bitmap = pill.photo,
                         pendingIntent = ReminderUtil.getNotificationPendingIntent(context, pill.id),
                         notificationId = reminder.reminderId,
-                        channelId = pill.id.toString()
+                        channelId = pill.id.toString(),
+                        whenMillis = reminder.getMillisWithTodayDate()
                     )
                     ReminderManager.setCheckForConfirmation(context, reminder.reminderId)
                 }

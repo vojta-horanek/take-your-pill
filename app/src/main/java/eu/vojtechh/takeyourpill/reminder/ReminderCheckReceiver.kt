@@ -44,7 +44,8 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
                     bitmap = pill.photo,
                     pendingIntent = ReminderUtil.getNotificationPendingIntent(context, pill.id),
                     notificationId = reminder.reminderId,
-                    channelId = pill.id.toString()
+                    channelId = pill.id.toString(),
+                    whenMillis = reminder.getMillisWithTodayDate()
                 )
 
                 // TODO Check if the reminder is confirmed, if so, don't alarm again
