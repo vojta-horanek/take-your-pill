@@ -118,7 +118,7 @@
             android:layout_marginTop="-8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:shapeAppearanceOverlay="@style/AppTheme.Shape.roundedCornersConfirmCard"
+            app:shapeAppearanceOverlay="@style/AppTheme.Shape.RoundedCornersConfirmCard"
             app:cardElevation="@dimen/minimal_card_elevation"
             android:id="@+id/cardConfirmTake"
             android:animateLayoutChanges="true">

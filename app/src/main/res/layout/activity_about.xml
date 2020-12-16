@@ -1,30 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AboutActivity">
+    tools:context=".activity.AboutActivity"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/textTitle"
-        style="@style/AppTheme.Widget.Header"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/about"
-        app:layout_constraintEnd_toStartOf="@+id/buttonClose"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/buttonClose"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textTitle"
-        app:srcCompat="@drawable/ic_close"
-        app:tint="?attr/colorOnSurface"
-        android:layout_marginEnd="@dimen/appbar_margin_horizontal" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="52dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/buttonClose"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="@dimen/appbar_margin_vertical"
+                android:layout_marginEnd="@dimen/appbar_margin_horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/imageIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_close"
+                app:tint="?attr/colorOnSurface" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageIcon"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_marginTop="@dimen/screen_margin_vertical"
+                android:background="@drawable/ic_launcher_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/buttonClose"
+                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Circle"
+                app:srcCompat="@drawable/ic_launcher_foreground" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textAppName"
+                style="@style/AppTheme.Widget.Header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                android:gravity="center"
+                android:text="@string/app_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageIcon" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textMadeBy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/screen_margin_vertical_little"
+                android:gravity="center"
+                android:text="@string/made_by"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:layout_constraintEnd_toEndOf="@+id/textAppName"
+                app:layout_constraintStart_toStartOf="@+id/textAppName"
+                app:layout_constraintTop_toBottomOf="@+id/textAppName" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/buttonGithub"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/screen_margin_vertical"
+                android:drawablePadding="@dimen/screen_margin_horizontal_small"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:padding="@dimen/screen_margin_vertical"
+                android:paddingStart="@dimen/screen_margin_horizontal"
+                android:paddingEnd="@dimen/screen_margin_horizontal"
+                android:text="@string/view_on_github"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:drawableStartCompat="@drawable/ic_github"
+                app:drawableTint="?attr/colorOnSurface"
+                app:layout_constraintEnd_toEndOf="@+id/textMadeBy"
+                app:layout_constraintStart_toStartOf="@+id/textMadeBy"
+                app:layout_constraintTop_toBottomOf="@+id/textMadeBy" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textVersion"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/screen_margin_vertical_little"
+            android:gravity="end|center_vertical"
+            android:text="@string/version"
+            android:textAppearance="@style/AppTheme.Text.BodySecondary"
+            android:layout_marginVertical="@dimen/screen_margin_vertical"
+            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</ScrollView>
