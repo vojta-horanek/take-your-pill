@@ -31,8 +31,8 @@ object NotificationManager {
 
         Timber.d("Creating notification for reminderId %d", notificationId)
 
+        val buttonDelay = Pref.buttonDelay
         // create notification
-        // TODO addAction for delay
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_pill)
             .setContentTitle(title)
@@ -52,7 +52,11 @@ object NotificationManager {
             .addAction(
                 NotificationCompat.Action(
                     R.drawable.ic_delay,
-                    context.getString(R.string.delay, Pref.buttonDelay),
+                    context.resources.getQuantityString(
+                        R.plurals.delay,
+                        buttonDelay,
+                        buttonDelay
+                    ),
                     delayPendingIntent
                 )
             )

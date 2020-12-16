@@ -11,8 +11,8 @@ class AppIntroActivity : IntroActivity() {
         super.onCreate(savedInstanceState)
         addSlide(
             SimpleSlide.Builder()
-                .title(R.string.intro_welome)
-                .description(R.string.intro_welome_description)
+                .title(R.string.intro_welcome)
+                .description(R.string.intro_welcome_description)
                 .image(R.drawable.ic_empty_view)
                 .background(android.R.color.white)
                 .backgroundDark(R.color.colorPrimaryDark)
