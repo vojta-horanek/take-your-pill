@@ -21,7 +21,7 @@
 
                 <View style="@style/AppTheme.Widget.Handle" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/appbar_margin_horizontal"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textAmount"
                     android:layout_width="0dp"
                     android:layout_height="56dp"
@@ -105,7 +105,7 @@
             <View style="@style/AppTheme.Widget.Divider" />
 
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

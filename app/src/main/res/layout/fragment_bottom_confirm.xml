@@ -35,7 +35,7 @@
 
             <View style="@style/AppTheme.Widget.Handle" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/appbar_margin_horizontal"
@@ -48,7 +48,7 @@
         </LinearLayout>
 
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textConfirm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -66,7 +66,7 @@
             tools:text="Yes"
             tools:drawableStart="@drawable/ic_check" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textCancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

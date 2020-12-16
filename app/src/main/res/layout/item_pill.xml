@@ -78,7 +78,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/textPillName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                         android:textAppearance="@style/AppTheme.Text.Header6"
                         tools:text="Xyzal" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/pillDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -98,12 +98,12 @@
                         tools:text="For certain issues\n8:00, 14:00" />
                 </LinearLayout>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imagePillPhoto"
                     android:layout_width="0dp"
                     android:layout_height="180dp"
                     android:scaleType="centerCrop"
-                    android:src="@{pill.photoDrawable(context)}"
+                    app:srcCompat="@{pill.photoDrawable(context)}"
                     android:visibility="@{pill.photoVisibility}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +130,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textQuestionTake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

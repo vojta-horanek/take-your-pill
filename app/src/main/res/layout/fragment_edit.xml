@@ -39,7 +39,7 @@
                     android:clipToPadding="false"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/textNewPill"
                         style="@style/AppTheme.Widget.Header"
                         android:layout_width="match_parent"
@@ -89,7 +89,7 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/textColor"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:listitem="@layout/item_color" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/textPhoto"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/textReminderTimes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -363,7 +363,7 @@
                     app:layout_constraintVertical_chainStyle="packed"
                     app:trackCornerRadius="4dp" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textSaving"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

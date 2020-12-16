@@ -33,11 +33,11 @@
             app:background_color_shaped="@{color.getColor(context)}"
             app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="4dp"
-            android:src="@drawable/ic_check"
+            app:srcCompat="@drawable/ic_check"
             android:visibility="@{color.checked ? View.VISIBLE : View.GONE}"
             app:tint="@android:color/white"
             tools:visibility="visible"

@@ -25,7 +25,7 @@
         android:orientation="horizontal"
         android:onClick="@{(view) -> listener.onReminderClicked(view, reminder)}">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -38,7 +38,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="at 12:23: 3 pills" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/buttonDeleteReminder"
             android:layout_width="24dp"
             android:layout_height="24dp"

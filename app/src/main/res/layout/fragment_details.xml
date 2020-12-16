@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textPillName"
                     style="@style/AppTheme.Widget.Header"
                     android:layout_width="0dp"
@@ -52,7 +52,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textPillName" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textPillDescription"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -91,18 +91,18 @@
                     app:strokeWidth="1dp"
                     tools:visibility="visible">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imagePillPhoto"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@{pill.photoDrawable(context)}"
+                        app:srcCompat="@{pill.photoDrawable(context)}"
                         tools:ignore="ContentDescription"
                         tools:src="@drawable/photo_default" />
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textReminders"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

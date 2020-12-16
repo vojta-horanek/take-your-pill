@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorSurface">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{title}"
