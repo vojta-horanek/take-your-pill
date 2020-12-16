@@ -152,7 +152,7 @@
                                 android:layout_gravity="center"
                                 android:contentDescription="@string/add_photo"
                                 android:elevation="5dp"
-                                app:srcCompat="@drawable/ic_photo_add" />
+                                app:srcCompat="@drawable/ic_photo_add_outline" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/imageDeletePhoto"
@@ -163,7 +163,7 @@
                                 android:contentDescription="@string/delete"
                                 android:elevation="5dp"
                                 android:visibility="@{pill.photoVisibility, default=gone}"
-                                app:srcCompat="@drawable/ic_delete"
+                                app:srcCompat="@drawable/ic_delete_outline"
                                 tools:visibility="visible" />
 
                         </FrameLayout>
