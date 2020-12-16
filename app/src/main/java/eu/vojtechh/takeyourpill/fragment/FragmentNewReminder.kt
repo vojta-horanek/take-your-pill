@@ -115,7 +115,7 @@ class FragmentNewReminder :
                     R.attr.colorControlNormal,
                     typedValue,
                     true
-                );
+                )
                 val color = ContextCompat.getColor(requireContext(), typedValue.resourceId)
                 binding.textTime.apply {
                     setTextColor(normalColor)

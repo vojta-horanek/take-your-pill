@@ -39,7 +39,7 @@ class ReminderOptions(
      */
     var repeatCount: Int = REPEAT_FOREVER,
 
-) {
+    ) {
     companion object {
         const val NO_DAY_LIMIT = -1
         const val NO_BREAK = -1

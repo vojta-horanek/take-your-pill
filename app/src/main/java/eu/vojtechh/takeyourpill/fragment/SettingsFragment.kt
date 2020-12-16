@@ -1,7 +1,6 @@
 package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.transition.MaterialFadeThrough
 import eu.vojtechh.takeyourpill.R
@@ -17,7 +16,4 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         enterTransition = MaterialFadeThrough()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 }
