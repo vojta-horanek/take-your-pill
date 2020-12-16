@@ -2,6 +2,7 @@ package eu.vojtechh.takeyourpill.reminder
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.HiltBroadcastReceiver
@@ -29,6 +30,14 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
             val reminderId = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1L)
             if (reminderId == -1L) return
 
+            val delayByMillis = intent.getLongExtra(Constants.INTENT_EXTRA_TIME_DELAY, -1L)
+            if (delayByMillis != -1L) {
+                Toast.makeText(context, "Delayed", Toast.LENGTH_LONG).show()
+                ReminderManager.setCheckForConfirmation(context, reminderId, delayByMillis)
+                NotificationManager.cancelNotification(context, reminderId)
+                return
+            }
+
             Timber.d("Reminder check run id: %d", reminderId)
 
             GlobalScope.launch(Dispatchers.IO) {
@@ -36,17 +45,7 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
                 val reminder = reminderRepository.getReminder(reminderId)
                 val pill = pillRepository.getPillSync(reminder.pillId)
 
-                NotificationManager.createAndShowNotification(
-                    context,
-                    title = pill.name,
-                    description = pill.getNotificationDescription(context, reminder),
-                    color = pill.color.getColor(context),
-                    bitmap = pill.photo,
-                    pendingIntent = ReminderUtil.getNotificationPendingIntent(context, pill.id),
-                    notificationId = reminder.reminderId,
-                    channelId = pill.id.toString(),
-                    whenMillis = reminder.getMillisWithTodayDate()
-                )
+                ReminderUtil.createStandardReminderNotification(context, pill, reminder)
 
                 // TODO Check if the reminder is confirmed, if so, don't alarm again
                 if (false) {

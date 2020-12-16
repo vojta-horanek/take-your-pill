@@ -39,16 +39,16 @@ object ReminderManager {
         )
     }
 
-    fun setCheckForConfirmation(context: Context, reminderId: Long) {
+    fun setCheckForConfirmation(context: Context, reminderId: Long, interval: Long = 1) {
         val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(context, ReminderCheckReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
             PendingIntent.getBroadcast(context, reminderId.toInt(), intent, 0)
         }
-        // Trigger after 15 minutes, then repeat every 15 minutes
+        // Trigger after [interval] minutes, then repeat every [interval] minutes
         // TODO Make the interval configurable
-        val triggerAt = SystemClock.elapsedRealtime() + 1000 * 60 * 1
+        val triggerAt = SystemClock.elapsedRealtime() + 1000 * 60 * interval
         Timber.d("Setting check alarm at %d", triggerAt)
         alarmMgr.setExactAndAllowWhileIdle(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,

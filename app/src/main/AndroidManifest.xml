@@ -29,6 +29,7 @@
 
         <receiver android:name=".reminder.ReminderAlarmReceiver" />
         <receiver android:name=".reminder.ReminderCheckReceiver" />
+        <receiver android:name=".reminder.ConfirmReceiver" />
 
         <receiver
             android:name=".klass.BootReceiver"

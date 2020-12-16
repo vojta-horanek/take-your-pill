@@ -33,17 +33,8 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
                 for (reminder in reminders) {
                     val pill = pillRepository.getPillSync(reminder.pillId)
 
-                    NotificationManager.createAndShowNotification(
-                        context,
-                        title = pill.name,
-                        description = pill.getNotificationDescription(context, reminder),
-                        color = pill.color.getColor(context),
-                        bitmap = pill.photo,
-                        pendingIntent = ReminderUtil.getNotificationPendingIntent(context, pill.id),
-                        notificationId = reminder.reminderId,
-                        channelId = pill.id.toString(),
-                        whenMillis = reminder.getMillisWithTodayDate()
-                    )
+                    ReminderUtil.createStandardReminderNotification(context, pill, reminder)
+
                     ReminderManager.setCheckForConfirmation(context, reminder.reminderId)
                 }
 

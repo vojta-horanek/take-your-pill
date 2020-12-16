@@ -2,10 +2,13 @@ package eu.vojtechh.takeyourpill.reminder
 
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.NavDeepLinkBuilder
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.Reminder
 
 object ReminderUtil {
     fun getNotificationPendingIntent(context: Context, pillId: Long): PendingIntent {
@@ -16,5 +19,46 @@ object ReminderUtil {
             .setDestination(R.id.details)
             .setArguments(args)
             .createPendingIntent()
+    }
+
+    fun getConfirmPendingIntent(context: Context, reminderId: Long): PendingIntent =
+        Intent(context, ConfirmReceiver::class.java).let { intent ->
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
+            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, 0)
+        }
+
+    fun getDelayPendingIntent(
+        context: Context,
+        reminderId: Long,
+        delayByMillis: Long
+    ): PendingIntent =
+        Intent(context, ReminderCheckReceiver::class.java).let { intent ->
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
+            intent.putExtra(Constants.INTENT_EXTRA_TIME_DELAY, delayByMillis)
+            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, 0)
+        }
+
+
+    fun createStandardReminderNotification(context: Context, pill: Pill, reminder: Reminder) {
+        NotificationManager.createAndShowNotification(
+            context,
+            title = pill.name,
+            description = pill.getNotificationDescription(context, reminder),
+            color = pill.color.getColor(context),
+            bitmap = pill.photo,
+            pendingIntent = getNotificationPendingIntent(context, pill.id),
+            confirmPendingIntent = getConfirmPendingIntent(
+                context,
+                reminder.reminderId
+            ),
+            delayPendingIntent = getDelayPendingIntent(
+                context,
+                reminder.reminderId,
+                1000 * 60 * 30 /* 30 minutes */
+            ),
+            notificationId = reminder.reminderId,
+            channelId = pill.id.toString(),
+            whenMillis = reminder.getMillisWithTodayDate()
+        )
     }
 }

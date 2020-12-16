@@ -20,6 +20,8 @@ object NotificationManager {
         color: Int,
         bitmap: Bitmap?,
         pendingIntent: PendingIntent,
+        confirmPendingIntent: PendingIntent,
+        delayPendingIntent: PendingIntent,
         notificationId: Long,
         channelId: String,
         whenMillis: Long
@@ -28,7 +30,7 @@ object NotificationManager {
         Timber.d("Creating notification for reminderId %d", notificationId)
 
         // create notification
-        // TODO addAction for pill confirmation
+        // TODO addAction for delay
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_pill)
             .setContentTitle(title)
@@ -38,6 +40,20 @@ object NotificationManager {
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setShowWhen(true)
             .setWhen(whenMillis)
+            .addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_check,
+                    context.getString(R.string.confirm),
+                    confirmPendingIntent
+                )
+            )
+            .addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_delay,
+                    context.getString(R.string.delay),
+                    delayPendingIntent
+                )
+            )
 
         // set notification style to BigPicture if the pill has a photo
         bitmap?.let {
@@ -54,6 +70,12 @@ object NotificationManager {
             notify(notificationId.toInt(), builder.build())
         }
 
+    }
+
+    fun cancelNotification(context: Context, notificationId: Long) {
+        with(NotificationManagerCompat.from(context)) {
+            cancel(notificationId.toInt())
+        }
     }
 
     fun createNotificationChannel(context: Context, id: String, name: String) {
