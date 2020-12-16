@@ -132,7 +132,11 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 text?.let { model.pill.name = it.trim().toString() }
             }
 
-            buttonSave.setOnClickListener { savePill() }
+            buttonSave.setOnClickListener {
+                binding.progress.setIndicatorColor(model.pill.color.getColor(requireContext()))
+                binding.layoutLoading.visibility = View.VISIBLE
+                savePill()
+            }
             buttonAddReminder.setOnClickListener { showReminderDialog() }
             imagePillPhoto.setOnClickListener { pickImage() }
             imageDeletePhoto.setOnClickListener { model.deleteImage() }
