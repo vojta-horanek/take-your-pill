@@ -10,6 +10,8 @@ import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
+import eu.vojtechh.takeyourpill.receiver.CheckReceiver
+import eu.vojtechh.takeyourpill.receiver.ConfirmReceiver
 import timber.log.Timber
 
 object ReminderUtil {
@@ -34,7 +36,7 @@ object ReminderUtil {
         reminderId: Long,
         delayByMillis: Long
     ): PendingIntent =
-        Intent(context, ReminderCheckReceiver::class.java).let { intent ->
+        Intent(context, CheckReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
             intent.putExtra(Constants.INTENT_EXTRA_TIME_DELAY, delayByMillis)
             PendingIntent.getBroadcast(context, reminderId.toInt(), intent, 0)

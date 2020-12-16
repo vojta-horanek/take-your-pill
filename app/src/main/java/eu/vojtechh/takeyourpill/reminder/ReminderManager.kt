@@ -8,6 +8,8 @@ import android.os.SystemClock
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.model.Reminder
+import eu.vojtechh.takeyourpill.receiver.CheckReceiver
+import eu.vojtechh.takeyourpill.receiver.ReminderReceiver
 import timber.log.Timber
 import java.util.*
 
@@ -47,7 +49,7 @@ object ReminderManager {
     ) {
         val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(context, ReminderCheckReceiver::class.java).let { intent ->
+        val alarmIntent = Intent(context, CheckReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
             PendingIntent.getBroadcast(
                 context,
@@ -75,7 +77,7 @@ object ReminderManager {
         Timber.d("Creating a reminder for AlarmReceiver at %d", triggerMillis)
         val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(context, ReminderAlarmReceiver::class.java).let { intent ->
+        val alarmIntent = Intent(context, ReminderReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_TIME, reminderTime)
             PendingIntent.getBroadcast(context, id.toInt(), intent, 0)
         }

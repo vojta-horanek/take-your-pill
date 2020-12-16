@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import eu.vojtechh.takeyourpill.databinding.FragmentBottomConfirmBinding
 
-class BottomSheetFragmentConfirmation :
+class FragmentConfirmation :
     BottomSheetDialogFragment() {
     private lateinit var binding: FragmentBottomConfirmBinding
 
@@ -18,7 +18,7 @@ class BottomSheetFragmentConfirmation :
             cancel_text: String,
             confirm_icon: Int,
             cancel_icon: Int,
-        ): BottomSheetFragmentConfirmation {
+        ): FragmentConfirmation {
             val args = Bundle()
             args.putString("title", title)
             args.putString("confirm_text", confirm_text)
@@ -26,7 +26,7 @@ class BottomSheetFragmentConfirmation :
             args.putInt("confirm_icon", confirm_icon)
             args.putInt("cancel_icon", cancel_icon)
 
-            val bottomSheetFragmentConfirmation = BottomSheetFragmentConfirmation()
+            val bottomSheetFragmentConfirmation = FragmentConfirmation()
             bottomSheetFragmentConfirmation.arguments = args
             return bottomSheetFragmentConfirmation
         }
@@ -34,7 +34,7 @@ class BottomSheetFragmentConfirmation :
 
     private var listener: DeleteListener? = null
 
-    fun setListener(listener: DeleteListener): BottomSheetFragmentConfirmation {
+    fun setListener(listener: DeleteListener): FragmentConfirmation {
         this.listener = listener
         return this
     }

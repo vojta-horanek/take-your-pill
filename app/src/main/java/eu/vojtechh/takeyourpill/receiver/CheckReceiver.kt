@@ -1,11 +1,13 @@
-package eu.vojtechh.takeyourpill.reminder
+package eu.vojtechh.takeyourpill.receiver
 
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
-import eu.vojtechh.takeyourpill.klass.HiltBroadcastReceiver
 import eu.vojtechh.takeyourpill.klass.Pref
+import eu.vojtechh.takeyourpill.reminder.NotificationManager
+import eu.vojtechh.takeyourpill.reminder.ReminderManager
+import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +17,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ReminderCheckReceiver : HiltBroadcastReceiver() {
+class CheckReceiver : HiltBroadcastReceiver() {
 
     @Inject
     lateinit var pillRepository: PillRepository

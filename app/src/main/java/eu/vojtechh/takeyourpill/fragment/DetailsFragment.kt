@@ -24,7 +24,7 @@ import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
-    BottomSheetFragmentConfirmation.DeleteListener, ReminderAdapter.ReminderAdapterListener {
+    FragmentConfirmation.DeleteListener, ReminderAdapter.ReminderAdapterListener {
 
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
@@ -73,7 +73,7 @@ class DetailsFragment : Fragment(),
         binding.recyclerReminders.adapter = reminderAdapter
 
         binding.buttonDelete.setOnClickListener {
-            BottomSheetFragmentConfirmation.newInstance(
+            FragmentConfirmation.newInstance(
                 getString(R.string.delete_pill),
                 getString(R.string.delete_only_pil),
                 getString(R.string.delete_pill_and_history),

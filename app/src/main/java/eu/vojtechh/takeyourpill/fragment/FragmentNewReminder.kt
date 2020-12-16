@@ -19,7 +19,7 @@ import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
 
-class BottomSheetFragmentNewReminder :
+class FragmentNewReminder :
     BottomSheetDialogFragment() {
     private var editing = false
     private lateinit var snackbar: Snackbar
@@ -29,17 +29,17 @@ class BottomSheetFragmentNewReminder :
 
     private lateinit var reminder: Reminder
 
-    fun setListener(listener: ConfirmListener): BottomSheetFragmentNewReminder {
+    fun setListener(listener: ConfirmListener): FragmentNewReminder {
         this.listener = listener
         return this
     }
 
-    fun setReminder(reminder: Reminder): BottomSheetFragmentNewReminder {
+    fun setReminder(reminder: Reminder): FragmentNewReminder {
         this.reminder = reminder
         return this
     }
 
-    fun setEditing(editing: Boolean): BottomSheetFragmentNewReminder {
+    fun setEditing(editing: Boolean): FragmentNewReminder {
         this.editing = editing
         return this
     }

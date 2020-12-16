@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import eu.vojtechh.takeyourpill.database.PillDatabase
+import eu.vojtechh.takeyourpill.database.Database
 import eu.vojtechh.takeyourpill.klass.Constants
 import javax.inject.Singleton
 
@@ -21,16 +21,16 @@ object DatabaseModule {
         @ApplicationContext app: Context
     ) = Room.databaseBuilder(
         app,
-        PillDatabase::class.java,
+        Database::class.java,
         Constants.PILL_DATABASE_NAME
     ).fallbackToDestructiveMigration()
         .build()
 
     @Singleton
     @Provides
-    fun providePillDao(db: PillDatabase) = db.getPillDao()
+    fun providePillDao(db: Database) = db.getPillDao()
 
     @Singleton
     @Provides
-    fun provideReminderDao(db: PillDatabase) = db.getReminderDao()
+    fun provideReminderDao(db: Database) = db.getReminderDao()
 }

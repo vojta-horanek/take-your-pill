@@ -38,7 +38,7 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     ReminderAdapter.ReminderAdapterListener, BottomSheetImagePicker.OnImagesSelectedListener,
-    BottomSheetFragmentNewReminder.ConfirmListener {
+    FragmentNewReminder.ConfirmListener {
 
     private lateinit var binding: FragmentEditBinding
     private val model: EditViewModel by viewModels()
@@ -151,7 +151,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         reminder: Reminder = Reminder.create(pillId = model.pill.id),
         editing: Boolean = false
     ) {
-        BottomSheetFragmentNewReminder()
+        FragmentNewReminder()
             .setListener(this)
             .setEditing(editing)
             .setReminder(reminder)
@@ -160,7 +160,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     override fun onNewReminderClicked(reminder: Reminder, editing: Boolean) {
         val sheet =
-            (childFragmentManager.findFragmentByTag("new_reminder") as BottomSheetFragmentNewReminder)
+            (childFragmentManager.findFragmentByTag("new_reminder") as FragmentNewReminder)
         val potentialMatch =
             model.pill.reminders.find { it.hour == reminder.hour && it.minute == reminder.minute }
         if (editing) {
