@@ -5,11 +5,13 @@ import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.HiltBroadcastReceiver
+import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,15 +29,20 @@ class ReminderAlarmReceiver : HiltBroadcastReceiver() {
             val reminderTime = it.getLongExtra(Constants.INTENT_EXTRA_REMINDER_TIME, -1L)
             if (reminderTime == -1L) return
 
+            Timber.d("Reminder time: %d", reminderTime)
+
             GlobalScope.launch(Dispatchers.IO) {
                 val reminders = reminderRepository.getRemindersBasedOnTime(reminderTime)
+                Timber.d("Reminders: %s", reminders.toString())
 
                 for (reminder in reminders) {
                     val pill = pillRepository.getPillSync(reminder.pillId)
 
                     ReminderUtil.createStandardReminderNotification(context, pill, reminder)
 
-                    ReminderManager.setCheckForConfirmation(context, reminder.reminderId)
+                    if (Pref.remindAgain) {
+                        ReminderManager.setCheckForConfirmation(context, reminder.reminderId)
+                    }
                 }
 
                 ReminderManager.planNextReminder(context, reminderRepository.getAllReminders())

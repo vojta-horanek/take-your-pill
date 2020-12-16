@@ -7,8 +7,10 @@ import android.os.Bundle
 import androidx.navigation.NavDeepLinkBuilder
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
+import timber.log.Timber
 
 object ReminderUtil {
     fun getNotificationPendingIntent(context: Context, pillId: Long): PendingIntent {
@@ -40,6 +42,7 @@ object ReminderUtil {
 
 
     fun createStandardReminderNotification(context: Context, pill: Pill, reminder: Reminder) {
+        Timber.d("Creating standard notification")
         NotificationManager.createAndShowNotification(
             context,
             title = pill.name,
@@ -54,8 +57,10 @@ object ReminderUtil {
             delayPendingIntent = getDelayPendingIntent(
                 context,
                 reminder.reminderId,
-                1000 * 60 * 30 /* 30 minutes */
+                1000 * 60 * Pref.buttonDelay.toLong()
             ),
+            // TODO Set the actual fullscreen intent
+            fullscreenPendingIntent = getNotificationPendingIntent(context, pill.id),
             notificationId = reminder.reminderId,
             channelId = pill.id.toString(),
             whenMillis = reminder.getMillisWithTodayDate()

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.model.Reminder
 import timber.log.Timber
 import java.util.*
@@ -26,7 +27,7 @@ object ReminderManager {
             }
         }
 
-        Timber.d("Next reminder is tommorow")
+        Timber.d("Next reminder is tomorrow")
         // no reminder for today if we get here, plan the first one for tomorrow
         val firstTomorrow = sortedByTime[0]
         calendar.timeInMillis = firstTomorrow.getMillisWithTodayDate()
@@ -39,15 +40,23 @@ object ReminderManager {
         )
     }
 
-    fun setCheckForConfirmation(context: Context, reminderId: Long, interval: Long = 1) {
+    fun setCheckForConfirmation(
+        context: Context,
+        reminderId: Long,
+        interval: Long = Pref.remindAgainAfter.toLong()
+    ) {
         val alarmMgr =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(context, ReminderCheckReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
-            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, 0)
+            PendingIntent.getBroadcast(
+                context,
+                reminderId.toInt(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
         }
         // Trigger after [interval] minutes, then repeat every [interval] minutes
-        // TODO Make the interval configurable
         val triggerAt = SystemClock.elapsedRealtime() + 1000 * 60 * interval
         Timber.d("Setting check alarm at %d", triggerAt)
         alarmMgr.setExactAndAllowWhileIdle(

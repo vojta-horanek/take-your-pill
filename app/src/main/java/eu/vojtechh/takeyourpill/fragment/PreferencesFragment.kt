@@ -28,7 +28,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
-        findPreference<Preference>("notification_options")?.setOnPreferenceClickListener {
+        findPreference<Preference>("notificationOptions")?.setOnPreferenceClickListener {
             val intent = Intent()
             intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
 
@@ -40,7 +40,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             false
         }
 
-        findPreference<Preference>("show_about")?.setOnPreferenceClickListener {
+        findPreference<Preference>("showAbout")?.setOnPreferenceClickListener {
             val intent = Intent(requireActivity(), AboutActivity::class.java)
             startActivity(intent)
             false

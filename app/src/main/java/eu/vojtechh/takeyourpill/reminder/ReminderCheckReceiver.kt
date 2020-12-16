@@ -2,10 +2,10 @@ package eu.vojtechh.takeyourpill.reminder
 
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.HiltBroadcastReceiver
+import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +32,6 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
 
             val delayByMillis = intent.getLongExtra(Constants.INTENT_EXTRA_TIME_DELAY, -1L)
             if (delayByMillis != -1L) {
-                Toast.makeText(context, "Delayed", Toast.LENGTH_LONG).show()
                 ReminderManager.setCheckForConfirmation(context, reminderId, delayByMillis)
                 NotificationManager.cancelNotification(context, reminderId)
                 return
@@ -48,7 +47,7 @@ class ReminderCheckReceiver : HiltBroadcastReceiver() {
                 ReminderUtil.createStandardReminderNotification(context, pill, reminder)
 
                 // TODO Check if the reminder is confirmed, if so, don't alarm again
-                if (false) {
+                if (Pref.remindAgain) {
                     ReminderManager.setCheckForConfirmation(context, reminderId)
                 }
             }

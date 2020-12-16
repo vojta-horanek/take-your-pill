@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.klass.Pref
 import timber.log.Timber
 
 object NotificationManager {
@@ -22,6 +23,7 @@ object NotificationManager {
         pendingIntent: PendingIntent,
         confirmPendingIntent: PendingIntent,
         delayPendingIntent: PendingIntent,
+        fullscreenPendingIntent: PendingIntent,
         notificationId: Long,
         channelId: String,
         whenMillis: Long
@@ -50,10 +52,17 @@ object NotificationManager {
             .addAction(
                 NotificationCompat.Action(
                     R.drawable.ic_delay,
-                    context.getString(R.string.delay),
+                    context.getString(R.string.delay, Pref.buttonDelay),
                     delayPendingIntent
                 )
             )
+
+        // FIXME Currently broken, must have a foreground service
+//        if (Pref.alertStyle) {
+//            Timber.d("Using fullscreen intent")
+//            builder.setFullScreenIntent(fullscreenPendingIntent, true)
+//            builder.setCategory(NotificationCompat.CATEGORY_ALARM)
+//        }
 
         // set notification style to BigPicture if the pill has a photo
         bitmap?.let {

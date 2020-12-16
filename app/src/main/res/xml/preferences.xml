@@ -4,42 +4,41 @@
     <PreferenceCategory app:title="@string/reminders">
         <SwitchPreferenceCompat
             app:icon="@drawable/ic_vibration"
-            app:key="alert_style"
+            app:key="alertStyleKey"
             app:summary="@string/alert_style_summary"
             app:title="@string/alarm_settings" />
         <SeekBarPreference
-            max="60"
             app:defaultValue="30"
             app:icon="@drawable/ic_delay"
-            app:key="button_delay"
+            app:key="buttonDelayKey"
             app:min="1"
             app:showSeekBarValue="true"
             app:summary="@string/settings_delay_summary"
             app:title="@string/settings_delay_by" />
         <SwitchPreferenceCompat
             app:icon="@drawable/ic_alarm"
-            app:key="remind_again"
+            app:key="remindAgainKey"
+            app:defaultValue="true"
             app:summary="@string/settings_remind_again_summary"
             app:title="@string/settings_remind_again" />
         <SeekBarPreference
-            max="60"
-            app:defaultValue="30"
-            app:dependency="remind_again"
-            app:key="remind_again_after"
+            app:defaultValue="10"
+            app:dependency="remindAgainKey"
+            app:key="remindAgainAfterKey"
             app:min="1"
             app:showSeekBarValue="true"
             app:summary="@string/settings_remind_again_after_summary"
             app:title="@string/settings_remind_again_after" />
         <Preference
             app:icon="@drawable/ic_notifications"
-            app:key="notification_options"
+            app:key="notificationOptions"
             app:summary="@string/settings_notification_options_summary"
             app:title="@string/settings_notification_options" />
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/miscellaneous">
         <Preference
             app:icon="@drawable/ic_info"
-            app:key="show_about"
+            app:key="showAbout"
             app:summary="@string/settings_about_application_summary"
             app:title="@string/settings_about_application" />
     </PreferenceCategory>

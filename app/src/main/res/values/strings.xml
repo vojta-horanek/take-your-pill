@@ -79,9 +79,9 @@
     <string name="intro_history">See history</string>
     <string name="intro_history_description">Look at the history of your pill taking and get data on your accuracy</string>
     <string name="intro">Intro</string>
-    <string name="x_new_reminders">$1%d new reminders</string>
+    <string name="x_new_reminders">%1$d new reminders</string>
     <string name="confirm">Confirm</string>
-    <string name="delay">Delay</string>
+    <string name="delay">Delay by %1$d minutes</string>
     <string name="saving">Saving</string>
     <string name="alert_style_summary">Display a fullscreen alert when a reminder is shown</string>
     <string name="settings_delay_summary">Chose how many minutes to delay when clicking the delay button in a notification</string>
