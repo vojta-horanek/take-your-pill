@@ -132,11 +132,11 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 text?.let { model.pill.name = it.trim().toString() }
             }
 
-            buttonSave.setOnClickListener {
-                binding.progress.setIndicatorColor(model.pill.color.getColor(requireContext()))
-                binding.layoutLoading.visibility = View.VISIBLE
-                savePill()
+            inputDescription.doOnTextChanged { text, _, _, _ ->
+                text?.let { model.pill.name = it.trim().toString() }
             }
+
+            buttonSave.setOnClickListener { savePill() }
             buttonAddReminder.setOnClickListener { showReminderDialog() }
             imagePillPhoto.setOnClickListener { pickImage() }
             imageDeletePhoto.setOnClickListener { model.deleteImage() }
@@ -302,6 +302,9 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 ).show()
                 return
             }
+
+            progress.setIndicatorColor(model.pill.color.getColor(requireContext()))
+            layoutLoading.visibility = View.VISIBLE
 
             val reminderOptions = getReminderOptions()
             model.pill.apply {
