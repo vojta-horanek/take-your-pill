@@ -13,6 +13,8 @@
         <item name="bottomSheetDialogTheme">@style/AppTheme.Theme.CustomBottomSheetDialog</item>
     </style>
 
+    <color name="colorDivider">#1f000000</color>
+
     <style name="AppTheme.Theme.CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppTheme.Widget.CustomBottomSheet</item>
         <item name="android:windowIsFloating">false</item>
@@ -137,7 +139,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginTop">4dp</item>
-        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:background">@color/colorDivider</item>
     </style>
 
     <style name="AppTheme.Widget.Header" parent="">
