@@ -83,4 +83,16 @@
     <string name="confirm">Confirm</string>
     <string name="delay">Delay</string>
     <string name="saving">Saving</string>
+    <string name="alert_style_summary">Display a fullscreen alert when a reminder is shown</string>
+    <string name="settings_delay_summary">Chose how many minutes to delay when clicking the delay button in a notification</string>
+    <string name="settings_delay_by">Delay by</string>
+    <string name="settings_notification_options">Set notification options</string>
+    <string name="settings_notification_options_summary">Open android settings and set notification options like sound and priority for each pill</string>
+    <string name="settings_remind_again_after">Remind again after</string>
+    <string name="settings_remind_again_after_summary">Chose how many minutes to remind after if you did not confirm taking the pill</string>
+    <string name="settings_remind_again">Remind again</string>
+    <string name="settings_remind_again_summary">Remind again if you did not confirm taking the pill</string>
+    <string name="miscellaneous">Miscellaneous</string>
+    <string name="settings_about_application_summary">See information about this application</string>
+    <string name="settings_about_application">About this application</string>
 </resources>

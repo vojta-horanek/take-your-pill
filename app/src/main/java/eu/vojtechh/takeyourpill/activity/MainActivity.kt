@@ -19,7 +19,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
 import eu.vojtechh.takeyourpill.fragment.HistoryFragment
 import eu.vojtechh.takeyourpill.fragment.HomeFragment
-import eu.vojtechh.takeyourpill.fragment.SettingsFragment
+import eu.vojtechh.takeyourpill.fragment.PreferencesFragment
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                     Slide(Gravity.BOTTOM).excludeTarget(R.id.navHostFragment, true)
                 )
                 when (fragment) {
-                    is HomeFragment, is HistoryFragment, is SettingsFragment -> {
+                    is HomeFragment, is HistoryFragment, is PreferencesFragment -> {
                         binding.bottomNavigation.visibility = View.VISIBLE
                     }
                     else -> {

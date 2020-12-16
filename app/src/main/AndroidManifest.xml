@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.AboutActivity"></activity>
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.AppIntroActivity"
             android:label="@string/intro"
@@ -31,7 +31,6 @@
         <receiver android:name=".reminder.ReminderAlarmReceiver" />
         <receiver android:name=".reminder.ReminderCheckReceiver" />
         <receiver android:name=".reminder.ConfirmReceiver" />
-
         <receiver
             android:name=".klass.BootReceiver"
             android:enabled="true">

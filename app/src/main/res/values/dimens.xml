@@ -16,4 +16,5 @@
     <dimen name="minimal_card_elevation">4dp</dimen>
     <dimen name="list_with_fab_padding">88dp</dimen>
     <dimen name="list_with_fab_and_navigation_padding">144dp</dimen>
+    <dimen name="list_with_navigation_padding">56dp</dimen>
 </resources>
