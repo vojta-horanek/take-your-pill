@@ -1,15 +1,12 @@
 package eu.vojtechh.takeyourpill.reminder
 
 import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.os.SystemClock
-import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
+import eu.vojtechh.takeyourpill.klass.getDateTimeString
+import eu.vojtechh.takeyourpill.klass.getTimeString
 import eu.vojtechh.takeyourpill.model.Reminder
-import eu.vojtechh.takeyourpill.receiver.CheckReceiver
-import eu.vojtechh.takeyourpill.receiver.ReminderReceiver
 import timber.log.Timber
 import java.util.*
 
@@ -24,66 +21,69 @@ object ReminderManager {
         sortedByTime.forEach {
             // Only plan if the reminder time is past the current time
             if (it.getMillisWithTodayDate() > calendar.timeInMillis) {
+                Timber.d(
+                    "Next reminder is today at %s",
+                    it.getMillisWithTodayDate().getDateTimeString()
+                )
                 createReminder(context, it)
                 return@planNextReminder
             }
         }
 
-        Timber.d("Next reminder is tomorrow")
         // no reminder for today if we get here, plan the first one for tomorrow
-        val firstTomorrow = sortedByTime[0]
-        calendar.timeInMillis = firstTomorrow.getMillisWithTodayDate()
-        calendar.add(Calendar.DAY_OF_YEAR, 1)
-        createReminder(
-            context,
-            firstTomorrow.reminderId,
-            calendar.timeInMillis,
-            firstTomorrow.calendar.timeInMillis
-        )
+        val firstTomorrow = sortedByTime.firstOrNull()
+        firstTomorrow?.let {
+            calendar.timeInMillis = it.getMillisWithTodayDate()
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
+            Timber.d("Next reminder is tomorrow at %s", calendar.timeInMillis.getDateTimeString())
+            createReminder(
+                context,
+                it.reminderId,
+                calendar.timeInMillis,
+                it.calendar.timeInMillis
+            )
+        } ?: run {
+            Timber.e("No reminder found")
+        }
     }
 
     fun setCheckForConfirmation(
         context: Context,
         reminderId: Long,
-        interval: Long = Pref.remindAgainAfter.toLong()
+        remindAfterMinutes: Long = Pref.remindAgainAfter.toLong()
     ) {
-        val alarmMgr =
-            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(context, CheckReceiver::class.java).let { intent ->
-            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
-            PendingIntent.getBroadcast(
-                context,
-                reminderId.toInt(),
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
-        }
+
+        val alarmIntent = ReminderUtil.getAlarmAgainIntent(context, reminderId)
+        Timber.e("buttonDelay %d", Pref.buttonDelay.toLong())
+        Timber.e("buttonDelay2 %d", remindAfterMinutes)
+        Timber.e("remindAgainAfter %d", Pref.remindAgainAfter.toLong())
+
         // Trigger after [interval] minutes, then repeat every [interval] minutes
-        val triggerAt = SystemClock.elapsedRealtime() + 1000 * 60 * interval
-        Timber.d("Setting check alarm at %d", triggerAt)
-        alarmMgr.setExactAndAllowWhileIdle(
+        val triggerAt = 1000 * 60 * remindAfterMinutes
+        Timber.d("Setting check alarm to start in %s minutes", triggerAt.getTimeString())
+        getAlarmManager(context).setExactAndAllowWhileIdle(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            triggerAt,
+            SystemClock.elapsedRealtime() + triggerAt,
             alarmIntent
         )
     }
 
     private fun createReminder(
         context: Context,
-        id: Long,
-        triggerMillis: Long,
+        reminderId: Long,
+        triggerAtMillis: Long,
         reminderTime: Long
     ) {
-        Timber.d("Creating a reminder for AlarmReceiver at %d", triggerMillis)
-        val alarmMgr =
-            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(context, ReminderReceiver::class.java).let { intent ->
-            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_TIME, reminderTime)
-            PendingIntent.getBroadcast(context, id.toInt(), intent, 0)
-        }
-        alarmMgr.setExactAndAllowWhileIdle(
+        Timber.d(
+            "Creating a reminder for ReminderReceiver to trigger at %s",
+            triggerAtMillis.getDateTimeString()
+        )
+
+        val alarmIntent = ReminderUtil.getAlarmIntent(context, reminderId, reminderTime)
+
+        getAlarmManager(context).setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            triggerMillis,
+            triggerAtMillis,
             alarmIntent
         )
     }
@@ -95,4 +95,7 @@ object ReminderManager {
             reminder.getMillisWithTodayDate(),
             reminder.calendar.timeInMillis
         )
+
+    private fun getAlarmManager(context: Context) =
+        context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 }

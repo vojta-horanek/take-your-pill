@@ -12,6 +12,8 @@ import androidx.annotation.ColorInt
 import androidx.core.content.res.use
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.textfield.TextInputLayout
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Retrieve a color from the current [android.content.res.Resources.Theme].
@@ -61,4 +63,14 @@ fun View.slideUp(duration: Int = 400) {
         override fun onAnimationRepeat(animation: Animation?) {}
     })
     this.startAnimation(animate)
+}
+
+fun Long.getDateTimeString(): String {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = this
+    return  SimpleDateFormat.getDateTimeInstance().format(calendar.time)
+}
+
+fun Long.getTimeString(): String {
+    return (this/60L/1000L).toString()
 }

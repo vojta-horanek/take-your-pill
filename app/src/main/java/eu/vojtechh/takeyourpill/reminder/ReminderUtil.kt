@@ -12,10 +12,11 @@ import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.receiver.CheckReceiver
 import eu.vojtechh.takeyourpill.receiver.ConfirmReceiver
+import eu.vojtechh.takeyourpill.receiver.ReminderReceiver
 import timber.log.Timber
 
 object ReminderUtil {
-    fun getNotificationPendingIntent(context: Context, pillId: Long): PendingIntent {
+    fun getNotificationClickIntent(context: Context, pillId: Long): PendingIntent {
         val args = Bundle()
         args.putLong(Constants.INTENT_EXTRA_PILL_ID, pillId)
         return NavDeepLinkBuilder(context)
@@ -25,13 +26,13 @@ object ReminderUtil {
             .createPendingIntent()
     }
 
-    fun getConfirmPendingIntent(context: Context, reminderId: Long): PendingIntent =
+    fun getNotificationConfirmIntent(context: Context, reminderId: Long): PendingIntent =
         Intent(context, ConfirmReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
-            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, 0)
+            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
-    fun getDelayPendingIntent(
+    fun getNotificationDelayIntent(
         context: Context,
         reminderId: Long,
         delayByMillis: Long
@@ -39,9 +40,27 @@ object ReminderUtil {
         Intent(context, CheckReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
             intent.putExtra(Constants.INTENT_EXTRA_TIME_DELAY, delayByMillis)
-            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, 0)
+            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
+    fun getAlarmAgainIntent(
+        context: Context,
+        reminderId: Long,
+    ): PendingIntent = Intent(context, CheckReceiver::class.java).let { intent ->
+        intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
+        // FIXME FLAG_CANCEL_CURRENT causes action button to be disabled
+        PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_CANCEL_CURRENT)
+    }
+
+    fun getAlarmIntent(
+        context: Context,
+        reminderId: Long,
+        reminderTime: Long
+    ): PendingIntent =
+        Intent(context, ReminderReceiver::class.java).let { intent ->
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_TIME, reminderTime)
+            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
 
     fun createStandardReminderNotification(context: Context, pill: Pill, reminder: Reminder) {
         Timber.d("Creating standard notification")
@@ -51,18 +70,16 @@ object ReminderUtil {
             description = pill.getNotificationDescription(context, reminder),
             color = pill.color.getColor(context),
             bitmap = pill.photo,
-            pendingIntent = getNotificationPendingIntent(context, pill.id),
-            confirmPendingIntent = getConfirmPendingIntent(
+            pendingIntent = getNotificationClickIntent(context, pill.id),
+            confirmPendingIntent = getNotificationConfirmIntent(
                 context,
                 reminder.reminderId
             ),
-            delayPendingIntent = getDelayPendingIntent(
+            delayPendingIntent = getNotificationDelayIntent(
                 context,
                 reminder.reminderId,
-                1000 * 60 * Pref.buttonDelay.toLong()
+                Pref.buttonDelay.toLong()
             ),
-            // TODO Set the actual fullscreen intent
-            fullscreenPendingIntent = getNotificationPendingIntent(context, pill.id),
             notificationId = reminder.reminderId,
             channelId = pill.id.toString(),
             whenMillis = reminder.getMillisWithTodayDate()

@@ -23,7 +23,6 @@ object NotificationManager {
         pendingIntent: PendingIntent,
         confirmPendingIntent: PendingIntent,
         delayPendingIntent: PendingIntent,
-        fullscreenPendingIntent: PendingIntent,
         notificationId: Long,
         channelId: String,
         whenMillis: Long

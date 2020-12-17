@@ -103,7 +103,7 @@
                     android:layout_width="0dp"
                     android:layout_height="180dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@{pill.photoDrawable(context)}"
+                    android:src="@{pill.photoDrawable(context)}"
                     android:visibility="@{pill.photoVisibility}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

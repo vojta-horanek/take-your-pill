@@ -96,7 +96,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@{pill.photoDrawable(context)}"
+                        android:src="@{pill.photoDrawable(context)}"
                         tools:ignore="ContentDescription"
                         tools:src="@drawable/photo_default" />
 

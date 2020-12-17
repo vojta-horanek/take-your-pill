@@ -39,7 +39,7 @@ class CheckReceiver : HiltBroadcastReceiver() {
                 return
             }
 
-            Timber.d("Reminder check run id: %d", reminderId)
+            Timber.d("received id: %d", reminderId)
 
             GlobalScope.launch(Dispatchers.IO) {
 
