@@ -73,14 +73,14 @@ object ReminderUtil {
             pendingIntent = getNotificationClickIntent(context, pill.id),
             confirmPendingIntent = getNotificationConfirmIntent(
                 context,
-                reminder.reminderId
+                reminder.id
             ),
             delayPendingIntent = getNotificationDelayIntent(
                 context,
-                reminder.reminderId,
+                reminder.id,
                 Pref.buttonDelay.toLong()
             ),
-            notificationId = reminder.reminderId,
+            notificationId = reminder.id,
             channelId = pill.id.toString(),
             whenMillis = reminder.getMillisWithTodayDate()
         )

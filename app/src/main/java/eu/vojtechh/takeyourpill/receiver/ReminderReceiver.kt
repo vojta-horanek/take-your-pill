@@ -42,7 +42,7 @@ class ReminderReceiver : HiltBroadcastReceiver() {
                     ReminderUtil.createStandardReminderNotification(context, pill, reminder)
 
                     if (Pref.remindAgain) {
-                        ReminderManager.setCheckForConfirmation(context, reminder.reminderId)
+                        ReminderManager.setCheckForConfirmation(context, reminder.id)
                     }
                 }
 

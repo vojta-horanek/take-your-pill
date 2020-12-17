@@ -76,7 +76,7 @@ data class Pill(
         }
 
     val id
-        get() = pill.pillId
+        get() = pill.id
 
     var options
         get() = pill.options

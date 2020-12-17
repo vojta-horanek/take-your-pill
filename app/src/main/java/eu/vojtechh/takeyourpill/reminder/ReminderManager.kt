@@ -38,7 +38,7 @@ object ReminderManager {
             Timber.d("Next reminder is tomorrow at %s", calendar.timeInMillis.getDateTimeString())
             createReminder(
                 context,
-                it.reminderId,
+                it.id,
                 calendar.timeInMillis,
                 it.calendar.timeInMillis
             )
@@ -91,7 +91,7 @@ object ReminderManager {
     private fun createReminder(context: Context, reminder: Reminder) =
         createReminder(
             context,
-            reminder.reminderId,
+            reminder.id,
             reminder.getMillisWithTodayDate(),
             reminder.calendar.timeInMillis
         )

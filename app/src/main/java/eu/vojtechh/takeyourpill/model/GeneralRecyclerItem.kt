@@ -25,7 +25,7 @@ abstract class GeneralRecyclerItem {
             newItem: GeneralRecyclerItem
         ): Boolean {
             return if (oldItem is Pill && newItem is Pill) {
-                oldItem.pill.pillId == newItem.pill.pillId
+                oldItem.pill.id == newItem.pill.id
             } else !(oldItem is HeaderItem && newItem is HeaderItem)
         }
 
