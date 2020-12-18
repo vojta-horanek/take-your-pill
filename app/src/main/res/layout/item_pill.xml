@@ -78,7 +78,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/textPillName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                         android:textAppearance="@style/AppTheme.Text.Header6"
                         tools:text="Xyzal" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/pillDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                         tools:text="For certain issues\n8:00, 14:00" />
                 </LinearLayout>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imagePillPhoto"
                     android:layout_width="0dp"
                     android:layout_height="180dp"
@@ -118,7 +118,7 @@
             android:layout_marginTop="-8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:shapeAppearanceOverlay="@style/AppTheme.Shape.roundedCornersConfirmCard"
+            app:shapeAppearanceOverlay="@style/AppTheme.Shape.RoundedCornersConfirmCard"
             app:cardElevation="@dimen/minimal_card_elevation"
             android:id="@+id/cardConfirmTake"
             android:animateLayoutChanges="true">
@@ -130,7 +130,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textQuestionTake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

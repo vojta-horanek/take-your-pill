@@ -38,7 +38,7 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     ReminderAdapter.ReminderAdapterListener, BottomSheetImagePicker.OnImagesSelectedListener,
-    BottomSheetFragmentNewReminder.ConfirmListener {
+    FragmentNewReminder.ConfirmListener {
 
     private lateinit var binding: FragmentEditBinding
     private val model: EditViewModel by viewModels()
@@ -132,6 +132,10 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 text?.let { model.pill.name = it.trim().toString() }
             }
 
+            inputDescription.doOnTextChanged { text, _, _, _ ->
+                text?.let { model.pill.name = it.trim().toString() }
+            }
+
             buttonSave.setOnClickListener { savePill() }
             buttonAddReminder.setOnClickListener { showReminderDialog() }
             imagePillPhoto.setOnClickListener { pickImage() }
@@ -147,7 +151,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         reminder: Reminder = Reminder.create(pillId = model.pill.id),
         editing: Boolean = false
     ) {
-        BottomSheetFragmentNewReminder()
+        FragmentNewReminder()
             .setListener(this)
             .setEditing(editing)
             .setReminder(reminder)
@@ -156,7 +160,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     override fun onNewReminderClicked(reminder: Reminder, editing: Boolean) {
         val sheet =
-            (childFragmentManager.findFragmentByTag("new_reminder") as BottomSheetFragmentNewReminder)
+            (childFragmentManager.findFragmentByTag("new_reminder") as FragmentNewReminder)
         val potentialMatch =
             model.pill.reminders.find { it.hour == reminder.hour && it.minute == reminder.minute }
         if (editing) {
@@ -298,6 +302,9 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 ).show()
                 return
             }
+
+            progress.setIndicatorColor(model.pill.color.getColor(requireContext()))
+            layoutLoading.visibility = View.VISIBLE
 
             val reminderOptions = getReminderOptions()
             model.pill.apply {

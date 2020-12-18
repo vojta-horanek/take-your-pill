@@ -1,17 +1,19 @@
 package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.transition.MaterialFadeThrough
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.databinding.FragmentSettingsBinding
+import eu.vojtechh.takeyourpill.klass.viewBinding
 
-class SettingsFragment : PreferenceFragmentCompat() {
+class SettingsFragment : Fragment(R.layout.fragment_settings) {
+
+    private val binding by viewBinding(FragmentSettingsBinding::bind)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFadeThrough()
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.preferences, rootKey)
-    }
 }

@@ -50,34 +50,61 @@
     <string name="save_reminder">Save reminder</string>
     <string name="set_a_reminder">Set a reminder</string>
     <string name="delete_pill">Delete pill</string>
+
     <plurals name="set_amount_format">
         <item quantity="one">Take %1$d pill</item>
         <item quantity="other">Take %1$d pills</item>
     </plurals>
+
     <plurals name="reminder_text">
         <item quantity="one">%1$s: %2$d pill</item>
         <item quantity="other">%1$s: %2$d pills</item>
     </plurals>
+
     <plurals name="it_is_time_to_take">
-        <item quantity="one">It is time to take $1$d pill!</item>
-        <item quantity="other">It is time to take $1$d pills!</item>
+        <item quantity="one">It is time to take $1%d pill!</item>
+        <item quantity="other">It is time to take $1%d pills!</item>
     </plurals>
 
     <plurals name="pill_taken_question">
         <item quantity="one">Have you taken %1$d pill at %2$s?</item>
         <item quantity="other">Have you taken %1$d of these pills at %2$s?</item>
     </plurals>
+
+    <plurals name="delay">
+        <item quantity="one">Delay by %1$d minute</item>
+        <item quantity="other">Delay by %1$d minutes</item>
+    </plurals>
+
     <string name="two_reminders_same_time">There can only be one reminder with the same time. Please set a different time.</string>
     <string name="nothing_to_see_here">Nothing to see here… 🧐</string>
     <string name="try_to_add_a_pill_first">Try to add a pill first!</string>
-    <string name="intro_welome">Welcome!</string>
-    <string name="intro_welome_description">Take Your Pill reminds you about yor pills so that you never forget</string>
+
+    <string name="intro">Intro</string>
+    <string name="intro_welcome">Welcome!</string>
+    <string name="intro_welcome_description">Take Your Pill reminds you about yor pills so that you never forget</string>
     <string name="intro_new_pill">Start by adding a pill</string>
     <string name="intro_new_pill_description">Click the \"New Pill\" button</string>
     <string name="intro_reminder">Get reminder</string>
     <string name="intro_reminder_description">Set reminders for your pills and record your taking habbits</string>
     <string name="intro_history">See history</string>
     <string name="intro_history_description">Look at the history of your pill taking and get data on your accuracy</string>
-    <string name="intro">Intro</string>
-    <string name="x_new_reminders">$1%d new reminders</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="saving">Saving…</string>
+    <string name="alert_style_summary">Display a fullscreen alert when a reminder is shown</string>
+    <string name="settings_delay_summary">Chose how many minutes to delay when clicking the delay button in a notification</string>
+    <string name="settings_delay_by">Delay by</string>
+    <string name="settings_notification_options">Set notification options</string>
+    <string name="settings_notification_options_summary">Open android settings and set notification options like sound and priority for each pill</string>
+    <string name="settings_remind_again_after">Remind again after</string>
+    <string name="settings_remind_again_after_summary">Chose how many minutes to remind after if you did not confirm taking the pill</string>
+    <string name="settings_remind_again">Remind until confirmed</string>
+    <string name="settings_remind_again_summary">Remind again if you did not confirm taking the pill</string>
+    <string name="miscellaneous">Miscellaneous</string>
+    <string name="settings_about_application_summary">Information about this application</string>
+    <string name="settings_about_application">About this application</string>
+    <string name="made_by">made by Vojtěch Hořánek</string>
+    <string name="view_on_github">View source code on GitHub</string>
+    <string name="version">Version %1$s</string>
 </resources>

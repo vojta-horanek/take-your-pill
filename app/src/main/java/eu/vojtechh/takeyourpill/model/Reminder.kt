@@ -20,7 +20,7 @@ import java.util.*
     )]
 )
 data class Reminder(
-    @PrimaryKey(autoGenerate = true) val reminderId: Long = 0,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "reminderId") val id: Long = 0,
     var calendar: Calendar,
     var amount: Int,
     @ColumnInfo(index = true) var pillId: Long

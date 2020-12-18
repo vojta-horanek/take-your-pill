@@ -8,10 +8,10 @@ import eu.vojtechh.takeyourpill.model.Reminder
 
 @Database(
     entities = [BasePill::class, Reminder::class],
-    version = 17
+    version = 18
 )
 @TypeConverters(Converters::class)
-abstract class PillDatabase : RoomDatabase() {
+abstract class Database : RoomDatabase() {
     abstract fun getPillDao(): PillDao
     abstract fun getReminderDao(): ReminderDao
 }

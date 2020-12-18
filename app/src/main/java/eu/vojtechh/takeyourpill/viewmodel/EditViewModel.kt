@@ -79,8 +79,8 @@ class EditViewModel @ViewModelInject constructor(
 
     fun editReminder(reminder: Reminder) {
         val newList = _reminders.value?.toMutableList()
-        if (reminder.reminderId != 0L) {
-            newList?.removeAll { r -> r.reminderId == reminder.reminderId }
+        if (reminder.id != 0L) {
+            newList?.removeAll { r -> r.id == reminder.id }
         } else {
             newList?.remove(reminder)
         }

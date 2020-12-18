@@ -1,6 +1,7 @@
 package eu.vojtechh.takeyourpill.model
 
 import android.graphics.Bitmap
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -15,5 +16,5 @@ data class BasePill(
     var deleted: Boolean,
     @Embedded(prefix = "constant_") var options: ReminderOptions,
     @Embedded(prefix = "current_") var optionsChanging: ReminderOptions,
-    @PrimaryKey(autoGenerate = true) val pillId: Long = 0
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "pillId") val id: Long = 0
 )

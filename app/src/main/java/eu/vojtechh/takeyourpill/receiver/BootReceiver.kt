@@ -1,4 +1,4 @@
-package eu.vojtechh.takeyourpill.klass
+package eu.vojtechh.takeyourpill.receiver
 
 import android.content.Context
 import android.content.Intent

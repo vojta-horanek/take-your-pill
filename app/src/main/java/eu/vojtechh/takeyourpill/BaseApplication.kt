@@ -1,6 +1,7 @@
 package eu.vojtechh.takeyourpill
 
 import android.app.Application
+import com.marcinmoskala.kotlinpreferences.PreferenceHolder
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -13,5 +14,6 @@ class BaseApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         }
+        PreferenceHolder.setContext(applicationContext)
     }
 }

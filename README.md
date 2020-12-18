@@ -1,6 +1,11 @@
 # Take your Pill
 An app that reminds you to take your pills. Developed as my long-term graduation work.
 
+## Current todo list
+- improve performance
+    - should we load the photo separatly?
+    - add some animations/loading screen to make it feel more fluid
+
 ## Roadmap
 - see progress in GitHub Projects
 

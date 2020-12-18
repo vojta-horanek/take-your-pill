@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.klass.Pref
 import timber.log.Timber
 
 object NotificationManager {
@@ -20,14 +21,17 @@ object NotificationManager {
         color: Int,
         bitmap: Bitmap?,
         pendingIntent: PendingIntent,
+        confirmPendingIntent: PendingIntent,
+        delayPendingIntent: PendingIntent,
         notificationId: Long,
-        channelId: String
+        channelId: String,
+        whenMillis: Long
     ) {
 
         Timber.d("Creating notification for reminderId %d", notificationId)
 
+        val buttonDelay = Pref.buttonDelay
         // create notification
-        // TODO addAction for pill confirmation
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_pill)
             .setContentTitle(title)
@@ -35,6 +39,33 @@ object NotificationManager {
             .setColor(color)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setShowWhen(true)
+            .setWhen(whenMillis)
+            .addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_check,
+                    context.getString(R.string.confirm),
+                    confirmPendingIntent
+                )
+            )
+            .addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_delay,
+                    context.resources.getQuantityString(
+                        R.plurals.delay,
+                        buttonDelay,
+                        buttonDelay
+                    ),
+                    delayPendingIntent
+                )
+            )
+
+        // FIXME Currently broken, must have a foreground service
+//        if (Pref.alertStyle) {
+//            Timber.d("Using fullscreen intent")
+//            builder.setFullScreenIntent(fullscreenPendingIntent, true)
+//            builder.setCategory(NotificationCompat.CATEGORY_ALARM)
+//        }
 
         // set notification style to BigPicture if the pill has a photo
         bitmap?.let {
@@ -51,6 +82,12 @@ object NotificationManager {
             notify(notificationId.toInt(), builder.build())
         }
 
+    }
+
+    fun cancelNotification(context: Context, notificationId: Long) {
+        with(NotificationManagerCompat.from(context)) {
+            cancel(notificationId.toInt())
+        }
     }
 
     fun createNotificationChannel(context: Context, id: String, name: String) {

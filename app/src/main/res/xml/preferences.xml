@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:key="alert_style"
-        app:title="@string/alarm_settings" />
-
+    <PreferenceCategory app:title="@string/reminders">
+        <SwitchPreferenceCompat
+            app:icon="@drawable/ic_vibration"
+            app:key="alertStyleKey"
+            app:summary="@string/alert_style_summary"
+            app:title="@string/alarm_settings" />
+        <SeekBarPreference
+            app:defaultValue="30"
+            app:icon="@drawable/ic_delay"
+            app:key="buttonDelayKey"
+            app:min="1"
+            app:showSeekBarValue="true"
+            app:summary="@string/settings_delay_summary"
+            app:title="@string/settings_delay_by" />
+        <SwitchPreferenceCompat
+            app:icon="@drawable/ic_alarm"
+            app:key="remindAgainKey"
+            app:defaultValue="true"
+            app:summary="@string/settings_remind_again_summary"
+            app:title="@string/settings_remind_again" />
+        <SeekBarPreference
+            app:defaultValue="10"
+            app:dependency="remindAgainKey"
+            app:key="remindAgainAfterKey"
+            app:min="1"
+            app:showSeekBarValue="true"
+            app:summary="@string/settings_remind_again_after_summary"
+            app:title="@string/settings_remind_again_after" />
+        <Preference
+            app:icon="@drawable/ic_notifications"
+            app:key="notificationOptions"
+            app:summary="@string/settings_notification_options_summary"
+            app:title="@string/settings_notification_options" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/miscellaneous">
+        <Preference
+            app:icon="@drawable/ic_info"
+            app:key="showAbout"
+            app:summary="@string/settings_about_application_summary"
+            app:title="@string/settings_about_application" />
+    </PreferenceCategory>
 </PreferenceScreen>

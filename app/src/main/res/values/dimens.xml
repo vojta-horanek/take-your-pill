@@ -7,7 +7,10 @@
     <dimen name="appbar_margin_horizontal">24dp</dimen>
     <dimen name="appbar_margin_vertical">24dp</dimen>
     <dimen name="screen_margin_horizontal">@dimen/appbar_margin_horizontal</dimen>
+    <dimen name="screen_margin_horizontal_small">16dp</dimen>
+    <dimen name="screen_margin_horizontal_little">8dp</dimen>
     <dimen name="screen_margin_vertical">16dp</dimen>
+    <dimen name="screen_margin_vertical_big">32dp</dimen>
     <dimen name="fab_margins">16dp</dimen>
     <dimen name="screen_margin_vertical_small">8dp</dimen>
     <dimen name="screen_margin_vertical_little">4dp</dimen>
@@ -16,4 +19,5 @@
     <dimen name="minimal_card_elevation">4dp</dimen>
     <dimen name="list_with_fab_padding">88dp</dimen>
     <dimen name="list_with_fab_and_navigation_padding">144dp</dimen>
+    <dimen name="list_with_navigation_padding">56dp</dimen>
 </resources>
