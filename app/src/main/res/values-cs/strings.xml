@@ -60,9 +60,9 @@
         <item quantity="other">Je čas si vzít %1$d prášků!</item>
     </plurals>
     <plurals name="delay">
-        <item quantity="one">Zpozdit o %1$d minutu</item>
-        <item quantity="few">Zpozdit o %1$d minuty</item>
-        <item quantity="other">Zpozdit o %1$d minut</item>
+        <item quantity="one">Odložit o %1$d minutu</item>
+        <item quantity="few">Odložit o %1$d minuty</item>
+        <item quantity="other">Odložit o %1$d minut</item>
     </plurals>
     <string name="delete_pill_and_history">Smazat prášek a historii</string>
     <string name="delete_only_pil">Smazat pouze prášek</string>
@@ -88,8 +88,8 @@
     <string name="settings_remind_again_after_summary">Nastavit po kolika minutách se připomene znova, pokud nepotvrdíte připomínku</string>
     <string name="settings_notification_options_summary">Otevřít android nastavení a nastavit možnosti oznámení, například zvuk nebo priorita, pro každý prášek zvlášť</string>
     <string name="settings_notification_options">Nastavit možnosti oznámení</string>
-    <string name="settings_delay_by">Zpozdit o</string>
-    <string name="settings_delay_summary">Nastavit o kolik minut se připomínka zpozdí při kliknutí na tlačítko v oznámení</string>
+    <string name="settings_delay_by">Odložit o</string>
+    <string name="settings_delay_summary">Nastavit o kolik minut se připomínka odloží při kliknutí na tlačítko v oznámení</string>
     <string name="alert_style_summary">Při připomínce zobrazit výstrahu na celou obrazovku</string>
     <string name="saving">Ukládání…</string>
     <string name="confirm">Potvrdit</string>

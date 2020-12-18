@@ -5,6 +5,7 @@ import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
+import eu.vojtechh.takeyourpill.klass.getTimeString
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
@@ -35,11 +36,12 @@ class CheckReceiver : HiltBroadcastReceiver() {
             val delayByMillis = intent.getLongExtra(Constants.INTENT_EXTRA_TIME_DELAY, -1L)
             if (delayByMillis != -1L) {
                 ReminderManager.setCheckForConfirmation(context, reminderId, delayByMillis)
+                Timber.d("Set check alarm to start in %s minutes", delayByMillis.getTimeString())
                 NotificationManager.cancelNotification(context, reminderId)
                 return
             }
 
-            Timber.d("received id: %d", reminderId)
+            Timber.d("Received reminder id: %d", reminderId)
 
             GlobalScope.launch(Dispatchers.IO) {
 

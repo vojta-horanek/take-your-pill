@@ -12,12 +12,19 @@ import java.util.*
 
 object ReminderManager {
 
+    /**
+     * Takes [reminders] and checks which reminder should be the next to fire.
+     * If it finds one it creates a reminder with [createReminder]
+     * If it does not find one it uses the first [Reminder] in a day and plans a reminder with
+     * the same time but tomorrows date
+     */
     fun planNextReminder(context: Context, reminders: List<Reminder>) {
         val sortedByTime = reminders.sortedBy { rem -> rem.calendar.time }
         val calendar = Calendar.getInstance()
 
         Timber.d("Planning next reminder")
 
+        // Go trough reminders from the 00:00 to 23:59 basically
         sortedByTime.forEach {
             // Only plan if the reminder time is past the current time
             if (it.getMillisWithTodayDate() > calendar.timeInMillis) {
@@ -47,27 +54,35 @@ object ReminderManager {
         }
     }
 
+    /**
+     * takes [remindAfterMillis] (defaults to the value currently stored in SharedPrefs * 1000 * 60)
+     * sets a ExactAndAllowWhileIdle [AlarmManager.ELAPSED_REALTIME_WAKEUP] alarm using [AlarmManager]
+     * with a pending intent from [ReminderUtil.getAlarmAgainIntent] and a trigger value of [remindAfterMillis]
+     * works on reminder by reminder bases => each reminder has its own Alarm
+     */
     fun setCheckForConfirmation(
         context: Context,
         reminderId: Long,
-        remindAfterMinutes: Long = Pref.remindAgainAfter.toLong()
+        remindAfterMillis: Long = 1000 * 60 * Pref.remindAgainAfter.toLong()
     ) {
-
         val alarmIntent = ReminderUtil.getAlarmAgainIntent(context, reminderId)
-        Timber.e("buttonDelay %d", Pref.buttonDelay.toLong())
-        Timber.e("buttonDelay2 %d", remindAfterMinutes)
-        Timber.e("remindAgainAfter %d", Pref.remindAgainAfter.toLong())
-
         // Trigger after [interval] minutes, then repeat every [interval] minutes
-        val triggerAt = 1000 * 60 * remindAfterMinutes
-        Timber.d("Setting check alarm to start in %s minutes", triggerAt.getTimeString())
+        Timber.d("Setting check alarm to start in %s minutes", remindAfterMillis.getTimeString())
         getAlarmManager(context).setExactAndAllowWhileIdle(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + triggerAt,
+            SystemClock.elapsedRealtime() + remindAfterMillis,
             alarmIntent
         )
     }
 
+    /**
+     * takes [reminderTime] that a reminder or multiple reminders should be triggered with
+     * [reminderId] only represents a single reminder and is only used to fire the PendingIntent for
+     * [eu.vojtechh.takeyourpill.receiver.ReminderReceiver]
+     * sets a ExactAndAllowWhileIdle [AlarmManager.RTC_WAKEUP] alarm using [AlarmManager]
+     * with a pending intent from [ReminderUtil.getAlarmIntent] and a trigger value of [triggerAtMillis]
+     * works on a time bases, more reminders can have the same fire time, this function should be able to handle that
+     */
     private fun createReminder(
         context: Context,
         reminderId: Long,
