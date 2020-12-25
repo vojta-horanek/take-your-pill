@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -18,9 +17,8 @@ import eu.vojtechh.takeyourpill.databinding.FragmentNewReminderBinding
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
-
 class FragmentNewReminder :
-    BottomSheetDialogFragment() {
+    RoundedBottomSheetDialogFragment() {
     private var editing = false
     private lateinit var snackbar: Snackbar
     private lateinit var binding: FragmentNewReminderBinding

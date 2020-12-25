@@ -19,7 +19,8 @@
         <item name="bottomSheetStyle">@style/AppTheme.Widget.CustomBottomSheet</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">?colorSurface</item>
+        <item name="android:navigationBarColor">?attr/colorBackgroundFloating</item>
+        <item name="android:colorBackground">?attr/colorBackgroundFloating</item>
     </style>
 
     <style name="AppTheme.Widget.CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">

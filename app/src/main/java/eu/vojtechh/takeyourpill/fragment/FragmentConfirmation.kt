@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import eu.vojtechh.takeyourpill.databinding.FragmentBottomConfirmBinding
 
 class FragmentConfirmation :
-    BottomSheetDialogFragment() {
+    RoundedBottomSheetDialogFragment() {
     private lateinit var binding: FragmentBottomConfirmBinding
 
     companion object {
