@@ -133,7 +133,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             }
 
             inputDescription.doOnTextChanged { text, _, _, _ ->
-                text?.let { model.pill.name = it.trim().toString() }
+                text?.let { model.pill.description = it.trim().toString() }
             }
 
             buttonSave.setOnClickListener { savePill() }
