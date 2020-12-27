@@ -11,7 +11,7 @@ import eu.vojtechh.takeyourpill.model.Pill
 
 class PillViewHolder(
     private val binding: ItemPillBinding,
-    private val listener: AppRecyclerAdapter.PillAdapterListener
+    private val listener: AppRecyclerAdapter.ItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
     init {
         binding.listener = listener

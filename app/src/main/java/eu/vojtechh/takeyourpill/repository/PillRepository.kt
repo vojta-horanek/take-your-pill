@@ -12,6 +12,7 @@ class PillRepository @Inject constructor(
     private val reminderDao: ReminderDao
 ) {
     fun getAllPills() = pillDao.getAll()
+    fun getAllPillsIncludingDeleted() = pillDao.getAllIncludingDeleted()
     fun getPill(pillId: Long) = pillDao.getById(pillId)
     fun getPillSync(pillId: Long) = pillDao.getByIdSync(pillId)
 

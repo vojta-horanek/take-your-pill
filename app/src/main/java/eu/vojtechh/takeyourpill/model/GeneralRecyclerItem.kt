@@ -10,6 +10,7 @@ abstract class GeneralRecyclerItem {
         PILL,
         HEADER,
         EMPTY,
+        HISTORY,
     }
 
 
@@ -26,6 +27,8 @@ abstract class GeneralRecyclerItem {
         ): Boolean {
             return if (oldItem is Pill && newItem is Pill) {
                 oldItem.pill.id == newItem.pill.id
+            } else if (oldItem is History && newItem is History) {
+                oldItem.history.id == newItem.history.id
             } else !(oldItem is HeaderItem && newItem is HeaderItem)
         }
 
@@ -34,6 +37,8 @@ abstract class GeneralRecyclerItem {
             newItem: GeneralRecyclerItem
         ): Boolean {
             return if (oldItem is Pill && newItem is Pill) {
+                ObjectsCompat.equals(oldItem, newItem)
+            } else if (oldItem is History && newItem is History) {
                 ObjectsCompat.equals(oldItem, newItem)
             } else !(oldItem is HeaderItem && newItem is HeaderItem)
         }

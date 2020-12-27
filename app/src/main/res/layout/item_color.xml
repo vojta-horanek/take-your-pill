@@ -26,7 +26,7 @@
         android:onClick="@{(view) -> listener.onColorClicked(view, color)}">
 
         <View
-            android:id="@+id/imagePillColor"
+            android:id="@+id/layoutHistoryStatus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_oval"

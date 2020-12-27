@@ -21,7 +21,7 @@ data class Pill(
 ) : GeneralRecyclerItem() {
 
     @Ignore
-    override val itemType: ItemTypes = ItemTypes.PILL
+    override var itemType: ItemTypes = ItemTypes.PILL
 
     companion object {
 

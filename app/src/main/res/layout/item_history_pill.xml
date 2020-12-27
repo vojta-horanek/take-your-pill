@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.content.Context" />
+
+        <variable
+            name="pill"
+            type="eu.vojtechh.takeyourpill.model.Pill" />
+
+        <variable
+            name="listener"
+            type="eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter.ItemListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="?attr/colorBackgroundFloating"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:onClick="@{(view) -> listener.onItemClicked(view, pill)}"
+            app:cardCornerRadius="@dimen/standard_corner_radius"
+            app:cardElevation="@dimen/standard_card_elevation"
+            app:cardPreventCornerOverlap="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/layoutHistoryStatus"
+                    android:layout_width="@dimen/color_dot_size"
+                    android:layout_height="@dimen/color_dot_size"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/shape_oval"
+                    app:background_color_shaped="@{pill.colorResource(context)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/layoutHistoryStatus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textHistoryName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{pill.name}"
+                        android:textAppearance="@style/AppTheme.Text.Header6"
+                        tools:text="Xyzal" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textHistoryDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        android:text="@{pill.description}"
+                        android:visibility="@{pill.descriptionVisibility}"
+                        tools:text="Description" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</layout>

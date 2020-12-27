@@ -7,5 +7,6 @@ object Pref : PreferenceHolder() {
     var buttonDelay: Int by bindToPreferenceField(30)
     var remindAgain: Boolean by bindToPreferenceField(true)
     var remindAgainAfter: Int by bindToPreferenceField(10)
+    var firstRun: Boolean by bindToPreferenceField(true)
 
 }

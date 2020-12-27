@@ -17,9 +17,11 @@ import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
+import eu.vojtechh.takeyourpill.fragment.FragmentHistoryView
 import eu.vojtechh.takeyourpill.fragment.HistoryFragment
 import eu.vojtechh.takeyourpill.fragment.HomeFragment
 import eu.vojtechh.takeyourpill.fragment.PreferencesFragment
+import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 
@@ -46,9 +48,10 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // if (firstRun)
-        //val intent = Intent(this, AppIntroActivity::class.java)
-        //startActivityForResult(intent, REQUEST_CODE_INTRO)
+        if (Pref.firstRun) {
+            val intent = Intent(this, AppIntroActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_INTRO)
+        }
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(object :
             FragmentManager.FragmentLifecycleCallbacks() {
@@ -63,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                     Slide(Gravity.BOTTOM).excludeTarget(R.id.navHostFragment, true)
                 )
                 when (fragment) {
-                    is HomeFragment, is HistoryFragment, is PreferencesFragment -> {
+                    is HomeFragment, is HistoryFragment, is PreferencesFragment, is FragmentHistoryView -> {
                         binding.bottomNavigation.visibility = View.VISIBLE
                     }
                     else -> {
@@ -92,7 +95,9 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_INTRO) {
-            if (resultCode != RESULT_OK) {
+            if (resultCode == RESULT_OK) {
+                Pref.firstRun = false
+            } else {
                 finish()
             }
         }

@@ -70,14 +70,16 @@ class Converters {
     }
 
     @TypeConverter
-    fun toCalendar(l: Long): Calendar {
-        val c: Calendar = Calendar.getInstance()
-        c.timeInMillis = l
-        return c
+    fun toCalendar(l: Long?): Calendar? {
+        l?.let {
+            val c: Calendar = Calendar.getInstance()
+            c.timeInMillis = it
+            return c
+        } ?: run { return null }
     }
 
     @TypeConverter
-    fun fromCalendar(c: Calendar): Long {
-        return c.time.time
+    fun fromCalendar(c: Calendar?): Long? {
+        return c?.time?.time
     }
 }

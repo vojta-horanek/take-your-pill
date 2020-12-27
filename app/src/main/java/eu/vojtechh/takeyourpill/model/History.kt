@@ -1,32 +1,19 @@
 package eu.vojtechh.takeyourpill.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
-import java.util.*
+import androidx.room.Embedded
+import androidx.room.Relation
 
-@Entity(
-    tableName = "history",
-    foreignKeys = [ForeignKey(
-        entity = BasePill::class,
-        parentColumns = arrayOf("pillId"),
-        childColumns = arrayOf("pillId"),
-        onDelete = ForeignKey.CASCADE
-    ),
-        ForeignKey(
-            entity = Reminder::class,
-            parentColumns = arrayOf("reminderId"),
-            childColumns = arrayOf("reminderId"),
-            onDelete = ForeignKey.CASCADE
-        )]
-)
 data class History(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "historyId") val id: Long = 0,
-    var confirmed: Calendar? = null,
-    @ColumnInfo(index = true) var pillId: Long,
-    @ColumnInfo(index = true) var reminderId: Long
-) {
-    val isConfirmed: Boolean
-        get() = confirmed?.let { true } ?: false
+    @Embedded val history: BaseHistory,
+    @Relation(
+        parentColumn = "reminderId",
+        entityColumn = "reminderId"
+    )
+    var reminder: Reminder
+) : GeneralRecyclerItem() {
+    val hasBeenConfirmed: Boolean
+        get() = history.hasBeenConfirmed
+
+    override val itemType: ItemTypes
+        get() = ItemTypes.HISTORY
 }

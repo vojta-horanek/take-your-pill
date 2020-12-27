@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="pill"
+            type="eu.vojtechh.takeyourpill.model.Pill" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/darker_surface"
+            android:orientation="vertical">
+
+            <View style="@style/AppTheme.Widget.Handle" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/appbar_margin_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="@dimen/appbar_margin_vertical"
+                android:text="@{pill.name}"
+                android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                tools:text="Xyzal" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_history"
+            android:paddingTop="8dp"
+            android:clipToPadding="false" />
+
+
+    </LinearLayout>
+
+</layout>
