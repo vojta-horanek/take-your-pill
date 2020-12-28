@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryViewBinding
+import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
 import eu.vojtechh.takeyourpill.viewmodel.HistoryViewViewModel
-import timber.log.Timber
 
 @AndroidEntryPoint
 class FragmentHistoryView :
-    RoundedBottomSheetDialogFragment() {
+    RoundedBottomSheetDialogFragment(), HistoryViewAdapter.ItemListener {
     private lateinit var binding: FragmentHistoryViewBinding
     private val args: FragmentHistoryViewArgs by navArgs()
     private val model: HistoryViewViewModel by viewModels()
@@ -36,15 +37,20 @@ class FragmentHistoryView :
                 initViews()
             }
         })
-
     }
 
     private fun initViews() {
-
+        val adapter = HistoryViewAdapter(this)
+        binding.recyclerHistoryView.adapter = adapter
         model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner, {
             if (it != null) {
-                Timber.e(it.toString())
+                adapter.submitList(it)
+                binding.layoutLoading.visibility = View.GONE
             }
         })
+    }
+
+    override fun onItemClicked(view: View, item: GeneralRecyclerItem) {
+
     }
 }

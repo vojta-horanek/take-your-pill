@@ -6,7 +6,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.getTimeString
-import eu.vojtechh.takeyourpill.model.BaseHistory
+import eu.vojtechh.takeyourpill.model.HistoryEntity
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
@@ -46,7 +46,10 @@ class ReminderReceiver : HiltBroadcastReceiver() {
                     val pill = pillRepository.getPillSync(reminder.pillId)
 
                     ReminderUtil.createStandardReminderNotification(context, pill, reminder)
-                    val history = BaseHistory(reminderId = reminder.id)
+                    val history = HistoryEntity(
+                        reminderId = reminder.id,
+                        reminded = reminder.getCalendarWithTodayDate()
+                    )
                     historyRepository.insertHistoryItem(history)
                     if (Pref.remindAgain) {
                         ReminderManager.setCheckForConfirmation(context, reminder.id)

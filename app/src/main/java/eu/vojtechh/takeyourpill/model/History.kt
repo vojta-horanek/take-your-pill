@@ -1,10 +1,11 @@
 package eu.vojtechh.takeyourpill.model
 
+import android.view.View
 import androidx.room.Embedded
 import androidx.room.Relation
 
 data class History(
-    @Embedded val history: BaseHistory,
+    @Embedded val historyEntity: HistoryEntity,
     @Relation(
         parentColumn = "reminderId",
         entityColumn = "reminderId"
@@ -12,8 +13,11 @@ data class History(
     var reminder: Reminder
 ) : GeneralRecyclerItem() {
     val hasBeenConfirmed: Boolean
-        get() = history.hasBeenConfirmed
+        get() = historyEntity.hasBeenConfirmed
 
     override val itemType: ItemTypes
         get() = ItemTypes.HISTORY
+
+    val confirmedVisibility
+        get() = if (hasBeenConfirmed) View.VISIBLE else View.GONE
 }

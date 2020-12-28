@@ -3,8 +3,8 @@ package eu.vojtechh.takeyourpill.repository
 import androidx.lifecycle.LiveData
 import eu.vojtechh.takeyourpill.database.PillDao
 import eu.vojtechh.takeyourpill.database.ReminderDao
-import eu.vojtechh.takeyourpill.model.BasePill
 import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.PillEntity
 import javax.inject.Inject
 
 class PillRepository @Inject constructor(
@@ -17,12 +17,12 @@ class PillRepository @Inject constructor(
     fun getPillSync(pillId: Long) = pillDao.getByIdSync(pillId)
 
     suspend fun deletePillAndReminder(pill: Pill) {
-        pillDao.deletePill(pill.pill)
+        pillDao.deletePill(pill.pillEntity)
         reminderDao.delete(pill.reminders)
     }
 
     suspend fun insertPill(pill: Pill): Long {
-        val id = pillDao.insertPill(pill.pill)
+        val id = pillDao.insertPill(pill.pillEntity)
         pill.reminders.forEach {
             it.pillId = id
         }
@@ -31,7 +31,7 @@ class PillRepository @Inject constructor(
     }
 
     suspend fun insertPillReturn(pill: Pill): LiveData<Pill> {
-        val id = pillDao.insertPill(pill.pill)
+        val id = pillDao.insertPill(pill.pillEntity)
         pill.reminders.forEach {
             it.pillId = id
         }
@@ -44,7 +44,7 @@ class PillRepository @Inject constructor(
         reminderDao.deleteByPillId(pill.id)
         // Add all reminders (new, updated)
         reminderDao.insert(pill.reminders)
-        pillDao.updatePill(pill.pill)
+        pillDao.updatePill(pill.pillEntity)
         return pill.id
     }
 
@@ -53,12 +53,12 @@ class PillRepository @Inject constructor(
         reminderDao.deleteByPillId(pill.id)
         // Add all reminders (new, updated)
         reminderDao.insert(pill.reminders)
-        pillDao.updatePill(pill.pill)
+        pillDao.updatePill(pill.pillEntity)
         return pillDao.getById(pill.id)
     }
 
-    suspend fun markPillDeleted(pill: BasePill) {
-        pill.deleted = true
-        pillDao.updatePill(pill)
+    suspend fun markPillDeleted(pillEntity: PillEntity) {
+        pillEntity.deleted = true
+        pillDao.updatePill(pillEntity)
     }
 }

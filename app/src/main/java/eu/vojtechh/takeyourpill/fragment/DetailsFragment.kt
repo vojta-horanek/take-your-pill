@@ -102,7 +102,7 @@ class DetailsFragment : Fragment(),
     }
 
     override fun onDeletePill(view: View) {
-        model.deletePill(model.pill.pill)
+        model.deletePill(model.pill.pillEntity)
         doOnDelete()
     }
 

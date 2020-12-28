@@ -17,6 +17,7 @@
         android:paddingBottom="@dimen/bottom_bar_height"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_history_pill" />
+        tools:listitem="@layout/item_history_pill"
+        android:clipChildren="false" />
 
 </LinearLayout>

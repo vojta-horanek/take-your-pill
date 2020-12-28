@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 
 @Entity(tableName = "pill")
-data class BasePill(
+data class PillEntity(
     var name: String,
     var description: String?,
     var photo: Bitmap?,

@@ -12,7 +12,7 @@ import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import java.util.*
 
 data class Pill(
-    @Embedded val pill: BasePill,
+    @Embedded val pillEntity: PillEntity,
     @Relation(
         parentColumn = "pillId",
         entityColumn = "pillId"
@@ -26,7 +26,7 @@ data class Pill(
     companion object {
 
         fun getEmpty() = Pill(
-            BasePill(
+            PillEntity(
                 "",
                 "",
                 null,
@@ -39,15 +39,15 @@ data class Pill(
     }
 
     var name
-        get() = pill.name
+        get() = pillEntity.name
         set(value) {
-            pill.name = value
+            pillEntity.name = value
         }
 
     var description
-        get() = pill.description
+        get() = pillEntity.description
         set(value) {
-            pill.description = value
+            pillEntity.description = value
         }
 
     fun getNotificationDescription(context: Context, reminder: Reminder) =
@@ -58,42 +58,42 @@ data class Pill(
         )
 
     var photo
-        get() = pill.photo
+        get() = pillEntity.photo
         set(value) {
-            pill.photo = value
+            pillEntity.photo = value
         }
 
     var color
-        get() = pill.color
+        get() = pillEntity.color
         set(value) {
-            pill.color = value
+            pillEntity.color = value
         }
 
     var deleted
-        get() = pill.deleted
+        get() = pillEntity.deleted
         set(value) {
-            pill.deleted = value
+            pillEntity.deleted = value
         }
 
     val id
-        get() = pill.id
+        get() = pillEntity.id
 
     var options
-        get() = pill.options
+        get() = pillEntity.options
         set(value) {
-            pill.options = value
+            pillEntity.options = value
         }
 
     var optionsChanging
-        get() = pill.optionsChanging
+        get() = pillEntity.optionsChanging
         set(value) {
-            pill.optionsChanging = value
+            pillEntity.optionsChanging = value
         }
 
     val photoVisibility
-        get() = if (pill.photo != null) View.VISIBLE else View.GONE
+        get() = if (pillEntity.photo != null) View.VISIBLE else View.GONE
     val descriptionVisibility
-        get() = pill.description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE }
+        get() = pillEntity.description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE }
             ?: View.GONE
 
     fun getCloseReminder(): Reminder? {
@@ -128,9 +128,9 @@ data class Pill(
     }
 
     fun photoDrawable(context: Context) =
-        if (pill.photo != null) BitmapDrawable(context.resources, pill.photo)
+        if (pillEntity.photo != null) BitmapDrawable(context.resources, pillEntity.photo)
         else ContextCompat.getDrawable(context, R.drawable.photo_default)
 
-    fun colorResource(context: Context) = pill.color.getColor(context)
+    fun colorResource(context: Context) = pillEntity.color.getColor(context)
 
 }

@@ -68,9 +68,13 @@ fun View.slideUp(duration: Int = 400) {
 fun Long.getDateTimeString(): String {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = this
-    return  SimpleDateFormat.getDateTimeInstance().format(calendar.time)
+    return SimpleDateFormat.getDateTimeInstance().format(calendar.time)
+}
+
+fun Calendar.getDateTimeString(): String {
+    return SimpleDateFormat.getDateTimeInstance().format(this.time)
 }
 
 fun Long.getTimeString(): String {
-    return (this/60L/1000L).toString()
+    return (this / 60L / 1000L).toString()
 }

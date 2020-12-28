@@ -93,4 +93,7 @@
     <string name="alert_style_summary">Při připomínce zobrazit výstrahu na celou obrazovku</string>
     <string name="saving">Ukládání…</string>
     <string name="confirm">Potvrdit</string>
+    <string name="reminded_at">Připomenuto v %1$s</string>
+    <string name="confirmed_at">Potvrzeno v %1$s</string>
+    <string name="loading">Načítání…</string>
 </resources>

@@ -13,7 +13,7 @@ import java.util.*
 @Entity(
     tableName = "reminder",
     foreignKeys = [ForeignKey(
-        entity = BasePill::class,
+        entity = PillEntity::class,
         parentColumns = arrayOf("pillId"),
         childColumns = arrayOf("pillId"),
         onDelete = ForeignKey.CASCADE
@@ -31,13 +31,15 @@ data class Reminder(
     val minute
         get() = calendar.get(Calendar.MINUTE)
 
-    fun getMillisWithTodayDate(): Long {
+    fun getMillisWithTodayDate() = getCalendarWithTodayDate().timeInMillis
+
+    fun getCalendarWithTodayDate(): Calendar {
         val time = Calendar.getInstance()
         time.set(Calendar.HOUR_OF_DAY, hour)
         time.set(Calendar.MINUTE, minute)
         time.set(Calendar.SECOND, 0)
         time.set(Calendar.MILLISECOND, 0)
-        return time.timeInMillis
+        return time
     }
 
     companion object {

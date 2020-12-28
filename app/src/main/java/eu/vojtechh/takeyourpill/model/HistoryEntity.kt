@@ -12,11 +12,11 @@ import java.util.*
         entity = Reminder::class,
         parentColumns = arrayOf("reminderId"),
         childColumns = arrayOf("reminderId"),
-        onDelete = ForeignKey.CASCADE
     )]
 )
-data class BaseHistory(
+data class HistoryEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "historyId") val id: Long = 0,
+    var reminded: Calendar,
     var confirmed: Calendar? = null,
     @ColumnInfo(index = true) var reminderId: Long
 ) {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,23 +10,72 @@
         <variable
             name="history"
             type="eu.vojtechh.takeyourpill.model.History" />
+
+        <variable
+            name="listener"
+            type="eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter.ItemListener" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="4dp">
+        android:layout_height="72dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/screen_margin_vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textHistoryName"
+        <FrameLayout
+            android:layout_width="@dimen/history_status_icon_size"
+            android:layout_height="@dimen/history_status_icon_size"
+            android:background="?attr/colorSurface"
+            android:layout_gravity="center_vertical">
+
+            <View
+                android:id="@+id/layoutHistoryStatus"
+                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_oval"
+                app:background_color_shaped="@{history.hasBeenConfirmed ? @color/colorGreen : @color/colorRed}" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:src="@{history.hasBeenConfirmed ? @drawable/ic_check : @drawable/ic_close}"
+                tools:srcCompat="@drawable/ic_check"
+                app:tint="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                tools:ignore="ContentDescription"
+                tools:visibility="visible" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@{history.reminder.timeString}"
-            android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            tools:text="21:10 21. 12. 2020" />
+            android:orientation="vertical"
+            android:paddingStart="@dimen/screen_margin_vertical"
+            android:paddingEnd="0dp"
+            android:paddingVertical="4dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textHistoryReminded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                tools:text="Reminded at 21:10 21. 12. 2020" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textHistoryConfirmed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                tools:text="Confirmed at 21:10 21. 12. 2020" />
+
+        </LinearLayout>
+
     </LinearLayout>
+
 </layout>

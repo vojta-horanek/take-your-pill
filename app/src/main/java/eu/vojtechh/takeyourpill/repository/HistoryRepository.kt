@@ -1,7 +1,7 @@
 package eu.vojtechh.takeyourpill.repository
 
 import eu.vojtechh.takeyourpill.database.HistoryDao
-import eu.vojtechh.takeyourpill.model.BaseHistory
+import eu.vojtechh.takeyourpill.model.HistoryEntity
 import javax.inject.Inject
 
 class HistoryRepository @Inject constructor(
@@ -11,7 +11,7 @@ class HistoryRepository @Inject constructor(
     fun getHistory() = historyDao.getAll()
     fun getLatestByReminderId(reminderId: Long) = historyDao.getLatestByReminderId(reminderId)
     fun getHistoryForPill(pillId: Long) = historyDao.getHistoryByPillId(pillId)
-    suspend fun updateHistoryItem(baseHistory: BaseHistory) = historyDao.update(baseHistory)
-    suspend fun insertHistoryItem(baseHistory: BaseHistory) = historyDao.insert(baseHistory)
-    suspend fun deleteHistoryItem(baseHistory: BaseHistory) = historyDao.delete(baseHistory)
+    suspend fun updateHistoryItem(historyEntity: HistoryEntity) = historyDao.update(historyEntity)
+    suspend fun insertHistoryItem(historyEntity: HistoryEntity) = historyDao.insert(historyEntity)
+    suspend fun deleteHistoryItem(historyEntity: HistoryEntity) = historyDao.delete(historyEntity)
 }
