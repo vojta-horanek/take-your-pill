@@ -1,4 +1,4 @@
-package eu.vojtechh.takeyourpill.fragment
+package eu.vojtechh.takeyourpill.fragment.dialog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -11,14 +11,14 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import eu.vojtechh.takeyourpill.R
 
-open class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment() {
+open class RoundedDialogFragment : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog: BottomSheetDialog =
             super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         dialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    //In the EXPANDED STATE apply a new MaterialShapeDrawable with rounded cornes
+                    //In the EXPANDED STATE apply a new MaterialShapeDrawable with rounded corners
                     val newMaterialShapeDrawable: MaterialShapeDrawable =
                         createMaterialShapeDrawable(bottomSheet)
                     ViewCompat.setBackground(bottomSheet, newMaterialShapeDrawable)
@@ -40,7 +40,7 @@ open class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment() {
             )
                 .build()
 
-        //Create a new MaterialShapeDrawable (you can't use the original MaterialShapeDrawable in the BottoSheet)
+        //Create a new MaterialShapeDrawable (you can't use the original MaterialShapeDrawable in the BottomSheet)
         val currentMaterialShapeDrawable = bottomSheet.background as MaterialShapeDrawable
         val newMaterialShapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
         //Copy the attributes in the new MaterialShapeDrawable

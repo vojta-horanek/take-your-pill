@@ -9,8 +9,10 @@ class HistoryRepository @Inject constructor(
 ) {
     fun getHistoryItem(historyId: Long) = historyDao.getById(historyId)
     fun getHistory() = historyDao.getAll()
-    fun getLatestByReminderId(reminderId: Long) = historyDao.getLatestByReminderId(reminderId)
     fun getHistoryForPill(pillId: Long) = historyDao.getHistoryByPillId(pillId)
+    suspend fun getByPillIdAndTime(pillId: Long, remindedTime: Long) =
+        historyDao.getByPillIdAndTime(pillId, remindedTime)
+
     suspend fun updateHistoryItem(historyEntity: HistoryEntity) = historyDao.update(historyEntity)
     suspend fun insertHistoryItem(historyEntity: HistoryEntity) = historyDao.insert(historyEntity)
     suspend fun deleteHistoryItem(historyEntity: HistoryEntity) = historyDao.delete(historyEntity)

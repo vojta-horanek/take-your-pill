@@ -1,4 +1,4 @@
-package eu.vojtechh.takeyourpill.fragment
+package eu.vojtechh.takeyourpill.fragment.dialog
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -13,31 +13,31 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.databinding.FragmentNewReminderBinding
+import eu.vojtechh.takeyourpill.databinding.DialogNewReminderBinding
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
-class FragmentNewReminder :
-    RoundedBottomSheetDialogFragment() {
+class ReminderDialog :
+    RoundedDialogFragment() {
     private var editing = false
     private lateinit var snackbar: Snackbar
-    private lateinit var binding: FragmentNewReminderBinding
+    private lateinit var binding: DialogNewReminderBinding
 
     private var listener: ConfirmListener? = null
 
     private lateinit var reminder: Reminder
 
-    fun setListener(listener: ConfirmListener): FragmentNewReminder {
+    fun setListener(listener: ConfirmListener): ReminderDialog {
         this.listener = listener
         return this
     }
 
-    fun setReminder(reminder: Reminder): FragmentNewReminder {
+    fun setReminder(reminder: Reminder): ReminderDialog {
         this.reminder = reminder
         return this
     }
 
-    fun setEditing(editing: Boolean): FragmentNewReminder {
+    fun setEditing(editing: Boolean): ReminderDialog {
         this.editing = editing
         return this
     }
@@ -56,7 +56,7 @@ class FragmentNewReminder :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNewReminderBinding.inflate(inflater, container, false)
+        binding = DialogNewReminderBinding.inflate(inflater, container, false)
 
         snackbar = Snackbar.make(binding.coordinatorNewReminder, "", Snackbar.LENGTH_SHORT)
         setTexts()

@@ -2,6 +2,7 @@ package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -31,7 +32,12 @@ class HistoryFragment : Fragment(R.layout.fragment_history),
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
 
-        val appAdapter = AppRecyclerAdapter(this, getString(R.string.history))
+        val appAdapter = AppRecyclerAdapter(
+            this,
+            getString(R.string.history),
+            getString(R.string.history),
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_history)
+        )
 
         view.recyclerHome.adapter = appAdapter
 

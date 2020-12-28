@@ -23,6 +23,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ColorAdapter
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
+import eu.vojtechh.takeyourpill.fragment.dialog.ReminderDialog
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
@@ -38,7 +39,7 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     ReminderAdapter.ReminderAdapterListener, BottomSheetImagePicker.OnImagesSelectedListener,
-    FragmentNewReminder.ConfirmListener {
+    ReminderDialog.ConfirmListener {
 
     private lateinit var binding: FragmentEditBinding
     private val model: EditViewModel by viewModels()
@@ -151,7 +152,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         reminder: Reminder = Reminder.create(pillId = model.pill.id),
         editing: Boolean = false
     ) {
-        FragmentNewReminder()
+        ReminderDialog()
             .setListener(this)
             .setEditing(editing)
             .setReminder(reminder)
@@ -160,7 +161,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     override fun onNewReminderClicked(reminder: Reminder, editing: Boolean) {
         val sheet =
-            (childFragmentManager.findFragmentByTag("new_reminder") as FragmentNewReminder)
+            (childFragmentManager.findFragmentByTag("new_reminder") as ReminderDialog)
         val potentialMatch =
             model.pill.reminders.find { it.hour == reminder.hour && it.minute == reminder.minute }
         if (editing) {

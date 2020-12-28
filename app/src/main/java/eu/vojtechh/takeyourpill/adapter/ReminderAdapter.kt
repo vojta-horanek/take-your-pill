@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import eu.vojtechh.takeyourpill.adapter.viewholder.ReminderViewHolder
 import eu.vojtechh.takeyourpill.databinding.ItemReminderBinding
 import eu.vojtechh.takeyourpill.model.Reminder
 

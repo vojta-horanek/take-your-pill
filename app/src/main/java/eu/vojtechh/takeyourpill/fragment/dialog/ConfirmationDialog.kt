@@ -1,14 +1,14 @@
-package eu.vojtechh.takeyourpill.fragment
+package eu.vojtechh.takeyourpill.fragment.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import eu.vojtechh.takeyourpill.databinding.FragmentBottomConfirmBinding
+import eu.vojtechh.takeyourpill.databinding.DialogConfirmationBinding
 
-class FragmentConfirmation :
-    RoundedBottomSheetDialogFragment() {
-    private lateinit var binding: FragmentBottomConfirmBinding
+class ConfirmationDialog :
+    RoundedDialogFragment() {
+    private lateinit var binding: DialogConfirmationBinding
 
     companion object {
         fun newInstance(
@@ -17,7 +17,7 @@ class FragmentConfirmation :
             cancel_text: String,
             confirm_icon: Int,
             cancel_icon: Int,
-        ): FragmentConfirmation {
+        ): ConfirmationDialog {
             val args = Bundle()
             args.putString("title", title)
             args.putString("confirm_text", confirm_text)
@@ -25,7 +25,7 @@ class FragmentConfirmation :
             args.putInt("confirm_icon", confirm_icon)
             args.putInt("cancel_icon", cancel_icon)
 
-            val bottomSheetFragmentConfirmation = FragmentConfirmation()
+            val bottomSheetFragmentConfirmation = ConfirmationDialog()
             bottomSheetFragmentConfirmation.arguments = args
             return bottomSheetFragmentConfirmation
         }
@@ -33,7 +33,7 @@ class FragmentConfirmation :
 
     private var listener: DeleteListener? = null
 
-    fun setListener(listener: DeleteListener): FragmentConfirmation {
+    fun setListener(listener: DeleteListener): ConfirmationDialog {
         this.listener = listener
         return this
     }
@@ -44,7 +44,7 @@ class FragmentConfirmation :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBottomConfirmBinding.inflate(inflater, container, false)
+        binding = DialogConfirmationBinding.inflate(inflater, container, false)
         binding.title = arguments?.getString("title")
         binding.yes = arguments?.getString("confirm_text")
         binding.no = arguments?.getString("cancel_text")

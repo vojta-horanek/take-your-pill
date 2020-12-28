@@ -1,30 +1,33 @@
-package eu.vojtechh.takeyourpill.fragment
+package eu.vojtechh.takeyourpill.fragment.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
-import eu.vojtechh.takeyourpill.databinding.FragmentHistoryViewBinding
+import eu.vojtechh.takeyourpill.databinding.DialogHistoryBinding
+import eu.vojtechh.takeyourpill.klass.setVisible
 import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
-import eu.vojtechh.takeyourpill.viewmodel.HistoryViewViewModel
+import eu.vojtechh.takeyourpill.viewmodel.HistoryItemViewModel
 
 @AndroidEntryPoint
-class FragmentHistoryView :
-    RoundedBottomSheetDialogFragment(), HistoryViewAdapter.ItemListener {
-    private lateinit var binding: FragmentHistoryViewBinding
-    private val args: FragmentHistoryViewArgs by navArgs()
-    private val model: HistoryViewViewModel by viewModels()
+class HistoryViewDialog :
+    RoundedDialogFragment(), HistoryViewAdapter.ItemListener {
+    private lateinit var binding: DialogHistoryBinding
+    private val args: HistoryViewDialogArgs by navArgs()
+    private val model: HistoryItemViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHistoryViewBinding.inflate(inflater, container, false)
+        binding = DialogHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,12 +43,15 @@ class FragmentHistoryView :
     }
 
     private fun initViews() {
-        val adapter = HistoryViewAdapter(this)
+        val adapter = HistoryViewAdapter(
+            this,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_history)
+        )
         binding.recyclerHistoryView.adapter = adapter
         model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner, {
             if (it != null) {
                 adapter.submitList(it)
-                binding.layoutLoading.visibility = View.GONE
+                binding.layoutLoading.setVisible(false)
             }
         })
     }

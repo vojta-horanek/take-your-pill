@@ -4,19 +4,23 @@ import android.view.View
 import androidx.room.Embedded
 import androidx.room.Relation
 
+/**
+ * data class for mapping [HistoryEntity] together with [Pill]
+ */
+
 data class History(
     @Embedded val historyEntity: HistoryEntity,
     @Relation(
-        parentColumn = "reminderId",
-        entityColumn = "reminderId"
+        parentColumn = "pillId",
+        entityColumn = "pillId"
     )
-    var reminder: Reminder
+    var pill: PillEntity
 ) : GeneralRecyclerItem() {
     val hasBeenConfirmed: Boolean
         get() = historyEntity.hasBeenConfirmed
 
     override val itemType: ItemTypes
-        get() = ItemTypes.HISTORY
+        get() = ItemTypes.HISTORY_ITEM
 
     val confirmedVisibility
         get() = if (hasBeenConfirmed) View.VISIBLE else View.GONE

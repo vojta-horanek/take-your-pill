@@ -3,14 +3,10 @@ package eu.vojtechh.takeyourpill.database
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.model.PillColor
-import eu.vojtechh.takeyourpill.model.Reminder
 import java.io.ByteArrayOutputStream
 import java.util.*
-
 
 class Converters {
     @TypeConverter
@@ -54,19 +50,6 @@ class Converters {
                 else -> R.color.colorBlue
             }
         )
-    }
-
-    @TypeConverter
-    fun jsonToList(listOfCReminder: String): MutableList<Reminder> {
-        return Gson().fromJson(
-            listOfCReminder,
-            object : TypeToken<MutableList<Reminder>>() {}.type
-        )
-    }
-
-    @TypeConverter
-    fun listToJson(listOfString: MutableList<Reminder>): String {
-        return Gson().toJson(listOfString)
     }
 
     @TypeConverter

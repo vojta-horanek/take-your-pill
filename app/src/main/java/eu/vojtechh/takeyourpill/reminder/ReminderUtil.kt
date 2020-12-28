@@ -26,9 +26,16 @@ object ReminderUtil {
             .createPendingIntent()
     }
 
-    private fun getNotificationConfirmIntent(context: Context, reminderId: Long): PendingIntent =
+    private fun getNotificationConfirmIntent(
+        context: Context,
+        reminderId: Long,
+        pillId: Long,
+        remindedTime: Long
+    ): PendingIntent =
         Intent(context, ConfirmReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
+            intent.putExtra(Constants.INTENT_EXTRA_PILL_ID, pillId)
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDED_TIME, remindedTime)
             PendingIntent.getBroadcast(
                 context,
                 reminderId.toInt(),
@@ -56,8 +63,10 @@ object ReminderUtil {
     fun getAlarmAgainIntent(
         context: Context,
         reminderId: Long,
+        remindedTime: Long,
     ): PendingIntent = Intent(context, CheckReceiver::class.java).let { intent ->
         intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
+        intent.putExtra(Constants.INTENT_EXTRA_REMINDED_TIME, remindedTime)
         PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_ONE_SHOT)
     }
 
@@ -69,11 +78,16 @@ object ReminderUtil {
         Intent(context, ReminderReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_TIME, reminderTime)
             // TODO Test if this is working correctly
-            PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(
+                context,
+                reminderId.toInt(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
         }
 
-    fun createStandardReminderNotification(context: Context, pill: Pill, reminder: Reminder) {
-        Timber.d("Creating standard notification")
+    fun createReminderNotification(context: Context, pill: Pill, reminder: Reminder) {
+        Timber.d("Creating reminder notification")
         NotificationManager.createAndShowNotification(
             context,
             title = pill.name,
@@ -83,7 +97,9 @@ object ReminderUtil {
             pendingIntent = getNotificationClickIntent(context, pill.id),
             confirmPendingIntent = getNotificationConfirmIntent(
                 context,
-                reminder.id
+                reminder.id,
+                pill.id,
+                reminder.getMillisWithTodayDate()
             ),
             delayPendingIntent = getNotificationDelayIntent(
                 context,

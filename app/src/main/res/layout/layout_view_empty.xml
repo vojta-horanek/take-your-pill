@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--    TODO Be able to customize this    -->
+    <data>
+
+        <variable
+            name="description"
+            type="java.lang.String" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,7 +22,7 @@
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            app:srcCompat="@drawable/ic_empty_view"
+            tools:srcCompat="@drawable/ic_empty_view"
             app:layout_constraintBottom_toTopOf="@id/textEmptyTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +51,8 @@
             android:paddingHorizontal="16dp"
             android:paddingTop="4dp"
             android:paddingBottom="16dp"
-            android:text="@string/try_to_add_a_pill_first"
+            android:text="@{description}"
+            tools:text="@string/try_to_add_a_pill_first"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

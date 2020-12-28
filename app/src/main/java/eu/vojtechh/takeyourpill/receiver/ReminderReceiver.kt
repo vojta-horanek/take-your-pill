@@ -1,5 +1,6 @@
 package eu.vojtechh.takeyourpill.receiver
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +20,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ReminderReceiver : HiltBroadcastReceiver() {
+class ReminderReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var pillRepository: PillRepository
@@ -31,7 +32,6 @@ class ReminderReceiver : HiltBroadcastReceiver() {
     lateinit var historyRepository: HistoryRepository
 
     override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
         intent.let {
             val reminderTime = it.getLongExtra(Constants.INTENT_EXTRA_REMINDER_TIME, -1L)
             if (reminderTime == -1L) return
@@ -45,14 +45,20 @@ class ReminderReceiver : HiltBroadcastReceiver() {
                 for (reminder in reminders) {
                     val pill = pillRepository.getPillSync(reminder.pillId)
 
-                    ReminderUtil.createStandardReminderNotification(context, pill, reminder)
+                    val remindedCalendar = reminder.getCalendarWithTodayDate()
+                    ReminderUtil.createReminderNotification(context, pill, reminder)
+
                     val history = HistoryEntity(
-                        reminderId = reminder.id,
-                        reminded = reminder.getCalendarWithTodayDate()
+                        pillId = pill.id,
+                        reminded = remindedCalendar
                     )
                     historyRepository.insertHistoryItem(history)
                     if (Pref.remindAgain) {
-                        ReminderManager.setCheckForConfirmation(context, reminder.id)
+                        ReminderManager.setCheckForConfirmation(
+                            context,
+                            reminder.id,
+                            remindedCalendar.timeInMillis
+                        )
                     }
                 }
 

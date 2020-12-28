@@ -63,9 +63,10 @@ object ReminderManager {
     fun setCheckForConfirmation(
         context: Context,
         reminderId: Long,
-        remindAfterMillis: Long = 1000 * 60 * Pref.remindAgainAfter.toLong()
+        remindedTime: Long,
+        remindAfterMillis: Long = 1000 * 60 * Pref.remindAgainAfter.toLong(),
     ) {
-        val alarmIntent = ReminderUtil.getAlarmAgainIntent(context, reminderId)
+        val alarmIntent = ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime)
         // Trigger after [interval] minutes, then repeat every [interval] minutes
         Timber.d("Setting check alarm to start in %s minutes", remindAfterMillis.getTimeString())
         getAlarmManager(context).setExactAndAllowWhileIdle(

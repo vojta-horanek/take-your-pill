@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -25,36 +25,36 @@
         <FrameLayout
             android:layout_width="@dimen/history_status_icon_size"
             android:layout_height="@dimen/history_status_icon_size"
-            android:background="?attr/colorSurface"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:background="?attr/colorSurface">
 
             <View
-                android:id="@+id/layoutHistoryStatus"
-                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
+                android:id="@+id/viewPillColor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_oval"
-                app:background_color_shaped="@{history.hasBeenConfirmed ? @color/colorGreen : @color/colorRed}" />
+                app:background_color_shaped="@{history.hasBeenConfirmed ? @color/colorGreen : @color/colorRed}"
+                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:src="@{history.hasBeenConfirmed ? @drawable/ic_check : @drawable/ic_close}"
-                tools:srcCompat="@drawable/ic_check"
-                app:tint="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="4dp"
+                android:src="@{history.hasBeenConfirmed ? @drawable/ic_check : @drawable/ic_close}"
+                app:tint="@android:color/white"
                 tools:ignore="ContentDescription"
+                tools:srcCompat="@drawable/ic_check"
                 tools:visibility="visible" />
         </FrameLayout>
 
         <LinearLayout
-            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical"
+            android:paddingVertical="4dp"
             android:paddingStart="@dimen/screen_margin_vertical"
-            android:paddingEnd="0dp"
-            android:paddingVertical="4dp">
+            android:paddingEnd="0dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textHistoryReminded"

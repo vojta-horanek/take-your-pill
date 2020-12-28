@@ -2,6 +2,7 @@ package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -47,7 +48,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
 
-        val appAdapter = AppRecyclerAdapter(this, getString(R.string.pills))
+        val appAdapter = AppRecyclerAdapter(
+            this, getString(R.string.pills), getString(R.string.try_to_add_a_pill_first),
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_empty_view)
+        )
 
         view.recyclerHome.run {
             adapter = appAdapter
@@ -87,13 +91,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         }
     }
 
-    // TODO
     override fun onPillConfirmClicked(view: View, reminder: Reminder) {
-        Snackbar.make(view, reminder.timeString, Snackbar.LENGTH_SHORT)
+        model.confirmPill(reminder)
+        Snackbar.make(view, getString(R.string.confirmed), Snackbar.LENGTH_SHORT)
             .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
     }
 
-    // TODO
     override fun onPillNotConfirmClicked(view: View, reminder: Reminder) {
         Snackbar.make(view, "DISMISS" + reminder.timeString, Snackbar.LENGTH_SHORT)
             .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()

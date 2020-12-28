@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
+import eu.vojtechh.takeyourpill.fragment.dialog.ConfirmationDialog
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
@@ -24,7 +25,7 @@ import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
-    FragmentConfirmation.DeleteListener, ReminderAdapter.ReminderAdapterListener {
+    ConfirmationDialog.DeleteListener, ReminderAdapter.ReminderAdapterListener {
 
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
@@ -73,7 +74,7 @@ class DetailsFragment : Fragment(),
         binding.recyclerReminders.adapter = reminderAdapter
 
         binding.buttonDelete.setOnClickListener {
-            FragmentConfirmation.newInstance(
+            ConfirmationDialog.newInstance(
                 getString(R.string.delete_pill),
                 getString(R.string.delete_only_pil),
                 getString(R.string.delete_pill_and_history),

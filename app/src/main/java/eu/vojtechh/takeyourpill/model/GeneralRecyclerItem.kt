@@ -11,6 +11,7 @@ abstract class GeneralRecyclerItem {
         HEADER,
         EMPTY,
         HISTORY,
+        HISTORY_ITEM,
     }
 
 

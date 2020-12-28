@@ -17,10 +17,10 @@ import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
-import eu.vojtechh.takeyourpill.fragment.FragmentHistoryView
 import eu.vojtechh.takeyourpill.fragment.HistoryFragment
 import eu.vojtechh.takeyourpill.fragment.HomeFragment
 import eu.vojtechh.takeyourpill.fragment.PreferencesFragment
+import eu.vojtechh.takeyourpill.fragment.dialog.HistoryViewDialog
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                     Slide(Gravity.BOTTOM).excludeTarget(R.id.navHostFragment, true)
                 )
                 when (fragment) {
-                    is HomeFragment, is HistoryFragment, is PreferencesFragment, is FragmentHistoryView -> {
+                    is HomeFragment, is HistoryFragment, is PreferencesFragment, is HistoryViewDialog -> {
                         binding.bottomNavigation.visibility = View.VISIBLE
                     }
                     else -> {

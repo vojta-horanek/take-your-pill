@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 
-class HistoryViewViewModel @ViewModelInject constructor(
+class HistoryItemViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository,
     private val historyRepository: HistoryRepository
 ) : ViewModel() {

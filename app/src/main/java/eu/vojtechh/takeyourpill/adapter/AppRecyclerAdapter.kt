@@ -1,19 +1,26 @@
 package eu.vojtechh.takeyourpill.adapter
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import eu.vojtechh.takeyourpill.adapter.viewholder.EmptyViewHolder
+import eu.vojtechh.takeyourpill.adapter.viewholder.HeaderViewHolder
+import eu.vojtechh.takeyourpill.adapter.viewholder.HistoryViewHolder
+import eu.vojtechh.takeyourpill.adapter.viewholder.PillViewHolder
 import eu.vojtechh.takeyourpill.databinding.ItemHeaderBinding
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryPillBinding
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
-import eu.vojtechh.takeyourpill.databinding.LayoutPillViewEmptyBinding
+import eu.vojtechh.takeyourpill.databinding.LayoutViewEmptyBinding
 import eu.vojtechh.takeyourpill.model.*
 
 class AppRecyclerAdapter(
     private val listener: ItemListener,
-    private val sectionPrefix: String
+    private val sectionPrefix: String,
+    private val emptyDescription: String,
+    private val emptyDrawable: Drawable?
 ) : ListAdapter<GeneralRecyclerItem, RecyclerView.ViewHolder>(GeneralRecyclerItem.DiffCallback) {
 
     interface ItemListener {
@@ -55,11 +62,13 @@ class AppRecyclerAdapter(
                 )
             )
             GeneralRecyclerItem.ItemTypes.EMPTY.ordinal -> EmptyViewHolder(
-                LayoutPillViewEmptyBinding.inflate(
+                LayoutViewEmptyBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ),
+                emptyDescription,
+                emptyDrawable
             )
             GeneralRecyclerItem.ItemTypes.HISTORY.ordinal -> HistoryViewHolder(
                 ItemHistoryPillBinding.inflate(

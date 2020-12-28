@@ -18,7 +18,7 @@
 
         <variable
             name="listener"
-            type="eu.vojtechh.takeyourpill.fragment.FragmentConfirmation.DeleteListener" />
+            type="eu.vojtechh.takeyourpill.fragment.dialog.ConfirmationDialog.DeleteListener" />
     </data>
 
 

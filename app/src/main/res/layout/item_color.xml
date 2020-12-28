@@ -26,7 +26,7 @@
         android:onClick="@{(view) -> listener.onColorClicked(view, color)}">
 
         <View
-            android:id="@+id/layoutHistoryStatus"
+            android:id="@+id/viewPillColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_oval"
@@ -37,10 +37,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="4dp"
-            app:srcCompat="@drawable/ic_check"
             android:visibility="@{color.checked ? View.VISIBLE : View.GONE}"
+            app:srcCompat="@drawable/ic_check"
             app:tint="@android:color/white"
-            tools:visibility="visible"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:visibility="visible" />
     </FrameLayout>
 </layout>

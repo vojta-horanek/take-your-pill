@@ -1,11 +1,12 @@
-package eu.vojtechh.takeyourpill.adapter
+package eu.vojtechh.takeyourpill.adapter.viewholder
 
 import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
-import eu.vojtechh.takeyourpill.klass.slideUp
+import eu.vojtechh.takeyourpill.klass.setVisible
 import eu.vojtechh.takeyourpill.model.Pill
 
 
@@ -27,8 +28,6 @@ class PillViewHolder(
 
     private fun setCardConfirm(pill: Pill) {
         pill.getCloseReminder()?.let {
-
-
             binding.textQuestionTake.text = binding.root.context.resources.getQuantityString(
                 R.plurals.pill_taken_question,
                 it.amount,
@@ -41,17 +40,13 @@ class PillViewHolder(
                 listener.onPillConfirmClicked(v, it)
                 hideConfirmCard()
             }
-            binding.buttonNotTaken.setOnClickListener { v ->
-                listener.onPillNotConfirmClicked(v, it)
-                hideConfirmCard()
-            }
         } ?: run {
             binding.cardConfirmTake.visibility = View.GONE
         }
     }
 
     private fun hideConfirmCard() {
-        binding.cardConfirmTake.slideUp()
+        binding.cardConfirmTake.setVisible(false)
     }
 
     private fun getFormattedDescription(pill: Pill, context: Context): CharSequence {

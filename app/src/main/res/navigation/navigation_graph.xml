@@ -75,7 +75,7 @@
         tools:layout="@layout/activity_main" />
     <dialog
         android:id="@+id/fragmentHistoryView"
-        android:name="eu.vojtechh.takeyourpill.fragment.FragmentHistoryView"
+        android:name="eu.vojtechh.takeyourpill.fragment.dialog.HistoryViewDialog"
         android:label="FragmentHistoryView">
         <argument
             android:name="pillId"

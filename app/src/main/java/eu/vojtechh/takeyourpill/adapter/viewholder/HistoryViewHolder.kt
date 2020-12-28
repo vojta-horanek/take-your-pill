@@ -1,6 +1,7 @@
-package eu.vojtechh.takeyourpill.adapter
+package eu.vojtechh.takeyourpill.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
+import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryPillBinding
 import eu.vojtechh.takeyourpill.model.Pill
 

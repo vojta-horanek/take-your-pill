@@ -20,19 +20,28 @@ interface HistoryDao {
         """
         SELECT * FROM history
         WHERE 
-            reminderId = (:reminderId)
+            pillId = (:pillId)
         ORDER BY confirmed DESC LIMIT 1"""
     )
-    fun getLatestByReminderId(reminderId: Long): LiveData<History>
+    fun getLatestByPillId(pillId: Long): LiveData<History>
 
     @Transaction
     @Query(
         """
-        SELECT history.historyId, history.reminderId, history.confirmed, history.reminded FROM history
-        INNER JOIN reminder
-        ON history.reminderId = reminder.reminderId
+        SELECT * FROM history
+        WHERE
+            pillId = (:pillId) AND
+            reminded = (:remindedTime)
+        ORDER BY confirmed DESC LIMIT 1"""
+    )
+    suspend fun getByPillIdAndTime(pillId: Long, remindedTime: Long): History
+
+    @Transaction
+    @Query(
+        """
+        SELECT * FROM history
         WHERE 
-            reminder.pillId = (:pillId)
+            history.pillId = (:pillId)
         ORDER BY history.reminded DESC"""
     )
     fun getHistoryByPillId(pillId: Long): LiveData<List<History>>

@@ -146,9 +146,8 @@
                     android:layout_width="0dp"
                     android:layout_marginTop="8dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@+id/buttonNotTaken"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textQuestionTake"
                     android:layout_marginEnd="4dp"
                     android:text="@string/yes"
@@ -157,25 +156,6 @@
                     android:textColor="@color/colorPrimary"
                     app:iconTint="@color/colorPrimary"
                     app:rippleColor="@color/colorPrimary"
-                    android:textAppearance="@style/AppTheme.Text.ButtonSmall" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="4dp"
-                    android:id="@+id/buttonNotTaken"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/buttonTaken"
-                    app:layout_constraintTop_toBottomOf="@+id/textQuestionTake"
-                    android:text="@string/no"
-                    app:icon="@drawable/ic_cancel"
-                    app:strokeColor="@color/colorRed"
-                    android:textColor="@color/colorRed"
-                    app:iconTint="@color/colorRed"
-                    app:rippleColor="@color/colorRed"
                     android:textAppearance="@style/AppTheme.Text.ButtonSmall" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

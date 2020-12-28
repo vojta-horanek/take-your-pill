@@ -43,16 +43,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <View
-                    android:id="@+id/layoutHistoryStatus"
-                    android:layout_width="@dimen/color_dot_size"
-                    android:layout_height="@dimen/color_dot_size"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/shape_oval"
-                    app:background_color_shaped="@{pill.colorResource(context)}"
-                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -62,7 +52,7 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/layoutHistoryStatus"
+                    app:layout_constraintEnd_toStartOf="@+id/viewPillColor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -82,11 +72,32 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                         android:text="@{pill.description}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                         android:visibility="@{pill.descriptionVisibility}"
                         tools:text="Description" />
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/viewPillColor"
+                    android:layout_width="@dimen/color_dot_size"
+                    android:layout_height="@dimen/color_dot_size"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/shape_oval"
+                    app:background_color_shaped="@{pill.colorResource(context)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                    app:layout_constraintEnd_toStartOf="@id/imageNext"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageNext"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout"
+                    app:srcCompat="@drawable/ic_next" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
