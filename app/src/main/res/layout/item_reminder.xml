@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.content.Context" />
+
         <variable
             name="reminder"
             type="eu.vojtechh.takeyourpill.model.Reminder" />
@@ -22,8 +24,8 @@
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
-        android:orientation="horizontal"
-        android:onClick="@{(view) -> listener.onReminderClicked(view, reminder)}">
+        android:onClick="@{(view) -> listener.onReminderClicked(view, reminder)}"
+        android:orientation="horizontal">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"

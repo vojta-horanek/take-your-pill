@@ -44,18 +44,18 @@
                 android:id="@+id/recyclerHistoryView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
+                android:background="?attr/colorBackgroundFloating"
                 android:clipChildren="false"
+                android:clipToPadding="false"
                 android:paddingTop="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_history"
-                android:background="?attr/colorBackgroundFloating" />
+                tools:listitem="@layout/item_history" />
 
             <FrameLayout
-                android:animateLayoutChanges="true"
                 android:id="@+id/layoutLoading"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="128dp">

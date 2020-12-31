@@ -15,10 +15,10 @@
         android:background="?attr/colorSurface">
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/AppTheme.Widget.Header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{title}"
-            tools:text="Title"
-            style="@style/AppTheme.Widget.Header" />
+            tools:text="Title" />
     </FrameLayout>
 </layout>

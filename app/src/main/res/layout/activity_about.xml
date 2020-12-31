@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AboutActivity"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".activity.AboutActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -91,13 +91,13 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textVersion"
             android:layout_width="match_parent"
-            android:layout_gravity="bottom"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+            android:layout_marginVertical="@dimen/screen_margin_vertical"
             android:layout_marginTop="@dimen/screen_margin_vertical_little"
             android:gravity="end|center_vertical"
             android:text="@string/version"
-            android:textAppearance="@style/AppTheme.Text.BodySecondary"
-            android:layout_marginVertical="@dimen/screen_margin_vertical"
-            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
+            android:textAppearance="@style/AppTheme.Text.BodySecondary" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </ScrollView>

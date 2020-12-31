@@ -28,12 +28,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="16dp"
+        android:animateLayoutChanges="true"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:animateLayoutChanges="true">
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -115,13 +115,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_marginTop="-8dp"
+            android:id="@+id/cardConfirmTake"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:shapeAppearanceOverlay="@style/AppTheme.Shape.RoundedCornersConfirmCard"
+            android:layout_marginTop="-8dp"
+            android:animateLayoutChanges="true"
             app:cardElevation="@dimen/minimal_card_elevation"
-            android:id="@+id/cardConfirmTake"
-            android:animateLayoutChanges="true">
+            app:shapeAppearanceOverlay="@style/AppTheme.Shape.RoundedCornersConfirmCard">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -134,29 +134,29 @@
                     android:id="@+id/textQuestionTake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="Have you taken 1 pill at 8:00?"
+                    android:textAppearance="@style/AppTheme.Text.BodyTitleSmall"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:textAppearance="@style/AppTheme.Text.BodyTitleSmall" />
+                    tools:text="Have you taken 1 pill at 8:00?" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonTaken"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
-                    android:layout_marginTop="8dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/yes"
+                    android:textAppearance="@style/AppTheme.Text.ButtonSmall"
+                    android:textColor="@color/colorPrimary"
+                    app:icon="@drawable/ic_check"
+                    app:iconTint="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintTop_toBottomOf="@+id/textQuestionTake"
-                    android:layout_marginEnd="4dp"
-                    android:text="@string/yes"
-                    app:icon="@drawable/ic_check"
-                    app:strokeColor="@color/colorPrimary"
-                    android:textColor="@color/colorPrimary"
-                    app:iconTint="@color/colorPrimary"
                     app:rippleColor="@color/colorPrimary"
-                    android:textAppearance="@style/AppTheme.Text.ButtonSmall" />
+                    app:strokeColor="@color/colorPrimary" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

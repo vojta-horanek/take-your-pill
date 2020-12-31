@@ -69,15 +69,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         }
 
         view.floatingActionButton.setOnClickListener {
-            exitTransition = MaterialElevationScale(false)
-            reenterTransition = MaterialElevationScale(true)
-            model.isReturningFromPillDetails = true
-            findNavController().navigate(R.id.edit)
+            openNewPill()
         }
 
         model.allPills.observe(viewLifecycleOwner, {
             appAdapter.submitList(it)
         })
+    }
+
+    private fun openNewPill() {
+        exitTransition = MaterialElevationScale(false)
+        reenterTransition = MaterialElevationScale(true)
+        model.isReturningFromPillDetails = true
+        findNavController().navigate(R.id.edit)
     }
 
     override fun onItemClicked(view: View, item: GeneralRecyclerItem) {

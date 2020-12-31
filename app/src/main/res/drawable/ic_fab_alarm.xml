@@ -1,28 +1,32 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="16dp"/>
-            <size android:height="128dp" android:width="256dp"/>
+            <corners android:radius="16dp" />
+            <size
+                android:width="256dp"
+                android:height="128dp" />
             <solid android:color="@color/colorGreen" />
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_alarm"
+    <item
+        android:width="80dp"
+        android:height="80dp"
+        android:bottom="14dp"
+        android:drawable="@drawable/ic_alarm"
         android:end="14dp"
+        android:gravity="center_vertical"
         android:start="24dp"
-        android:top="14dp"
-        android:bottom="14dp"
-        android:width="80dp"
-        android:height="80dp"
-        android:gravity="center_vertical"/>
+        android:top="14dp" />
 
-    <item android:drawable="@drawable/ic_add_alert"
-        android:end="24dp"
-        android:start="14dp"
-        android:top="14dp"
-        android:bottom="14dp"
+    <item
         android:width="80dp"
         android:height="80dp"
-        android:gravity="end|center_vertical"/>
+        android:bottom="14dp"
+        android:drawable="@drawable/ic_add_alert"
+        android:end="24dp"
+        android:gravity="end|center_vertical"
+        android:start="14dp"
+        android:top="14dp" />
 
 </layer-list>
 

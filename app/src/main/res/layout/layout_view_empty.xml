@@ -22,12 +22,12 @@
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            tools:srcCompat="@drawable/ic_empty_view"
             app:layout_constraintBottom_toTopOf="@id/textEmptyTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:srcCompat="@drawable/ic_empty_view" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textEmptyTitle"
@@ -52,12 +52,12 @@
             android:paddingTop="4dp"
             android:paddingBottom="16dp"
             android:text="@{description}"
-            tools:text="@string/try_to_add_a_pill_first"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textEmptyTitle" />
+            app:layout_constraintTop_toBottomOf="@id/textEmptyTitle"
+            tools:text="@string/try_to_add_a_pill_first" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

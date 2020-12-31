@@ -16,9 +16,9 @@
             app:summary="@string/settings_delay_summary"
             app:title="@string/settings_delay_by" />
         <SwitchPreferenceCompat
+            app:defaultValue="true"
             app:icon="@drawable/ic_alarm"
             app:key="remindAgainKey"
-            app:defaultValue="true"
             app:summary="@string/settings_remind_again_summary"
             app:title="@string/settings_remind_again" />
         <SeekBarPreference
