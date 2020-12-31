@@ -13,7 +13,7 @@ class HistoryRepository @Inject constructor(
     suspend fun getByPillIdAndTime(pillId: Long, remindedTime: Long) =
         historyDao.getByPillIdAndTime(pillId, remindedTime)
 
-    suspend fun updateHistoryItem(historyEntity: HistoryEntity) = historyDao.update(historyEntity)
+    suspend fun updateHistoryItem(historyEntity: HistoryEntity) = historyDao.insert(historyEntity)
     suspend fun insertHistoryItem(historyEntity: HistoryEntity) = historyDao.insert(historyEntity)
     suspend fun deleteHistoryItem(historyEntity: HistoryEntity) = historyDao.delete(historyEntity)
 }

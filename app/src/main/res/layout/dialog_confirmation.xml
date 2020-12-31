@@ -30,8 +30,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/darker_surface">
+            android:background="@drawable/darker_surface"
+            android:orientation="vertical">
 
             <View style="@style/AppTheme.Widget.Handle" />
 
@@ -47,43 +47,48 @@
 
         </LinearLayout>
 
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textConfirm"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackground"
-            android:checkable="true"
-            android:clickable="true"
-            android:drawablePadding="16dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:onClick="@{(view) -> listener.onDeletePill(view)}"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="16dp"
-            android:text="@{yes}"
-            android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            tools:text="Yes"
-            tools:drawableStart="@drawable/ic_check" />
+            android:layout_height="wrap_content"
+            android:background="?attr/colorBackgroundFloating"
+            android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textCancel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackground"
-            android:checkable="true"
-            android:clickable="true"
-            android:drawablePadding="16dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:onClick="@{(view) -> listener.onDeletePillHistory(view)}"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="16dp"
-            android:text="@{no}"
-            android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            tools:text="No"
-            tools:drawableStart="@drawable/ic_cancel" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:checkable="true"
+                android:clickable="true"
+                android:drawablePadding="16dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:onClick="@{(view) -> listener.onDeletePill(view)}"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:text="@{yes}"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                tools:drawableStart="@drawable/ic_check"
+                tools:text="Yes" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textCancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:checkable="true"
+                android:clickable="true"
+                android:drawablePadding="16dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:onClick="@{(view) -> listener.onDeletePillHistory(view)}"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:text="@{no}"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                tools:drawableStart="@drawable/ic_cancel"
+                tools:text="No" />
+
+        </LinearLayout>
     </LinearLayout>
-
 </layout>

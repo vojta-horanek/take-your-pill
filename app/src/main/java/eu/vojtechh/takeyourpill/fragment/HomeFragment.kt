@@ -71,6 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         view.floatingActionButton.setOnClickListener {
             exitTransition = MaterialElevationScale(false)
             reenterTransition = MaterialElevationScale(true)
+            model.isReturningFromPillDetails = true
             findNavController().navigate(R.id.edit)
         }
 

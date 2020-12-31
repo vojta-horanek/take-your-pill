@@ -2,16 +2,15 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="?attr/colorSurface" />
+            <solid android:color="?attr/colorBackgroundFloating" />
             <corners
                 android:topLeftRadius="8dp"
                 android:topRightRadius="8dp" />
-
         </shape>
     </item>
     <item>
         <shape>
-            <solid android:color="#0F000000" />
+            <solid android:color="#7F000000" />
             <corners
                 android:topLeftRadius="8dp"
                 android:topRightRadius="8dp" />
