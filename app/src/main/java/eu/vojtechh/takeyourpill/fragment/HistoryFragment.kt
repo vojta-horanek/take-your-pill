@@ -36,7 +36,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history),
             this,
             getString(R.string.history),
             getString(R.string.history),
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_history)
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_fab_history)
         )
 
         view.recyclerHome.adapter = appAdapter

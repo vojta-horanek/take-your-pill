@@ -16,17 +16,21 @@
             type="eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter.ItemListener" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/screen_margin_vertical">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/screen_margin_vertical"
+        android:paddingBottom="@dimen/screen_margin_vertical_small">
 
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="@dimen/history_status_icon_size"
             android:layout_height="@dimen/history_status_icon_size"
             android:layout_gravity="center_vertical"
-            android:background="?attr/colorBackgroundFloating">
+            android:background="?attr/colorBackgroundFloating"
+            app:layout_constraintBottom_toBottomOf="@+id/layoutHistoryText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/layoutHistoryText">
 
             <View
                 android:id="@+id/viewPillColor"
@@ -34,7 +38,8 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_oval"
                 app:background_color_shaped="@{history.hasBeenConfirmed ? @color/colorGreen : @color/colorRed}"
-                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval" />
+                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
+                tools:backgroundTint="@color/colorGreen" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
@@ -48,13 +53,17 @@
         </FrameLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/layoutHistoryText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:paddingVertical="4dp"
             android:paddingStart="@dimen/screen_margin_vertical"
-            android:paddingEnd="0dp">
+            android:paddingEnd="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textHistoryReminded"
@@ -76,6 +85,16 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/layoutHistoryText"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHistoryText"
+            android:text="@string/confirm"
+            android:layout_marginTop="@dimen/screen_margin_vertical_little" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
