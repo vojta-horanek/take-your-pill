@@ -1,11 +1,15 @@
 package eu.vojtechh.takeyourpill.adapter.viewholder
 
+import androidx.core.os.ConfigurationCompat.getLocales
 import androidx.recyclerview.widget.RecyclerView
-import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryBinding
-import eu.vojtechh.takeyourpill.klass.getDateTimeString
+import eu.vojtechh.takeyourpill.klass.getVisible
+import eu.vojtechh.takeyourpill.klass.setVisible
 import eu.vojtechh.takeyourpill.model.History
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
 
 class HistoryItemViewHolder(
     private val binding: ItemHistoryBinding,
@@ -15,15 +19,25 @@ class HistoryItemViewHolder(
         with(binding) {
             binding.history = history
             binding.listener = listener
-            textHistoryReminded.text = binding.root.context.getString(
-                R.string.reminded_at,
-                history.historyEntity.reminded.getDateTimeString()
-            )
+
+            textHistoryReminded.text = DateFormat.getTimeInstance(DateFormat.SHORT)
+                .format(history.historyEntity.reminded.time)
+
             textHistoryConfirmed.visibility = history.confirmedVisibility
-            textHistoryConfirmed.text = binding.root.context.getString(
-                R.string.confirmed_at,
-                history.historyEntity.confirmed?.getDateTimeString()
-            )
+            frameLayoutConfirm.visibility = history.confirmedVisibility
+            textHistoryConfirmed.text = history.historyEntity.confirmed?.let {
+                DateFormat.getTimeInstance(DateFormat.SHORT).format(it.time)
+            }
+
+            val pattern = "dd. MM."
+            val primaryLocale = getLocales(binding.root.context.resources.configuration).get(0)
+            val dateFormat = SimpleDateFormat(pattern, primaryLocale)
+            textDate.text = dateFormat.format(history.historyEntity.reminded.time)
+
+            buttonShowMore.setOnClickListener {
+                // TODO Rotate icon
+                layoutButtons.setVisible(!layoutButtons.getVisible())
+            }
             executePendingBindings()
         }
     }

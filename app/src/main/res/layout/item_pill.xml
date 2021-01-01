@@ -57,7 +57,7 @@
                     android:id="@+id/imagePillColor"
                     android:layout_width="@dimen/color_dot_size"
                     android:layout_height="@dimen/color_dot_size"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="@dimen/screen_margin_horizontal_small"
                     android:background="@drawable/shape_oval"
                     app:background_color_shaped="@{pill.colorResource(context)}"
                     app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
@@ -142,21 +142,16 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonTaken"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/AppTheme.Widget.Button.Positive"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="4dp"
                     android:text="@string/yes"
-                    android:textAppearance="@style/AppTheme.Text.ButtonSmall"
-                    android:textColor="@color/colorPrimary"
                     app:icon="@drawable/ic_check"
-                    app:iconTint="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintTop_toBottomOf="@+id/textQuestionTake"
-                    app:rippleColor="@color/colorPrimary"
-                    app:strokeColor="@color/colorPrimary" />
+                    app:layout_constraintTop_toBottomOf="@+id/textQuestionTake" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

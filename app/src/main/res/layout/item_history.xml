@@ -16,85 +16,139 @@
             type="eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter.ItemListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
         android:paddingHorizontal="@dimen/screen_margin_vertical"
-        android:paddingBottom="@dimen/screen_margin_vertical_small">
+        android:paddingVertical="@dimen/screen_margin_vertical_small">
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="@dimen/history_status_icon_size"
-            android:layout_height="@dimen/history_status_icon_size"
-            android:layout_gravity="center_vertical"
-            android:background="?attr/colorBackgroundFloating"
-            app:layout_constraintBottom_toBottomOf="@+id/layoutHistoryText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/layoutHistoryText">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground">
 
-            <View
-                android:id="@+id/viewPillColor"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/shape_oval"
-                app:background_color_shaped="@{history.hasBeenConfirmed ? @color/colorGreen : @color/colorRed}"
-                app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval"
-                tools:backgroundTint="@color/colorGreen" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/jost_medium"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="21. 12." />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="4dp"
-                android:src="@{history.hasBeenConfirmed ? @drawable/ic_check : @drawable/ic_close}"
-                app:tint="@android:color/white"
-                tools:ignore="ContentDescription"
-                tools:srcCompat="@drawable/ic_check"
-                tools:visibility="visible" />
-        </FrameLayout>
+                android:id="@+id/frameLayoutReminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/screen_margin_vertical_little"
+                app:layout_constraintBottom_toTopOf="@+id/textHistoryReminded"
+                app:layout_constraintEnd_toEndOf="@+id/textHistoryReminded"
+                app:layout_constraintStart_toStartOf="@+id/textHistoryReminded"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:srcCompat="@drawable/ic_alert"
+                app:tint="@color/colorAccent"
+                tools:ignore="ContentDescription" />
 
-        <LinearLayout
-            android:id="@+id/layoutHistoryText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingVertical="4dp"
-            android:paddingStart="@dimen/screen_margin_vertical"
-            android:paddingEnd="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/frameLayout"
-            app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/frameLayoutConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/screen_margin_vertical_little"
+                android:src="@{history.hasBeenConfirmed ? @drawable/ic_check : @drawable/ic_close}"
+                app:layout_constraintBottom_toTopOf="@+id/textHistoryConfirmed"
+                app:layout_constraintEnd_toEndOf="@+id/textHistoryConfirmed"
+                app:layout_constraintStart_toStartOf="@+id/textHistoryConfirmed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:tint="@color/colorGreen"
+                tools:ignore="ContentDescription"
+                tools:srcCompat="@drawable/ic_check" />
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textHistoryReminded"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/screen_margin_horizontal_small"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:maxLines="1"
+                android:minWidth="48dp"
                 android:textAppearance="@style/AppTheme.Text.BodyNormal"
-                tools:text="Reminded at 21:10 21. 12. 2020" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textHistoryConfirmed"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayoutReminder"
+                tools:text="16:00" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textHistoryConfirmed"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/screen_margin_horizontal_small"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:maxLines="1"
+                android:minWidth="48dp"
                 android:textAppearance="@style/AppTheme.Text.BodyNormal"
-                tools:text="Confirmed at 21:10 21. 12. 2020" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonShowMore"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayoutConfirm"
+                tools:text="16:33" />
 
-        </LinearLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/buttonShowMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_expand_more"
+                android:visibility="gone" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/layoutHistoryText"
-            app:layout_constraintTop_toBottomOf="@+id/layoutHistoryText"
-            android:text="@string/confirm"
-            android:layout_marginTop="@dimen/screen_margin_vertical_little" />
+            android:animateLayoutChanges="true"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonDeleteHistory"
+                style="@style/AppTheme.Widget.Button.Negative"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/screen_margin_horizontal_little"
+                android:text="@string/delete"
+                app:icon="@drawable/ic_delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonConfirmHistory"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonConfirmHistory"
+                style="@style/AppTheme.Widget.Button.Positive"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screen_margin_horizontal_little"
+                android:text="@string/confirm"
+                app:icon="@drawable/ic_check"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/buttonDeleteHistory"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

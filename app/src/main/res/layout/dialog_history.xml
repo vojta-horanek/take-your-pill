@@ -47,7 +47,7 @@
                 android:background="?attr/colorBackgroundFloating"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:paddingTop="@dimen/screen_margin_vertical"
+                android:paddingTop="@dimen/screen_margin_vertical_small"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_history" />
 

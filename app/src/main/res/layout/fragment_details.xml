@@ -130,21 +130,17 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonDelete"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/AppTheme.Widget.Button.Negative"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
                     android:layout_marginVertical="@dimen/screen_margin_vertical"
                     android:text="@string/delete"
-                    android:textColor="@color/colorRed"
                     app:icon="@drawable/ic_delete"
-                    app:iconTint="@color/colorRed"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerReminders"
-                    app:layout_constraintVertical_bias="1.0"
-                    app:rippleColor="@color/colorRed"
-                    app:strokeColor="@color/colorRed" />
+                    app:layout_constraintVertical_bias="1.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
