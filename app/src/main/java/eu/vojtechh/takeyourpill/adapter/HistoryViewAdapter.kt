@@ -20,7 +20,7 @@ class HistoryViewAdapter(
 ) : ListAdapter<GeneralRecyclerItem, RecyclerView.ViewHolder>(GeneralRecyclerItem.DiffCallback) {
 
     interface ItemListener {
-        fun onItemClicked(view: View, item: GeneralRecyclerItem)
+        fun onItemOptionsClick(view: View, item: GeneralRecyclerItem)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -56,11 +56,13 @@ class HistoryViewAdapter(
 
     override fun submitList(list: List<GeneralRecyclerItem>?) {
         list?.let {
-            val newList = list.toMutableList()
             if (it.isEmpty()) {
+                val newList = list.toMutableList()
                 newList.add(EmptyItem())
+                super.submitList(newList)
+            } else {
+                super.submitList(list)
             }
-            super.submitList(newList)
         } ?: super.submitList(list)
 
     }

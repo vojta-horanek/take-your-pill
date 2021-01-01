@@ -22,6 +22,16 @@ data class History(
     override val itemType: ItemTypes
         get() = ItemTypes.HISTORY_ITEM
 
+    override fun isSame(newItem: GeneralRecyclerItem) =
+        if (newItem is History) {
+            this.historyEntity.id == newItem.historyEntity.id
+        } else false
+
+    override fun isContentSame(newItem: GeneralRecyclerItem) =
+        if (newItem is History) {
+            this.hasBeenConfirmed == newItem.hasBeenConfirmed
+        } else false
+
     val confirmedVisibility
         get() = if (hasBeenConfirmed) View.VISIBLE else View.GONE
 }

@@ -133,4 +133,24 @@ data class Pill(
 
     fun colorResource(context: Context) = pillEntity.color.getColor(context)
 
+    override fun isSame(newItem: GeneralRecyclerItem) =
+        if (newItem is Pill) {
+            this.pillEntity.id == newItem.pillEntity.id
+        } else false
+
+
+    override fun isContentSame(newItem: GeneralRecyclerItem) =
+        if (newItem is Pill) {
+            this.name == newItem.name &&
+                    this.description == newItem.description &&
+                    this.photo == newItem.photo &&
+                    this.color == newItem.color &&
+                    this.deleted == newItem.deleted &&
+                    this.options == newItem.options &&
+                    this.optionsChanging == newItem.optionsChanging &&
+                    this.reminders == newItem.reminders
+
+        } else false
+
+
 }

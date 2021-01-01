@@ -4,21 +4,18 @@ import androidx.core.os.ConfigurationCompat.getLocales
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryBinding
-import eu.vojtechh.takeyourpill.klass.getVisible
-import eu.vojtechh.takeyourpill.klass.setVisible
 import eu.vojtechh.takeyourpill.model.History
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-
 
 class HistoryItemViewHolder(
     private val binding: ItemHistoryBinding,
     private val listener: HistoryViewAdapter.ItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(history: History) {
+        binding.history = history
+        binding.listener = listener
         with(binding) {
-            binding.history = history
-            binding.listener = listener
 
             textHistoryReminded.text = DateFormat.getTimeInstance(DateFormat.SHORT)
                 .format(history.historyEntity.reminded.time)
@@ -34,10 +31,6 @@ class HistoryItemViewHolder(
             val dateFormat = SimpleDateFormat(pattern, primaryLocale)
             textDate.text = dateFormat.format(history.historyEntity.reminded.time)
 
-            buttonShowMore.setOnClickListener {
-                // TODO Rotate icon
-                layoutButtons.setVisible(!layoutButtons.getVisible())
-            }
             executePendingBindings()
         }
     }

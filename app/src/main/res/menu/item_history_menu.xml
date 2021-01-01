@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/historyConfirm"
+        android:title="@string/mark_as_confirmed" />
+    <item
+        android:id="@+id/historyUnConfirm"
+        android:title="@string/mark_as_skipped" />
+</menu>

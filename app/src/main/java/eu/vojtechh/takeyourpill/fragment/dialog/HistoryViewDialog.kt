@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -13,6 +14,7 @@ import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.DialogHistoryBinding
 import eu.vojtechh.takeyourpill.klass.setVisible
 import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
+import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.viewmodel.HistoryItemViewModel
 
 @AndroidEntryPoint
@@ -56,7 +58,30 @@ class HistoryViewDialog :
         })
     }
 
-    override fun onItemClicked(view: View, item: GeneralRecyclerItem) {
+    override fun onItemOptionsClick(view: View, item: GeneralRecyclerItem) {
+        if (item is History) {
+            val popup = PopupMenu(requireContext(), view)
+            popup.inflate(R.menu.item_history_menu)
+            if (item.hasBeenConfirmed) {
+                popup.menu.findItem(R.id.historyConfirm).isVisible = false
+            } else {
+                popup.menu.findItem(R.id.historyUnConfirm).isVisible = false
+            }
+            popup.setOnMenuItemClickListener { menu ->
+                when (menu.itemId) {
+                    R.id.historyConfirm -> {
+                        model.confirmHistory(item)
+                        true
+                    }
+                    R.id.historyUnConfirm -> {
+                        model.markHistoryNotConfirmed(item)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popup.show()
+        }
 
     }
 }

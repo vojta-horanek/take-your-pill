@@ -96,4 +96,7 @@
     <string name="reminded_at">Připomenuto v %1$s</string>
     <string name="confirmed_at">Potvrzeno v %1$s</string>
     <string name="loading">Načítání…</string>
+    <string name="confirmed">Potvrzeno</string>
+    <string name="mark_as_skipped">Označit jako vynechané</string>
+    <string name="mark_as_confirmed">Označit jako potvrzené</string>
 </resources>

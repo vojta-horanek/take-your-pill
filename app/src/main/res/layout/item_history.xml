@@ -22,12 +22,15 @@
         android:animateLayoutChanges="true"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/screen_margin_vertical"
-        android:paddingVertical="@dimen/screen_margin_vertical_small">
+        android:paddingVertical="@dimen/screen_margin_vertical_small"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground">
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textDate"
@@ -109,45 +112,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_expand_more"
-                android:visibility="gone" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonDeleteHistory"
-                style="@style/AppTheme.Widget.Button.Negative"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/screen_margin_horizontal_little"
-                android:text="@string/delete"
-                app:icon="@drawable/ic_delete"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonConfirmHistory"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonConfirmHistory"
-                style="@style/AppTheme.Widget.Button.Positive"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/screen_margin_horizontal_little"
-                android:text="@string/confirm"
-                app:icon="@drawable/ic_check"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/buttonDeleteHistory"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:srcCompat="@drawable/ic_more"
+                android:onClick="@{(view) -> listener.onItemOptionsClick(view, history)}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
