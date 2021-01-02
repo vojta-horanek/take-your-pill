@@ -35,4 +35,18 @@ class HistoryItemViewModel @ViewModelInject constructor(
         )
         historyRepository.updateHistoryItem(historyEntity)
     }
+
+    fun setHistoryConfirmTime(item: History, newConfirmTime: Calendar) = viewModelScope.launch {
+        val historyEntity = HistoryEntity(
+            item.historyEntity.id,
+            item.historyEntity.reminded,
+            newConfirmTime,
+            item.historyEntity.pillId
+        )
+        historyRepository.updateHistoryItem(historyEntity)
+    }
+
+    fun deleteHistory(item: History) = viewModelScope.launch {
+        historyRepository.deleteHistoryItem(item.historyEntity)
+    }
 }

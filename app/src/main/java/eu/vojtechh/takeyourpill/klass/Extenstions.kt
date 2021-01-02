@@ -3,14 +3,13 @@ package eu.vojtechh.takeyourpill.klass
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.view.View
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import android.widget.EditText
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.res.use
 import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,12 +29,6 @@ fun Context.themeColor(
     }
 }
 
-fun View.setVisible(visible: Boolean) {
-    this.visibility = if (visible) View.VISIBLE else View.GONE
-}
-
-fun View.getVisible() = this.visibility == View.VISIBLE
-
 fun EditText.getNumber() = this.text.toString().toInt()
 fun EditText.getString() = this.text.toString()
 
@@ -46,23 +39,6 @@ fun TextInputLayout.showError(message: String?) {
 
 fun NestedScrollView.scrollToBottom() {
     smoothScrollBy(0, this.getChildAt(0).height)
-}
-
-fun View.slideUp(duration: Int = 400) {
-    // TODO Parent view changes height only after animation finished
-    visibility = View.VISIBLE
-    val animate = TranslateAnimation(0f, 0f, 0f, -this.height.toFloat())
-    animate.duration = duration.toLong()
-    animate.fillAfter = true
-    animate.setAnimationListener(object : Animation.AnimationListener {
-        override fun onAnimationStart(animation: Animation?) {}
-        override fun onAnimationEnd(animation: Animation?) {
-            this@slideUp.visibility = View.GONE
-        }
-
-        override fun onAnimationRepeat(animation: Animation?) {}
-    })
-    this.startAnimation(animate)
 }
 
 fun Long.getDateTimeString(): String {
@@ -78,3 +54,19 @@ fun Calendar.getDateTimeString(): String {
 fun Long.getTimeString(): String {
     return (this / 60L / 1000L).toString()
 }
+
+fun <T, VH : RecyclerView.ViewHolder> ListAdapter<T, VH>.getItemOrNull(position: Int): T? {
+    return this.currentList.elementAtOrNull(position)
+}
+
+var Calendar.hour: Int
+    get() = this.get(Calendar.HOUR_OF_DAY)
+    set(value) {
+        this.set(Calendar.HOUR_OF_DAY, value)
+    }
+
+var Calendar.minute: Int
+    get() = this.get(Calendar.MINUTE)
+    set(value) {
+        this.set(Calendar.MINUTE, value)
+    }

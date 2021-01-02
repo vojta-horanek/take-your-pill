@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -254,36 +255,36 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
 
     private fun doOnLimitDayChecked(checked: Boolean) {
         binding.run {
-            groupLimit.setVisible(checked)
+            groupLimit.isVisible = checked
 
-            checkRestoreAfter.setVisible(checked)
+            checkRestoreAfter.isVisible = checked
             if (checked) {
-                groupRestore.setVisible(checkRestoreAfter.isChecked)
-                checkCycleCount.setVisible(checkRestoreAfter.isChecked)
-                groupCycle.setVisible(!checkCycleCount.isChecked)
+                groupRestore.isVisible = checkRestoreAfter.isChecked
+                checkCycleCount.isVisible = checkRestoreAfter.isChecked
+                groupCycle.isVisible = !checkCycleCount.isChecked
             } else {
-                groupRestore.setVisible(false)
-                checkCycleCount.setVisible(false)
-                groupCycle.setVisible(false)
+                groupRestore.isVisible = false
+                checkCycleCount.isVisible = false
+                groupCycle.isVisible = false
             }
         }
     }
 
     private fun doOnRestoreAfterCheck(checked: Boolean) {
         binding.run {
-            groupRestore.setVisible(checked)
+            groupRestore.isVisible = checked
 
-            checkCycleCount.setVisible(checked)
+            checkCycleCount.isVisible = checked
             if (checked) {
-                groupCycle.setVisible(!checkCycleCount.isChecked)
+                groupCycle.isVisible = !checkCycleCount.isChecked
             } else {
-                groupCycle.setVisible(false)
+                groupCycle.isVisible = false
             }
         }
     }
 
     private fun doOnCycleCountChecked(checked: Boolean) {
-        binding.groupCycle.setVisible(!checked)
+        binding.groupCycle.isVisible = !checked
     }
 
     private fun savePill() {

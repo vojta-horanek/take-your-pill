@@ -29,7 +29,8 @@ data class History(
 
     override fun isContentSame(newItem: GeneralRecyclerItem) =
         if (newItem is History) {
-            this.hasBeenConfirmed == newItem.hasBeenConfirmed
+            this.hasBeenConfirmed == newItem.hasBeenConfirmed &&
+                    this.historyEntity.confirmed?.timeInMillis == newItem.historyEntity.confirmed?.timeInMillis
         } else false
 
     val confirmedVisibility

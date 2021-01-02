@@ -6,4 +6,11 @@
     <item
         android:id="@+id/historyUnConfirm"
         android:title="@string/mark_as_skipped" />
+    <item
+        android:id="@+id/historyChangeConfirmTime"
+        android:title="@string/change_confirm_time" />
+    <item
+        android:id="@+id/historyDelete"
+        android:title="@string/delete" />
+
 </menu>

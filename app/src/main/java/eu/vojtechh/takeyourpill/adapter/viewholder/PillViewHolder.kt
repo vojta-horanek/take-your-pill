@@ -2,11 +2,11 @@ package eu.vojtechh.takeyourpill.adapter.viewholder
 
 import android.content.Context
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
-import eu.vojtechh.takeyourpill.klass.setVisible
 import eu.vojtechh.takeyourpill.model.Pill
 
 
@@ -46,7 +46,7 @@ class PillViewHolder(
     }
 
     private fun hideConfirmCard() {
-        binding.cardConfirmTake.setVisible(false)
+        binding.cardConfirmTake.isVisible = false
     }
 
     private fun getFormattedDescription(pill: Pill, context: Context): CharSequence {

@@ -1,21 +1,28 @@
 package eu.vojtechh.takeyourpill.fragment.dialog
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.DialogHistoryBinding
-import eu.vojtechh.takeyourpill.klass.setVisible
+import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.hour
+import eu.vojtechh.takeyourpill.klass.minute
 import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.viewmodel.HistoryItemViewModel
+import java.util.*
 
 @AndroidEntryPoint
 class HistoryViewDialog :
@@ -53,7 +60,7 @@ class HistoryViewDialog :
         model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner, {
             if (it != null) {
                 adapter.submitList(it)
-                binding.layoutLoading.setVisible(false)
+                binding.layoutLoading.isVisible = false
             }
         })
     }
@@ -66,6 +73,7 @@ class HistoryViewDialog :
                 popup.menu.findItem(R.id.historyConfirm).isVisible = false
             } else {
                 popup.menu.findItem(R.id.historyUnConfirm).isVisible = false
+                popup.menu.findItem(R.id.historyChangeConfirmTime).isVisible = false
             }
             popup.setOnMenuItemClickListener { menu ->
                 when (menu.itemId) {
@@ -77,11 +85,44 @@ class HistoryViewDialog :
                         model.markHistoryNotConfirmed(item)
                         true
                     }
+                    R.id.historyDelete -> {
+                        model.deleteHistory(item)
+                        true
+                    }
+                    R.id.historyChangeConfirmTime -> {
+                        showChangeConfirmTimeDialog(item)
+                        true
+                    }
                     else -> false
                 }
             }
             popup.show()
         }
 
+    }
+
+    private fun showChangeConfirmTimeDialog(item: History) {
+        item.historyEntity.confirmed?.let {
+            val format =
+                if (DateFormat.is24HourFormat(requireContext()))
+                    TimeFormat.CLOCK_24H
+                else
+                    TimeFormat.CLOCK_12H
+
+            val materialTimePicker = MaterialTimePicker.Builder()
+                .setTimeFormat(format)
+                .setHour(it.hour)
+                .setMinute(it.minute)
+                .build()
+
+            materialTimePicker.addOnPositiveButtonClickListener {
+                val calendar = Calendar.getInstance()
+                calendar.hour = materialTimePicker.hour
+                calendar.minute = materialTimePicker.minute
+                model.setHistoryConfirmTime(item, calendar)
+            }
+
+            materialTimePicker.show(childFragmentManager, Constants.TAG_TIME_PICKER_HISTORY_VIEW)
+        }
     }
 }

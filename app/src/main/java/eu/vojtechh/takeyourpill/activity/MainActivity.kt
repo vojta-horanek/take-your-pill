@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
@@ -21,6 +22,7 @@ import eu.vojtechh.takeyourpill.fragment.HistoryFragment
 import eu.vojtechh.takeyourpill.fragment.HomeFragment
 import eu.vojtechh.takeyourpill.fragment.PreferencesFragment
 import eu.vojtechh.takeyourpill.fragment.dialog.HistoryViewDialog
+import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
@@ -66,8 +68,16 @@ class MainActivity : AppCompatActivity() {
                     Slide(Gravity.BOTTOM).excludeTarget(R.id.navHostFragment, true)
                 )
                 when (fragment) {
-                    is HomeFragment, is HistoryFragment, is PreferencesFragment, is HistoryViewDialog -> {
-                        binding.bottomNavigation.visibility = View.VISIBLE
+                    is HomeFragment, is HistoryFragment, is PreferencesFragment, is HistoryViewDialog, is MaterialTimePicker -> {
+                        if (fragment is MaterialTimePicker) {
+                            if (fragment.tag == Constants.TAG_TIME_PICKER_HISTORY_VIEW) {
+                                binding.bottomNavigation.visibility = View.VISIBLE
+                            } else {
+                                binding.bottomNavigation.visibility = View.INVISIBLE
+                            }
+                        } else {
+                            binding.bottomNavigation.visibility = View.VISIBLE
+                        }
                     }
                     else -> {
                         binding.bottomNavigation.visibility = View.INVISIBLE

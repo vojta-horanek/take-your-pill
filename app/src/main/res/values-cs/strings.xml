@@ -99,4 +99,5 @@
     <string name="confirmed">Potvrzeno</string>
     <string name="mark_as_skipped">Označit jako vynechané</string>
     <string name="mark_as_confirmed">Označit jako potvrzené</string>
+    <string name="change_confirm_time">Změnit čas potvrzení</string>
 </resources>

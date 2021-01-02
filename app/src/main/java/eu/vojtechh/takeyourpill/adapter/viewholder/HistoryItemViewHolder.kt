@@ -1,6 +1,7 @@
 package eu.vojtechh.takeyourpill.adapter.viewholder
 
 import androidx.core.os.ConfigurationCompat.getLocales
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryBinding
@@ -12,7 +13,7 @@ class HistoryItemViewHolder(
     private val binding: ItemHistoryBinding,
     private val listener: HistoryViewAdapter.ItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(history: History) {
+    fun bind(history: History, isFirstInList: Boolean, isFirstOfDate: Boolean) {
         binding.history = history
         binding.listener = listener
         with(binding) {
@@ -31,6 +32,11 @@ class HistoryItemViewHolder(
             val dateFormat = SimpleDateFormat(pattern, primaryLocale)
             textDate.text = dateFormat.format(history.historyEntity.reminded.time)
 
+            textDate.isVisible = isFirstOfDate
+            // Should this item show a divider
+            if (isFirstOfDate && !isFirstInList) {
+                divider.isVisible = true
+            }
             executePendingBindings()
         }
     }

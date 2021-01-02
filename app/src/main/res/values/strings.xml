@@ -113,4 +113,5 @@
     <string name="confirmed">Confirmed</string>
     <string name="mark_as_skipped">Mark as skipped</string>
     <string name="mark_as_confirmed">Mark as confirmed</string>
+    <string name="change_confirm_time">Change confirm time</string>
 </resources>

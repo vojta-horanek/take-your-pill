@@ -7,6 +7,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.klass.hour
+import eu.vojtechh.takeyourpill.klass.minute
 import java.text.DateFormat
 import java.util.*
 
@@ -32,10 +34,10 @@ data class Reminder(
     var pillId: Long
 ) {
     val hour
-        get() = calendar.get(Calendar.HOUR_OF_DAY)
+        get() = calendar.hour
 
     val minute
-        get() = calendar.get(Calendar.MINUTE)
+        get() = calendar.minute
 
     fun getMillisWithTodayDate() = getCalendarWithTodayDate().timeInMillis
 
