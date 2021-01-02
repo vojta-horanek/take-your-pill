@@ -29,7 +29,8 @@
     <fragment
         android:id="@id/settings"
         android:name="eu.vojtechh.takeyourpill.fragment.SettingsFragment"
-        android:label="@string/settings">
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settings_to_aboutActivity"
             app:destination="@id/aboutActivity" />
@@ -64,19 +65,11 @@
             android:name="pillId"
             app:argType="long" />
     </fragment>
-    <activity
-        android:id="@+id/introActivity"
-        android:name="eu.vojtechh.takeyourpill.activity.AppIntroActivity"
-        android:label="IntroActivity" />
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="eu.vojtechh.takeyourpill.activity.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
     <dialog
         android:id="@+id/fragmentHistoryView"
         android:name="eu.vojtechh.takeyourpill.fragment.dialog.HistoryViewDialog"
-        android:label="FragmentHistoryView">
+        android:label="FragmentHistoryView"
+        tools:layout="@layout/dialog_history">
         <argument
             android:name="pillId"
             app:argType="long" />

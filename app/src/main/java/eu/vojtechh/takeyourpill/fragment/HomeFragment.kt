@@ -1,7 +1,9 @@
 package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
@@ -16,21 +18,37 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
-import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemListener {
+class HomeFragment : Fragment(), AppRecyclerAdapter.ItemListener {
 
     private val model: HomeViewModel by viewModels()
-    private val view by viewBinding(FragmentHomeBinding::bind)
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFadeThrough()
+        exitTransition = MaterialFadeThrough()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,39 +60,39 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
             view.doOnPreDraw { startPostponedEnterTransition() }
             model.isReturningFromPillDetails = false
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setHasOptionsMenu(true)
 
         val appAdapter = AppRecyclerAdapter(
             this, getString(R.string.pills), getString(R.string.try_to_add_a_pill_first),
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_empty_view)
         )
 
-        view.recyclerHome.run {
+        binding.recyclerHome.run {
             adapter = appAdapter
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     if (dy > 0) {
-                        view.floatingActionButton.shrink()
+                        binding.floatingActionButton.shrink()
                     } else {
-                        view.floatingActionButton.extend()
+                        binding.floatingActionButton.extend()
                     }
                     super.onScrolled(recyclerView, dx, dy)
                 }
             })
         }
 
-        view.floatingActionButton.setOnClickListener {
+        binding.floatingActionButton.setOnClickListener {
             openNewPill()
         }
 
         model.allPills.observe(viewLifecycleOwner, {
             appAdapter.submitList(it)
         })
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
     }
 
     private fun openNewPill() {

@@ -18,7 +18,7 @@ import eu.vojtechh.takeyourpill.model.*
 
 class AppRecyclerAdapter(
     private val listener: ItemListener,
-    private val sectionPrefix: String,
+    private val headerText: String,
     private val emptyDescription: String,
     private val emptyDrawable: Drawable?
 ) : ListAdapter<GeneralRecyclerItem, RecyclerView.ViewHolder>(GeneralRecyclerItem.DiffCallback) {
@@ -87,7 +87,7 @@ class AppRecyclerAdapter(
             val newList = list.toMutableList()
             newList.add(
                 0,
-                HeaderItem(sectionPrefix)
+                HeaderItem(headerText)
             )
             if (it.isEmpty()) {
                 newList.add(EmptyItem())

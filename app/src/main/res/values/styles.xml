@@ -15,7 +15,7 @@
 
     <color name="colorDivider">#1f000000</color>
 
-    <style name="AppTheme.Theme.CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <style name="AppTheme.Theme.CustomBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppTheme.Widget.CustomBottomSheet</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>

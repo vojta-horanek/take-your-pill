@@ -12,9 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
@@ -34,12 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
     private val model: MainViewModel by viewModels()
-
-    private val currentNavigationFragment: Fragment?
-        get() = supportFragmentManager.findFragmentById(R.id.navHostFragment)
-            ?.childFragmentManager
-            ?.fragments
-            ?.first()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,15 +79,8 @@ class MainActivity : AppCompatActivity() {
             }
         }, true)
 
-        binding.bottomNavigation.setOnNavigationItemReselectedListener { /* Disables reselection */ }
-        binding.bottomNavigation.setOnNavigationItemSelectedListener {
-            currentNavigationFragment?.apply {
-                exitTransition = MaterialFadeThrough()
-            }
-            true
-        }
-
-        binding.bottomNavigation.setupWithNavController(navController)
+        binding.bottomNavigation.setOnNavigationItemReselectedListener { }
+        NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
