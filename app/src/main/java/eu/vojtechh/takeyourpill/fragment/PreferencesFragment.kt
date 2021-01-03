@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
+import eu.vojtechh.takeyourpill.BuildConfig
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.activity.AboutActivity
 import eu.vojtechh.takeyourpill.viewmodel.PreferencesViewModel
@@ -48,6 +49,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             startActivity(intent)
             true
         }
+
+        findPreference<Preference>("addTestData")?.isVisible = BuildConfig.DEBUG
 
         findPreference<Preference>("addTestData")?.setOnPreferenceClickListener {
             model.addTestData()
