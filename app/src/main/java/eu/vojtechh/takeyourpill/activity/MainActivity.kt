@@ -2,26 +2,15 @@ package eu.vojtechh.takeyourpill.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Slide
-import android.transition.TransitionManager
-import android.view.Gravity
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.timepicker.MaterialTimePicker
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
-import eu.vojtechh.takeyourpill.fragment.HistoryFragment
-import eu.vojtechh.takeyourpill.fragment.HomeFragment
-import eu.vojtechh.takeyourpill.fragment.PreferencesFragment
-import eu.vojtechh.takeyourpill.fragment.dialog.HistoryViewDialog
-import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
@@ -36,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(binding.root)
 
         val navHostFragment =
@@ -48,36 +36,12 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, REQUEST_CODE_INTRO)
         }
 
-        supportFragmentManager.registerFragmentLifecycleCallbacks(object :
-            FragmentManager.FragmentLifecycleCallbacks() {
-            override fun onFragmentViewCreated(
-                fm: FragmentManager,
-                fragment: Fragment,
-                v: View,
-                savedInstanceState: Bundle?
-            ) {
-                TransitionManager.beginDelayedTransition(
-                    binding.root,
-                    Slide(Gravity.BOTTOM).excludeTarget(R.id.navHostFragment, true)
-                )
-                when (fragment) {
-                    is HomeFragment, is HistoryFragment, is PreferencesFragment, is HistoryViewDialog, is MaterialTimePicker -> {
-                        if (fragment is MaterialTimePicker) {
-                            if (fragment.tag == Constants.TAG_TIME_PICKER_HISTORY_VIEW) {
-                                binding.bottomNavigation.visibility = View.VISIBLE
-                            } else {
-                                binding.bottomNavigation.visibility = View.INVISIBLE
-                            }
-                        } else {
-                            binding.bottomNavigation.visibility = View.VISIBLE
-                        }
-                    }
-                    else -> {
-                        binding.bottomNavigation.visibility = View.INVISIBLE
-                    }
-                }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.bottomNavigation.isVisible = when (destination.id) {
+                R.id.homescreen, R.id.history, R.id.settings, R.id.fragmentHistoryView -> true
+                else -> false
             }
-        }, true)
+        }
 
         binding.bottomNavigation.setOnNavigationItemReselectedListener { }
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
