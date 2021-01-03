@@ -1,19 +1,16 @@
 package eu.vojtechh.takeyourpill.fragment.dialog
 
-import android.content.res.ColorStateList
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.widget.TextViewCompat
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.DialogNewReminderBinding
+import eu.vojtechh.takeyourpill.klass.Builders
+import eu.vojtechh.takeyourpill.klass.setDrawableTint
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
@@ -47,7 +44,7 @@ class ReminderDialog :
         val redColor = resources.getColor(R.color.colorRed, requireContext().theme)
         binding.textTime.apply {
             setTextColor(redColor)
-            TextViewCompat.setCompoundDrawableTintList(this, ColorStateList.valueOf(redColor))
+            setDrawableTint(redColor)
         }
     }
 
@@ -80,34 +77,26 @@ class ReminderDialog :
     }
 
     private fun showTimeDialog() {
-        val format =
-            if (DateFormat.is24HourFormat(requireContext()))
-                TimeFormat.CLOCK_24H
-            else
-                TimeFormat.CLOCK_12H
-
-        val materialTimePicker = MaterialTimePicker.Builder()
-            .setTimeFormat(format)
-            .setHour(reminder.hour)
-            .setMinute(reminder.minute)
-            .build()
-
-        materialTimePicker.addOnPositiveButtonClickListener {
-            val error = reminder.hour == materialTimePicker.hour &&
-                    reminder.minute == materialTimePicker.minute &&
-                    binding.textTime.textColors != binding.textConfirm.textColors
-            reminder.time.set(Calendar.HOUR_OF_DAY, materialTimePicker.hour)
-            reminder.time.set(Calendar.MINUTE, materialTimePicker.minute)
-            setTexts(error)
+        val timePicker = Builders.getTimePicker(requireContext(), reminder.hour, reminder.minute)
+        timePicker.addOnPositiveButtonClickListener {
+            onTimePickerConfirmed(timePicker.hour, timePicker.minute)
         }
+        timePicker.show(childFragmentManager, "time_picker")
+    }
 
-        materialTimePicker.show(childFragmentManager, "time_picker")
+    private fun onTimePickerConfirmed(hour: Int, minute: Int) {
+        val error = reminder.hour == hour &&
+                reminder.minute == minute &&
+                binding.textTime.textColors != binding.textConfirm.textColors
+        reminder.time.set(Calendar.HOUR_OF_DAY, hour)
+        reminder.time.set(Calendar.MINUTE, minute)
+        setTexts(error)
     }
 
     private fun setTexts(error: Boolean = false) {
         binding.run {
             if (!error) {
-                val normalColor = binding.textConfirm.textColors
+                val normalColor = textConfirm.textColors
                 val typedValue = TypedValue()
                 requireContext().theme.resolveAttribute(
                     R.attr.colorControlNormal,
@@ -115,9 +104,9 @@ class ReminderDialog :
                     true
                 )
                 val color = ContextCompat.getColor(requireContext(), typedValue.resourceId)
-                binding.textTime.apply {
+                textTime.apply {
                     setTextColor(normalColor)
-                    TextViewCompat.setCompoundDrawableTintList(this, ColorStateList.valueOf(color))
+                    setDrawableTint(color)
                 }
             }
             textAmount.text =

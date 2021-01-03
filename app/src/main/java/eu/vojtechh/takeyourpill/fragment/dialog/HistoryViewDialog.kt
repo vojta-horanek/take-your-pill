@@ -1,7 +1,6 @@
 package eu.vojtechh.takeyourpill.fragment.dialog
 
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,11 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.DialogHistoryBinding
+import eu.vojtechh.takeyourpill.klass.Builders
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.hour
 import eu.vojtechh.takeyourpill.klass.minute
@@ -101,26 +99,22 @@ class HistoryViewDialog :
 
     private fun showChangeConfirmTimeDialog(item: History) {
         item.historyEntity.confirmed?.let {
-            val format =
-                if (DateFormat.is24HourFormat(requireContext()))
-                    TimeFormat.CLOCK_24H
-                else
-                    TimeFormat.CLOCK_12H
-
-            val materialTimePicker = MaterialTimePicker.Builder()
-                .setTimeFormat(format)
-                .setHour(it.hour)
-                .setMinute(it.minute)
-                .build()
-
-            materialTimePicker.addOnPositiveButtonClickListener {
-                val calendar = Calendar.getInstance()
-                calendar.hour = materialTimePicker.hour
-                calendar.minute = materialTimePicker.minute
-                model.setHistoryConfirmTime(item, calendar)
+            val timePicker = Builders.getTimePicker(requireContext(), it.hour, it.minute)
+            timePicker.addOnPositiveButtonClickListener {
+                onTimePickerConfirmed(timePicker.hour, timePicker.minute, item)
             }
-
-            materialTimePicker.show(childFragmentManager, Constants.TAG_TIME_PICKER_HISTORY_VIEW)
+            timePicker.show(childFragmentManager, Constants.TAG_TIME_PICKER_HISTORY_VIEW)
         }
+    }
+
+    private fun onTimePickerConfirmed(
+        hour: Int,
+        minute: Int,
+        item: History
+    ) {
+        val calendar = Calendar.getInstance()
+        calendar.hour = hour
+        calendar.minute = minute
+        model.setHistoryConfirmTime(item, calendar)
     }
 }

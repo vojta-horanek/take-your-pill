@@ -2,12 +2,15 @@ package eu.vojtechh.takeyourpill.klass
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.widget.EditText
+import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.res.use
 import androidx.core.widget.NestedScrollView
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
@@ -35,6 +38,10 @@ fun EditText.getString() = this.text.toString()
 fun TextInputLayout.showError(message: String?) {
     isErrorEnabled = message != null
     error = message
+}
+
+fun TextView.setDrawableTint(color: Int) {
+    TextViewCompat.setCompoundDrawableTintList(this, ColorStateList.valueOf(color))
 }
 
 fun NestedScrollView.scrollToBottom() {
