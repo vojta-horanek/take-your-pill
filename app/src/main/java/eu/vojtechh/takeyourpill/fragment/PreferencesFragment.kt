@@ -4,18 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.OVER_SCROLL_NEVER
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import androidx.core.view.updateLayoutParams
+import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.activity.AboutActivity
+import eu.vojtechh.takeyourpill.viewmodel.PreferencesViewModel
 
+@AndroidEntryPoint
 class PreferencesFragment : PreferenceFragmentCompat() {
+
+    private val model: PreferencesViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listView.updateLayoutParams { height = WRAP_CONTENT }
         listView.clipToPadding = false
         listView.overScrollMode = OVER_SCROLL_NEVER
         listView.setPadding(
@@ -37,13 +40,18 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             intent.putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
 
             startActivity(intent)
-            false
+            true
         }
 
         findPreference<Preference>("showAbout")?.setOnPreferenceClickListener {
             val intent = Intent(requireActivity(), AboutActivity::class.java)
             startActivity(intent)
-            false
+            true
+        }
+
+        findPreference<Preference>("addTestData")?.setOnPreferenceClickListener {
+            model.addTestData()
+            true
         }
     }
 }

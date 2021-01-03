@@ -22,22 +22,22 @@ import java.util.*
     )]
 )
 data class Reminder(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "reminderId")
-    val id: Long = 0,
-
-    var calendar: Calendar,
+    var time: Calendar,
 
     var amount: Int,
 
     @ColumnInfo(index = true)
-    var pillId: Long
+    var pillId: Long,
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "reminderId")
+    val id: Long = 0
 ) {
     val hour
-        get() = calendar.hour
+        get() = time.hour
 
     val minute
-        get() = calendar.minute
+        get() = time.minute
 
     fun getMillisWithTodayDate() = getCalendarWithTodayDate().timeInMillis
 
@@ -56,12 +56,12 @@ data class Reminder(
             calendar.clear()
             calendar.set(Calendar.HOUR_OF_DAY, hour)
             calendar.set(Calendar.MINUTE, minute)
-            return Reminder(calendar = calendar, amount = amount, pillId = pillId)
+            return Reminder(time = calendar, amount = amount, pillId = pillId)
         }
     }
 
     val timeString: String
-        get() = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)
+        get() = DateFormat.getTimeInstance(DateFormat.SHORT).format(time.time)
 
     fun formattedString(context: Context) =
         context.resources.getQuantityString(R.plurals.reminder_text, amount, timeString, amount)

@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
@@ -25,7 +25,7 @@
             android:id="@+id/fragmentPreferences"
             android:name="eu.vojtechh.takeyourpill.fragment.PreferencesFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

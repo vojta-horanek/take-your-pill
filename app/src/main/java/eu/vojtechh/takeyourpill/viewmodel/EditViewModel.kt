@@ -57,7 +57,7 @@ class EditViewModel @ViewModelInject constructor(
     }
 
     val reminders = Transformations.map(_reminders) {
-        pill.reminders = it.sortedBy { rem -> rem.calendar.time }.toMutableList()
+        pill.reminders = it.sortedBy { rem -> rem.time.time }.toMutableList()
         pill.reminders
     }
 

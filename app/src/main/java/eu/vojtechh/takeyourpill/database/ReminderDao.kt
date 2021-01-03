@@ -7,12 +7,12 @@ import eu.vojtechh.takeyourpill.model.Reminder
 interface ReminderDao {
     @Query(
         """
-        SELECT reminder.pillId, reminder.reminderId, reminder.amount, reminder.calendar 
+        SELECT reminder.pillId, reminder.reminderId, reminder.amount, reminder.time 
         FROM reminder 
         INNER JOIN pill 
             ON reminder.pillId = pill.pillId 
         WHERE deleted = 0 
-        ORDER BY calendar ASC
+        ORDER BY time ASC
         """
     )
     fun getAll(): List<Reminder>
@@ -22,14 +22,14 @@ interface ReminderDao {
 
     @Query(
         """
-        SELECT reminder.pillId, reminder.reminderId, reminder.amount, reminder.calendar 
+        SELECT reminder.pillId, reminder.reminderId, reminder.amount, reminder.time 
         FROM reminder 
         INNER JOIN pill 
             ON reminder.pillId = pill.pillId 
         WHERE 
             pill.deleted = 0 AND 
-            reminder.calendar = (:time) 
-        ORDER BY calendar ASC"""
+            reminder.time = (:time) 
+        ORDER BY time ASC"""
     )
     fun getBasedOnTime(time: Long): List<Reminder>
 

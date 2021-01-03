@@ -96,8 +96,8 @@ class ReminderDialog :
             val error = reminder.hour == materialTimePicker.hour &&
                     reminder.minute == materialTimePicker.minute &&
                     binding.textTime.textColors != binding.textConfirm.textColors
-            reminder.calendar.set(Calendar.HOUR_OF_DAY, materialTimePicker.hour)
-            reminder.calendar.set(Calendar.MINUTE, materialTimePicker.minute)
+            reminder.time.set(Calendar.HOUR_OF_DAY, materialTimePicker.hour)
+            reminder.time.set(Calendar.MINUTE, materialTimePicker.minute)
             setTexts(error)
         }
 

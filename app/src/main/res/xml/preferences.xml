@@ -41,5 +41,9 @@
             app:key="showAbout"
             app:summary="@string/settings_about_application_summary"
             app:title="@string/settings_about_application" />
+        <Preference
+            app:icon="@drawable/ic_pill"
+            app:key="addTestData"
+            app:title="Add test data" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -1,9 +1,7 @@
 package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,36 +11,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryBinding
+import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.HistoryViewModel
 
 @AndroidEntryPoint
-class HistoryFragment : Fragment(), AppRecyclerAdapter.ItemListener {
+class HistoryFragment : Fragment(R.layout.fragment_history), AppRecyclerAdapter.ItemListener {
 
     private val model: HistoryViewModel by viewModels()
 
-    private var _binding: FragmentHistoryBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentHistoryBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFadeThrough()
         exitTransition = MaterialFadeThrough()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

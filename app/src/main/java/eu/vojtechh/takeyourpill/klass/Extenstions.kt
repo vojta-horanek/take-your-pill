@@ -70,3 +70,8 @@ var Calendar.minute: Int
     set(value) {
         this.set(Calendar.MINUTE, value)
     }
+
+fun Calendar.addDay(amount: Int): Calendar {
+    this.add(Calendar.DAY_OF_YEAR, amount)
+    return this
+}

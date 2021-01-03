@@ -109,7 +109,7 @@ data class Pill(
             if (LongRange(
                     calendar.timeInMillis - timeOffset,
                     calendar.timeInMillis + timeOffset
-                ).contains(it.calendar.timeInMillis)
+                ).contains(it.time.timeInMillis)
             ) {
                 return it
             }
@@ -118,7 +118,7 @@ data class Pill(
     }
 
     fun getRemindersString(context: Context): String {
-        val sorted = reminders.sortedBy { rem -> rem.calendar.time }.toMutableList()
+        val sorted = reminders.sortedBy { rem -> rem.time.time }.toMutableList()
         return sorted.joinToString {
             context.resources.getString(
                 R.string.pill_time_reminders_format,

@@ -19,7 +19,7 @@ object ReminderManager {
      * the same time but tomorrows date
      */
     fun planNextReminder(context: Context, reminders: List<Reminder>) {
-        val sortedByTime = reminders.sortedBy { rem -> rem.calendar.time }
+        val sortedByTime = reminders.sortedBy { rem -> rem.time.time }
         val calendar = Calendar.getInstance()
 
         Timber.d("Planning next reminder")
@@ -47,7 +47,7 @@ object ReminderManager {
                 context,
                 it.id,
                 calendar.timeInMillis,
-                it.calendar.timeInMillis
+                it.time.timeInMillis
             )
         } ?: run {
             Timber.e("No reminder found")
@@ -109,7 +109,7 @@ object ReminderManager {
             context,
             reminder.id,
             reminder.getMillisWithTodayDate(),
-            reminder.calendar.timeInMillis
+            reminder.time.timeInMillis
         )
 
     private fun getAlarmManager(context: Context) =
