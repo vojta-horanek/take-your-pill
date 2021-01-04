@@ -2,15 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/historyConfirm"
-        android:title="@string/mark_as_confirmed" />
+        android:title="@string/mark_as_confirmed"
+        android:icon="@drawable/ic_check" />
     <item
         android:id="@+id/historyUnConfirm"
-        android:title="@string/mark_as_skipped" />
+        android:title="@string/mark_as_skipped"
+        android:icon="@drawable/ic_cancel" />
     <item
         android:id="@+id/historyChangeConfirmTime"
-        android:title="@string/change_confirm_time" />
+        android:title="@string/change_confirm_time"
+        android:icon="@drawable/ic_time" />
     <item
         android:id="@+id/historyDelete"
-        android:title="@string/delete" />
+        android:title="@string/delete"
+        android:icon="@drawable/ic_delete" />
 
 </menu>

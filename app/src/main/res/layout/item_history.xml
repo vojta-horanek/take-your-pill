@@ -62,7 +62,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:srcCompat="@drawable/ic_alert"
-                app:tint="@color/colorAccent"
                 tools:ignore="ContentDescription" />
 
             <androidx.appcompat.widget.AppCompatImageView

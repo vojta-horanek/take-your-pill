@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.res.use
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.TextViewCompat
@@ -81,4 +82,17 @@ var Calendar.minute: Int
 fun Calendar.addDay(amount: Int): Calendar {
     this.add(Calendar.DAY_OF_YEAR, amount)
     return this
+}
+
+fun PopupMenu.forcePopUpMenuToShowIcons() {
+    try {
+        val method = menu.javaClass.getDeclaredMethod(
+            "setOptionalIconsVisible",
+            Boolean::class.javaPrimitiveType
+        )
+        method.isAccessible = true
+        method.invoke(menu, true)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }

@@ -12,10 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.DialogHistoryBinding
-import eu.vojtechh.takeyourpill.klass.Builders
-import eu.vojtechh.takeyourpill.klass.Constants
-import eu.vojtechh.takeyourpill.klass.hour
-import eu.vojtechh.takeyourpill.klass.minute
+import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.viewmodel.HistoryItemViewModel
@@ -65,6 +62,7 @@ class HistoryViewDialog :
         if (item is History) {
             val popup = PopupMenu(requireContext(), view)
             popup.inflate(R.menu.item_history_menu)
+            popup.forcePopUpMenuToShowIcons()
             if (item.hasBeenConfirmed) {
                 popup.menu.findItem(R.id.historyConfirm).isVisible = false
             } else {
