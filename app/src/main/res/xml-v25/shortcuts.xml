@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="new_pill"
+        android:enabled="true"
+        android:icon="@drawable/ic_add_shortcut"
+        android:shortcutShortLabel="@string/new_pill"
+        android:shortcutLongLabel="@string/new_pill"
+        android:shortcutDisabledMessage="@string/new_pill">
+        <intent
+            android:action="eu.vojtechh.takeyourpill.ADD_NEW_PILL"
+            android:targetPackage="eu.vojtechh.takeyourpill"
+            android:targetClass="eu.vojtechh.takeyourpill.activity.MainActivity"
+            android:data="eu.vojtechh.takeyourpill://add_new_pill" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="history"
+        android:enabled="true"
+        android:icon="@drawable/ic_history_shortcut"
+        android:shortcutShortLabel="@string/history"
+        android:shortcutLongLabel="@string/history"
+        android:shortcutDisabledMessage="@string/history">
+        <intent
+            android:action="eu.vojtechh.takeyourpill.HISTORY"
+            android:targetPackage="eu.vojtechh.takeyourpill"
+            android:targetClass="eu.vojtechh.takeyourpill.activity.MainActivity"
+            android:data="eu.vojtechh.takeyourpill://history" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

@@ -22,6 +22,7 @@
         android:name="eu.vojtechh.takeyourpill.fragment.HistoryFragment"
         android:label="@string/history"
         tools:layout="@layout/fragment_history">
+        <deepLink app:uri="eu.vojtechh.takeyourpill://history" />
         <action
             android:id="@+id/action_history_to_fragmentHistoryView"
             app:destination="@id/fragmentHistoryView" />
@@ -40,6 +41,7 @@
         android:name="eu.vojtechh.takeyourpill.fragment.EditFragment"
         android:label="@string/edit"
         tools:layout="@layout/fragment_edit">
+        <deepLink app:uri="eu.vojtechh.takeyourpill://add_new_pill" />
         <action
             android:id="@+id/action_edit_to_details"
             app:destination="@id/details"
