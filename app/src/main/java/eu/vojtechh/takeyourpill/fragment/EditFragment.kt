@@ -1,12 +1,15 @@
 package eu.vojtechh.takeyourpill.fragment
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -14,11 +17,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import com.kroegerama.imgpicker.BottomSheetImagePicker
-import com.kroegerama.imgpicker.ButtonType
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ColorAdapter
@@ -30,7 +33,6 @@ import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
-import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -189,11 +191,13 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-            BottomSheetImagePicker.Builder(getString(R.string.file_provider))
-                .cameraButton(ButtonType.Tile)
-                .galleryButton(ButtonType.Tile)
-                .singleSelectTitle(R.string.select_image)
-                .show(childFragmentManager)
+            ImagePicker.with(this)
+                .compress(1024)
+                .maxResultSize(
+                    1920,
+                    1080
+                )
+                .start()
         } else {
             EasyPermissions.requestPermissions(
                 this,
@@ -201,6 +205,21 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                 1,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                model.setImage(data?.data!!, requireContext())
+            }
+            ImagePicker.RESULT_ERROR -> {
+                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
+                    .show()
+            }
+            else -> {
+            }
         }
     }
 
@@ -338,7 +357,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             pill.id.toString(),
             pill.name
         )
-        ReminderManager.planNextReminder(requireContext(), pill.reminders)
+        //ReminderManager.planNextReminder(requireContext(), pill.reminders)
     }
 
     private fun getReminderOptions(): ReminderOptions {
