@@ -43,18 +43,11 @@ internal object DialogHelper {
             setOnCancelListener {
                 listener.onResult(null)
             }
-            behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                        //In the EXPANDED STATE apply a new MaterialShapeDrawable with rounded corners
-                        val newMaterialShapeDrawable: MaterialShapeDrawable =
-                            createMaterialShapeDrawable(bottomSheet, context)
-                        ViewCompat.setBackground(bottomSheet, newMaterialShapeDrawable)
-                    }
+            setBottomSheetCallback({ bottomSheet, newState ->
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    ViewCompat.setBackground(bottomSheet, createRoundDrawable(bottomSheet))
                 }
-
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-            })
+            }, { _, _ -> })
         }
         dialog.show()
 
@@ -71,29 +64,36 @@ internal object DialogHelper {
         }
     }
 
-    private fun createMaterialShapeDrawable(
-        bottomSheet: View,
-        context: Context
+    private fun createRoundDrawable(
+        bottomSheet: View
     ): MaterialShapeDrawable {
         val shapeAppearanceModel =
-            //Create a ShapeAppearanceModel with the same shapeAppearanceOverlay used in the style
             ShapeAppearanceModel.builder(
-                context,
+                bottomSheet.context,
                 0,
                 R.style.AppTheme_Theme_CustomShapeAppearanceBottomSheetDialog
-            )
-                .build()
+            ).build()
 
-        //Create a new MaterialShapeDrawable (you can't use the original MaterialShapeDrawable in the BottomSheet)
-        val currentMaterialShapeDrawable = bottomSheet.background as MaterialShapeDrawable
-        val newMaterialShapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
-        //Copy the attributes in the new MaterialShapeDrawable
-        newMaterialShapeDrawable.initializeElevationOverlay(context)
-        newMaterialShapeDrawable.fillColor = currentMaterialShapeDrawable.fillColor
-        newMaterialShapeDrawable.tintList = currentMaterialShapeDrawable.tintList
-        newMaterialShapeDrawable.elevation = currentMaterialShapeDrawable.elevation
-        newMaterialShapeDrawable.strokeWidth = currentMaterialShapeDrawable.strokeWidth
-        newMaterialShapeDrawable.strokeColor = currentMaterialShapeDrawable.strokeColor
-        return newMaterialShapeDrawable
+        val currentDrawable = bottomSheet.background as MaterialShapeDrawable
+        return MaterialShapeDrawable(shapeAppearanceModel).apply {
+            initializeElevationOverlay(bottomSheet.context)
+            fillColor = currentDrawable.fillColor
+            tintList = currentDrawable.tintList
+            elevation = currentDrawable.elevation
+            strokeWidth = currentDrawable.strokeWidth
+            strokeColor = currentDrawable.strokeColor
+        }
+    }
+
+    private fun setBottomSheetCallback(
+        onStateChanged: (View, Int) -> Unit, onSlide: (View, Float) -> Unit
+    ) {
+        object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) =
+                onStateChanged(bottomSheet, newState)
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) =
+                onSlide(bottomSheet, slideOffset)
+        }
     }
 }

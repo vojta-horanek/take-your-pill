@@ -4,52 +4,54 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
+import com.github.dhaval2404.imagepicker.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
-import eu.vojtechh.takeyourpill.R
 
 open class RoundedDialogFragment : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog: BottomSheetDialog =
-            super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-        dialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
+        return (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
+            setBottomSheetCallback({ bottomSheet, newState ->
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    //In the EXPANDED STATE apply a new MaterialShapeDrawable with rounded corners
-                    val newMaterialShapeDrawable: MaterialShapeDrawable =
-                        createMaterialShapeDrawable(bottomSheet)
-                    ViewCompat.setBackground(bottomSheet, newMaterialShapeDrawable)
+                    ViewCompat.setBackground(bottomSheet, createRoundDrawable(bottomSheet))
                 }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-        })
-        return dialog
+            }, { _, _ -> })
+        }
     }
 
-    private fun createMaterialShapeDrawable(bottomSheet: View): MaterialShapeDrawable {
+    private fun createRoundDrawable(
+        bottomSheet: View
+    ): MaterialShapeDrawable {
         val shapeAppearanceModel =
-            //Create a ShapeAppearanceModel with the same shapeAppearanceOverlay used in the style
             ShapeAppearanceModel.builder(
-                context,
+                bottomSheet.context,
                 0,
                 R.style.AppTheme_Theme_CustomShapeAppearanceBottomSheetDialog
-            )
-                .build()
+            ).build()
 
-        //Create a new MaterialShapeDrawable (you can't use the original MaterialShapeDrawable in the BottomSheet)
-        val currentMaterialShapeDrawable = bottomSheet.background as MaterialShapeDrawable
-        val newMaterialShapeDrawable = MaterialShapeDrawable(shapeAppearanceModel)
-        //Copy the attributes in the new MaterialShapeDrawable
-        newMaterialShapeDrawable.initializeElevationOverlay(context)
-        newMaterialShapeDrawable.fillColor = currentMaterialShapeDrawable.fillColor
-        newMaterialShapeDrawable.tintList = currentMaterialShapeDrawable.tintList
-        newMaterialShapeDrawable.elevation = currentMaterialShapeDrawable.elevation
-        newMaterialShapeDrawable.strokeWidth = currentMaterialShapeDrawable.strokeWidth
-        newMaterialShapeDrawable.strokeColor = currentMaterialShapeDrawable.strokeColor
-        return newMaterialShapeDrawable
+        val currentDrawable = bottomSheet.background as MaterialShapeDrawable
+        return MaterialShapeDrawable(shapeAppearanceModel).apply {
+            initializeElevationOverlay(bottomSheet.context)
+            fillColor = currentDrawable.fillColor
+            tintList = currentDrawable.tintList
+            elevation = currentDrawable.elevation
+            strokeWidth = currentDrawable.strokeWidth
+            strokeColor = currentDrawable.strokeColor
+        }
+    }
+
+    private fun setBottomSheetCallback(
+        onStateChanged: (View, Int) -> Unit, onSlide: (View, Float) -> Unit
+    ) {
+        object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) =
+                onStateChanged(bottomSheet, newState)
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) =
+                onSlide(bottomSheet, slideOffset)
+        }
     }
 }
