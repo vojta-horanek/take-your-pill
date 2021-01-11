@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_choose_image_provider">Vybrat</string>
+    <string name="action_cancel">Zrušit</string>
+    <string name="title_gallery">Galerie</string>
+    <string name="title_camera">Fotoaparát</string>
+</resources>
