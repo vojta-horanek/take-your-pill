@@ -17,15 +17,14 @@ import com.google.android.material.shape.ShapeAppearanceModel
 /**
  * Show Dialog
  *
- * @author Dhaval Patel
- * @version 1.0
+ * @author Dhaval Patel / Vojtěch Hořánek
+ * @version 2.0
  * @since 04 January 2018
  */
 internal object DialogHelper {
 
     /**
      * Show Image Provide Picker Dialog. This will streamline the code to pick/capture image
-     *
      */
     fun showChooseAppDialog(
         context: Context,

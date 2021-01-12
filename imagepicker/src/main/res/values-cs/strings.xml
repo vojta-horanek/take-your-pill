@@ -4,4 +4,18 @@
     <string name="action_cancel">Zrušit</string>
     <string name="title_gallery">Galerie</string>
     <string name="title_camera">Fotoaparát</string>
+
+    <string name="message_gallery_permission_denied">Přístup k úložišti je nutný pro vybrání obrázku.</string>
+    <string name="message_camera_permission_denied">Oprávnění k fotoaparátu a úložisti jsou nutná pro vyfocení obrázku. Vypnutí oprávnění může vypnout nějaké funkce.</string>
+    <string name="permission_gallery_denied">Přístup k úložišti je nutný pro vybání obrázku z galerie</string>
+    <string name="permission_camera_extended_denied">Oprávnění k fotoaparátu a úložisti jsou nutná pro vyfocení obrázku.</string>
+    <string name="permission_camera_denied">Přístup k úložišti je nutný pro vyfocení obrázku.</string>
+
+    <string name="error_failed_to_create_camera_image_file">Nepodařilo se vytvořit soubor obrázku z fotoaparátu</string>
+    <string name="error_failed_pick_gallery_image">Nepodařilo se vybrat obrázek z galerie</string>
+    <string name="error_failed_to_crop_image">Ořezáváni se nezdařilo</string>
+    <string name="error_failed_to_compress_image">Komprimování se nezdařilo</string>
+    <string name="error_task_cancelled">Úloha zrušena</string>
+    <string name="error_camera_app_not_found">Nebyla nalezene aplikace kamery</string>
+
 </resources>
