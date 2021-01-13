@@ -21,11 +21,11 @@ class HomeViewModel @ViewModelInject constructor(
         // We can use today millis because this function will be only executed few minutes after or before reminder
         // FIXME If user confirms 5 minutes before midnight
         // FIXME Update doesn't work for non existent row => when executed before reminder
-        val history =
-            historyRepository.getByPillIdAndTime(reminder.pillId, reminder.getMillisWithTodayDate())
+        historyRepository.getByPillIdAndTime(reminder.pillId, reminder.getMillisWithTodayDate())
+            ?.let { history ->
+                history.confirmed = Calendar.getInstance()
+                historyRepository.updateHistoryItem(history)
+            }
 
-        history.historyEntity.confirmed = Calendar.getInstance()
-
-        historyRepository.updateHistoryItem(history.historyEntity)
     }
 }

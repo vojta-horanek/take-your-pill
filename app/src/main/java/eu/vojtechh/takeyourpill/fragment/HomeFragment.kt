@@ -17,7 +17,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
-import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
+import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
@@ -86,7 +86,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         findNavController().navigate(R.id.edit)
     }
 
-    override fun onItemClicked(view: View, item: GeneralRecyclerItem) {
+    override fun onItemClicked(view: View, item: BaseModel) {
         if (item is Pill) {
             model.isReturningFromPillDetails = true
             exitTransition = MaterialElevationScale(false)

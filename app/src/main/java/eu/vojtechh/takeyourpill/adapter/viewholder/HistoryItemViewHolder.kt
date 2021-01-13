@@ -19,18 +19,16 @@ class HistoryItemViewHolder(
         with(binding) {
 
             textHistoryReminded.text = DateFormat.getTimeInstance(DateFormat.SHORT)
-                .format(history.historyEntity.reminded.time)
+                .format(history.reminded.time)
 
-            textHistoryConfirmed.visibility = history.confirmedVisibility
-            frameLayoutConfirm.visibility = history.confirmedVisibility
-            textHistoryConfirmed.text = history.historyEntity.confirmed?.let {
+            textHistoryConfirmed.text = history.confirmed?.let {
                 DateFormat.getTimeInstance(DateFormat.SHORT).format(it.time)
             }
 
             val pattern = "dd. MM."
             val primaryLocale = getLocales(binding.root.context.resources.configuration).get(0)
             val dateFormat = SimpleDateFormat(pattern, primaryLocale)
-            textDate.text = dateFormat.format(history.historyEntity.reminded.time)
+            textDate.text = dateFormat.format(history.reminded.time)
 
             textDate.isVisible = isFirstOfDate
             // Should this item show a divider

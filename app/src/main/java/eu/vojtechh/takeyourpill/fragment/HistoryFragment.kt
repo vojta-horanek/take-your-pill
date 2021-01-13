@@ -12,7 +12,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
-import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
+import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.HistoryViewModel
 
@@ -42,12 +42,12 @@ class HistoryFragment : Fragment(R.layout.fragment_history), AppRecyclerAdapter.
         binding.recyclerHome.adapter = appAdapter
 
         model.allPills.observe(viewLifecycleOwner, {
-            it.map { pill -> pill.itemType = GeneralRecyclerItem.ItemTypes.HISTORY }
+            it.map { pill -> pill.itemType = BaseModel.ItemTypes.HISTORY }
             appAdapter.submitList(it)
         })
     }
 
-    override fun onItemClicked(view: View, item: GeneralRecyclerItem) {
+    override fun onItemClicked(view: View, item: BaseModel) {
         if (item is Pill) {
             val directions = HistoryFragmentDirections.actionHistoryToFragmentHistoryView(item.id)
             findNavController().navigate(directions)

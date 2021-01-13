@@ -13,7 +13,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.DialogHistoryBinding
 import eu.vojtechh.takeyourpill.klass.*
-import eu.vojtechh.takeyourpill.model.GeneralRecyclerItem
+import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.viewmodel.HistoryItemViewModel
 import java.util.*
@@ -58,7 +58,7 @@ class HistoryViewDialog :
         })
     }
 
-    override fun onItemOptionsClick(view: View, item: GeneralRecyclerItem) {
+    override fun onItemOptionsClick(view: View, item: BaseModel) {
         if (item is History) {
             val popup = PopupMenu(requireContext(), view)
             popup.inflate(R.menu.item_history_menu)
@@ -96,7 +96,7 @@ class HistoryViewDialog :
     }
 
     private fun showChangeConfirmTimeDialog(item: History) {
-        item.historyEntity.confirmed?.let {
+        item.confirmed?.let {
             val timePicker = Builders.getTimePicker(requireContext(), it.hour, it.minute)
             timePicker.addOnPositiveButtonClickListener {
                 onTimePickerConfirmed(timePicker.hour, timePicker.minute, item)

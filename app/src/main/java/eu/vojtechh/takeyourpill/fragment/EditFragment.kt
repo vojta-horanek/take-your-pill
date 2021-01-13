@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,6 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
-import com.kroegerama.imgpicker.BottomSheetImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ColorAdapter
@@ -42,7 +40,7 @@ import pub.devrel.easypermissions.EasyPermissions
 
 @AndroidEntryPoint
 class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
-    ReminderAdapter.ReminderAdapterListener, BottomSheetImagePicker.OnImagesSelectedListener,
+    ReminderAdapter.ReminderAdapterListener,
     ReminderDialog.ConfirmListener {
 
     private lateinit var binding: FragmentEditBinding
@@ -228,12 +226,6 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             }
             else -> {
             }
-        }
-    }
-
-    override fun onImagesSelected(uris: List<Uri>, tag: String?) {
-        uris.forEach { uri ->
-            model.setImage(uri, requireContext())
         }
     }
 

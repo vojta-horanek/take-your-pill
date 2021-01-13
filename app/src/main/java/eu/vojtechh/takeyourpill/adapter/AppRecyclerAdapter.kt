@@ -21,32 +21,32 @@ class AppRecyclerAdapter(
     private val headerText: String,
     private val emptyDescription: String,
     private val emptyDrawable: Drawable?
-) : ListAdapter<GeneralRecyclerItem, RecyclerView.ViewHolder>(GeneralRecyclerItem.DiffCallback) {
+) : ListAdapter<BaseModel, RecyclerView.ViewHolder>(BaseModel.DiffCallback) {
 
     interface ItemListener {
-        fun onItemClicked(view: View, item: GeneralRecyclerItem)
+        fun onItemClicked(view: View, item: BaseModel)
         fun onPillConfirmClicked(view: View, reminder: Reminder) {}
         fun onPillNotConfirmClicked(view: View, reminder: Reminder) {}
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            GeneralRecyclerItem.ItemTypes.PILL.ordinal -> if (holder is PillViewHolder) holder.bind(
+            BaseModel.ItemTypes.PILL.ordinal -> if (holder is PillViewHolder) holder.bind(
                 getItem(position) as Pill
             )
-            GeneralRecyclerItem.ItemTypes.HEADER.ordinal -> if (holder is HeaderViewHolder) holder.bind(
+            BaseModel.ItemTypes.HEADER.ordinal -> if (holder is HeaderViewHolder) holder.bind(
                 (getItem(position) as HeaderItem).title
             )
-            GeneralRecyclerItem.ItemTypes.HISTORY.ordinal -> if (holder is HistoryViewHolder) holder.bind(
+            BaseModel.ItemTypes.HISTORY.ordinal -> if (holder is HistoryViewHolder) holder.bind(
                 getItem(position) as Pill
             )
-            GeneralRecyclerItem.ItemTypes.EMPTY.ordinal -> if (holder is EmptyViewHolder) holder.bind()
+            BaseModel.ItemTypes.EMPTY.ordinal -> if (holder is EmptyViewHolder) holder.bind()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            GeneralRecyclerItem.ItemTypes.PILL.ordinal -> PillViewHolder(
+            BaseModel.ItemTypes.PILL.ordinal -> PillViewHolder(
                 ItemPillBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -54,14 +54,14 @@ class AppRecyclerAdapter(
                 ),
                 listener
             )
-            GeneralRecyclerItem.ItemTypes.HEADER.ordinal -> HeaderViewHolder(
+            BaseModel.ItemTypes.HEADER.ordinal -> HeaderViewHolder(
                 ItemHeaderBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
-            GeneralRecyclerItem.ItemTypes.EMPTY.ordinal -> EmptyViewHolder(
+            BaseModel.ItemTypes.EMPTY.ordinal -> EmptyViewHolder(
                 LayoutViewEmptyBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -70,7 +70,7 @@ class AppRecyclerAdapter(
                 emptyDescription,
                 emptyDrawable
             )
-            GeneralRecyclerItem.ItemTypes.HISTORY.ordinal -> HistoryViewHolder(
+            BaseModel.ItemTypes.HISTORY.ordinal -> HistoryViewHolder(
                 ItemHistoryPillBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -82,7 +82,7 @@ class AppRecyclerAdapter(
         }
     }
 
-    override fun submitList(list: List<GeneralRecyclerItem>?) {
+    override fun submitList(list: List<BaseModel>?) {
         list?.let {
             val newList = list.toMutableList()
             newList.add(

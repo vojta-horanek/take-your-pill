@@ -7,7 +7,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.getTimeString
-import eu.vojtechh.takeyourpill.model.HistoryEntity
+import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
@@ -48,7 +48,7 @@ class ReminderReceiver : BroadcastReceiver() {
                     val remindedCalendar = reminder.getCalendarWithTodayDate()
                     ReminderUtil.createReminderNotification(context, pill, reminder)
 
-                    val history = HistoryEntity(
+                    val history = History(
                         pillId = pill.id,
                         reminded = remindedCalendar
                     )

@@ -67,9 +67,10 @@ class CheckReceiver : BroadcastReceiver() {
 
                 ReminderUtil.createReminderNotification(context, pill, reminder)
 
-                val history = historyRepository.getByPillIdAndTime(pill.id, remindedTime)
-                if (Pref.remindAgain && !history.hasBeenConfirmed) {
-                    ReminderManager.setCheckForConfirmation(context, reminderId, remindedTime)
+                historyRepository.getByPillIdAndTime(pill.id, remindedTime)?.let { history ->
+                    if (Pref.remindAgain && !history.hasBeenConfirmed) {
+                        ReminderManager.setCheckForConfirmation(context, reminderId, remindedTime)
+                    }
                 }
             }
         }

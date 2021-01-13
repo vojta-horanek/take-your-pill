@@ -1,38 +1,51 @@
 package eu.vojtechh.takeyourpill.model
 
-import android.view.View
-import androidx.room.Embedded
-import androidx.room.Relation
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
+import java.util.*
 
 /**
- * data class for mapping [HistoryEntity] together with [Pill]
+ * Database entity used for storing history
  */
 
+@Entity(
+    tableName = "history",
+    foreignKeys = [ForeignKey(
+        entity = PillEntity::class,
+        parentColumns = arrayOf("pillId"),
+        childColumns = arrayOf("pillId"),
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 data class History(
-    @Embedded val historyEntity: HistoryEntity,
-    @Relation(
-        parentColumn = "pillId",
-        entityColumn = "pillId"
-    )
-    var pill: PillEntity
-) : GeneralRecyclerItem() {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "historyId")
+    val id: Long = 0,
+
+    var reminded: Calendar,
+
+    var confirmed: Calendar? = null,
+
+    @ColumnInfo(index = true)
+    var pillId: Long
+) : BaseModel() {
+
     val hasBeenConfirmed: Boolean
-        get() = historyEntity.hasBeenConfirmed
+        get() = confirmed?.let { true } ?: false
 
     override val itemType: ItemTypes
         get() = ItemTypes.HISTORY_ITEM
 
-    override fun isSame(newItem: GeneralRecyclerItem) =
+    override fun isSame(newItem: BaseModel) =
         if (newItem is History) {
-            this.historyEntity.id == newItem.historyEntity.id
+            this.id == newItem.id
         } else false
 
-    override fun isContentSame(newItem: GeneralRecyclerItem) =
+    override fun isContentSame(newItem: BaseModel) =
         if (newItem is History) {
             this.hasBeenConfirmed == newItem.hasBeenConfirmed &&
-                    this.historyEntity.confirmed?.timeInMillis == newItem.historyEntity.confirmed?.timeInMillis
+                    this.confirmed?.timeInMillis == newItem.confirmed?.timeInMillis
         } else false
-
-    val confirmedVisibility
-        get() = if (hasBeenConfirmed) View.VISIBLE else View.GONE
 }

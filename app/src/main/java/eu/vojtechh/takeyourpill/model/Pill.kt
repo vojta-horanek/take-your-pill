@@ -18,7 +18,7 @@ data class Pill(
         entityColumn = "pillId"
     )
     var reminders: List<Reminder>
-) : GeneralRecyclerItem() {
+) : BaseModel() {
 
     @Ignore
     override var itemType: ItemTypes = ItemTypes.PILL
@@ -133,13 +133,13 @@ data class Pill(
 
     fun colorResource(context: Context) = pillEntity.color.getColor(context)
 
-    override fun isSame(newItem: GeneralRecyclerItem) =
+    override fun isSame(newItem: BaseModel) =
         if (newItem is Pill) {
             this.pillEntity.id == newItem.pillEntity.id
         } else false
 
 
-    override fun isContentSame(newItem: GeneralRecyclerItem) =
+    override fun isContentSame(newItem: BaseModel) =
         if (newItem is Pill) {
             this.name == newItem.name &&
                     this.description == newItem.description &&

@@ -33,11 +33,10 @@ class ConfirmReceiver : BroadcastReceiver() {
 
             GlobalScope.launch(Dispatchers.IO) {
 
-                val history = historyRepository.getByPillIdAndTime(pillId, remindedTime)
-
-                history.historyEntity.confirmed = Calendar.getInstance()
-
-                historyRepository.updateHistoryItem(history.historyEntity)
+                historyRepository.getByPillIdAndTime(pillId, remindedTime)?.let { history ->
+                    history.confirmed = Calendar.getInstance()
+                    historyRepository.updateHistoryItem(history)
+                }
 
                 ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime).cancel()
             }

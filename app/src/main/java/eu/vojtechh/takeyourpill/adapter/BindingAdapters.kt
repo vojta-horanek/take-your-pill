@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 
 object BindingAdapters {
@@ -23,5 +24,11 @@ object BindingAdapters {
                 PorterDuff.Mode.SRC_ATOP
             )
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("isVisible")
+    fun isVisible(view: View, visible: Boolean) {
+        view.isVisible = visible
     }
 }
