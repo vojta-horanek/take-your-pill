@@ -14,8 +14,6 @@ import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setTheme(R.style.AppTheme)
-        runBlocking { delay(3000) }
         setContentView(binding.root)
 
         val navHostFragment =
