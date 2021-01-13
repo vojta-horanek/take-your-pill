@@ -1,10 +1,15 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="BaseStyle">
+    <style name="AppTheme" parent="BaseTheme">
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="BaseStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme.Splash" parent="BaseTheme">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">?attr/colorSurface</item>

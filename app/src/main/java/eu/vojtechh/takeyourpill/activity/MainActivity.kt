@@ -14,17 +14,22 @@ import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
-
-const val REQUEST_CODE_INTRO = 22
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val requestCodeIntro = 22
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
     private val model: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setTheme(R.style.AppTheme)
+        runBlocking { delay(3000) }
         setContentView(binding.root)
 
         val navHostFragment =
@@ -33,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         if (Pref.firstRun) {
             val intent = Intent(this, AppIntroActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE_INTRO)
+            startActivityForResult(intent, requestCodeIntro)
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -54,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_INTRO) {
+        if (requestCode == requestCodeIntro) {
             if (resultCode == RESULT_OK) {
                 Pref.firstRun = false
             } else {
