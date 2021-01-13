@@ -190,20 +190,6 @@ public class UCrop {
     }
 
     /**
-     * Get Fragment {@link UCropFragment}
-     *
-     * @return Fragment of {@link UCropFragment}
-     */
-    public UCropFragment getFragment() {
-        return UCropFragment.newInstance(mCropOptionsBundle);
-    }
-
-    public UCropFragment getFragment(Bundle bundle) {
-        mCropOptionsBundle = bundle;
-        return getFragment();
-    }
-
-    /**
      * Retrieve cropped image Uri from the result Intent
      *
      * @param intent crop result intent
