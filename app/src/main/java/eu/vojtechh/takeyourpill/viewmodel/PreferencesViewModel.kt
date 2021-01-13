@@ -24,7 +24,7 @@ class PreferencesViewModel @ViewModelInject constructor(
                     color = PillColor.default(),
                     deleted = false,
                     options = ReminderOptions.infinite(),
-                    optionsChanging = ReminderOptions.infinite()
+                    optionsCurrent = ReminderOptions.infinite()
                 ),
                 listOf(
                     Reminder.create(pillId = -1),
@@ -40,7 +40,7 @@ class PreferencesViewModel @ViewModelInject constructor(
                     color = PillColor.teal(),
                     deleted = false,
                     options = ReminderOptions.infinite(),
-                    optionsChanging = ReminderOptions.infinite()
+                    optionsCurrent = ReminderOptions.infinite()
                 ),
                 listOf(
                     Reminder.create(pillId = -1),
@@ -56,7 +56,7 @@ class PreferencesViewModel @ViewModelInject constructor(
                     color = PillColor.red(),
                     deleted = false,
                     options = ReminderOptions.finite(7),
-                    optionsChanging = ReminderOptions.finite(7)
+                    optionsCurrent = ReminderOptions.finite(7)
                 ),
                 listOf(
                     Reminder.create(hour = 7, pillId = -1),

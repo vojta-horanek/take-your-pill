@@ -31,9 +31,9 @@ data class Pill(
                 "",
                 null,
                 PillColor.default(),
-                false,
                 ReminderOptions.empty(),
-                ReminderOptions.empty()
+                ReminderOptions.empty(),
+                false
             ), listOf()
         )
     }
@@ -84,10 +84,10 @@ data class Pill(
             pillEntity.options = value
         }
 
-    var optionsChanging
-        get() = pillEntity.optionsChanging
+    var optionsCurrent
+        get() = pillEntity.optionsCurrent
         set(value) {
-            pillEntity.optionsChanging = value
+            pillEntity.optionsCurrent = value
         }
 
     val photoVisibility
@@ -147,10 +147,57 @@ data class Pill(
                     this.color == newItem.color &&
                     this.deleted == newItem.deleted &&
                     this.options == newItem.options &&
-                    this.optionsChanging == newItem.optionsChanging &&
+                    this.optionsCurrent == newItem.optionsCurrent &&
                     this.reminders == newItem.reminders
 
         } else false
 
+    /**
+     * Check whether this pill is currently reminding based on [options] and [optionsCurrent]
+     *
+     * @return whether this pill is currently reminding
+     */
+    fun shouldRemind(): Boolean {
+        return if (options.limitDays != ReminderOptions.NO_DAY_LIMIT) {
+            if (options.breakDays != ReminderOptions.NO_BREAK) {
+                if (options.repeatCount != ReminderOptions.REPEAT_FOREVER) {
+                    optionsCurrent.repeatCount >= 0
+                } else {
+                    optionsCurrent.breakDays > 0
+                }
+            } else {
+                optionsCurrent.limitDays > 0
+            }
+        } else {
+            true
+        }
+    }
 
+    // TODO Complete this function
+    /**
+     * Check whether this pill should remind tomorrow based on [options] and [optionsCurrent]
+     *
+     * @return whether this pill should remind tomorrow
+     */
+    fun shouldRemindTomorrow(): Boolean {
+        return if (options.limitDays != ReminderOptions.NO_DAY_LIMIT) {
+            if (options.breakDays != ReminderOptions.NO_BREAK) {
+                if (options.repeatCount != ReminderOptions.REPEAT_FOREVER) {
+                    optionsCurrent.repeatCount >= 0
+                } else {
+                    optionsCurrent.breakDays - 1 > 0
+                }
+            } else {
+                optionsCurrent.limitDays - 1 > 0
+            }
+        } else {
+            true
+        }
+    }
+
+    // TODO function that bumps lastReminded time and changes its [optionsCurrent]
+    //  when this Pill gets reminded
+    fun justReminded(time: Calendar) {
+        pillEntity.lastRemindedTime = time
+    }
 }

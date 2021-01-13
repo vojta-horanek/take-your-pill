@@ -41,9 +41,9 @@ class ReminderOptions(
 
     ) {
     companion object {
-        const val NO_DAY_LIMIT = -1
-        const val NO_BREAK = -1
-        const val REPEAT_FOREVER = -1
+        const val NO_DAY_LIMIT = -100
+        const val NO_BREAK = -100
+        const val REPEAT_FOREVER = -100
 
         fun infinite() =
             ReminderOptions()

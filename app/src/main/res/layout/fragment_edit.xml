@@ -248,7 +248,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:inputType="number"
-                                    android:text="@{Integer.toString(pill.optionsChanging.displayLimit)}" />
+                                    android:text="@{Integer.toString(pill.optionsCurrent.displayLimit)}" />
 
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
@@ -336,7 +336,7 @@
             android:clickable="true"
             android:focusable="true"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <FrameLayout
                 android:layout_width="match_parent"

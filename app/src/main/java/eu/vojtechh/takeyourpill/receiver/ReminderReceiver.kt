@@ -44,15 +44,19 @@ class ReminderReceiver : BroadcastReceiver() {
 
                 for (reminder in reminders) {
                     val pill = pillRepository.getPillSync(reminder.pillId)
+                    ReminderUtil.createReminderNotification(context, pill, reminder)
 
                     val remindedCalendar = reminder.getCalendarWithTodayDate()
-                    ReminderUtil.createReminderNotification(context, pill, reminder)
+
+                    pill.justReminded(remindedCalendar)
+                    pillRepository.updatePill(pill)
 
                     val history = HistoryEntity(
                         pillId = pill.id,
                         reminded = remindedCalendar
                     )
                     historyRepository.insertHistoryItem(history)
+
                     if (Pref.remindAgain) {
                         ReminderManager.setCheckForConfirmation(
                             context,
@@ -62,7 +66,11 @@ class ReminderReceiver : BroadcastReceiver() {
                     }
                 }
 
-                ReminderManager.planNextReminder(context, reminderRepository.getAllReminders())
+                ReminderManager.planNextReminder(
+                    context,
+                    reminderRepository.getAllReminders(),
+                    pillRepository.getAllPillsSync()
+                )
             }
         }
     }

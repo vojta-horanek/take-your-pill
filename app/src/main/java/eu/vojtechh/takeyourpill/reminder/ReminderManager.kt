@@ -4,8 +4,10 @@ import android.app.AlarmManager
 import android.content.Context
 import android.os.SystemClock
 import eu.vojtechh.takeyourpill.klass.Pref
+import eu.vojtechh.takeyourpill.klass.addDay
 import eu.vojtechh.takeyourpill.klass.getDateTimeString
 import eu.vojtechh.takeyourpill.klass.getTimeString
+import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import timber.log.Timber
 import java.util.*
@@ -18,40 +20,49 @@ object ReminderManager {
      * If it does not find one it uses the first [Reminder] in a day and plans a reminder with
      * the same time but tomorrows date
      */
-    fun planNextReminder(context: Context, reminders: List<Reminder>) {
-        val sortedByTime = reminders.sortedBy { rem -> rem.time.time }
+    fun planNextReminder(context: Context, reminders: List<Reminder>, pills: List<Pill>) {
+        val remindersSorted = reminders.sortedBy { rem -> rem.time.timeInMillis }
         val calendar = Calendar.getInstance()
 
         Timber.d("Planning next reminder")
 
         // Go trough reminders from the 00:00 to 23:59 basically
-        sortedByTime.forEach {
+        remindersSorted.forEach { reminder ->
             // Only plan if the reminder time is past the current time
-            if (it.getMillisWithTodayDate() > calendar.timeInMillis) {
-                Timber.d(
-                    "Next reminder is today at %s",
-                    it.getMillisWithTodayDate().getDateTimeString()
-                )
-                createReminder(context, it)
-                return@planNextReminder
+            if (reminder.getMillisWithTodayDate() > calendar.timeInMillis) {
+                // Find the pill that corresponds to this reminder
+                val pill = pills.first { pill -> pill.id == reminder.pillId }
+                if (pill.shouldRemind()) {
+                    Timber.d(
+                        "Next reminder is today at %s",
+                        reminder.getMillisWithTodayDate().getDateTimeString()
+                    )
+                    createReminder(context, reminder)
+                    return@planNextReminder
+                }
             }
         }
 
         // no reminder for today if we get here, plan the first one for tomorrow
-        val firstTomorrow = sortedByTime.firstOrNull()
-        firstTomorrow?.let {
-            calendar.timeInMillis = it.getMillisWithTodayDate()
-            calendar.add(Calendar.DAY_OF_YEAR, 1)
-            Timber.d("Next reminder is tomorrow at %s", calendar.timeInMillis.getDateTimeString())
-            createReminder(
-                context,
-                it.id,
-                calendar.timeInMillis,
-                it.time.timeInMillis
-            )
-        } ?: run {
-            Timber.e("No reminder found")
+        remindersSorted.forEach { reminder ->
+            // Find the pill that corresponds to this reminder
+            val pill = pills.first { pill -> pill.id == reminder.pillId }
+            if (pill.shouldRemindTomorrow()) {
+                Timber.d(
+                    "Next reminder is tomorrow at %s",
+                    calendar.timeInMillis.getDateTimeString()
+                )
+                createReminder(
+                    context,
+                    reminder.id,
+                    reminder.getCalendarWithTodayDate().addDay(1).timeInMillis,
+                    reminder.time.timeInMillis
+                )
+                return@planNextReminder
+            }
         }
+        Timber.d("No reminder found")
+        return
     }
 
     /**
