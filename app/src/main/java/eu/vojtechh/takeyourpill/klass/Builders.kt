@@ -16,7 +16,7 @@ object Builders {
         return MaterialTimePicker.Builder()
             .setTimeFormat(format)
             .setHour(hour)
-            .setMinute(hour)
+            .setMinute(minute)
             .build()
     }
 }
