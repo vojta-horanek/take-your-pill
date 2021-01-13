@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:visibility="gone"
     tools:showIn="@layout/ucrop_controls"
-    tools:visibility="visible">
+    tools:visibility="visible"
+    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
 
     <TextView
         android:id="@+id/text_view_rotate"

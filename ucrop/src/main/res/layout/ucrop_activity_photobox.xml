@@ -1,32 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ucrop_photobox"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
-        android:minHeight="?attr/actionBarSize">
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/ucrop_label_edit_photo"
-            android:textColor="?attr/colorOnSurface" />
-
-    </com.google.android.material.appbar.MaterialToolbar>
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
 
     <FrameLayout
         android:id="@+id/ucrop_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/controls_wrapper"
-        android:layout_below="@+id/toolbar"
+        android:layout_alignParentTop="true"
         android:layout_marginBottom="-12dp">
 
         <com.yalantis.ucrop.view.UCropView
@@ -34,6 +18,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0" />
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_gravity="top"
+            android:minHeight="?attr/actionBarSize"
+            app:titleTextAppearance="@style/ucrop_TextViewToolbar" />
 
     </FrameLayout>
 

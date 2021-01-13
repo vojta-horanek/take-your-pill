@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="ucrop_AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
     <style name="ucrop_ImageViewWidgetIcon">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:scaleType">fitCenter</item>
-        <item name="tint">?attr/colorSurface</item>
+        <item name="tint">?attr/colorOnSurface</item>
         <item name="android:duplicateParentState">true</item>
     </style>
 
@@ -46,13 +47,20 @@
     </style>
 
     <style name="ucrop_TextViewWidget">
+        <item name="android:fontFamily">@font/jost_medium</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginTop">@dimen/ucrop_margin_top_controls_text</item>
-        <item name="android:textColor">?colorOnSurface</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/ucrop_text_size_controls_text</item>
     </style>
+
+
+    <style name="ucrop_TextViewToolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="fontFamily">@font/jost_medium</item>
+    </style>
+
 
 </resources>

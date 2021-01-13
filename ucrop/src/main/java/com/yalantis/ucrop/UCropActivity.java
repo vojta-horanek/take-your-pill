@@ -33,9 +33,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.transition.AutoTransition;
-import androidx.transition.Transition;
-import androidx.transition.TransitionManager;
 
 import com.yalantis.ucrop.callback.BitmapCropCallback;
 import com.yalantis.ucrop.model.AspectRatio;
@@ -76,12 +73,9 @@ public class UCropActivity extends AppCompatActivity {
     }
 
     private static final String TAG = "UCropActivity";
-    private static final long CONTROLS_ANIMATION_DURATION = 50;
     private static final int TABS_COUNT = 3;
     private static final int SCALE_WIDGET_SENSITIVITY_COEFFICIENT = 15000;
     private static final int ROTATE_WIDGET_SENSITIVITY_COEFFICIENT = 42;
-
-    private String mToolbarTitle;
 
     private int mActiveControlsWidgetColor;
 
@@ -97,8 +91,6 @@ public class UCropActivity extends AppCompatActivity {
     private TextView mTextViewRotateAngle, mTextViewScalePercent;
     private View mBlockingView;
 
-    private Transition mControlsTransition;
-
     private Bitmap.CompressFormat mCompressFormat = DEFAULT_COMPRESS_FORMAT;
     private int mCompressQuality = DEFAULT_COMPRESS_QUALITY;
     private int[] mAllowedGestures = new int[]{SCALE, ROTATE, ALL};
@@ -110,6 +102,7 @@ public class UCropActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.ucrop_AppTheme);
         setContentView(R.layout.ucrop_activity_photobox);
 
         final Intent intent = getIntent();
@@ -265,10 +258,11 @@ public class UCropActivity extends AppCompatActivity {
     }
 
     private void setupViews(@NonNull Intent intent) {
-        mActiveControlsWidgetColor = intent.getIntExtra(UCrop.Options.EXTRA_UCROP_COLOR_CONTROLS_WIDGET_ACTIVE, ContextCompat.getColor(this, R.color.ucrop_color_active_controls_color));
+        mActiveControlsWidgetColor = intent.getIntExtra(
+                UCrop.Options.EXTRA_UCROP_COLOR_CONTROLS_WIDGET_ACTIVE,
+                ContextCompat.getColor(this, R.color.ucrop_color_active_controls_color)
+        );
 
-        mToolbarTitle = intent.getStringExtra(UCrop.Options.EXTRA_UCROP_TITLE_TEXT_TOOLBAR);
-        mToolbarTitle = mToolbarTitle != null ? mToolbarTitle : getResources().getString(R.string.ucrop_label_edit_photo);
         mShowBottomControls = !intent.getBooleanExtra(UCrop.Options.EXTRA_HIDE_BOTTOM_CONTROLS, false);
 
         setupAppBar();
@@ -280,9 +274,6 @@ public class UCropActivity extends AppCompatActivity {
             ViewGroup wrapper = viewGroup.findViewById(R.id.controls_wrapper);
             wrapper.setVisibility(View.VISIBLE);
             LayoutInflater.from(this).inflate(R.layout.ucrop_controls, wrapper, true);
-
-            mControlsTransition = new AutoTransition();
-            mControlsTransition.setDuration(CONTROLS_ANIMATION_DURATION);
 
             mWrapperStateAspectRatio = findViewById(R.id.state_aspect_ratio);
             mWrapperStateAspectRatio.setOnClickListener(mStateClickListener);
@@ -306,13 +297,7 @@ public class UCropActivity extends AppCompatActivity {
      * Configures and styles both status bar and toolbar.
      */
     private void setupAppBar() {
-
         final Toolbar toolbar = findViewById(R.id.toolbar);
-
-
-        final TextView toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(mToolbarTitle);
-
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -590,12 +575,9 @@ public class UCropActivity extends AppCompatActivity {
     }
 
     private void changeSelectedTab(int stateViewId) {
-        TransitionManager.beginDelayedTransition((ViewGroup) findViewById(R.id.ucrop_photobox), mControlsTransition);
-
         mWrapperStateScale.findViewById(R.id.text_view_scale).setVisibility(stateViewId == R.id.state_scale ? View.VISIBLE : View.GONE);
         mWrapperStateAspectRatio.findViewById(R.id.text_view_crop).setVisibility(stateViewId == R.id.state_aspect_ratio ? View.VISIBLE : View.GONE);
         mWrapperStateRotate.findViewById(R.id.text_view_rotate).setVisibility(stateViewId == R.id.state_rotate ? View.VISIBLE : View.GONE);
-
     }
 
     private void setAllowedGestures(int tab) {
