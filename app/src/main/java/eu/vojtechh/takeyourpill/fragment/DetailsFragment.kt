@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.transition.Slide
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
@@ -72,6 +73,14 @@ class DetailsFragment : Fragment(),
 
         binding.cardPhoto.visibility = model.pill.photoVisibility
         binding.recyclerReminders.adapter = reminderAdapter
+
+        // Turn off animations for the recycler view
+        (binding.recyclerReminders.itemAnimator as SimpleItemAnimator).apply {
+            changeDuration = 0
+            removeDuration = 0
+            addDuration = 0
+            moveDuration = 0
+        }
 
         binding.buttonDelete.setOnClickListener {
             ConfirmationDialog.newInstance(

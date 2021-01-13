@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.transition.Slide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
@@ -126,6 +127,13 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         binding.run {
             recyclerColor.adapter = colorAdapter
             recyclerReminders.adapter = reminderAdapter
+
+            (recyclerColor.itemAnimator as SimpleItemAnimator).apply {
+                changeDuration = 0
+                removeDuration = 0
+                addDuration = 0
+                moveDuration = 0
+            }
 
             setReminderOptionsViews()
 
