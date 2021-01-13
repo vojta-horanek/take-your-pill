@@ -14,7 +14,7 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
 
         <provider
             android:name="com.github.dhaval2404.imagepicker.ImagePickerFileProvider"

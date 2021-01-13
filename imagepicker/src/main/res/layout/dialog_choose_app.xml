@@ -36,7 +36,7 @@
             android:paddingVertical="16dp"
             android:text="@string/title_camera"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            android:drawableStart="@drawable/ic_photo" />
+            android:drawableStart="@drawable/ic_camera" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/lytGalleryPick"
@@ -52,6 +52,6 @@
             android:paddingVertical="16dp"
             android:text="@string/title_gallery"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
-            android:drawableStart="@drawable/ic_camera" />
+            android:drawableStart="@drawable/ic_photo" />
     </LinearLayout>
 </LinearLayout>

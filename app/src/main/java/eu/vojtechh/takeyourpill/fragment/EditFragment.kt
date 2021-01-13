@@ -203,6 +203,7 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
                     1920,
                     1080
                 )
+                .crop()
                 .start()
         } else {
             EasyPermissions.requestPermissions(
