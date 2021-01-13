@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Splash">
 
-        <activity android:name=".activity.AboutActivity" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".activity.MainActivity">
             <meta-data
                 android:name="android.app.shortcuts"
