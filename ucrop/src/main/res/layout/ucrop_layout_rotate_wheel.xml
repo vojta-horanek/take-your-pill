@@ -7,7 +7,7 @@
     android:visibility="gone"
     tools:showIn="@layout/ucrop_controls"
     tools:visibility="visible"
-    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+    android:theme="@style/ucrop_AppTheme">
 
     <TextView
         android:id="@+id/text_view_rotate"

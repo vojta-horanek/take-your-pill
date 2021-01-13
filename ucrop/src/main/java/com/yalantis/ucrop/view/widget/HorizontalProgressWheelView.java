@@ -142,7 +142,7 @@ public class HorizontalProgressWheelView extends View {
 
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = getContext().getTheme();
-        theme.resolveAttribute(R.color.ucrop_color_progress_wheel_line, typedValue, true);
+        theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true);
         @ColorInt int color = typedValue.data;
 
         mProgressLinePaint.setColor(color);

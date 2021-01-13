@@ -1,12 +1,10 @@
 package com.yalantis.ucrop;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,16 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.IdRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -32,11 +26,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yalantis.ucrop.callback.BitmapCropCallback;
 import com.yalantis.ucrop.model.AspectRatio;
-import com.yalantis.ucrop.util.SelectedStateListDrawable;
 import com.yalantis.ucrop.view.CropImageView;
 import com.yalantis.ucrop.view.GestureCropImageView;
 import com.yalantis.ucrop.view.OverlayView;
@@ -85,11 +80,11 @@ public class UCropActivity extends AppCompatActivity {
     private UCropView mUCropView;
     private GestureCropImageView mGestureCropImageView;
     private OverlayView mOverlayView;
-    private ViewGroup mWrapperStateAspectRatio, mWrapperStateRotate, mWrapperStateScale;
     private ViewGroup mLayoutAspectRatio, mLayoutRotate, mLayoutScale;
     private List<ViewGroup> mCropAspectRatioViews = new ArrayList<>();
     private TextView mTextViewRotateAngle, mTextViewScalePercent;
     private View mBlockingView;
+    private BottomNavigationView mBottomNavigationView;
 
     private Bitmap.CompressFormat mCompressFormat = DEFAULT_COMPRESS_FORMAT;
     private int mCompressQuality = DEFAULT_COMPRESS_QUALITY;
@@ -130,8 +125,6 @@ public class UCropActivity extends AppCompatActivity {
             }
             ((Animatable) menuItemLoader.getIcon()).start();
         }
-
-        MenuItem menuItemCrop = menu.findItem(R.id.menu_crop);
 
         return true;
     }
@@ -236,9 +229,6 @@ public class UCropActivity extends AppCompatActivity {
         ArrayList<AspectRatio> aspectRatioList = intent.getParcelableArrayListExtra(UCrop.Options.EXTRA_ASPECT_RATIO_OPTIONS);
 
         if (aspectRatioX > 0 && aspectRatioY > 0) {
-            if (mWrapperStateAspectRatio != null) {
-                mWrapperStateAspectRatio.setVisibility(View.GONE);
-            }
             mGestureCropImageView.setTargetAspectRatio(aspectRatioX / aspectRatioY);
         } else if (aspectRatioList != null && aspectRationSelectedByDefault < aspectRatioList.size()) {
             mGestureCropImageView.setTargetAspectRatio(aspectRatioList.get(aspectRationSelectedByDefault).getAspectRatioX() /
@@ -258,10 +248,7 @@ public class UCropActivity extends AppCompatActivity {
     }
 
     private void setupViews(@NonNull Intent intent) {
-        mActiveControlsWidgetColor = intent.getIntExtra(
-                UCrop.Options.EXTRA_UCROP_COLOR_CONTROLS_WIDGET_ACTIVE,
-                ContextCompat.getColor(this, R.color.ucrop_color_active_controls_color)
-        );
+        mActiveControlsWidgetColor = ContextCompat.getColor(this, R.color.ucrop_color_active_controls_color);
 
         mShowBottomControls = !intent.getBooleanExtra(UCrop.Options.EXTRA_HIDE_BOTTOM_CONTROLS, false);
 
@@ -275,12 +262,20 @@ public class UCropActivity extends AppCompatActivity {
             wrapper.setVisibility(View.VISIBLE);
             LayoutInflater.from(this).inflate(R.layout.ucrop_controls, wrapper, true);
 
-            mWrapperStateAspectRatio = findViewById(R.id.state_aspect_ratio);
-            mWrapperStateAspectRatio.setOnClickListener(mStateClickListener);
-            mWrapperStateRotate = findViewById(R.id.state_rotate);
-            mWrapperStateRotate.setOnClickListener(mStateClickListener);
-            mWrapperStateScale = findViewById(R.id.state_scale);
-            mWrapperStateScale.setOnClickListener(mStateClickListener);
+            mBottomNavigationView = findViewById(R.id.selectorMenu);
+            mBottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+                @Override
+                public void onNavigationItemReselected(@NonNull MenuItem item) {
+                }
+            });
+
+            mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    setWidgetState(item.getItemId());
+                    return true;
+                }
+            });
 
             mLayoutAspectRatio = findViewById(R.id.layout_aspect_ratio);
             mLayoutRotate = findViewById(R.id.layout_rotate_wheel);
@@ -289,7 +284,6 @@ public class UCropActivity extends AppCompatActivity {
             setupAspectRatioWidget(intent);
             setupRotateWidget();
             setupScaleWidget();
-            setupStatesWrapper();
         }
     }
 
@@ -297,6 +291,7 @@ public class UCropActivity extends AppCompatActivity {
      * Configures and styles both status bar and toolbar.
      */
     private void setupAppBar() {
+
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
@@ -313,9 +308,9 @@ public class UCropActivity extends AppCompatActivity {
         mGestureCropImageView.setTransformImageListener(mImageListener);
 
         if (!mShowBottomControls) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) findViewById(R.id.ucrop_frame).getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mUCropView.getLayoutParams();
             params.bottomMargin = 0;
-            findViewById(R.id.ucrop_frame).requestLayout();
+            mUCropView.requestLayout();
         }
     }
 
@@ -346,35 +341,6 @@ public class UCropActivity extends AppCompatActivity {
 
     };
 
-    /**
-     * Use {@link #mActiveControlsWidgetColor} for color filter
-     */
-    private void setupStatesWrapper() {
-        ImageView stateScaleImageView = findViewById(R.id.image_view_state_scale);
-        ImageView stateRotateImageView = findViewById(R.id.image_view_state_rotate);
-        ImageView stateAspectRatioImageView = findViewById(R.id.image_view_state_aspect_ratio);
-
-        stateScaleImageView.setImageDrawable(new SelectedStateListDrawable(stateScaleImageView.getDrawable(), mActiveControlsWidgetColor));
-        stateRotateImageView.setImageDrawable(new SelectedStateListDrawable(stateRotateImageView.getDrawable(), mActiveControlsWidgetColor));
-        stateAspectRatioImageView.setImageDrawable(new SelectedStateListDrawable(stateAspectRatioImageView.getDrawable(), mActiveControlsWidgetColor));
-    }
-
-
-    /**
-     * Sets status-bar color for L devices.
-     *
-     * @param color - status-bar color
-     */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setStatusBarColor(@ColorInt int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            final Window window = getWindow();
-            if (window != null) {
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(color);
-            }
-        }
-    }
 
     private void setupAspectRatioWidget(@NonNull Intent intent) {
 
@@ -387,7 +353,7 @@ public class UCropActivity extends AppCompatActivity {
             aspectRatioList = new ArrayList<>();
             aspectRatioList.add(new AspectRatio(null, 1, 1));
             aspectRatioList.add(new AspectRatio(null, 3, 4));
-            aspectRatioList.add(new AspectRatio(getString(R.string.ucrop_label_original).toUpperCase(),
+            aspectRatioList.add(new AspectRatio(getString(R.string.ucrop_label_original),
                     CropImageView.SOURCE_IMAGE_ASPECT_RATIO, CropImageView.SOURCE_IMAGE_ASPECT_RATIO));
             aspectRatioList.add(new AspectRatio(null, 3, 2));
             aspectRatioList.add(new AspectRatio(null, 16, 9));
@@ -531,22 +497,9 @@ public class UCropActivity extends AppCompatActivity {
         mGestureCropImageView.setImageToWrapCropBounds();
     }
 
-    private final View.OnClickListener mStateClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (!v.isSelected()) {
-                setWidgetState(v.getId());
-            }
-        }
-    };
-
     private void setInitialState() {
         if (mShowBottomControls) {
-            if (mWrapperStateAspectRatio.getVisibility() == View.VISIBLE) {
-                setWidgetState(R.id.state_aspect_ratio);
-            } else {
-                setWidgetState(R.id.state_scale);
-            }
+            setWidgetState(R.id.menu_crop);
         } else {
             setAllowedGestures(0);
         }
@@ -555,29 +508,17 @@ public class UCropActivity extends AppCompatActivity {
     private void setWidgetState(@IdRes int stateViewId) {
         if (!mShowBottomControls) return;
 
-        mWrapperStateAspectRatio.setSelected(stateViewId == R.id.state_aspect_ratio);
-        mWrapperStateRotate.setSelected(stateViewId == R.id.state_rotate);
-        mWrapperStateScale.setSelected(stateViewId == R.id.state_scale);
+        mLayoutAspectRatio.setVisibility(stateViewId == R.id.menu_crop ? View.VISIBLE : View.GONE);
+        mLayoutRotate.setVisibility(stateViewId == R.id.menu_rotate ? View.VISIBLE : View.GONE);
+        mLayoutScale.setVisibility(stateViewId == R.id.menu_scale ? View.VISIBLE : View.GONE);
 
-        mLayoutAspectRatio.setVisibility(stateViewId == R.id.state_aspect_ratio ? View.VISIBLE : View.GONE);
-        mLayoutRotate.setVisibility(stateViewId == R.id.state_rotate ? View.VISIBLE : View.GONE);
-        mLayoutScale.setVisibility(stateViewId == R.id.state_scale ? View.VISIBLE : View.GONE);
-
-        changeSelectedTab(stateViewId);
-
-        if (stateViewId == R.id.state_scale) {
+        if (stateViewId == R.id.menu_scale) {
             setAllowedGestures(0);
-        } else if (stateViewId == R.id.state_rotate) {
+        } else if (stateViewId == R.id.menu_rotate) {
             setAllowedGestures(1);
         } else {
             setAllowedGestures(2);
         }
-    }
-
-    private void changeSelectedTab(int stateViewId) {
-        mWrapperStateScale.findViewById(R.id.text_view_scale).setVisibility(stateViewId == R.id.state_scale ? View.VISIBLE : View.GONE);
-        mWrapperStateAspectRatio.findViewById(R.id.text_view_crop).setVisibility(stateViewId == R.id.state_aspect_ratio ? View.VISIBLE : View.GONE);
-        mWrapperStateRotate.findViewById(R.id.text_view_rotate).setVisibility(stateViewId == R.id.state_rotate ? View.VISIBLE : View.GONE);
     }
 
     private void setAllowedGestures(int tab) {
@@ -599,7 +540,7 @@ public class UCropActivity extends AppCompatActivity {
             mBlockingView.setClickable(true);
         }
 
-        ((RelativeLayout) findViewById(R.id.ucrop_photobox)).addView(mBlockingView);
+        ((ConstraintLayout) findViewById(R.id.ucrop_photobox)).addView(mBlockingView);
     }
 
     protected void cropAndSaveImage() {

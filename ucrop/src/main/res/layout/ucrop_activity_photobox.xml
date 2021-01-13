@@ -1,40 +1,39 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ucrop_photobox"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+    android:theme="@style/ucrop_AppTheme">
 
-    <FrameLayout
-        android:id="@+id/ucrop_frame"
+    <com.yalantis.ucrop.view.UCropView
+        android:id="@+id/ucrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        app:layout_constraintBottom_toTopOf="@+id/controls_wrapper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/controls_wrapper"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="-12dp">
-
-        <com.yalantis.ucrop.view.UCropView
-            android:id="@+id/ucrop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0" />
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:layout_gravity="top"
-            android:minHeight="?attr/actionBarSize"
-            app:titleTextAppearance="@style/ucrop_TextViewToolbar" />
-
-    </FrameLayout>
+        android:layout_gravity="top"
+        android:background="@android:color/transparent"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fitsSystemWindows="true" />
 
     <FrameLayout
         android:id="@+id/controls_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone" />
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

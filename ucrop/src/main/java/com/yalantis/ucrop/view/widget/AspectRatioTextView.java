@@ -119,7 +119,7 @@ public class AspectRatioTextView extends AppCompatTextView {
 
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = getContext().getTheme();
-        theme.resolveAttribute(R.color.ucrop_color_widget_active, typedValue, true);
+        theme.resolveAttribute(R.color.ucrop_color_widget, typedValue, true);
         @ColorInt int activeColor = typedValue.data;
 
         applyActiveColor(activeColor);
@@ -131,10 +131,12 @@ public class AspectRatioTextView extends AppCompatTextView {
         if (mDotPaint != null) {
             mDotPaint.setColor(activeColor);
         }
+
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = getContext().getTheme();
-        theme.resolveAttribute(R.color.ucrop_color_widget, typedValue, true);
+        theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true);
         @ColorInt int color = typedValue.data;
+
         ColorStateList textViewColorStateList = new ColorStateList(
                 new int[][]{
                         new int[]{android.R.attr.state_selected},

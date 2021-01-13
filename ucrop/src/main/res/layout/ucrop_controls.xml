@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+    android:theme="@style/ucrop_AppTheme">
 
     <FrameLayout
         android:id="@+id/wrapper_controls"
@@ -29,63 +29,13 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/wrapper_states"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ucrop_height_wrapper_states"
-        android:background="?attr/colorSurface"
-        android:baselineAligned="false"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:id="@+id/selectorMenu"
+        app:menu="@menu/ucrop_menu_selector"
+        style="@style/ucrop_Widgets.BottomNavigation"
+        app:elevation="0dp" />
 
-        <LinearLayout
-            android:id="@+id/state_aspect_ratio"
-            style="@style/ucrop_WrapperIconState">
 
-            <ImageView
-                android:id="@+id/image_view_state_aspect_ratio"
-                style="@style/ucrop_ImageViewWidgetIcon"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:srcCompat="@drawable/ucrop_crop" />
-
-            <TextView
-                android:id="@+id/text_view_crop"
-                style="@style/ucrop_TextViewWidget"
-                android:text="@string/ucrop_crop" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/state_rotate"
-            style="@style/ucrop_WrapperIconState">
-
-            <ImageView
-                android:id="@+id/image_view_state_rotate"
-                style="@style/ucrop_ImageViewWidgetIcon"
-                app:srcCompat="@drawable/ucrop_rotate" />
-
-            <TextView
-                android:id="@+id/text_view_rotate"
-                style="@style/ucrop_TextViewWidget"
-                android:text="@string/ucrop_rotate" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/state_scale"
-            style="@style/ucrop_WrapperIconState">
-
-            <ImageView
-                android:id="@+id/image_view_state_scale"
-                style="@style/ucrop_ImageViewWidgetIcon"
-                app:srcCompat="@drawable/ucrop_scale" />
-
-            <TextView
-                android:id="@+id/text_view_scale"
-                style="@style/ucrop_TextViewWidget"
-                android:text="@string/ucrop_scale" />
-
-        </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:showIn="@layout/ucrop_controls"
     tools:visibility="gone"
-    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+    android:theme="@style/ucrop_AppTheme">
 
     <TextView
         android:id="@+id/text_view_scale"

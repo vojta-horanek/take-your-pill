@@ -3,15 +3,15 @@
 
     <!--Palette-->
     <color name="ucrop_color_black">#000</color>
-    <color name="ucrop_color_blaze_orange">#FF6300</color>
+    <color name="ucrop_color_accent">#FFC107</color>
 
     <!--uCrop Activity-->
     <color name="ucrop_color_widget">?attr/colorOnSurface</color>
     <color name="ucrop_color_widget_active">?attr/colorSurface</color>
-    <color name="ucrop_color_active_controls_color">@color/ucrop_color_blaze_orange</color>
-    <color name="ucrop_color_widget_rotate_mid_line">@color/ucrop_color_blaze_orange</color>
-    <color name="ucrop_color_active_aspect_ratio">@color/ucrop_color_blaze_orange</color>
-    <color name="ucrop_color_widget_text">@color/ucrop_color_blaze_orange</color>
+    <color name="ucrop_color_active_controls_color">@color/ucrop_color_accent</color>
+    <color name="ucrop_color_widget_rotate_mid_line">@color/ucrop_color_accent</color>
+    <color name="ucrop_color_active_aspect_ratio">@color/ucrop_color_accent</color>
+    <color name="ucrop_color_widget_text">@color/ucrop_color_accent</color>
     <color name="ucrop_color_progress_wheel_line">?attr/colorOnSurface</color>
     <color name="ucrop_color_crop_background">@color/ucrop_color_black</color>
 

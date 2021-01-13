@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout style="@style/ucrop_WrapperIconState"
-    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+    android:theme="@style/ucrop_AppTheme"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.yalantis.ucrop.view.widget.AspectRatioTextView style="@style/ucrop_TextViewCropAspectRatio" />
