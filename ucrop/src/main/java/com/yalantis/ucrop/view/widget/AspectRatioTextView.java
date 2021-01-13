@@ -89,17 +89,21 @@ public class AspectRatioTextView extends AppCompatTextView {
         super.onDraw(canvas);
 
         if (isSelected()) {
+            setGravity(Gravity.CENTER_HORIZONTAL);
+
             canvas.getClipBounds(mCanvasClipBounds);
 
             float x = (mCanvasClipBounds.right - mCanvasClipBounds.left) / 2.0f;
             float y = (mCanvasClipBounds.bottom - mCanvasClipBounds.top / 2f) - mDotSize * MARGIN_MULTIPLIER;
 
             canvas.drawCircle(x, y, mDotSize / 2f, mDotPaint);
+        } else {
+            setGravity(Gravity.CENTER);
         }
     }
 
     private void init(@NonNull TypedArray a) {
-        setGravity(Gravity.CENTER_HORIZONTAL);
+        setGravity(Gravity.CENTER);
 
         mAspectRatioTitle = a.getString(R.styleable.ucrop_AspectRatioTextView_ucrop_artv_ratio_title);
         mAspectRatioX = a.getFloat(R.styleable.ucrop_AspectRatioTextView_ucrop_artv_ratio_x, CropImageView.SOURCE_IMAGE_ASPECT_RATIO);

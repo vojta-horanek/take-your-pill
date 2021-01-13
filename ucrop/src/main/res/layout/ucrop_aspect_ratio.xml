@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout style="@style/ucrop_WrapperIconState"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ucrop_WrapperIconState"
     android:theme="@style/ucrop_AppTheme"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:animateLayoutChanges="true">
 
     <com.yalantis.ucrop.view.widget.AspectRatioTextView style="@style/ucrop_TextViewCropAspectRatio" />
 
