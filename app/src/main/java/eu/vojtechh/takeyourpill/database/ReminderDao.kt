@@ -15,10 +15,10 @@ interface ReminderDao {
         ORDER BY time ASC
         """
     )
-    fun getAll(): List<Reminder>
+    suspend fun getAll(): List<Reminder>
 
     @Query("SELECT * FROM reminder WHERE reminderId = (:reminderId)")
-    fun getById(reminderId: Long): Reminder
+    suspend fun getById(reminderId: Long): Reminder
 
     @Query(
         """
@@ -31,7 +31,7 @@ interface ReminderDao {
             reminder.time = (:time) 
         ORDER BY time ASC"""
     )
-    fun getBasedOnTime(time: Long): List<Reminder>
+    suspend fun getBasedOnTime(time: Long): List<Reminder>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(reminders: List<Reminder>)
