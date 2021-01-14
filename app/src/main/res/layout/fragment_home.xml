@@ -31,6 +31,7 @@
         android:contentDescription="@string/new_pill"
         android:focusable="true"
         android:text="@string/new_pill"
-        app:icon="@drawable/ic_add" />
+        app:icon="@drawable/ic_add"
+        style="@style/AppTheme.Widgets.FloatingActionButton" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
