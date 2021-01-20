@@ -105,7 +105,6 @@ class EditViewModel @ViewModelInject constructor(
         try {
             val inputStream: InputStream? =
                 context.contentResolver.openInputStream(data)
-            // FIXME Fix rotation
             val userBitmap = BitmapFactory.decodeStream(inputStream)
             val scaledBitmap = Bitmap.createScaledBitmap(
                 userBitmap,
