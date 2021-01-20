@@ -13,12 +13,14 @@ import com.google.android.material.shape.ShapeAppearanceModel
 
 open class RoundedDialogFragment : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
         return (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
-            setBottomSheetCallback({ bottomSheet, newState ->
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    ViewCompat.setBackground(bottomSheet, createRoundDrawable(bottomSheet))
-                }
-            }, { _, _ -> })
+            behavior.addBottomSheetCallback(
+                getBottomSheetCallback({ bottomSheet, newState ->
+                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                        ViewCompat.setBackground(bottomSheet, createRoundDrawable(bottomSheet))
+                    }
+                }) { _, _ -> })
         }
     }
 
@@ -43,9 +45,9 @@ open class RoundedDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setBottomSheetCallback(
+    private fun getBottomSheetCallback(
         onStateChanged: (View, Int) -> Unit, onSlide: (View, Float) -> Unit
-    ) {
+    ) =
         object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) =
                 onStateChanged(bottomSheet, newState)
@@ -53,5 +55,4 @@ open class RoundedDialogFragment : BottomSheetDialogFragment() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) =
                 onSlide(bottomSheet, slideOffset)
         }
-    }
 }

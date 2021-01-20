@@ -42,12 +42,16 @@ internal object DialogHelper {
             setOnCancelListener {
                 listener.onResult(null)
             }
-            setBottomSheetCallback({ bottomSheet, newState ->
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    ViewCompat.setBackground(bottomSheet, createRoundDrawable(bottomSheet))
-                }
-            }, { _, _ -> })
+            apply {
+                behavior.addBottomSheetCallback(
+                    getBottomSheetCallback({ bottomSheet, newState ->
+                        if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                            ViewCompat.setBackground(bottomSheet, createRoundDrawable(bottomSheet))
+                        }
+                    }) { _, _ -> })
+            }
         }
+
         dialog.show()
 
         // Handle Camera option click
@@ -84,9 +88,9 @@ internal object DialogHelper {
         }
     }
 
-    private fun setBottomSheetCallback(
+    private fun getBottomSheetCallback(
         onStateChanged: (View, Int) -> Unit, onSlide: (View, Float) -> Unit
-    ) {
+    ) =
         object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) =
                 onStateChanged(bottomSheet, newState)
@@ -94,5 +98,4 @@ internal object DialogHelper {
             override fun onSlide(bottomSheet: View, slideOffset: Float) =
                 onSlide(bottomSheet, slideOffset)
         }
-    }
 }
