@@ -22,7 +22,7 @@ class HistoryViewAdapter(
 ) : ListAdapter<BaseModel, RecyclerView.ViewHolder>(BaseModel.DiffCallback) {
 
     interface ItemListener {
-        fun onItemOptionsClick(view: View, item: BaseModel)
+        fun onItemOptionsClick(view: View, item: BaseModel, position: Int)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -39,7 +39,12 @@ class HistoryViewAdapter(
                             isFirstOfDate = false
                         }
                     }
-                    holder.bind(currentHistoryItem, position == 0, isFirstOfDate)
+                    holder.bind(
+                        currentHistoryItem,
+                        currentList.firstOrNull() == currentHistoryItem,
+                        isFirstOfDate,
+                        position
+                    )
                 }
             }
             BaseModel.ItemTypes.EMPTY.ordinal -> if (holder is EmptyViewHolder) holder.bind()
@@ -79,6 +84,18 @@ class HistoryViewAdapter(
             }
         } ?: super.submitList(list)
 
+    }
+
+    override fun submitList(list: List<BaseModel>?, commitCallback: Runnable?) {
+        list?.let {
+            if (it.isEmpty()) {
+                val newList = list.toMutableList()
+                newList.add(EmptyItem())
+                super.submitList(newList, commitCallback)
+            } else {
+                super.submitList(list, commitCallback)
+            }
+        } ?: super.submitList(list, commitCallback)
     }
 
     override fun getItemViewType(position: Int) = getItem(position).itemType.ordinal

@@ -14,6 +14,10 @@
         <variable
             name="listener"
             type="eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter.ItemListener" />
+
+        <variable
+            name="position"
+            type="java.lang.Integer" />
     </data>
 
     <LinearLayout
@@ -117,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:onClick="@{(view) -> listener.onItemOptionsClick(view, history)}"
+                android:onClick="@{(view) -> listener.onItemOptionsClick(view, history, position)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

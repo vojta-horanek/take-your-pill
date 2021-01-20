@@ -13,9 +13,10 @@ class HistoryItemViewHolder(
     private val binding: ItemHistoryBinding,
     private val listener: HistoryViewAdapter.ItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(history: History, isFirstInList: Boolean, isFirstOfDate: Boolean) {
+    fun bind(history: History, isFirstInList: Boolean, isFirstOfDate: Boolean, position: Int) {
         binding.history = history
         binding.listener = listener
+        binding.position = position
         with(binding) {
 
             textHistoryReminded.text = DateFormat.getTimeInstance(DateFormat.SHORT)
@@ -32,9 +33,8 @@ class HistoryItemViewHolder(
 
             textDate.isVisible = isFirstOfDate
             // Should this item show a divider
-            if (isFirstOfDate && !isFirstInList) {
-                divider.isVisible = true
-            }
+            divider.isVisible = isFirstOfDate && !isFirstInList
+
             executePendingBindings()
         }
     }

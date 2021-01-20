@@ -26,6 +26,9 @@ class HistoryViewDialog :
     private val args: HistoryViewDialogArgs by navArgs()
     private val model: HistoryItemViewModel by viewModels()
 
+    private var itemJustRemoved = false
+    private var itemRemovedPosition = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,7 +57,13 @@ class HistoryViewDialog :
         binding.recyclerHistoryView.adapter = adapter
         model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner, {
             if (it != null) {
-                adapter.submitList(it)
+                adapter.submitList(it) {
+                    // Handle item removal correctly (don't remove the date)
+                    if (itemJustRemoved) {
+                        adapter.notifyItemRangeChanged(itemRemovedPosition - 1, 3)
+                        itemJustRemoved = false
+                    }
+                }
             }
         })
         binding.buttonDeleteHistory.setOnClickListener {
@@ -80,7 +89,7 @@ class HistoryViewDialog :
             .show()
     }
 
-    override fun onItemOptionsClick(view: View, item: BaseModel) {
+    override fun onItemOptionsClick(view: View, item: BaseModel, position: Int) {
         if (item is History) {
             val popup = PopupMenu(requireContext(), view)
             popup.inflate(R.menu.item_history_menu)
@@ -103,6 +112,8 @@ class HistoryViewDialog :
                     }
                     R.id.historyDelete -> {
                         model.deleteHistory(item)
+                        itemJustRemoved = true
+                        itemRemovedPosition = position
                         true
                     }
                     R.id.historyChangeConfirmTime -> {
