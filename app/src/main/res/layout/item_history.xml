@@ -61,7 +61,7 @@
                 app:layout_constraintStart_toStartOf="@+id/textHistoryReminded"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:srcCompat="@drawable/ic_alert"
+                app:srcCompat="@drawable/ic_notifications"
                 tools:ignore="ContentDescription" />
 
             <androidx.appcompat.widget.AppCompatImageView
