@@ -22,6 +22,8 @@
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
     <string name="confirm_delete_pill">Do you really want to delete this pill?</string>
+    <string name="confirm_delete_history">Do you really want to do this?</string>
+    <string name="confirm_delete_history_description">This will delete the history for this pill</string>
     <string name="description">Description</string>
     <string name="name">Name</string>
     <string name="photo">Photo</string>

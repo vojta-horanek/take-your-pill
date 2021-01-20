@@ -48,4 +48,7 @@ interface HistoryDao {
 
     @Delete
     suspend fun delete(historyEntity: List<History>)
+
+    @Query("DELETE FROM history WHERE history.pillId = (:pillId)")
+    suspend fun deleteByPillId(pillId: Long)
 }

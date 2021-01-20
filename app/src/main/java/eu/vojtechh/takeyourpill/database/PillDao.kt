@@ -21,7 +21,7 @@ interface PillDao {
 
     @Transaction
     @Query("SELECT * FROM pill WHERE pillId = (:pillId)")
-    fun getByIdSync(pillId: Long): Pill
+    suspend fun getByIdSync(pillId: Long): Pill
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPill(pillEntity: PillEntity): Long

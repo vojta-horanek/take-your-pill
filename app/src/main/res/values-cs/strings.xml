@@ -100,4 +100,6 @@
     <string name="mark_as_skipped">Označit jako vynechané</string>
     <string name="mark_as_confirmed">Označit jako potvrzené</string>
     <string name="change_confirm_time">Změnit čas potvrzení</string>
+    <string name="confirm_delete_history">Doopravdy to chcete udělat?</string>
+    <string name="confirm_delete_history_description">Toto smaže celou historii pro tento prášek.</string>
 </resources>

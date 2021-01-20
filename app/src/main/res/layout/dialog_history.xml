@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="pill"
             type="eu.vojtechh.takeyourpill.model.Pill" />
@@ -23,15 +22,43 @@
 
             <View style="@style/AppTheme.Widget.Handle" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/appbar_margin_horizontal"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="@dimen/appbar_margin_vertical"
-                android:text="@{pill.name}"
-                android:textAppearance="@style/AppTheme.Text.BodyTitle"
-                tools:text="Xyzal" />
+                android:orientation="horizontal"
+                android:clipChildren="false">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/materialTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{pill.name}"
+                    android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonDeleteHistory"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/appbar_margin_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="@dimen/appbar_margin_vertical"
+                    android:layout_marginEnd="@dimen/appbar_margin_horizontal"
+                    tools:text="Xyzal" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/buttonDeleteHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/appbar_margin_horizontal"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_delete"
+                    app:layout_constraintBottom_toBottomOf="@+id/materialTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/materialTextView"
+                    android:background="@null" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
@@ -42,10 +69,10 @@
             android:background="?attr/colorBackgroundFloating"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:minHeight="@dimen/recycler_history_view_min_height"
             android:paddingTop="@dimen/screen_margin_vertical_small"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_history"
-            android:minHeight="@dimen/recycler_history_view_min_height" />
+            tools:listitem="@layout/item_history" />
 
     </LinearLayout>
 </layout>
