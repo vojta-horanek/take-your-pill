@@ -43,7 +43,7 @@
                 android:id="@+id/textDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/cantarell_bold"
+                android:fontFamily="@font/jost_medium"
                 android:textAppearance="@style/AppTheme.Text.BodyNormal"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
