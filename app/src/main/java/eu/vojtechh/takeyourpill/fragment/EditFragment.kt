@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -79,12 +80,19 @@ class EditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            onBackPressed()
+        }
+
         if (isCreatingNewPill) {
             binding.textNewPill.text = getString(R.string.new_pill)
             if (!model.isPillInitialized) {
                 model.pill = model.getNewEmptyPill()
             }
             binding.pill = model.pill
+            model.firstNameEdit = false
+            model.firstDescriptionEdit = false
             initViews()
         } else {
             binding.textNewPill.text = getString(R.string.edit_pill)
@@ -130,6 +138,7 @@ class EditFragment : Fragment() {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
+
     private fun initViews() {
         model.initFields()
 
@@ -152,7 +161,6 @@ class EditFragment : Fragment() {
 
             colorAdapter.onColorClicked { _, pillColor -> model.setActivePillColor(pillColor) }
 
-
             setReminderOptionsViews()
 
             inputName.doOnTextChanged { text, _, _, _ ->
@@ -167,6 +175,24 @@ class EditFragment : Fragment() {
             imageDeletePhoto.setOnClickListener { onImageDelete() }
         }
 
+    }
+
+    private fun onBackPressed() {
+        if (model.hasPillBeenEdited) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.confirm_exit_edit))
+                .setMessage(getString(R.string.confirm_exit_edit_description))
+                .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                    findNavController().popBackStack()
+
+                    dialog.dismiss()
+                }
+                .show()
+
+        } else {
+            findNavController().popBackStack()
+        }
     }
 
     private fun onImageDelete() {
@@ -248,14 +274,17 @@ class EditFragment : Fragment() {
         checkDayLimit.setOnCheckedChangeListener { _, b ->
             onLimitDayChecked(b)
             scrollToBottom()
+            model.hasPillBeenEdited = true
         }
         checkRestoreAfter.setOnCheckedChangeListener { _, b ->
             onRestoreAfterCheck(b)
             scrollToBottom()
+            model.hasPillBeenEdited = true
         }
         checkCycleCount.setOnCheckedChangeListener { _, b ->
             onCycleCountChecked(b)
             scrollToBottom()
+            model.hasPillBeenEdited = true
         }
 
         // Set to initial state

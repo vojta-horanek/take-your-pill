@@ -20,12 +20,9 @@ import java.io.InputStream
 class EditViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository
 ) : ViewModel() {
-    fun addPill(pill: Pill) = liveData { emit(pillRepository.insertPill(pill)) }
 
     fun addAndGetPill(pill: Pill) =
         liveData(Dispatchers.IO) { emitSource(pillRepository.insertPillReturn(pill)) }
-
-    fun updatePill(pill: Pill) = liveData { emit(pillRepository.updatePill(pill)) }
 
     fun updateAndGetPill(pill: Pill) =
         liveData(Dispatchers.IO) { emitSource(pillRepository.updatePillReturn(pill)) }
@@ -34,6 +31,7 @@ class EditViewModel @ViewModelInject constructor(
 
     fun getNewEmptyPill() = Pill.getEmpty()
 
+    var hasPillBeenEdited = false
     lateinit var pill: Pill
     val isPillInitialized
         get() = ::pill.isInitialized
@@ -49,10 +47,6 @@ class EditViewModel @ViewModelInject constructor(
         colors
     }
 
-    fun setActivePillColor(pillColor: PillColor) {
-        _activeColor.value = pillColor
-    }
-
     private val _reminders = MutableLiveData(listOf<Reminder>())
 
     val reminders = Transformations.map(_reminders) {
@@ -60,19 +54,29 @@ class EditViewModel @ViewModelInject constructor(
         pill.reminders
     }
 
-    fun setReminders(reminders: List<Reminder>) {
-        _reminders.value = reminders
+    private val _photoBitmap = MutableLiveData<Bitmap?>()
+
+    val photoBitmap = Transformations.map(_photoBitmap) {
+        pill.photo = it
+        it
+    }
+
+    fun setActivePillColor(pillColor: PillColor) {
+        _activeColor.value = pillColor
+        hasPillBeenEdited = true
     }
 
     fun addReminder(reminder: Reminder) {
         val newList = _reminders.value?.toMutableList()
         newList?.add(reminder)
+        hasPillBeenEdited = true
         _reminders.value = newList
     }
 
     fun removerReminder(reminder: Reminder) {
         val newList = _reminders.value?.toMutableList()
         newList?.remove(reminder)
+        hasPillBeenEdited = true
         _reminders.value = newList
     }
 
@@ -84,26 +88,15 @@ class EditViewModel @ViewModelInject constructor(
             newList?.remove(reminder)
         }
         newList?.add(reminder)
+        hasPillBeenEdited = true
         _reminders.value = newList
-    }
-
-    fun getReminderTimes(): MutableList<Reminder> {
-        return _reminders.value!!.toMutableList()
-    }
-
-    private val _photoBitmap: MutableLiveData<Bitmap?> by lazy {
-        MutableLiveData<Bitmap?>()
-    }
-
-    val photoBitmap = Transformations.map(_photoBitmap) {
-        pill.photo = it
-        it
     }
 
     fun setImage(data: Uri, context: Context) = liveData(Dispatchers.IO) {
         try {
             val inputStream: InputStream? = context.contentResolver.openInputStream(data)
             _photoBitmap.postValue(BitmapFactory.decodeStream(inputStream))
+            hasPillBeenEdited = true
             emit(true)
         } catch (e: FileNotFoundException) {
             emit(false)
@@ -111,21 +104,34 @@ class EditViewModel @ViewModelInject constructor(
     }
 
     fun deleteImage() {
+        hasPillBeenEdited = true
         _photoBitmap.value = null
     }
 
     fun initFields() {
-        setActivePillColor(pill.color)
-        setReminders(pill.reminders)
+        _activeColor.value = pill.color
+        _reminders.value = pill.reminders
     }
+
+    public var firstNameEdit = true
+    public var firstDescriptionEdit = true
 
     fun onNameChanged(text: CharSequence?): Boolean {
         text?.let { pill.name = it.trim().toString() }
+        if (firstNameEdit) {
+            firstNameEdit = false
+        } else {
+            hasPillBeenEdited = true
+        }
         return text.isNullOrBlank()
     }
 
-    fun onDescriptionChanged(text: CharSequence?) =
+    fun onDescriptionChanged(text: CharSequence?) {
         text?.let { pill.description = it.trim().toString() }
-
-
+        if (firstDescriptionEdit) {
+            firstDescriptionEdit = false
+        } else {
+            hasPillBeenEdited = true
+        }
+    }
 }

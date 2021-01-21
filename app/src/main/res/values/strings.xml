@@ -26,6 +26,8 @@
     <string name="confirm_delete_history_description">This will delete the history for this pill</string>
     <string name="confirm_delete_photo">Do you really want to remove the photo?</string>
     <string name="confirm_delete_photo_description">This will remove the current photo from this pill</string>
+    <string name="confirm_exit_edit">Do you really want to exit?</string>
+    <string name="confirm_exit_edit_description">This will discard all your modifications</string>
     <string name="description">Description</string>
     <string name="name">Name</string>
     <string name="photo">Photo</string>

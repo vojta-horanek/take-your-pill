@@ -102,4 +102,8 @@
     <string name="change_confirm_time">Změnit čas potvrzení</string>
     <string name="confirm_delete_history">Doopravdy to chcete udělat?</string>
     <string name="confirm_delete_history_description">Toto smaže celou historii pro tento prášek.</string>
+    <string name="confirm_delete_photo">Doopravdy chcete smazat fotku?</string>
+    <string name="confirm_delete_photo_description">Toto smaže fotku u tohoto prášku.</string>
+    <string name="confirm_exit_edit">Doopravdy chcete odejít?</string>
+    <string name="confirm_exit_edit_description">Toto zahodí všechny Vaše úpravy.</string>
 </resources>
