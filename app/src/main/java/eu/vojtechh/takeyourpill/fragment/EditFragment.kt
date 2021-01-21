@@ -153,8 +153,8 @@ class EditFragment : Fragment() {
             }
 
             recyclerReminders.adapter = reminderAdapter
-            reminderAdapter.onReminderClick { _, reminder -> showReminderDialog(reminder, true) }
-            reminderAdapter.onReminderDelete { _, reminder -> model.removerReminder(reminder) }
+            reminderAdapter.onReminderClicked { _, reminder -> showReminderDialog(reminder, true) }
+            reminderAdapter.onReminderDelete { _, reminder -> model.removeReminder(reminder) }
 
             recyclerColor.adapter = colorAdapter
             recyclerColor.disableAnimations()

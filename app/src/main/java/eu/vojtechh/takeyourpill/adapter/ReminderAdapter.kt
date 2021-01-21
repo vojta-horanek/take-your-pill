@@ -16,12 +16,12 @@ class ReminderAdapter(
     private var clickListener: (View, Reminder) -> Unit = { _, _ -> }
     private var deleteListener: (View, Reminder) -> Unit = { _, _ -> }
 
-    fun onReminderClick(listener: (View, Reminder) -> Unit) {
+    fun onReminderClicked(listener: (View, Reminder) -> Unit) {
         clickListener = listener
     }
 
     fun onReminderDelete(listener: (View, Reminder) -> Unit) {
-        clickListener = listener
+        deleteListener = listener
     }
 
     override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {
@@ -35,8 +35,8 @@ class ReminderAdapter(
                 parent,
                 false
             ),
-            deleteListener,
-            clickListener
+            clickListener,
+            deleteListener
         )
     }
 }

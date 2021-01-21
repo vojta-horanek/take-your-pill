@@ -36,7 +36,9 @@ class EditViewModel @ViewModelInject constructor(
     val isPillInitialized
         get() = ::pill.isInitialized
 
-    private val _activeColor = MutableLiveData(PillColor.default())
+    private val _activeColor: MutableLiveData<PillColor> by lazy {
+        MutableLiveData<PillColor>()
+    }
 
     val pillColors = Transformations.map(_activeColor) {
         pill.color = it
@@ -47,14 +49,18 @@ class EditViewModel @ViewModelInject constructor(
         colors
     }
 
-    private val _reminders = MutableLiveData(listOf<Reminder>())
+    private val _reminders: MutableLiveData<List<Reminder>> by lazy {
+        MutableLiveData<List<Reminder>>()
+    }
 
     val reminders = Transformations.map(_reminders) {
         pill.reminders = it.sortedBy { rem -> rem.time.time }.toMutableList()
         pill.reminders
     }
 
-    private val _photoBitmap = MutableLiveData<Bitmap?>()
+    private val _photoBitmap: MutableLiveData<Bitmap?> by lazy {
+        MutableLiveData<Bitmap?>()
+    }
 
     val photoBitmap = Transformations.map(_photoBitmap) {
         pill.photo = it
@@ -73,7 +79,7 @@ class EditViewModel @ViewModelInject constructor(
         _reminders.value = newList
     }
 
-    fun removerReminder(reminder: Reminder) {
+    fun removeReminder(reminder: Reminder) {
         val newList = _reminders.value?.toMutableList()
         newList?.remove(reminder)
         hasPillBeenEdited = true
@@ -113,8 +119,8 @@ class EditViewModel @ViewModelInject constructor(
         _reminders.value = pill.reminders
     }
 
-    public var firstNameEdit = true
-    public var firstDescriptionEdit = true
+    var firstNameEdit = true
+    var firstDescriptionEdit = true
 
     fun onNameChanged(text: CharSequence?): Boolean {
         text?.let { pill.name = it.trim().toString() }
