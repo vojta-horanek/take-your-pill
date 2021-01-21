@@ -121,8 +121,8 @@
                     android:layout_marginTop="@dimen/screen_margin_vertical_small"
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="@+id/textReminders"
-                    app:layout_constraintStart_toStartOf="@+id/textReminders"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textReminders"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_reminder" />

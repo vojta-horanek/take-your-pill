@@ -31,7 +31,6 @@
                 android:overScrollMode="never"
                 android:paddingBottom="@dimen/list_with_fab_padding">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,16 +52,15 @@
                         android:background="?attr/colorSurface"
                         android:clipChildren="false"
                         android:clipToPadding="false"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="16dp">
-
+                        android:orientation="vertical">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/inputNameLayout"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/name">
+                            android:hint="@string/name"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/inputName"
@@ -79,7 +77,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/screen_margin_vertical_little"
-                            android:hint="@string/description">
+                            android:hint="@string/description"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/inputDescription"
@@ -95,7 +94,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/screen_margin_vertical"
                             android:text="@string/color"
-                            android:textAppearance="@style/AppTheme.Text.BodyTitle" />
+                            android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerColor"
@@ -104,7 +104,8 @@
                             android:layout_marginTop="@dimen/screen_margin_vertical_small"
                             android:orientation="horizontal"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/item_color" />
+                            tools:listitem="@layout/item_color"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/textPhoto"
@@ -112,7 +113,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/screen_margin_vertical"
                             android:text="@string/photo"
-                            android:textAppearance="@style/AppTheme.Text.BodyTitle" />
+                            android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cardPhoto"
@@ -129,7 +131,8 @@
                             app:cardElevation="0dp"
                             app:cardPreventCornerOverlap="true"
                             app:strokeColor="@color/stroke_color"
-                            app:strokeWidth="1dp">
+                            app:strokeWidth="1dp"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal">
 
                             <FrameLayout
                                 android:id="@+id/layoutPhoto"
@@ -183,7 +186,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/reminders"
-                            android:textAppearance="@style/AppTheme.Text.BodyTitle" />
+                            android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerReminders"
@@ -204,20 +208,23 @@
                             android:text="@string/add_reminder"
                             android:textAppearance="@style/AppTheme.Text.ButtonSmall"
                             app:icon="@drawable/ic_add_alert"
-                            app:strokeColor="@color/colorPrimary" />
+                            app:strokeColor="@color/colorPrimary"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
 
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:id="@+id/checkDayLimit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/screen_margin_vertical"
-                            android:text="@string/limit_to_x_days" />
+                            android:text="@string/limit_to_x_days"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
 
                         <LinearLayout
                             android:id="@+id/groupLimit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/inputDayNumberLayout"
@@ -259,13 +266,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/screen_margin_vertical_small"
-                            android:text="@string/restore_after" />
+                            android:text="@string/restore_after"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
 
                         <LinearLayout
                             android:id="@+id/groupRestore"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/inputRestoreLayout"
@@ -289,13 +298,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/screen_margin_vertical_small"
-                            android:text="@string/cycle_forever" />
+                            android:text="@string/cycle_forever"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal" />
 
                         <LinearLayout
                             android:id="@+id/groupCycle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/inputCycleCountLayout"

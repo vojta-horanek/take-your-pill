@@ -20,7 +20,8 @@
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/screen_margin_horizontal">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
