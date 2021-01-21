@@ -6,4 +6,6 @@
     <string name="ucrop_rotate">Otočit</string>
     <string name="ucrop_scale">Škálovat</string>
     <string name="ucrop_crop">Oříznout</string>
+    <string name="ucrop_confirm_discard_photo">Doopravdy chcete odejít?</string>
+    <string name="ucrop_confirm_discard_photo_description">Toto zruší vaše úpravy a fotku nepřidá.</string>
 </resources>

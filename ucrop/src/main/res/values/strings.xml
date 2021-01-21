@@ -10,5 +10,9 @@
     <string name="ucrop_rotate">Rotate</string>
     <string name="ucrop_scale">Scale</string>
     <string name="ucrop_crop">Crop</string>
+    <string name="ucrop_confirm_discard_photo">Do you really want to exit?</string>
+    <string name="ucrop_confirm_discard_photo_description">This will discard your edits and your photo won\'t be added</string>
+    <string name="ucrop_no">No</string>
+    <string name="ucrop_yes">Yes</string>
 
 </resources>
