@@ -24,6 +24,8 @@
     <string name="confirm_delete_pill">Do you really want to delete this pill?</string>
     <string name="confirm_delete_history">Do you really want to do this?</string>
     <string name="confirm_delete_history_description">This will delete the history for this pill</string>
+    <string name="confirm_delete_photo">Do you really want to remove the photo?</string>
+    <string name="confirm_delete_photo_description">This will remove the current photo from this pill</string>
     <string name="description">Description</string>
     <string name="name">Name</string>
     <string name="photo">Photo</string>
@@ -116,4 +118,5 @@
     <string name="mark_as_skipped">Mark as skipped</string>
     <string name="mark_as_confirmed">Mark as confirmed</string>
     <string name="change_confirm_time">Change confirm time</string>
+    <string name="error_opening_image">There was an error opening the image</string>
 </resources>

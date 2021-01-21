@@ -14,6 +14,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.*
@@ -94,5 +95,14 @@ fun PopupMenu.forcePopUpMenuToShowIcons() {
         method.invoke(menu, true)
     } catch (e: Exception) {
         e.printStackTrace()
+    }
+}
+
+fun RecyclerView.disableAnimations() {
+    (itemAnimator as SimpleItemAnimator).apply {
+        changeDuration = 0
+        removeDuration = 0
+        addDuration = 0
+        moveDuration = 0
     }
 }

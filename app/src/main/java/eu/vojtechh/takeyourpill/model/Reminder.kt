@@ -39,6 +39,8 @@ data class Reminder(
     val minute
         get() = time.minute
 
+    fun hasSameTime(other: Reminder) = hour == other.hour && minute == other.minute
+
     fun getMillisWithTodayDate() = getCalendarWithTodayDate().timeInMillis
 
     fun getCalendarWithTodayDate(): Calendar {

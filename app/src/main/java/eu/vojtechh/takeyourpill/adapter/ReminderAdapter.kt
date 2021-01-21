@@ -9,14 +9,19 @@ import eu.vojtechh.takeyourpill.databinding.ItemReminderBinding
 import eu.vojtechh.takeyourpill.model.Reminder
 
 class ReminderAdapter(
-    private val listener: ReminderAdapterListener,
     private val showDelete: Boolean = true,
     private val showRipple: Boolean = true
 ) : ListAdapter<Reminder, ReminderViewHolder>(Reminder.DiffCallback) {
 
-    interface ReminderAdapterListener {
-        fun onReminderDelete(view: View, reminder: Reminder) {}
-        fun onReminderClicked(view: View, reminder: Reminder) {}
+    private var clickListener: (View, Reminder) -> Unit = { _, _ -> }
+    private var deleteListener: (View, Reminder) -> Unit = { _, _ -> }
+
+    fun onReminderClick(listener: (View, Reminder) -> Unit) {
+        clickListener = listener
+    }
+
+    fun onReminderDelete(listener: (View, Reminder) -> Unit) {
+        clickListener = listener
     }
 
     override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {
@@ -30,7 +35,8 @@ class ReminderAdapter(
                 parent,
                 false
             ),
-            listener
+            deleteListener,
+            clickListener
         )
     }
 }

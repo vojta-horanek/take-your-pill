@@ -8,12 +8,12 @@ import eu.vojtechh.takeyourpill.adapter.viewholder.ColorViewHolder
 import eu.vojtechh.takeyourpill.databinding.ItemColorBinding
 import eu.vojtechh.takeyourpill.model.PillColor
 
-class ColorAdapter(
-    private val listener: ColorAdapterListener
-) : ListAdapter<PillColor, ColorViewHolder>(PillColor.DiffCallback) {
+class ColorAdapter : ListAdapter<PillColor, ColorViewHolder>(PillColor.DiffCallback) {
 
-    interface ColorAdapterListener {
-        fun onColorClicked(view: View, color: PillColor)
+    private var clickListener: (View, PillColor) -> Unit = { _, _ -> }
+
+    fun onColorClicked(listener: (View, PillColor) -> Unit) {
+        clickListener = listener
     }
 
     override fun onBindViewHolder(holder: ColorViewHolder, position: Int) {
@@ -27,7 +27,7 @@ class ColorAdapter(
                 parent,
                 false
             ),
-            listener
+            clickListener
         )
     }
 }

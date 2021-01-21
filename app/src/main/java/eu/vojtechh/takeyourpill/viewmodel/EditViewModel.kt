@@ -5,13 +5,15 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.FileNotFoundException
 import java.io.InputStream
 
@@ -20,12 +22,13 @@ class EditViewModel @ViewModelInject constructor(
 ) : ViewModel() {
     fun addPill(pill: Pill) = liveData { emit(pillRepository.insertPill(pill)) }
 
-    fun addPillReturn(pill: Pill) = liveData { emitSource(pillRepository.insertPillReturn(pill)) }
+    fun addAndGetPill(pill: Pill) =
+        liveData(Dispatchers.IO) { emitSource(pillRepository.insertPillReturn(pill)) }
 
     fun updatePill(pill: Pill) = liveData { emit(pillRepository.updatePill(pill)) }
 
-    fun updatePillReturn(pill: Pill) =
-        liveData { emitSource(pillRepository.updatePillReturn(pill)) }
+    fun updateAndGetPill(pill: Pill) =
+        liveData(Dispatchers.IO) { emitSource(pillRepository.updatePillReturn(pill)) }
 
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
 
@@ -35,15 +38,13 @@ class EditViewModel @ViewModelInject constructor(
     val isPillInitialized
         get() = ::pill.isInitialized
 
-    private val _activeColor: MutableLiveData<PillColor> by lazy {
-        MutableLiveData<PillColor>()
-    }
+    private val _activeColor = MutableLiveData(PillColor.default())
 
     val pillColors = Transformations.map(_activeColor) {
         pill.color = it
         val colors = PillColor.getAllPillColorList()
         for (color in colors) {
-            color.checked = (color.resource == it.resource)
+            color.isChecked = (color.resource == it.resource)
         }
         colors
     }
@@ -52,9 +53,7 @@ class EditViewModel @ViewModelInject constructor(
         _activeColor.value = pillColor
     }
 
-    private val _reminders: MutableLiveData<List<Reminder>> by lazy {
-        MutableLiveData<List<Reminder>>()
-    }
+    private val _reminders = MutableLiveData(listOf<Reminder>())
 
     val reminders = Transformations.map(_reminders) {
         pill.reminders = it.sortedBy { rem -> rem.time.time }.toMutableList()
@@ -101,26 +100,32 @@ class EditViewModel @ViewModelInject constructor(
         it
     }
 
-    fun setImage(data: Uri, context: Context) = viewModelScope.launch(Dispatchers.IO) {
+    fun setImage(data: Uri, context: Context) = liveData(Dispatchers.IO) {
         try {
-            val inputStream: InputStream? =
-                context.contentResolver.openInputStream(data)
-            val userBitmap = BitmapFactory.decodeStream(inputStream)
-            val scaledBitmap = Bitmap.createScaledBitmap(
-                userBitmap,
-                (userBitmap.width.toFloat() * 0.8).toInt(), // Downscale image
-                (userBitmap.height.toFloat() * 0.8).toInt(),
-                false
-            )
-            _photoBitmap.postValue(scaledBitmap)
+            val inputStream: InputStream? = context.contentResolver.openInputStream(data)
+            _photoBitmap.postValue(BitmapFactory.decodeStream(inputStream))
+            emit(true)
         } catch (e: FileNotFoundException) {
-            // Ignore
+            emit(false)
         }
     }
 
     fun deleteImage() {
         _photoBitmap.value = null
     }
+
+    fun initFields() {
+        setActivePillColor(pill.color)
+        setReminders(pill.reminders)
+    }
+
+    fun onNameChanged(text: CharSequence?): Boolean {
+        text?.let { pill.name = it.trim().toString() }
+        return text.isNullOrBlank()
+    }
+
+    fun onDescriptionChanged(text: CharSequence?) =
+        text?.let { pill.description = it.trim().toString() }
 
 
 }

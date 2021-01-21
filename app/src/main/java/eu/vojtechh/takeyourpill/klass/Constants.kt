@@ -9,5 +9,10 @@ class Constants {
         const val INTENT_EXTRA_PILL_ID = "INTENT_EXTRA_PILL_ID"
         const val PILL_DATABASE_NAME = "db_pill"
         const val TAG_TIME_PICKER_HISTORY_VIEW = "TIME_PICKER_HISTORY_VIEW"
+        const val TAG_REMINDER_DIALOG = "TAG_REMINDER_DIALOG"
+        const val READ_EXTERNAL_STORAGE_PERMISSION_CODE = 1
+        const val IMAGE_MAX_WIDTH = 1920
+        const val IMAGE_MAX_HEIGHT = 1080
+        const val IMAGE_MAX_SIZE = 1024
     }
 }

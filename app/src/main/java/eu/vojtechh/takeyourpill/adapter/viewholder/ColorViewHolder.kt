@@ -1,20 +1,20 @@
 package eu.vojtechh.takeyourpill.adapter.viewholder
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import eu.vojtechh.takeyourpill.adapter.ColorAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemColorBinding
 import eu.vojtechh.takeyourpill.model.PillColor
 
 class ColorViewHolder(
     private val binding: ItemColorBinding,
-    listener: ColorAdapter.ColorAdapterListener
+    private val listener: (View, PillColor) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    init {
-        binding.listener = listener
-    }
 
-    fun bind(color: PillColor) {
-        binding.color = color
-        binding.executePendingBindings()
+    fun bind(pillColor: PillColor) {
+        binding.run {
+            color = pillColor
+            pillColorFrame.setOnClickListener { view -> listener(view, pillColor) }
+            executePendingBindings()
+        }
     }
 }

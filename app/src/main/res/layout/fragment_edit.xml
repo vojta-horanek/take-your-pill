@@ -146,7 +146,7 @@
                                     android:focusable="true"
                                     android:foreground="?attr/selectableItemBackground"
                                     android:scaleType="centerCrop"
-                                    android:src="@{pill.photoDrawable(context)}"
+                                    android:src="@{pill.getPhotoDrawable(context)}"
                                     app:tint="#8C000000"
                                     app:tintMode="src_over"
                                     tools:ignore="ContentDescription"
@@ -169,7 +169,7 @@
                                     android:layout_margin="8dp"
                                     android:contentDescription="@string/delete"
                                     android:elevation="5dp"
-                                    android:visibility="@{pill.photoVisibility, default=gone}"
+                                    app:isVisible="@{pill.photoVisible}"
                                     app:srcCompat="@drawable/ic_delete"
                                     app:tint="@android:color/white"
                                     tools:visibility="visible" />

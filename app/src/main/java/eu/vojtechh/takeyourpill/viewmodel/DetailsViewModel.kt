@@ -16,6 +16,7 @@ class DetailsViewModel @ViewModelInject constructor(
     private val pillRepository: PillRepository
 ) : ViewModel() {
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
+
     fun deletePillWithHistory(pill: Pill) =
         viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePillAndReminder(pill) }
 
@@ -24,9 +25,7 @@ class DetailsViewModel @ViewModelInject constructor(
 
     lateinit var pill: Pill
 
-    private val _reminders: MutableLiveData<List<Reminder>> by lazy {
-        MutableLiveData<List<Reminder>>()
-    }
+    private val _reminders = MutableLiveData(listOf<Reminder>())
 
     val reminders = Transformations.map(_reminders) {
         pill.reminders = it.sortedBy { rem -> rem.time.time }.toMutableList()

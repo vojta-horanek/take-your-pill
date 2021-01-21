@@ -2,7 +2,6 @@ package eu.vojtechh.takeyourpill.model
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.room.Embedded
 import androidx.room.Ignore
@@ -90,11 +89,10 @@ data class Pill(
             pillEntity.optionsChanging = value
         }
 
-    val photoVisibility
-        get() = if (pillEntity.photo != null) View.VISIBLE else View.GONE
-    val descriptionVisibility
-        get() = pillEntity.description?.let { if (it.isNotBlank()) View.VISIBLE else View.GONE }
-            ?: View.GONE
+    val isPhotoVisible
+        get() = pillEntity.photo != null
+    val isDescriptionVisible
+        get() = pillEntity.description?.isNotBlank() ?: false
 
     fun getCloseReminder(): Reminder? {
         // TODO Also include if user confirmed already
@@ -127,7 +125,7 @@ data class Pill(
         }
     }
 
-    fun photoDrawable(context: Context) =
+    fun getPhotoDrawable(context: Context) =
         if (pillEntity.photo != null) BitmapDrawable(context.resources, pillEntity.photo)
         else ContextCompat.getDrawable(context, R.drawable.photo_default)
 

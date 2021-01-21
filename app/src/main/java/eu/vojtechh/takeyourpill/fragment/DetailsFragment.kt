@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.transition.Slide
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
@@ -20,18 +19,19 @@ import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.ConfirmationDialog
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.disableAnimations
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
-    ConfirmationDialog.DeleteListener, ReminderAdapter.ReminderAdapterListener {
+    ConfirmationDialog.DeleteListener {
 
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
     private lateinit var binding: FragmentDetailsBinding
-    private val reminderAdapter = ReminderAdapter(this, showDelete = false, showRipple = false)
+    private val reminderAdapter = ReminderAdapter(showDelete = false, showRipple = false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,73 +55,69 @@ class DetailsFragment : Fragment(),
         postponeEnterTransition()
 
         var pillId = requireArguments().getLong(Constants.INTENT_EXTRA_PILL_ID, -1L)
-        if (pillId == -1L) {
-            pillId = args.pillId
-        }
+        if (pillId == -1L) pillId = args.pillId
 
-        model.getPillById(pillId).observe(viewLifecycleOwner, {
-            if (it != null) {
+        model.getPillById(pillId).observe(viewLifecycleOwner) { pill ->
+            pill?.let {
                 model.pill = it
-                binding.pill = model.pill
+                binding.pill = it
                 initViews()
             }
-        })
+        }
 
     }
 
     private fun initViews() {
 
-        binding.cardPhoto.visibility = model.pill.photoVisibility
-        binding.recyclerReminders.adapter = reminderAdapter
+        binding.run {
+            cardPhoto.isVisible = model.pill.isPhotoVisible
 
-        // Turn off animations for the recycler view
-        (binding.recyclerReminders.itemAnimator as SimpleItemAnimator).apply {
-            changeDuration = 0
-            removeDuration = 0
-            addDuration = 0
-            moveDuration = 0
-        }
+            recyclerReminders.adapter = reminderAdapter
+            recyclerReminders.disableAnimations()
 
-        binding.buttonDelete.setOnClickListener {
-            ConfirmationDialog.newInstance(
-                getString(R.string.delete_pill),
-                getString(R.string.delete_only_pil),
-                getString(R.string.delete_pill_and_history),
-                R.drawable.ic_delete,
-                R.drawable.ic_delete_history,
-            ).apply {
-                setListener(this@DetailsFragment) // FIXME the listener get deleted when BottomS.. open and theme is changed
-            }.show(childFragmentManager, "confirm_delete")
-        }
+            binding.buttonDelete.setOnClickListener {
+                ConfirmationDialog.newInstance(
+                    getString(R.string.delete_pill),
+                    getString(R.string.delete_only_pil),
+                    getString(R.string.delete_pill_and_history),
+                    R.drawable.ic_delete,
+                    R.drawable.ic_delete_history,
+                ).apply {
+                    setListener(this@DetailsFragment) // FIXME the listener get deleted when BottomS.. open and theme is changed
+                }.show(childFragmentManager, "confirm_delete")
+            }
 
-        binding.buttonEdit.setOnClickListener {
-            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-            val directions =
-                DetailsFragmentDirections.actionDetailsFragmentToEditFragment(model.pill.id)
-            findNavController().navigate(directions)
+            binding.buttonEdit.setOnClickListener {
+                exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+                findNavController().navigate(
+                    DetailsFragmentDirections.actionDetailsFragmentToEditFragment(
+                        model.pill.id
+                    )
+                )
+            }
         }
 
         model.setReminders(model.pill.reminders)
-        model.reminders.observe(viewLifecycleOwner, {
-            reminderAdapter.submitList(it)
-            (binding.root.parent as? ViewGroup)?.doOnPreDraw {
+
+        model.reminders.observe(viewLifecycleOwner) {
+            reminderAdapter.submitList(it) {
                 startPostponedEnterTransition()
             }
-        })
+        }
 
     }
 
     override fun onDeletePill(view: View) {
         model.deletePill(model.pill.pillEntity)
-        doOnDelete()
+        exitOnDelete()
     }
 
     override fun onDeletePillHistory(view: View) {
         model.deletePillWithHistory(model.pill)
-        doOnDelete()
+        exitOnDelete()
     }
 
-    private fun doOnDelete() {
+    private fun exitOnDelete() {
         NotificationManager.removeNotificationChannel(requireContext(), model.pill.id.toString())
         exitTransition = Slide().apply {
             addTarget(R.id.detailsView)

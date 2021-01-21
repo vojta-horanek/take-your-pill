@@ -14,18 +14,16 @@ import eu.vojtechh.takeyourpill.klass.setDrawableTint
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
-class ReminderDialog :
-    RoundedDialogFragment() {
-    private var editing = false
+class ReminderDialog : RoundedDialogFragment() {
     private lateinit var snackbar: Snackbar
     private lateinit var binding: DialogNewReminderBinding
 
-    private var listener: ConfirmListener? = null
-
+    private var confirmListener: (Reminder, Boolean) -> Unit = { _, _ -> }
     private lateinit var reminder: Reminder
+    private var isEditing = false
 
-    fun setListener(listener: ConfirmListener): ReminderDialog {
-        this.listener = listener
+    fun setConfirmListener(listener: (Reminder, Boolean) -> Unit): ReminderDialog {
+        this.confirmListener = listener
         return this
     }
 
@@ -34,8 +32,8 @@ class ReminderDialog :
         return this
     }
 
-    fun setEditing(editing: Boolean): ReminderDialog {
-        this.editing = editing
+    fun setIsEditing(editing: Boolean): ReminderDialog {
+        this.isEditing = editing
         return this
     }
 
@@ -54,23 +52,23 @@ class ReminderDialog :
         savedInstanceState: Bundle?
     ): View {
         binding = DialogNewReminderBinding.inflate(inflater, container, false)
-
         snackbar = Snackbar.make(binding.coordinatorNewReminder, "", Snackbar.LENGTH_SHORT)
+
         setTexts()
-        binding.numberPickerAmount.value = reminder.amount
 
-        binding.textConfirm.setOnClickListener {
-            listener?.onNewReminderClicked(reminder, editing)
-        }
+        binding.run {
+            numberPickerAmount.value = reminder.amount
+            textConfirm.setOnClickListener { confirmListener(reminder, isEditing) }
 
-        binding.numberPickerAmount.setOnValueChangedListener { _, _, value ->
-            reminder.amount = value
-            setTexts()
-        }
+            numberPickerAmount.setOnValueChangedListener { _, _, value ->
+                reminder.amount = value
+                setTexts()
+            }
 
-        binding.textTime.setOnClickListener {
-            snackbar.dismiss()
-            showTimeDialog()
+            textTime.setOnClickListener {
+                snackbar.dismiss()
+                showTimeDialog()
+            }
         }
 
         return binding.root
@@ -121,9 +119,5 @@ class ReminderDialog :
             )
 
         }
-    }
-
-    interface ConfirmListener {
-        fun onNewReminderClicked(reminder: Reminder, editing: Boolean)
     }
 }

@@ -74,7 +74,7 @@
                         android:maxLines="1"
                         android:text="@{pill.description}"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                        android:visibility="@{pill.descriptionVisibility}"
+                        app:isVisible="@{pill.descriptionVisible}"
                         tools:text="Description" />
                 </LinearLayout>
 
@@ -84,7 +84,7 @@
                     android:layout_height="@dimen/color_dot_size"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/shape_oval"
-                    app:background_color_shaped="@{pill.colorResource(context)}"
+                    app:backgroundColorShaped="@{pill.colorResource(context)}"
                     app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
                     app:layout_constraintEnd_toStartOf="@id/imageNext"
                     app:layout_constraintTop_toTopOf="@+id/linearLayout" />
