@@ -25,18 +25,19 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.run {
-            listOf(pieChartAll, pieChartMissed).forEach {
+            listOf(pieChartAll, pieChartMissed, pieChartAllConfirmed).forEach {
                 it.apply {
                     description.isEnabled = false
                     legend.textColor = requireContext().getAttr(R.attr.colorOnSurface)
                     legend.isWordWrapEnabled = true
                     legend.textSize = 12f
+                    legend.isEnabled = false
                     setUsePercentValues(true)
                     dragDecelerationFrictionCoef = 0.8f
                     animateY(1400, Easing.EaseInOutQuad)
                     holeRadius = 25f
                     transparentCircleRadius = 30f
-                    setDrawEntryLabels(false)
+                    setDrawEntryLabels(true)
                 }
             }
         }
@@ -53,6 +54,11 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
             pieDataAll.observe(viewLifecycleOwner) {
                 binding.pieChartAll.data = it
                 binding.pieChartAll.invalidate()
+            }
+
+            pieDataConfirmed.observe(viewLifecycleOwner) {
+                binding.pieChartAllConfirmed.data = it
+                binding.pieChartAllConfirmed.invalidate()
             }
 
             pieDataMissed.observe(viewLifecycleOwner) {

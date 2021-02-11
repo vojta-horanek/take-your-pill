@@ -133,4 +133,6 @@
     <string name="stat_confirmed">\u2022 Confirmed %1$d times</string>
     <string name="stat_missed">\u2022 Missed %1$d times</string>
     <string name="no_history">Looks like you haven\'t received any reminder yet. Statistics and charts won\'t be available for you.</string>
+    <string name="confirmed_missed_pills">Confirmed ✕ Missed</string>
+    <string name="missed">Missed</string>
 </resources>

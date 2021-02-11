@@ -118,4 +118,6 @@
     <string name="no_history">Vypadá to, že jste zatím neobdrželi žádnou připomínku, statistiky a grafy pro Vás zatím nebudou dostupné.</string>
     <string name="stat_overall">Celkem</string>
     <string name="error_opening_image">Nastala chyba při otevírání obrázku</string>
+    <string name="confirmed_missed_pills">Potvrzené ✕ Vynechané</string>
+    <string name="missed">Vynecháno</string>
 </resources>

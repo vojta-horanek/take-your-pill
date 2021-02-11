@@ -22,4 +22,5 @@
     <dimen name="list_with_fab_and_navigation_padding">128dp</dimen>
     <dimen name="list_with_navigation_padding">56dp</dimen>
     <dimen name="recycler_history_view_min_height">256dp</dimen>
+    <dimen name="chart_height">400dp</dimen>
 </resources>
