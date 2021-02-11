@@ -32,8 +32,8 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="16dp">
+        android:paddingHorizontal="@dimen/screen_margin_horizontal_small"
+        android:paddingBottom="@dimen/screen_margin_vertical">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

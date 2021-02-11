@@ -64,6 +64,14 @@
         <item name="cornerSizeTopLeft">0dp</item>
     </style>
 
+    <style name="AppTheme.Text.Header5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/jost_medium</item>
+        <item name="android:textColor">?colorOnSurface</item>
+    </style>
+
+    <style name="AppTheme.Text.Overline" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="android:textColor">?colorOnSurface</item>
+    </style>
 
     <style name="AppTheme.Text.Header4" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="fontFamily">@font/jost_medium</item>

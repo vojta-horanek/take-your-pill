@@ -108,4 +108,8 @@
     <string name="confirm_exit_edit_description">Toto zahodí všechny Vaše úpravy.</string>
     <string name="overview">Přehled</string>
     <string name="charts">Grafy</string>
+    <string name="pill">Prášek</string>
+    <string name="stats">Statistiky</string>
+    <string name="all_pills_chart">Všechny prášky</string>
+    <string name="missed_pills">Vynechané prášky</string>
 </resources>

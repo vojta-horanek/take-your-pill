@@ -6,7 +6,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
@@ -14,7 +13,7 @@ import eu.vojtechh.takeyourpill.databinding.FragmentHistoryOverviewBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.Pill
-import eu.vojtechh.takeyourpill.viewmodel.HistoryOverviewViewModel
+import eu.vojtechh.takeyourpill.viewmodel.history.HistoryOverviewViewModel
 
 @AndroidEntryPoint
 class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),

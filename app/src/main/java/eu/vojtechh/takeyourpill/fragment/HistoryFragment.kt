@@ -3,7 +3,6 @@ package eu.vojtechh.takeyourpill.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +30,8 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.overview)
-                1 -> getString(R.string.charts)
+                1 -> getString(R.string.stats)
+                2 -> getString(R.string.charts)
                 else -> getString(R.string.history)
             }
         }.attach()

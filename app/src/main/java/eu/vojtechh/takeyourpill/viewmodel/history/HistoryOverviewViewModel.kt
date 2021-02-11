@@ -1,4 +1,4 @@
-package eu.vojtechh.takeyourpill.viewmodel
+package eu.vojtechh.takeyourpill.viewmodel.history
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel

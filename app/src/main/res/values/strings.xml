@@ -93,7 +93,7 @@
     <string name="intro_new_pill">Start by adding a pill</string>
     <string name="intro_new_pill_description">Click the \"New Pill\" button</string>
     <string name="intro_reminder">Get reminder</string>
-    <string name="intro_reminder_description">Set reminders for your pills and record your taking habbits</string>
+    <string name="intro_reminder_description">Set reminders for your pills and record your taking habits</string>
     <string name="intro_history">See history</string>
     <string name="intro_history_description">Look at the history of your pill taking and get data on your accuracy</string>
 
@@ -124,4 +124,12 @@
     <string name="error_opening_image">There was an error opening the image</string>
     <string name="overview">Overview</string>
     <string name="charts">Charts</string>
+    <string name="stats">Stats</string>
+    <string name="all_pills_chart">All pills</string>
+    <string name="missed_pills">Missed pills</string>
+    <string name="stat_overall">Overall</string>
+    <string name="stat_name">%1$s:</string>
+    <string name="stat_reminded">\u2022 Reminded %1$d times</string>
+    <string name="stat_confirmed">\u2022 Confirmed %1$d times</string>
+    <string name="stat_missed">\u2022 Missed %1$d times</string>
 </resources>

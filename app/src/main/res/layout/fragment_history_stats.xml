@@ -37,61 +37,31 @@
                 android:padding="@dimen/screen_margin_horizontal_small">
 
                 <TextView
-                    android:id="@+id/titleGraphs"
+                    android:id="@+id/titleStats"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/AppTheme.Text.Header5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="@string/charts" />
+                    android:text="@string/stats" />
 
-                <TextView
-                    android:id="@+id/titleGraphAll"
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                    android:id="@+id/recyclerStats"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/all_pills_chart"
-                    android:textAppearance="@style/AppTheme.Text.Overline"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/titleGraphs" />
-
-
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/pieChartAll"
-                    android:layout_width="match_parent"
-                    android:layout_height="256dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/titleGraphAll"
-                    android:layout_marginTop="@dimen/screen_margin_vertical_little" />
-
-                <TextView
-                    android:id="@+id/titleGraphMissed"
-                    android:layout_marginTop="@dimen/screen_margin_vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/missed_pills"
-                    android:textAppearance="@style/AppTheme.Text.Overline"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pieChartAll" />
-
-
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/pieChartMissed"
-                    android:layout_width="match_parent"
-                    android:layout_height="256dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/titleGraphMissed"
-                    android:layout_marginTop="@dimen/screen_margin_vertical_little" />
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    tools:listitem="@layout/item_stat"
+                    tools:itemCount="2"
+                    app:layout_constraintTop_toBottomOf="@+id/titleStats"
+                    tools:layout_editor_absoluteX="16dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.card.MaterialCardView>
 
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

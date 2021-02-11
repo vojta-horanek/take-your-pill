@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="stat"
+            type="eu.vojtechh.takeyourpill.model.StatItem" />
+
+        <import type="android.content.Context" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/screen_margin_vertical_small">
+
+        <TextView
+            android:id="@+id/stat_pill_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{stat.getNameText(context)}"
+            android:textAppearance="@style/AppTheme.Text.BodyTitleSmall"
+            android:textSize="19sp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Xyzal:" />
+
+        <TextView
+            android:id="@+id/stat_pill_reminded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{stat.getRemindedText(context)}"
+            android:textAppearance="@style/AppTheme.Text.BodyNormal"
+            app:layout_constraintEnd_toEndOf="@+id/stat_pill_name"
+            app:layout_constraintStart_toStartOf="@+id/stat_pill_name"
+            app:layout_constraintTop_toBottomOf="@+id/stat_pill_name"
+            tools:text="\u2022 Remided 10 times" />
+
+        <TextView
+            android:id="@+id/stat_pill_confirmed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{stat.getConfirmedText(context)}"
+            android:textAppearance="@style/AppTheme.Text.BodyNormal"
+            app:layout_constraintEnd_toEndOf="@+id/stat_pill_name"
+            app:layout_constraintStart_toStartOf="@+id/stat_pill_name"
+            app:layout_constraintTop_toBottomOf="@+id/stat_pill_reminded"
+            tools:text="\u2022 Confirmed 9 times" />
+
+        <TextView
+            android:id="@+id/stat_pill_missed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{stat.getMissedText(context)}"
+            android:textAppearance="@style/AppTheme.Text.BodyNormal"
+            app:layout_constraintEnd_toEndOf="@+id/stat_pill_name"
+            app:layout_constraintStart_toStartOf="@+id/stat_pill_name"
+            app:layout_constraintTop_toBottomOf="@+id/stat_pill_confirmed"
+            tools:text="\u2022 Missed 1 time" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

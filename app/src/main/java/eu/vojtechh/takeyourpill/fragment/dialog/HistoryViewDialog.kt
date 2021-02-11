@@ -16,7 +16,7 @@ import eu.vojtechh.takeyourpill.databinding.DialogHistoryBinding
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
-import eu.vojtechh.takeyourpill.viewmodel.HistoryItemViewModel
+import eu.vojtechh.takeyourpill.viewmodel.history.HistoryItemViewModel
 import java.util.*
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package eu.vojtechh.takeyourpill.viewmodel
+package eu.vojtechh.takeyourpill.viewmodel.history
 
 import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -25,46 +24,63 @@ class HistoryChartViewModel @ViewModelInject constructor(
     val allHistory = historyRepository.getHistory()
     private suspend fun getPill(pillId: Long) = pillRepository.getPillSync(pillId)
 
-    val statsText = MutableLiveData("")
-    val pieData = MutableLiveData<PieData>()
+    val pieDataAll = MutableLiveData<PieData>()
+    val pieDataMissed = MutableLiveData<PieData>()
 
     fun computeStatsData(history: List<History>, context: Context, pieChart: PieChart) =
         viewModelScope.launch(Dispatchers.IO) {
-            var statsText = ""
+
             val totalReminded = history.count()
             val totalConfirmed =
                 history.filter { history -> history.hasBeenConfirmed }.count()
             val totalMissed = totalReminded - totalConfirmed
-            statsText += "You took $totalConfirmed of $totalReminded in total ($totalMissed missed)\n"
 
             val pillsHistory = history.groupBy { history -> history.pillId }.values
-            val colors = mutableListOf<Int>()
-            val pieEntries: ArrayList<PieEntry> = ArrayList()
+            val colorsAll = mutableListOf<Int>()
+            val colorsMissed = mutableListOf<Int>()
+            val allEntries: ArrayList<PieEntry> = ArrayList()
+            val missedEntries: ArrayList<PieEntry> = ArrayList()
 
             pillsHistory.forEach { pillHistory ->
                 val pill = getPill(pillHistory.first().pillId)
 
-                colors.add(pill.color.getColor(context))
-                pieEntries.add(PieEntry(pillHistory.size.toFloat(), pill.name))
+                colorsAll.add(pill.color.getColor(context))
+                allEntries.add(PieEntry(pillHistory.size.toFloat(), pill.name))
 
                 val pillReminded = pillHistory.count()
                 val pillConfirmed =
                     pillHistory.filter { history -> history.hasBeenConfirmed }.count()
                 val pillMissed = pillReminded - pillConfirmed
-                statsText += "${pill.name}: $pillConfirmed of $pillReminded ($pillMissed missed)\n"
+
+                if (pillMissed > 0) {
+                    colorsMissed.add(pill.color.getColor(context))
+                    missedEntries.add(PieEntry(pillMissed.toFloat(), pill.name))
+                }
+
             }
 
-            val pieDataSet = PieDataSet(pieEntries, context.getString(R.string.pill)).apply {
-                setColors(colors)
+            val pieDataSetAll = PieDataSet(allEntries, context.getString(R.string.pill)).apply {
+                colors = colorsAll
                 valueTextSize = 12f
             }
 
-            val pieData = PieData(pieDataSet).apply {
+            val pieDataSetMissed =
+                PieDataSet(missedEntries, context.getString(R.string.pill)).apply {
+                    colors = colorsMissed
+                    valueTextSize = 12f
+                }
+
+            val pieDataAll = PieData(pieDataSetAll).apply {
                 setDrawValues(true)
                 setValueFormatter(PercentFormatter(pieChart))
             }
 
-            this@HistoryChartViewModel.pieData.postValue(pieData)
-            this@HistoryChartViewModel.statsText.postValue(statsText)
+            val pieDataMissed = PieData(pieDataSetMissed).apply {
+                setDrawValues(true)
+                setValueFormatter(PercentFormatter(pieChart))
+            }
+
+            this@HistoryChartViewModel.pieDataAll.postValue(pieDataAll)
+            this@HistoryChartViewModel.pieDataMissed.postValue(pieDataMissed)
         }
 }
