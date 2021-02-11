@@ -27,18 +27,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.pager.adapter = HistoryViewPagerAdapter(this)
-        binding.pager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-
-                binding.pager.isUserInputEnabled = when (position) {
-                    1 -> false
-                    else -> true
-                }
-
-            }
-        })
 
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = when (position) {

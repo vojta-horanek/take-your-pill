@@ -4,13 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:transitionGroup="true"
-    tools:context=".fragment.HistoryChartFragment"
+    android:paddingTop="@dimen/screen_margin_vertical"
     android:paddingBottom="@dimen/bottom_bar_height"
-    android:paddingTop="@dimen/screen_margin_vertical">
+    android:transitionGroup="true"
+    tools:context=".fragment.HistoryChartFragment">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
+    <TextView
+        android:id="@+id/statsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

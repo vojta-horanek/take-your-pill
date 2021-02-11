@@ -24,12 +24,6 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
 
     private val binding by viewBinding(FragmentHistoryOverviewBinding::bind)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough()
-        exitTransition = MaterialFadeThrough()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
