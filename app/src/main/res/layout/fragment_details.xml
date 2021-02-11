@@ -98,7 +98,8 @@
                         android:scaleType="centerCrop"
                         android:src="@{pill.getPhotoDrawable(context)}"
                         tools:ignore="ContentDescription"
-                        tools:src="@drawable/photo_default" />
+                        tools:src="@drawable/photo_default"
+                        android:foreground="?attr/selectableItemBackground" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -142,6 +143,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/recyclerReminders"
                     app:layout_constraintVertical_bias="1.0" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonHistory"
+                    style="@style/AppTheme.Widget.Button.Positive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                    android:layout_marginVertical="@dimen/screen_margin_vertical"
+                    android:text="@string/history"
+                    app:icon="@drawable/ic_history"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/buttonDelete"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerReminders"
+                    app:layout_constraintVertical_bias="1.0" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
@@ -154,6 +169,25 @@
             android:layout_margin="@dimen/fab_margins"
             android:src="@drawable/ic_edit"
             tools:ignore="ContentDescription" />
+
+        <FrameLayout
+            android:id="@+id/imageFullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#BF000000"
+            android:visibility="gone"
+            app:elevation="6dp"
+            android:elevation="6dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@{pill.getPhotoDrawable(context)}"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/photo_default" />
+        </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

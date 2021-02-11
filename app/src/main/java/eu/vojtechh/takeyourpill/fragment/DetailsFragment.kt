@@ -1,13 +1,13 @@
 package eu.vojtechh.takeyourpill.fragment
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
@@ -23,11 +23,14 @@ import eu.vojtechh.takeyourpill.klass.disableAnimations
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
     ConfirmationDialog.DeleteListener {
 
+    private var fullscreenImageUp: Boolean = false
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
     private lateinit var binding: FragmentDetailsBinding
@@ -67,6 +70,7 @@ class DetailsFragment : Fragment(),
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initViews() {
 
         binding.run {
@@ -75,7 +79,7 @@ class DetailsFragment : Fragment(),
             recyclerReminders.adapter = reminderAdapter
             recyclerReminders.disableAnimations()
 
-            binding.buttonDelete.setOnClickListener {
+            buttonDelete.setOnClickListener {
                 ConfirmationDialog.newInstance(
                     getString(R.string.delete_pill),
                     getString(R.string.delete_only_pil),
@@ -87,13 +91,34 @@ class DetailsFragment : Fragment(),
                 }.show(childFragmentManager, "confirm_delete")
             }
 
-            binding.buttonEdit.setOnClickListener {
+            buttonEdit.setOnClickListener {
                 exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
                 findNavController().navigate(
                     DetailsFragmentDirections.actionDetailsFragmentToEditFragment(
                         model.pill.id
                     )
                 )
+            }
+
+            cardPhoto.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        lifecycleScope.launch {
+                            fullscreenImageUp = false
+                            delay(ViewConfiguration.getLongPressTimeout().toLong())
+                            if (!fullscreenImageUp) {
+                                imageFullscreen.isVisible = true
+                            }
+                        }
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        fullscreenImageUp = true
+                        imageFullscreen.isVisible = false
+                    }
+                    else -> {
+                    }
+                }
+                true
             }
         }
 
