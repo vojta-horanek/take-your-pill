@@ -10,7 +10,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
-import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
@@ -59,15 +58,19 @@ class HistoryChartViewModel @ViewModelInject constructor(
 
             }
 
-            val pieDataSetAll = PieDataSet(allEntries, context.getString(R.string.pill)).apply {
+            val pieDataSetAll = PieDataSet(allEntries, "").apply {
                 colors = colorsAll
                 valueTextSize = 12f
+                valueTextColor = context.getColor(android.R.color.white)
+                sliceSpace = 4f
             }
 
             val pieDataSetMissed =
-                PieDataSet(missedEntries, context.getString(R.string.pill)).apply {
+                PieDataSet(missedEntries, "").apply {
                     colors = colorsMissed
                     valueTextSize = 12f
+                    valueTextColor = context.getColor(android.R.color.white)
+                    sliceSpace = 4f
                 }
 
             val pieDataAll = PieData(pieDataSetAll).apply {

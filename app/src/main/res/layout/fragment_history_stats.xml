@@ -28,6 +28,9 @@
             android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
             app:cardCornerRadius="@dimen/standard_corner_radius"
             app:cardElevation="@dimen/standard_card_elevation"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/card_stats"
             app:cardPreventCornerOverlap="true"
             android:layout_marginBottom="@dimen/screen_margin_vertical">
 
@@ -46,17 +49,35 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:text="@string/stats" />
 
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressStats"
+                    app:indicatorColor="@color/colorPrimary"
+                    tools:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/titleStats"
+                    android:padding="@dimen/screen_margin_vertical"
+                    android:indeterminate="true"
+                    app:showAnimationBehavior="outward"
+                    app:hideAnimationBehavior="inward" />
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="@dimen/screen_margin_vertical_small"
                     android:id="@+id/recyclerStats"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                    android:nestedScrollingEnabled="true"
                     android:overScrollMode="never"
-                    tools:listitem="@layout/item_stat"
-                    tools:itemCount="2"
+                    android:scrollIndicators="end"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/titleStats"
-                    tools:layout_editor_absoluteX="16dp" />
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_stat" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

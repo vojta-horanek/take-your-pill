@@ -112,4 +112,10 @@
     <string name="stats">Statistiky</string>
     <string name="all_pills_chart">Všechny prášky</string>
     <string name="missed_pills">Vynechané prášky</string>
+    <string name="stat_reminded">\u2022 Připomenuto %1$dkrát</string>
+    <string name="stat_confirmed">\u2022 Potvrzeno %1$dkrát</string>
+    <string name="stat_missed">\u2022 Vynecháno %1$dkrát</string>
+    <string name="no_history">Vypadá to, že jste zatím neobdrželi žádnou připomínku, statistiky a grafy pro Vás zatím nebudou dostupné.</string>
+    <string name="stat_overall">Celkem</string>
+    <string name="error_opening_image">Nastala chyba při otevírání obrázku</string>
 </resources>

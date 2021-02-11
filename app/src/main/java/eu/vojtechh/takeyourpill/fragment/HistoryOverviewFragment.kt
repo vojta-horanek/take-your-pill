@@ -29,7 +29,7 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
         val appAdapter = AppRecyclerAdapter(
             this,
             null,
-            getString(R.string.history),
+            getString(R.string.no_history),
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_fab_history)
         )
 
@@ -37,8 +37,15 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
 
         model.allPills.observe(viewLifecycleOwner, {
             it.map { pill -> pill.itemType = BaseModel.ItemTypes.HISTORY }
+            if (it.isEmpty()) {
+                try {
+                    (requireParentFragment() as HistoryFragment).disableTabs()
+                } catch (e: Exception) {
+                }
+            }
             appAdapter.submitList(it)
         })
+
     }
 
     override fun onItemClicked(view: View, item: BaseModel) {

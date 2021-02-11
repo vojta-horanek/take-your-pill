@@ -2,6 +2,7 @@ package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.transition.MaterialFadeThrough
@@ -36,6 +37,11 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             }
         }.attach()
 
+    }
+
+    fun disableTabs() {
+        binding.pager.isUserInputEnabled = false
+        binding.tabLayout.isVisible = false
     }
 
 }

@@ -3,7 +3,9 @@ package eu.vojtechh.takeyourpill.klass
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources.Theme
 import android.graphics.Color
+import android.util.TypedValue
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.AttrRes
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Retrieve a color from the current [android.content.res.Resources.Theme].
@@ -105,4 +108,11 @@ fun RecyclerView.disableAnimations() {
         addDuration = 0
         moveDuration = 0
     }
+}
+
+fun Context.getAttr(res: Int): Int {
+    val typedValue = TypedValue()
+    val theme: Theme = this.theme
+    theme.resolveAttribute(res, typedValue, true)
+    return typedValue.data
 }
