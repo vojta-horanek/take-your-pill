@@ -75,12 +75,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
     private fun openNewPill() {
-        exitTransition = MaterialElevationScale(false)
+        exitTransition = null
         reenterTransition = MaterialElevationScale(true)
         model.isReturningFromPillDetails = true
         findNavController().navigate(R.id.edit)

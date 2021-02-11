@@ -69,7 +69,6 @@ class EditFragment : Fragment() {
             }
 
             returnTransition = Slide().addTarget(R.id.layoutEdit)
-
         } else {
             enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
             returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
