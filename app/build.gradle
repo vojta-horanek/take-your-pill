@@ -79,6 +79,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.preference:preference-ktx:$preference_version"
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // Navigation components
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -124,6 +125,9 @@ dependencies {
     implementation ("com.marcinmoskala.PreferenceHolder:preferenceholder:1.51") {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
     }
+
+    //charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //Custom image picker
     implementation project(path: ':imagepicker')

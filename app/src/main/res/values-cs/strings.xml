@@ -106,4 +106,6 @@
     <string name="confirm_delete_photo_description">Toto smaže fotku u tohoto prášku.</string>
     <string name="confirm_exit_edit">Doopravdy chcete odejít?</string>
     <string name="confirm_exit_edit_description">Toto zahodí všechny Vaše úpravy.</string>
+    <string name="overview">Přehled</string>
+    <string name="charts">Grafy</string>
 </resources>

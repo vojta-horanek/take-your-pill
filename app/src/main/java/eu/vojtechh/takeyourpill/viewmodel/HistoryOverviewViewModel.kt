@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import eu.vojtechh.takeyourpill.repository.PillRepository
 
-class HistoryViewModel @ViewModelInject constructor(
+class HistoryOverviewViewModel @ViewModelInject constructor(
     pillRepository: PillRepository
 ) : ViewModel() {
     val allPills = pillRepository.getAllPillsIncludingDeleted()

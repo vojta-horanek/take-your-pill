@@ -6,7 +6,7 @@ import eu.vojtechh.takeyourpill.model.History
 
 @Dao
 interface HistoryDao {
-    @Query("SELECT * FROM history")
+    @Query("SELECT * FROM history ORDER BY history.reminded ASC")
     fun getAll(): LiveData<List<History>>
 
     @Query("SELECT * FROM history WHERE historyId = (:historyId)")

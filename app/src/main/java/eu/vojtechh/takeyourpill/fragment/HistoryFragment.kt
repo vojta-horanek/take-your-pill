@@ -2,24 +2,18 @@ package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
+import eu.vojtechh.takeyourpill.adapter.HistoryViewPagerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
-import eu.vojtechh.takeyourpill.model.BaseModel
-import eu.vojtechh.takeyourpill.model.Pill
-import eu.vojtechh.takeyourpill.viewmodel.HistoryViewModel
 
 @AndroidEntryPoint
-class HistoryFragment : Fragment(R.layout.fragment_history), AppRecyclerAdapter.ItemListener {
-
-    private val model: HistoryViewModel by viewModels()
+class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     private val binding by viewBinding(FragmentHistoryBinding::bind)
 
@@ -32,25 +26,28 @@ class HistoryFragment : Fragment(R.layout.fragment_history), AppRecyclerAdapter.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val appAdapter = AppRecyclerAdapter(
-            this,
-            getString(R.string.history),
-            getString(R.string.history),
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_fab_history)
-        )
+        binding.pager.adapter = HistoryViewPagerAdapter(this)
+        binding.pager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
 
-        binding.recyclerHome.adapter = appAdapter
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
 
-        model.allPills.observe(viewLifecycleOwner, {
-            it.map { pill -> pill.itemType = BaseModel.ItemTypes.HISTORY }
-            appAdapter.submitList(it)
+                binding.pager.isUserInputEnabled = when (position) {
+                    1 -> false
+                    else -> true
+                }
+
+            }
         })
+
+        TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
+            tab.text = when (position) {
+                0 -> getString(R.string.overview)
+                1 -> getString(R.string.charts)
+                else -> getString(R.string.history)
+            }
+        }.attach()
+
     }
 
-    override fun onItemClicked(view: View, item: BaseModel) {
-        if (item is Pill) {
-            val directions = HistoryFragmentDirections.actionHistoryToFragmentHistoryView(item.id)
-            findNavController().navigate(directions)
-        }
-    }
 }

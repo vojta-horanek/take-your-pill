@@ -6,18 +6,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:transitionGroup="true"
-    tools:context=".fragment.HistoryFragment">
+    tools:context=".fragment.HistoryFragment"
+    android:clipToPadding="false"
+    android:clipChildren="false">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerHome"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textTitle"
+        style="@style/AppTheme.Widget.Header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin_vertical"
+        android:text="@string/history" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabContentStart="@dimen/appbar_margin_horizontal"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable"
+        app:tabTextAppearance="@style/AppTheme.Text.TabLayoutText">
+
+        <!-- These TabItems do not actually represent the tabs, they are here only for the Layout Inspector -->
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/overview" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/charts" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clipChildren="false"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingBottom="@dimen/bottom_bar_height"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_history_pill" />
+        android:clipToPadding="false" />
 
 </LinearLayout>
