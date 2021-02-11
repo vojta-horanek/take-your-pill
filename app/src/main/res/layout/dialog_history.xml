@@ -52,6 +52,8 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:padding="4dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_delete"
                     app:layout_constraintBottom_toBottomOf="@+id/materialTextView"

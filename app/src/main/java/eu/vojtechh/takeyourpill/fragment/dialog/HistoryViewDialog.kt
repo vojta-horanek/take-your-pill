@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -55,8 +56,9 @@ class HistoryViewDialog :
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_history)
         )
         binding.recyclerHistoryView.adapter = adapter
-        model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner, {
-            if (it != null) {
+        model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner, { history ->
+            history?.let {
+                binding.buttonDeleteHistory.isVisible = it.isNotEmpty()
                 adapter.submitList(it) {
                     // Handle item removal correctly (don't remove the date)
                     if (itemJustRemoved) {
