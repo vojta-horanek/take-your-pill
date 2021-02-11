@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.bottomNavigation.isVisible = when (destination.id) {
-                R.id.homescreen, R.id.history, R.id.settings, R.id.fragmentHistoryView -> true
+                R.id.homescreen, R.id.history, R.id.settings -> true
                 else -> false
             }
         }

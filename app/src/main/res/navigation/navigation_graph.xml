@@ -66,6 +66,9 @@
         <argument
             android:name="pillId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_details_to_fragmentHistoryView"
+            app:destination="@id/fragmentHistoryView" />
     </fragment>
     <dialog
         android:id="@+id/fragmentHistoryView"

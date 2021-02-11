@@ -91,6 +91,12 @@ class DetailsFragment : Fragment(),
                 }.show(childFragmentManager, "confirm_delete")
             }
 
+            buttonHistory.setOnClickListener {
+                val directions =
+                    DetailsFragmentDirections.actionDetailsToFragmentHistoryView(model.pill.id)
+                findNavController().navigate(directions)
+            }
+
             buttonEdit.setOnClickListener {
                 exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
                 findNavController().navigate(
