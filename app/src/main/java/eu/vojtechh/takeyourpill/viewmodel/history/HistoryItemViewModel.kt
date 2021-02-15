@@ -1,27 +1,29 @@
 package eu.vojtechh.takeyourpill.viewmodel.history
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
-class HistoryItemViewModel @ViewModelInject constructor(
-    private val pillRepository: PillRepository,
-    private val historyRepository: HistoryRepository
+@HiltViewModel
+class HistoryItemViewModel @Inject constructor(
+        private val pillRepository: PillRepository,
+        private val historyRepository: HistoryRepository
 ) : ViewModel() {
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
     fun getHistoryForPill(pillId: Long) = historyRepository.getHistoryForPill(pillId)
     fun confirmHistory(item: History) = viewModelScope.launch {
         val historyEntity = History(
-            item.id,
-            item.reminded,
-            Calendar.getInstance(),
-            item.pillId
+                item.id,
+                item.reminded,
+                Calendar.getInstance(),
+                item.pillId
         )
         historyRepository.updateHistoryItem(historyEntity)
     }

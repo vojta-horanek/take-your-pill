@@ -1,27 +1,29 @@
 package eu.vojtechh.takeyourpill.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillEntity
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailsViewModel @ViewModelInject constructor(
-    private val pillRepository: PillRepository
+@HiltViewModel
+class DetailsViewModel @Inject constructor(
+        private val pillRepository: PillRepository
 ) : ViewModel() {
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
 
     fun deletePillWithHistory(pill: Pill) =
-        viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePillAndReminder(pill) }
+            viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePillAndReminder(pill) }
 
     fun deletePill(pillEntity: PillEntity) =
-        viewModelScope.launch(Dispatchers.IO) { pillRepository.markPillDeleted(pillEntity) }
+            viewModelScope.launch(Dispatchers.IO) { pillRepository.markPillDeleted(pillEntity) }
 
     lateinit var pill: Pill
 

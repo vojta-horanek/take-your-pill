@@ -4,11 +4,11 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
@@ -16,16 +16,18 @@ import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import java.io.FileNotFoundException
 import java.io.InputStream
+import javax.inject.Inject
 
-class EditViewModel @ViewModelInject constructor(
-    private val pillRepository: PillRepository
+@HiltViewModel
+class EditViewModel @Inject constructor(
+        private val pillRepository: PillRepository
 ) : ViewModel() {
 
     fun addAndGetPill(pill: Pill) =
-        liveData(Dispatchers.IO) { emitSource(pillRepository.insertPillReturn(pill)) }
+            liveData(Dispatchers.IO) { emitSource(pillRepository.insertPillReturn(pill)) }
 
     fun updateAndGetPill(pill: Pill) =
-        liveData(Dispatchers.IO) { emitSource(pillRepository.updatePillReturn(pill)) }
+            liveData(Dispatchers.IO) { emitSource(pillRepository.updatePillReturn(pill)) }
 
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
 

@@ -1,10 +1,10 @@
 package eu.vojtechh.takeyourpill.viewmodel.history
 
 import android.content.Context
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.StatItem
@@ -12,10 +12,12 @@ import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HistoryStatViewModel @ViewModelInject constructor(
-    historyRepository: HistoryRepository,
-    private val pillRepository: PillRepository
+@HiltViewModel
+class HistoryStatViewModel @Inject constructor(
+        historyRepository: HistoryRepository,
+        private val pillRepository: PillRepository
 ) : ViewModel() {
     val allHistory = historyRepository.getHistory()
     private suspend fun getPill(pillId: Long) = pillRepository.getPillSync(pillId)
@@ -23,22 +25,22 @@ class HistoryStatViewModel @ViewModelInject constructor(
     val stats = MutableLiveData<List<StatItem>>()
 
     fun computeStatsData(history: List<History>, context: Context) =
-        viewModelScope.launch(Dispatchers.IO) {
-            val statList = mutableListOf<StatItem>()
+            viewModelScope.launch(Dispatchers.IO) {
+                val statList = mutableListOf<StatItem>()
 
-            val totalReminded = history.count()
-            val totalConfirmed =
-                history.filter { history -> history.hasBeenConfirmed }.count()
-            val totalMissed = totalReminded - totalConfirmed
+                val totalReminded = history.count()
+                val totalConfirmed =
+                        history.filter { history -> history.hasBeenConfirmed }.count()
+                val totalMissed = totalReminded - totalConfirmed
 
-            statList.add(
-                StatItem(
-                    context.getString(R.string.stat_overall),
-                    totalReminded,
-                    totalConfirmed,
-                    totalMissed
+                statList.add(
+                        StatItem(
+                                context.getString(R.string.stat_overall),
+                                totalReminded,
+                                totalConfirmed,
+                                totalMissed
+                        )
                 )
-            )
 
             val pillsHistory = history.groupBy { history -> history.pillId }.values
 
