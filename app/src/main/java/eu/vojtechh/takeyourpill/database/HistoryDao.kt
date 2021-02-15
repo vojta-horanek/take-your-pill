@@ -9,11 +9,14 @@ interface HistoryDao {
     @Query("SELECT * FROM history ORDER BY history.reminded ASC")
     fun getAll(): LiveData<List<History>>
 
+    @Query("SELECT * FROM history ORDER BY pillId ASC")
+    fun getAllOrderedById(): LiveData<List<History>>
+
     @Query("SELECT * FROM history WHERE historyId = (:historyId)")
     fun getWithId(historyId: Long): LiveData<History?>
 
     @Query(
-        """
+            """
         SELECT * FROM history
         WHERE
             pillId = (:pillId) AND

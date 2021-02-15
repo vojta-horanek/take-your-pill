@@ -8,11 +8,11 @@ import eu.vojtechh.takeyourpill.model.PillEntity
 @Dao
 interface PillDao {
     @Transaction
-    @Query("SELECT * FROM pill WHERE deleted = 0")
+    @Query("SELECT * FROM pill WHERE deleted = 0 ORDER BY pillId ASC")
     fun getAll(): LiveData<List<Pill>>
 
     @Transaction
-    @Query("SELECT * FROM pill")
+    @Query("SELECT * FROM pill ORDER BY pillId ASC")
     fun getAllIncludingDeleted(): LiveData<List<Pill>>
 
     @Transaction

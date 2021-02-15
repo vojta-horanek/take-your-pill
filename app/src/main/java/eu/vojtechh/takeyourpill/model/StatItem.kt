@@ -5,11 +5,12 @@ import androidx.recyclerview.widget.DiffUtil
 import eu.vojtechh.takeyourpill.R
 
 data class StatItem(
-    val name: String,
-    val reminded: Int,
-    val confirmed: Int,
-    val missed: Int,
-    val color: Int? = null
+        val id: Long,
+        val name: String,
+        val reminded: Int,
+        val confirmed: Int,
+        val missed: Int,
+        val color: Int? = null
 ) {
 
     fun getNameText(context: Context) = context.getString(R.string.stat_name, name)
@@ -19,9 +20,9 @@ data class StatItem(
 
     object DiffCallback : DiffUtil.ItemCallback<StatItem>() {
         override fun areItemsTheSame(oldItem: StatItem, newItem: StatItem) =
-            oldItem.name == newItem.name
+                oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: StatItem, newItem: StatItem) =
-            oldItem.reminded == newItem.reminded
+                oldItem.reminded == newItem.reminded
     }
 }

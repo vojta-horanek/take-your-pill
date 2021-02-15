@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.PieData
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryChartBinding
@@ -40,34 +41,31 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
                     setDrawEntryLabels(true)
                 }
             }
+            progressCharts.setVisibilityAfterHide(View.INVISIBLE)
         }
 
         model.run {
 
             allHistory.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
-                    model.computeStatsData(it, requireContext(), binding.pieChartAll)
                     binding.cardCharts.isVisible = true
+                    model.getStatsData(it, binding.pieChartAll, requireActivity().applicationContext).observe(viewLifecycleOwner) { data ->
+                        processData(data)
+                        binding.layoutChartContent.isVisible = true
+                        binding.progressCharts.hide()
+                    }
                 }
             }
+        }
+    }
 
-            pieDataAll.observe(viewLifecycleOwner) {
-                binding.pieChartAll.data = it
-                binding.pieChartAll.invalidate()
-            }
-
-            pieDataConfirmed.observe(viewLifecycleOwner) {
-                binding.pieChartAllConfirmed.data = it
-                binding.pieChartAllConfirmed.invalidate()
-            }
-
-            pieDataMissed.observe(viewLifecycleOwner) {
-                binding.pieChartMissed.data = it
-                binding.pieChartMissed.invalidate()
-                binding.layoutChartContent.isVisible = true
-                binding.progressCharts.setVisibilityAfterHide(View.INVISIBLE)
-                binding.progressCharts.hide()
-            }
+    private fun processData(data: List<PieData>) {
+        binding.run {
+            listOf(pieChartAll, pieChartMissed, pieChartAllConfirmed)
+                    .forEachIndexed { index, pieChart ->
+                        pieChart.data = data[index]
+                        pieChart.invalidate()
+                    }
         }
     }
 

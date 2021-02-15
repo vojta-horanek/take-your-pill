@@ -27,21 +27,20 @@ class HistoryStatFragment : Fragment(R.layout.fragment_history_stats) {
 
         binding.run {
             recyclerStats.adapter = statAdapter
+            progressStats.setVisibilityAfterHide(View.INVISIBLE)
+
         }
 
         model.run {
 
             allHistory.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
-                    model.computeStatsData(it, requireContext())
                     binding.cardStats.isVisible = true
+                    model.getStatsData(it, requireActivity().applicationContext).observe(viewLifecycleOwner) { stats ->
+                        statAdapter.submitList(stats)
+                        binding.progressStats.hide()
+                    }
                 }
-            }
-
-            stats.observe(viewLifecycleOwner) {
-                statAdapter.submitList(it)
-                binding.progressStats.setVisibilityAfterHide(View.INVISIBLE)
-                binding.progressStats.hide()
             }
         }
     }
