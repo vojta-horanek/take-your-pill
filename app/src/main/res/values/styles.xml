@@ -148,6 +148,22 @@
         <item name="fontFamily">@font/jost_medium</item>
     </style>
 
+    <style name="AppTheme.Widgets.BottomNavigation.Stable" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/AppTheme.Text.BottomNavigationLabels.Stable
+        </item>
+        <item name="itemTextAppearanceInactive">@style/AppTheme.Text.BottomNavigationLabels.Stable
+        </item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemTextColor">?attr/colorControlNormal</item>
+        <item name="itemIconTint">?attr/colorControlNormal</item>
+        <item name="itemRippleColor">@color/stable_nav_ripple_color</item>
+    </style>
+
+    <style name="AppTheme.Text.BottomNavigationLabels.Stable" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textAllCaps">true</item>
+        <item name="fontFamily">@font/jost_medium</item>
+    </style>
+
     <style name="AppTheme.Widget.Handle" parent="">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">6dp</item>

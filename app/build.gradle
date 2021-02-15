@@ -129,6 +129,8 @@ dependencies {
     //charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    implementation 'com.nambimobile.widgets:expandable-fab:1.0.2'
+
     //Custom image picker
     implementation project(path: ':imagepicker')
 

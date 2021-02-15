@@ -79,31 +79,14 @@ class DetailsFragment : Fragment(),
             recyclerReminders.adapter = reminderAdapter
             recyclerReminders.disableAnimations()
 
-            buttonDelete.setOnClickListener {
-                ConfirmationDialog.newInstance(
-                    getString(R.string.delete_pill),
-                    getString(R.string.delete_only_pil),
-                    getString(R.string.delete_pill_and_history),
-                    R.drawable.ic_delete,
-                    R.drawable.ic_delete_history,
-                ).apply {
-                    setListener(this@DetailsFragment) // FIXME the listener get deleted when BottomS.. open and theme is changed
-                }.show(childFragmentManager, "confirm_delete")
-            }
+            pill?.let {
+                efab.efabColor = it.colorResource(requireContext())
+                buttonEdit.fabOptionColor = efab.efabColor
+                buttonHistory.fabOptionColor = efab.efabColor
 
-            buttonHistory.setOnClickListener {
-                val directions =
-                    DetailsFragmentDirections.actionDetailsToFragmentHistoryView(model.pill.id)
-                findNavController().navigate(directions)
-            }
-
-            buttonEdit.setOnClickListener {
-                exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-                findNavController().navigate(
-                    DetailsFragmentDirections.actionDetailsFragmentToEditFragment(
-                        model.pill.id
-                    )
-                )
+                buttonEdit.setOnClickListener { navigateToEdit() }
+                buttonHistory.setOnClickListener { navigateToHistory() }
+                buttonDelete.setOnClickListener { navigateToDelete() }
             }
 
             cardPhoto.setOnTouchListener { _, event ->
@@ -136,6 +119,34 @@ class DetailsFragment : Fragment(),
             }
         }
 
+    }
+
+    private fun navigateToEdit() {
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+        findNavController().navigate(
+            DetailsFragmentDirections.actionDetailsFragmentToEditFragment(
+                model.pill.id
+            )
+        )
+    }
+
+    private fun navigateToHistory() {
+        val directions =
+            DetailsFragmentDirections.actionDetailsToFragmentHistoryView(model.pill.id)
+        findNavController().navigate(directions)
+    }
+
+
+    private fun navigateToDelete() {
+        ConfirmationDialog.newInstance(
+            getString(R.string.delete_pill),
+            getString(R.string.delete_only_pil),
+            getString(R.string.delete_pill_and_history),
+            R.drawable.ic_delete,
+            R.drawable.ic_delete_history,
+        ).apply {
+            setListener(this@DetailsFragment) // FIXME the listener get deleted when BottomS.. open and theme is changed
+        }.show(childFragmentManager, "confirm_delete")
     }
 
     override fun onDeletePill(view: View) {

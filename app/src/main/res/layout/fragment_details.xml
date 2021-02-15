@@ -27,14 +27,15 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true">
+                android:animateLayoutChanges="true"
+                android:clipChildren="false">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textPillName"
                     style="@style/AppTheme.Widget.Header"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="@dimen/screen_margin_horizontal_small"
                     android:text="@{pill.name}"
                     app:layout_constraintEnd_toStartOf="@+id/viewPillColor"
                     app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +66,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textPillName"
                     tools:text="This is a pill description"
-                    tools:visibility="gone" />
+                    tools:visibility="visible" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardPhoto"
@@ -128,66 +129,71 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_reminder" />
 
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonDelete"
-                    style="@style/AppTheme.Widget.Button.Negative"
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
-                    android:layout_marginVertical="@dimen/screen_margin_vertical"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
-                    app:icon="@drawable/ic_delete"
-                    app:iconPadding="0dp"
-                    app:iconGravity="textStart"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerReminders"
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonHistory"
-                    style="@style/AppTheme.Widget.Button.Positive"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/screen_margin_horizontal_small"
-                    android:layout_marginVertical="@dimen/screen_margin_vertical"
-                    app:icon="@drawable/ic_history"
-                    app:iconPadding="0dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
-                    app:iconGravity="textStart"
-                    android:layout_width="56dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/buttonDelete"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerReminders"
-                    app:layout_constraintVertical_bias="1.0" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/buttonEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margins"
-            android:src="@drawable/ic_edit"
-            tools:ignore="ContentDescription" />
+        <com.nambimobile.widgets.efab.ExpandableFabLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.nambimobile.widgets.efab.Overlay
+                android:layout_width="match_parent"
+                app:overlay_color="?attr/colorSurface"
+                android:layout_height="match_parent" />
+
+            <com.nambimobile.widgets.efab.ExpandableFab
+                android:id="@+id/efab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="@dimen/screen_margin_horizontal"
+                android:layout_marginBottom="@dimen/screen_margin_vertical"
+                app:efab_closingAnticipateTension="0"
+                app:efab_openingAnimationDurationMs="75"
+                app:efab_closingAnimationDurationMs="75"
+                app:efab_icon="@drawable/ic_more"
+                app:efab_iconAnimationRotationDeg="180" />
+
+            <com.nambimobile.widgets.efab.FabOption
+                android:id="@+id/buttonEdit"
+                app:label_hiddenToVisibleAnimationDurationMs="75"
+                app:fab_openingAnimationDurationMs="75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_icon="@drawable/ic_edit"
+                app:label_text="@string/edit" />
+
+            <com.nambimobile.widgets.efab.FabOption
+                android:id="@+id/buttonHistory"
+                app:label_hiddenToVisibleAnimationDurationMs="75"
+                app:fab_openingAnimationDurationMs="75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_icon="@drawable/ic_history"
+                app:label_text="@string/history" />
+
+            <com.nambimobile.widgets.efab.FabOption
+                android:id="@+id/buttonDelete"
+                app:fab_color="@color/colorRed"
+                app:label_backgroundColor="@color/colorRed"
+                app:label_hiddenToVisibleAnimationDurationMs="75"
+                app:fab_openingAnimationDurationMs="75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_icon="@drawable/ic_delete"
+                app:label_text="@string/delete" />
+
+        </com.nambimobile.widgets.efab.ExpandableFabLayout>
 
         <FrameLayout
             android:id="@+id/imageFullscreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#BF000000"
+            android:elevation="6dp"
             android:visibility="gone"
-            app:elevation="6dp"
-            android:elevation="6dp">
+            app:elevation="6dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
