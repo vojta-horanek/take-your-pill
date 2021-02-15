@@ -52,4 +52,5 @@ class AppIntroActivity : IntroActivity() {
         )
     }
 
+
 }

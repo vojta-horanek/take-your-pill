@@ -33,7 +33,7 @@
         <activity
             android:name=".activity.AppIntroActivity"
             android:label="@string/intro"
-            android:theme="@style/Theme.Intro" />
+            android:theme="@style/AppTheme.Intro" />
 
         <receiver android:name=".receiver.ReminderReceiver" />
         <receiver android:name=".receiver.CheckReceiver" />
