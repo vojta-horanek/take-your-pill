@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.view.View
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 
@@ -35,6 +36,6 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("isInvisible")
     fun isInvisible(view: View, invisible: Boolean) {
-        view.visibility = if (invisible) View.INVISIBLE else View.VISIBLE
+        view.isInvisible = invisible
     }
 }
