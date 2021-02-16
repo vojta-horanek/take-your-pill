@@ -43,21 +43,9 @@
     <string name="set_time_format">Nastavit čas připomínky (%1$s)</string>
     <string name="save_reminder">Uložit připomínku</string>
     <string name="set_a_reminder">Nastavit připomínku</string>
-    <plurals name="set_amount_format">
-        <item quantity="one">Vzít si %1$d prášek</item>
-        <item quantity="few">Vzít si %1$d prášky</item>
-        <item quantity="other">Vzít si %1$d prášků</item>
-    </plurals>
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s: %2$d prášek</item>
-        <item quantity="few">%1$s: %2$d prášky</item>
-        <item quantity="other">%1$s: %2$d prášků</item>
-    </plurals>
-    <plurals name="it_is_time_to_take">
-        <item quantity="one">Je čas si vzít %1$d prášek!</item>
-        <item quantity="few">Je čas si vzít %1$d prášky!</item>
-        <item quantity="other">Je čas si vzít %1$d prášků!</item>
-    </plurals>
+    <string name="set_amount_format">Vzít si %1$s prášek(y)</string>
+    <string name="reminder_text">%1$s: %2$s prášek(y)</string>
+    <string name="it_is_time_to_take">Je čas si vzít %1$s prášek(y)!</string>
     <plurals name="delay">
         <item quantity="one">Odložit o %1$d minutu</item>
         <item quantity="few">Odložit o %1$d minuty</item>
@@ -65,13 +53,9 @@
     </plurals>
     <string name="delete_pill_and_history">Smazat prášek a historii</string>
     <string name="delete_only_pil">Smazat pouze prášek</string>
-    <string name="pill_time_reminders_format">%1$d v %2$s</string>
+    <string name="pill_time_reminders_format">%1$s v %2$s</string>
     <string name="delete_pill">Smazat prášek</string>
-    <plurals name="pill_taken_question">
-        <item quantity="one">Vzali jste si %1$d tento prášek v %2$s?</item>
-        <item quantity="few">Vzali jste si %1$d tyto prášky v %2$s?</item>
-        <item quantity="other">Vzali jste si %1$d těchto prášků v %2$s?</item>
-    </plurals>
+    <string name="pill_taken_question">Vzali jste si %1$s prášek(y) v %2$s?</string>
     <string name="two_reminders_same_time">Může existovat pouze jedna připomínka se stejným časem. Prosím změnte čas.</string>
     <string name="nothing_to_see_here">Nic tu není… 🧐</string>
     <string name="try_to_add_a_pill_first">Zkuste nejdříve přidat prášek!</string>

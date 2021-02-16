@@ -49,8 +49,9 @@ class ReminderReceiver : BroadcastReceiver() {
                     ReminderUtil.createReminderNotification(context, pill, reminder)
 
                     val history = History(
-                        pillId = pill.id,
-                        reminded = remindedCalendar
+                            pillId = pill.id,
+                            reminded = remindedCalendar,
+                            amount = reminder.amount
                     )
                     historyRepository.insertHistoryItem(history)
                     if (Pref.remindAgain) {

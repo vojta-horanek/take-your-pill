@@ -53,30 +53,14 @@
     <string name="select_image">Select an image</string>
     <string name="set_time">Set time</string>
     <string name="set_time_format">Set remind time (%1$s)</string>
-    <string name="pill_time_reminders_format">%1$d at %2$s</string>
+    <string name="pill_time_reminders_format">%1$s at %2$s</string>
     <string name="save_reminder">Save reminder</string>
     <string name="set_a_reminder">Set a reminder</string>
     <string name="delete_pill">Delete pill</string>
-
-    <plurals name="set_amount_format">
-        <item quantity="one">Take %1$d pill</item>
-        <item quantity="other">Take %1$d pills</item>
-    </plurals>
-
-    <plurals name="reminder_text">
-        <item quantity="one">%1$s: %2$d pill</item>
-        <item quantity="other">%1$s: %2$d pills</item>
-    </plurals>
-
-    <plurals name="it_is_time_to_take">
-        <item quantity="one">It is time to take %1$d pill!</item>
-        <item quantity="other">It is time to take %1$d pills!</item>
-    </plurals>
-
-    <plurals name="pill_taken_question">
-        <item quantity="one">Have you taken %1$d pill at %2$s?</item>
-        <item quantity="other">Have you taken %1$d of these pills at %2$s?</item>
-    </plurals>
+    <string name="set_amount_format">Take %1$s pill(s)</string>
+    <string name="reminder_text">%1$s: %2$s pill(s)</string>
+    <string name="it_is_time_to_take">It is time to take %1$s pill(s)!</string>
+    <string name="pill_taken_question">Have you taken %1$s pill(s) at %2$s?</string>
 
     <plurals name="delay">
         <item quantity="one">Delay by %1$d minute</item>

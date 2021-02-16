@@ -50,11 +50,10 @@ data class Pill(
         }
 
     fun getNotificationDescription(context: Context, reminder: Reminder) =
-        context.resources.getQuantityString(
-            R.plurals.it_is_time_to_take,
-            reminder.amount,
-            reminder.amount
-        )
+            context.getString(
+                    R.string.it_is_time_to_take,
+                    reminder.amount
+            )
 
     var photo
         get() = pillEntity.photo

@@ -20,16 +20,18 @@ import java.util.*
     )]
 )
 data class History(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "historyId")
-    val id: Long = 0,
+        @PrimaryKey(autoGenerate = true)
+        @ColumnInfo(name = "historyId")
+        val id: Long = 0,
 
-    var reminded: Calendar,
+        var reminded: Calendar,
 
-    var confirmed: Calendar? = null,
+        var confirmed: Calendar? = null,
 
-    @ColumnInfo(index = true)
-    var pillId: Long
+        val amount: String = "1",
+
+        @ColumnInfo(index = true)
+        var pillId: Long
 ) : BaseModel() {
 
     val hasBeenConfirmed: Boolean

@@ -28,11 +28,10 @@ class PillViewHolder(
 
     private fun setCardConfirm(pill: Pill) {
         pill.getCloseReminder()?.let {
-            binding.textQuestionTake.text = binding.root.context.resources.getQuantityString(
-                R.plurals.pill_taken_question,
-                it.amount,
-                it.amount,
-                it.timeString
+            binding.textQuestionTake.text = binding.root.context.getString(
+                    R.string.pill_taken_question,
+                    it.amount,
+                    it.timeString
             )
 
             binding.nextReminder = it

@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.DialogNewReminderBinding
 import eu.vojtechh.takeyourpill.klass.Builders
+import eu.vojtechh.takeyourpill.klass.NumberPickerHelper
 import eu.vojtechh.takeyourpill.klass.setDrawableTint
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
@@ -47,9 +48,9 @@ class ReminderDialog : RoundedDialogFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = DialogNewReminderBinding.inflate(inflater, container, false)
         snackbar = Snackbar.make(binding.coordinatorNewReminder, "", Snackbar.LENGTH_SHORT)
@@ -57,11 +58,15 @@ class ReminderDialog : RoundedDialogFragment() {
         setTexts()
 
         binding.run {
-            numberPickerAmount.value = reminder.amount
+
+            numberPickerAmount.minValue = 1
+            numberPickerAmount.maxValue = NumberPickerHelper.getDisplayValues().size
+            numberPickerAmount.displayedValues = NumberPickerHelper.getDisplayValues().toTypedArray()
+            numberPickerAmount.value = NumberPickerHelper.convertToPosition(reminder.amount)
             textConfirm.setOnClickListener { confirmListener(reminder, isEditing) }
 
             numberPickerAmount.setOnValueChangedListener { _, _, value ->
-                reminder.amount = value
+                reminder.amount = NumberPickerHelper.convertToString(value)
                 setTexts()
             }
 
@@ -97,9 +102,9 @@ class ReminderDialog : RoundedDialogFragment() {
                 val normalColor = textConfirm.textColors
                 val typedValue = TypedValue()
                 requireContext().theme.resolveAttribute(
-                    R.attr.colorControlNormal,
-                    typedValue,
-                    true
+                        R.attr.colorControlNormal,
+                        typedValue,
+                        true
                 )
                 val color = ContextCompat.getColor(requireContext(), typedValue.resourceId)
                 textTime.apply {
@@ -107,15 +112,13 @@ class ReminderDialog : RoundedDialogFragment() {
                     setDrawableTint(color)
                 }
             }
-            textAmount.text =
-                resources.getQuantityString(
-                    R.plurals.set_amount_format,
-                    reminder.amount,
+            textAmount.text = getString(
+                    R.string.set_amount_format,
                     reminder.amount
-                )
+            )
             textTime.text = resources.getString(
-                R.string.set_time_format,
-                reminder.timeString
+                    R.string.set_time_format,
+                    reminder.timeString
             )
 
         }

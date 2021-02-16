@@ -23,6 +23,7 @@ class HistoryItemViewModel @Inject constructor(
                 item.id,
                 item.reminded,
                 Calendar.getInstance(),
+                item.amount,
                 item.pillId
         )
         historyRepository.updateHistoryItem(historyEntity)
@@ -30,20 +31,22 @@ class HistoryItemViewModel @Inject constructor(
 
     fun markHistoryNotConfirmed(item: History) = viewModelScope.launch {
         val historyEntity = History(
-            item.id,
-            item.reminded,
-            null,
-            item.pillId
+                item.id,
+                item.reminded,
+                null,
+                item.amount,
+                item.pillId
         )
         historyRepository.updateHistoryItem(historyEntity)
     }
 
     fun setHistoryConfirmTime(item: History, newConfirmTime: Calendar) = viewModelScope.launch {
         val historyEntity = History(
-            item.id,
-            item.reminded,
-            newConfirmTime,
-            item.pillId
+                item.id,
+                item.reminded,
+                newConfirmTime,
+                item.amount,
+                item.pillId
         )
         historyRepository.updateHistoryItem(historyEntity)
     }

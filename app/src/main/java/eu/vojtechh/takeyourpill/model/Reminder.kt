@@ -13,25 +13,25 @@ import java.text.DateFormat
 import java.util.*
 
 @Entity(
-    tableName = "reminder",
-    foreignKeys = [ForeignKey(
-        entity = PillEntity::class,
-        parentColumns = arrayOf("pillId"),
-        childColumns = arrayOf("pillId"),
-        onDelete = ForeignKey.CASCADE
-    )]
+        tableName = "reminder",
+        foreignKeys = [ForeignKey(
+                entity = PillEntity::class,
+                parentColumns = arrayOf("pillId"),
+                childColumns = arrayOf("pillId"),
+                onDelete = ForeignKey.CASCADE
+        )]
 )
 data class Reminder(
-    var time: Calendar,
+        var time: Calendar,
 
-    var amount: Int,
+        var amount: String,
 
-    @ColumnInfo(index = true)
-    var pillId: Long,
+        @ColumnInfo(index = true)
+        var pillId: Long,
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "reminderId")
-    val id: Long = 0
+        @PrimaryKey(autoGenerate = true)
+        @ColumnInfo(name = "reminderId")
+        val id: Long = 0
 ) {
     val hour
         get() = time.hour
@@ -53,7 +53,7 @@ data class Reminder(
     }
 
     companion object {
-        fun create(hour: Int = 8, minute: Int = 0, amount: Int = 1, pillId: Long): Reminder {
+        fun create(hour: Int = 8, minute: Int = 0, amount: String = "1", pillId: Long): Reminder {
             val calendar = Calendar.getInstance()
             calendar.clear()
             calendar.set(Calendar.HOUR_OF_DAY, hour)
@@ -65,8 +65,7 @@ data class Reminder(
     val timeString: String
         get() = DateFormat.getTimeInstance(DateFormat.SHORT).format(time.time)
 
-    fun formattedString(context: Context) =
-        context.resources.getQuantityString(R.plurals.reminder_text, amount, timeString, amount)
+    fun formattedString(context: Context) = context.getString(R.string.reminder_text, timeString, amount)
 
 
     // Always update list -> this must be used for instant change while editing reminders
