@@ -11,13 +11,13 @@ import java.util.*
  */
 
 @Entity(
-    tableName = "history",
-    foreignKeys = [ForeignKey(
-        entity = PillEntity::class,
-        parentColumns = arrayOf("pillId"),
-        childColumns = arrayOf("pillId"),
-        onDelete = ForeignKey.CASCADE
-    )]
+        tableName = "history",
+        foreignKeys = [ForeignKey(
+                entity = PillEntity::class,
+                parentColumns = arrayOf("pillId"),
+                childColumns = arrayOf("pillId"),
+                onDelete = ForeignKey.CASCADE
+        )]
 )
 data class History(
         @PrimaryKey(autoGenerate = true)
@@ -41,13 +41,14 @@ data class History(
         get() = ItemTypes.HISTORY_ITEM
 
     override fun isSame(newItem: BaseModel) =
-        if (newItem is History) {
-            this.id == newItem.id
-        } else false
+            if (newItem is History) {
+                this.id == newItem.id
+            } else false
 
     override fun isContentSame(newItem: BaseModel) =
-        if (newItem is History) {
-            this.hasBeenConfirmed == newItem.hasBeenConfirmed &&
-                    this.confirmed?.timeInMillis == newItem.confirmed?.timeInMillis
-        } else false
+            if (newItem is History) {
+                this.hasBeenConfirmed == newItem.hasBeenConfirmed &&
+                        this.confirmed?.timeInMillis == newItem.confirmed?.timeInMillis &&
+                        this.amount == newItem.amount
+            } else false
 }

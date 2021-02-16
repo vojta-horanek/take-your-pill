@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.shawnlin.numberpicker.NumberPicker
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
@@ -22,7 +23,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class HistoryViewDialog :
-    RoundedDialogFragment(), HistoryViewAdapter.ItemListener {
+        RoundedDialogFragment(), HistoryViewAdapter.ItemListener {
     private lateinit var binding: DialogHistoryBinding
     private val args: HistoryViewDialogArgs by navArgs()
     private val model: HistoryItemViewModel by viewModels()
@@ -31,9 +32,9 @@ class HistoryViewDialog :
     private var itemRemovedPosition = 0
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = DialogHistoryBinding.inflate(inflater, container, false)
         return binding.root
@@ -52,8 +53,8 @@ class HistoryViewDialog :
 
     private fun initViews() {
         val adapter = HistoryViewAdapter(
-            this,
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_history)
+                this,
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_history)
         )
         binding.recyclerHistoryView.adapter = adapter
         model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner, { history ->
@@ -75,20 +76,20 @@ class HistoryViewDialog :
 
     private fun showDeleteDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.confirm_delete_history))
-            .setMessage(getString(R.string.confirm_delete_history_description))
-            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
-                model.deletePillHistory(args.pillId).observe(viewLifecycleOwner, {
+                .setTitle(getString(R.string.confirm_delete_history))
+                .setMessage(getString(R.string.confirm_delete_history_description))
+                .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                    model.deletePillHistory(args.pillId).observe(viewLifecycleOwner, {
+                        dialog.dismiss()
+                        if (it) {
+                            this.dismiss()
+                        }
+                    })
+                }
+                .setNegativeButton(getString(R.string.no)) { dialog, _ ->
                     dialog.dismiss()
-                    if (it) {
-                        this.dismiss()
-                    }
-                })
-            }
-            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+                }
+                .show()
     }
 
     override fun onItemOptionsClick(view: View, item: BaseModel, position: Int) {
@@ -122,12 +123,49 @@ class HistoryViewDialog :
                         showChangeConfirmTimeDialog(item)
                         true
                     }
+                    R.id.historyChangeAmount -> {
+                        showChangeAmountDialog(item)
+                        true
+                    }
                     else -> false
                 }
             }
             popup.show()
         }
 
+    }
+
+    private fun showChangeAmountDialog(item: History) {
+
+        var amount = item.amount
+
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_change_amount,
+                binding.root as ViewGroup, false)
+
+        val dialog = MaterialAlertDialogBuilder(requireContext()).apply {
+            setView(view)
+            setTitle(R.string.change_amount)
+            setMessage(getString(R.string.change_amount_format, amount))
+            setPositiveButton(R.string.confirm) { dialog, _ ->
+                model.setHistoryAmount(item, amount)
+                dialog.dismiss()
+            }
+            setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+        }.create()
+        val numberPickerAmount = view.findViewById<NumberPicker>(R.id.numberPickerAmount)
+
+        numberPickerAmount.minValue = 1
+        numberPickerAmount.maxValue = NumberPickerHelper.getDisplayValues().size
+        numberPickerAmount.displayedValues = NumberPickerHelper.getDisplayValues().toTypedArray()
+        numberPickerAmount.value = NumberPickerHelper.convertToPosition(amount)
+        numberPickerAmount.setOnValueChangedListener { _, _, value ->
+            amount = NumberPickerHelper.convertToString(value)
+            dialog.setMessage(getString(R.string.change_amount_format, amount))
+        }
+
+        dialog.show()
     }
 
     private fun showChangeConfirmTimeDialog(item: History) {
@@ -141,9 +179,9 @@ class HistoryViewDialog :
     }
 
     private fun onTimePickerConfirmed(
-        hour: Int,
-        minute: Int,
-        item: History
+            hour: Int,
+            minute: Int,
+            item: History
     ) {
         val calendar = Calendar.getInstance()
         calendar.hour = hour

@@ -68,8 +68,25 @@
                 app:srcCompat="@drawable/ic_notifications"
                 tools:ignore="ContentDescription" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textHistoryReminded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:minWidth="48dp"
+
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textHistoryAmount"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayoutReminder"
+                tools:text="16:00" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/frameLayoutConfirm"
+                isVisible="@{history.hasBeenConfirmed}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/screen_margin_vertical_little"
@@ -81,27 +98,11 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 app:tint="@color/colorGreen"
                 tools:ignore="ContentDescription"
-                tools:srcCompat="@drawable/ic_check"
-                isVisible="@{history.hasBeenConfirmed}" />
-
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textHistoryReminded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:minWidth="48dp"
-                android:textAppearance="@style/AppTheme.Text.BodyNormal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonShowMore"
-                app:layout_constraintTop_toBottomOf="@+id/frameLayoutReminder"
-                tools:text="16:00" />
+                tools:srcCompat="@drawable/ic_check" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textHistoryConfirmed"
+                isVisible="@{history.hasBeenConfirmed}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -113,8 +114,37 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textHistoryReminded"
                 app:layout_constraintTop_toBottomOf="@+id/frameLayoutConfirm"
-                tools:text="16:33"
-                isVisible="@{history.hasBeenConfirmed}" />
+                tools:text="16:33" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/frameLayoutAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/screen_margin_vertical_little"
+                app:layout_constraintBottom_toTopOf="@+id/textHistoryAmount"
+                app:layout_constraintEnd_toEndOf="@+id/textHistoryAmount"
+                app:layout_constraintStart_toStartOf="@+id/textHistoryAmount"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:srcCompat="@drawable/ic_pill"
+                tools:ignore="ContentDescription" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textHistoryAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:minWidth="48dp"
+                android:text="@{history.amount}"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonShowMore"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayoutAmount"
+                tools:text="1" />
+
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/buttonShowMore"

@@ -58,6 +58,7 @@
     <string name="set_a_reminder">Set a reminder</string>
     <string name="delete_pill">Delete pill</string>
     <string name="set_amount_format">Take %1$s pill(s)</string>
+    <string name="change_amount_format">Set amount to %1$s pill(s)</string>
     <string name="reminder_text">%1$s: %2$s pill(s)</string>
     <string name="it_is_time_to_take">It is time to take %1$s pill(s)!</string>
     <string name="pill_taken_question">Have you taken %1$s pill(s) at %2$s?</string>
@@ -119,4 +120,5 @@
     <string name="no_history">Looks like you haven\'t received any reminder yet. Statistics and charts won\'t be available for you.</string>
     <string name="confirmed_missed_pills">Confirmed ✕ Missed</string>
     <string name="missed">Missed</string>
+    <string name="change_amount">Change amount</string>
 </resources>

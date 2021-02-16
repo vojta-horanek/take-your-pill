@@ -44,6 +44,7 @@
     <string name="save_reminder">Uložit připomínku</string>
     <string name="set_a_reminder">Nastavit připomínku</string>
     <string name="set_amount_format">Vzít si %1$s prášek(y)</string>
+    <string name="change_amount_format">Nastavit množství na %1$s prášek(u)</string>
     <string name="reminder_text">%1$s: %2$s prášek(y)</string>
     <string name="it_is_time_to_take">Je čas si vzít %1$s prášek(y)!</string>
     <plurals name="delay">
@@ -84,6 +85,7 @@
     <string name="mark_as_skipped">Označit jako vynechané</string>
     <string name="mark_as_confirmed">Označit jako potvrzené</string>
     <string name="change_confirm_time">Změnit čas potvrzení</string>
+    <string name="change_amount">Změnit množství</string>
     <string name="confirm_delete_history">Doopravdy to chcete udělat?</string>
     <string name="confirm_delete_history_description">Toto smaže celou historii pro tento prášek.</string>
     <string name="confirm_delete_photo">Doopravdy chcete smazat fotku?</string>

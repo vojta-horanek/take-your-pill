@@ -13,6 +13,10 @@
         android:title="@string/change_confirm_time"
         android:icon="@drawable/ic_time" />
     <item
+        android:id="@+id/historyChangeAmount"
+        android:title="@string/change_amount"
+        android:icon="@drawable/ic_pill" />
+    <item
         android:id="@+id/historyDelete"
         android:title="@string/delete"
         android:icon="@drawable/ic_delete" />
