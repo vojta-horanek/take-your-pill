@@ -228,9 +228,9 @@ class EditFragment : Fragment() {
         } ?: run {
             if (editing) model.editReminder(reminder)
             else model.addReminder(reminder)
+            reminderDialog.dismiss()
         }
 
-        reminderDialog.dismiss()
     }
 
     @AfterPermissionGranted(Constants.READ_EXTERNAL_STORAGE_PERMISSION_CODE)
