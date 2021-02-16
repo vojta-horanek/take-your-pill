@@ -35,6 +35,9 @@ class HistoryItemViewHolder(
             // Should this item show a divider
             divider.isVisible = isFirstOfDate && !isFirstInList
 
+            listOf(frameLayoutAmount, frameLayoutConfirm, frameLayoutReminder).forEach {
+                it.isVisible = isFirstInList
+            }
             executePendingBindings()
         }
     }

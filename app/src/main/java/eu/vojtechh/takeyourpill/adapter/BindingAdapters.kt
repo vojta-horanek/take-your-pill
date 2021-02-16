@@ -20,8 +20,8 @@ object BindingAdapters {
         } else {
             @Suppress("DEPRECATION")
             view.background.setColorFilter(
-                color,
-                PorterDuff.Mode.SRC_ATOP
+                    color,
+                    PorterDuff.Mode.SRC_ATOP
             )
         }
     }
@@ -30,5 +30,11 @@ object BindingAdapters {
     @BindingAdapter("isVisible")
     fun isVisible(view: View, visible: Boolean) {
         view.isVisible = visible
+    }
+
+    @JvmStatic
+    @BindingAdapter("isInvisible")
+    fun isInvisible(view: View, invisible: Boolean) {
+        view.visibility = if (invisible) View.INVISIBLE else View.VISIBLE
     }
 }

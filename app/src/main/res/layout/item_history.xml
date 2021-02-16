@@ -26,6 +26,7 @@
         android:animateLayoutChanges="true"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:minHeight="48dp"
         android:orientation="vertical">
 
         <View
@@ -47,20 +48,21 @@
                 android:id="@+id/textDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/jost_medium"
                 android:textAppearance="@style/AppTheme.Text.BodyNormal"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayoutConfirm"
+                app:layout_goneMarginTop="0dp"
                 tools:text="21. 12." />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/frameLayoutReminder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/screen_margin_vertical_little"
-                app:layout_constraintBottom_toTopOf="@+id/textHistoryReminded"
+                app:layout_constraintBottom_toBottomOf="@+id/frameLayoutConfirm"
                 app:layout_constraintEnd_toEndOf="@+id/textHistoryReminded"
                 app:layout_constraintStart_toStartOf="@+id/textHistoryReminded"
                 app:layout_constraintTop_toTopOf="parent"
@@ -86,23 +88,18 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/frameLayoutConfirm"
-                isVisible="@{history.hasBeenConfirmed}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/screen_margin_vertical_little"
-                android:src="@{history.hasBeenConfirmed ? @drawable/ic_check : @drawable/ic_close}"
-                app:layout_constraintBottom_toTopOf="@+id/textHistoryConfirmed"
+                app:srcCompat="@drawable/ic_check"
                 app:layout_constraintEnd_toEndOf="@+id/textHistoryConfirmed"
                 app:layout_constraintStart_toStartOf="@+id/textHistoryConfirmed"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:tint="@color/colorGreen"
-                tools:ignore="ContentDescription"
-                tools:srcCompat="@drawable/ic_check" />
+                tools:ignore="ContentDescription" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textHistoryConfirmed"
-                isVisible="@{history.hasBeenConfirmed}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -120,8 +117,7 @@
                 android:id="@+id/frameLayoutAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/screen_margin_vertical_little"
-                app:layout_constraintBottom_toTopOf="@+id/textHistoryAmount"
+                app:layout_constraintBottom_toBottomOf="@+id/frameLayoutReminder"
                 app:layout_constraintEnd_toEndOf="@+id/textHistoryAmount"
                 app:layout_constraintStart_toStartOf="@+id/textHistoryAmount"
                 app:layout_constraintTop_toTopOf="parent"
@@ -154,7 +150,7 @@
                 android:onClick="@{(view) -> listener.onItemOptionsClick(view, history, position)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayoutConfirm"
                 app:srcCompat="@drawable/ic_more" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
