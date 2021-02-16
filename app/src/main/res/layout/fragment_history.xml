@@ -16,7 +16,7 @@
         style="@style/AppTheme.Widget.Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/screen_margin_vertical"
+        android:layout_marginBottom="14dp"
         android:text="@string/history" />
 
     <com.google.android.material.tabs.TabLayout
@@ -52,6 +52,10 @@
             android:text="@string/charts" />
 
     </com.google.android.material.tabs.TabLayout>
+
+    <View
+        style="@style/AppTheme.Widget.Divider"
+        android:layout_marginTop="0dp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
