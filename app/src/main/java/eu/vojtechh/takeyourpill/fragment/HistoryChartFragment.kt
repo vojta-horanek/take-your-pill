@@ -61,11 +61,18 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
 
     private fun processData(data: List<PieData>) {
         binding.run {
-            listOf(pieChartAll, pieChartMissed, pieChartAllConfirmed)
-                    .forEachIndexed { index, pieChart ->
-                        pieChart.data = data[index]
-                        pieChart.invalidate()
-                    }
+            listOf(
+                    Pair(pieChartAll, titleGraphAll),
+                    Pair(pieChartMissed, titleGraphMissed),
+                    Pair(pieChartAllConfirmed, titleGraphAllMissed)
+            ).forEachIndexed { index, chart ->
+                if (data[index].entryCount == 0) {
+                    chart.first.isVisible = false
+                    chart.second.isVisible = false
+                }
+                chart.first.data = data[index]
+                chart.first.invalidate()
+            }
         }
     }
 
