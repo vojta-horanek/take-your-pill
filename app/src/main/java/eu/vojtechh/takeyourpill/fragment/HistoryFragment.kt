@@ -2,6 +2,7 @@ package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
@@ -35,6 +36,12 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 2 -> getString(R.string.charts)
                 else -> getString(R.string.history)
             }
+            tab.icon = ResourcesCompat.getDrawable(resources, when (position) {
+                0 -> R.drawable.ic_list_alt
+                1 -> R.drawable.ic_stats
+                2 -> R.drawable.ic_pie_chart
+                else -> R.drawable.ic_history
+            }, context?.theme)
         }.attach()
 
     }

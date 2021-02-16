@@ -28,6 +28,7 @@
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabIndicatorFullWidth="false"
         app:tabMode="scrollable"
+        app:tabInlineLabel="true"
         app:tabTextAppearance="@style/AppTheme.Text.TabLayoutText">
 
         <!-- These TabItems do not actually represent the tabs, they are here only for the Layout Inspector -->
@@ -35,16 +36,19 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_list_alt"
             android:text="@string/overview" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_stats"
             android:text="@string/stats" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_pie_chart"
             android:text="@string/charts" />
 
     </com.google.android.material.tabs.TabLayout>
