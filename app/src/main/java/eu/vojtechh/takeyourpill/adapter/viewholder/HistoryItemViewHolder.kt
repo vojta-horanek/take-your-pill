@@ -1,6 +1,7 @@
 package eu.vojtechh.takeyourpill.adapter.viewholder
 
 import androidx.core.os.ConfigurationCompat.getLocales
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
@@ -31,9 +32,9 @@ class HistoryItemViewHolder(
             val dateFormat = SimpleDateFormat(pattern, primaryLocale)
             textDate.text = dateFormat.format(history.reminded.time)
 
-            textDate.isVisible = isFirstOfDate
+            textDate.isInvisible = !isFirstOfDate
             // Should this item show a divider
-            divider.isVisible = isFirstOfDate && !isFirstInList
+            divider.isVisible = isFirstOfDate || isFirstInList
 
             listOf(frameLayoutAmount, frameLayoutConfirm, frameLayoutReminder).forEach {
                 it.isVisible = isFirstInList

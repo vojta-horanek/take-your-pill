@@ -72,7 +72,6 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:minHeight="@dimen/recycler_history_view_min_height"
-            android:paddingTop="@dimen/screen_margin_vertical_small"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_history" />
 
