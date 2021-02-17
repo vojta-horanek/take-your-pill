@@ -74,19 +74,24 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textPillName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
+            android:maxLines="1"
             android:minHeight="32dp"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
             android:textSize="18sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textHistoryConfirmed"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textDate"
             app:layout_constraintTop_toBottomOf="@+id/textDate"
             app:layout_goneMarginStart="16dp"
+            android:ellipsize="end"
             tools:text="Xyzal" />
 
         <androidx.appcompat.widget.AppCompatImageView

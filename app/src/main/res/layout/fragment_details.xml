@@ -34,6 +34,7 @@
                     android:id="@+id/textPillName"
                     style="@style/AppTheme.Widget.Header"
                     android:layout_width="0dp"
+                    android:maxLines="2"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/screen_margin_horizontal_small"
                     android:text="@{pill.name}"
