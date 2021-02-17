@@ -17,6 +17,7 @@ class HistoryItemViewModel @Inject constructor(
         private val historyRepository: HistoryRepository
 ) : ViewModel() {
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
+    fun getHistory() = historyRepository.getHistory()
     fun getHistoryForPill(pillId: Long) = historyRepository.getHistoryForPill(pillId)
     fun confirmHistory(item: History) = viewModelScope.launch {
         val historyEntity = History(item.id, item.reminded, Calendar.getInstance(), item.amount, item.pillId)

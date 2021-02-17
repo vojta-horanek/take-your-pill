@@ -13,6 +13,7 @@ import eu.vojtechh.takeyourpill.databinding.FragmentHistoryOverviewBinding
 import eu.vojtechh.takeyourpill.klass.tryIgnore
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.BaseModel
+import eu.vojtechh.takeyourpill.model.HistoryOverallItem
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.history.HistoryOverviewViewModel
 
@@ -36,7 +37,6 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
 
         binding.recyclerHistory.adapter = appAdapter
 
-        // TODO Add all pills item
         model.getStatsData().observe(viewLifecycleOwner) { result ->
             result.onSuccess {
                 appAdapter.submitList(it)
@@ -51,6 +51,9 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
     override fun onItemClicked(view: View, item: BaseModel) {
         if (item is Pill) {
             val directions = HistoryFragmentDirections.actionHistoryToFragmentHistoryView(item.id)
+            findNavController().navigate(directions)
+        } else if (item is HistoryOverallItem) {
+            val directions = HistoryFragmentDirections.actionHistoryToFragmentHistoryView(-1, true)
             findNavController().navigate(directions)
         }
     }

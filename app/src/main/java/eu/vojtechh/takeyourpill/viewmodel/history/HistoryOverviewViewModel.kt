@@ -5,6 +5,7 @@ import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.klass.CallResult
 import eu.vojtechh.takeyourpill.model.BaseModel
+import eu.vojtechh.takeyourpill.model.HistoryOverallItem
 import eu.vojtechh.takeyourpill.model.HistoryPillItem
 import eu.vojtechh.takeyourpill.model.StatItem
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
@@ -39,7 +40,7 @@ class HistoryOverviewViewModel @Inject constructor(
         val totalConfirmed = history.count { it.hasBeenConfirmed }
         val totalMissed = totalReminded - totalConfirmed
 
-        //statList.add(0, StatItem(totalReminded, totalConfirmed, totalMissed))
+        val overallStat = StatItem(null, totalReminded, totalConfirmed, totalMissed)
 
         val pillsHistory = history.groupBy { it.pillId }.values
         // Iterate over each pill
@@ -54,6 +55,7 @@ class HistoryOverviewViewModel @Inject constructor(
         }
 
         val mergedList = sequence {
+            yield(HistoryPillItem(HistoryOverallItem(), overallStat))
             pills.forEach { pill ->
                 pill.itemType = BaseModel.ItemTypes.HISTORY
                 statList.find { statItem -> statItem.pillId == pill.id }?.let { statItem ->

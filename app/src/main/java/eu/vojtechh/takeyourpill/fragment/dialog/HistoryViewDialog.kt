@@ -43,12 +43,17 @@ class HistoryViewDialog :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model.getPillById(args.pillId).observe(viewLifecycleOwner, {
-            if (it != null) {
-                binding.pill = it
-                initViews()
-            }
-        })
+        if (args.isOverall) {
+            binding.historyViewTitle.text = getString(R.string.stat_overall)
+            initViews()
+        } else {
+            model.getPillById(args.pillId).observe(viewLifecycleOwner, {
+                if (it != null) {
+                    binding.historyViewTitle.text = it.name
+                    initViews()
+                }
+            })
+        }
     }
 
     private fun initViews() {
@@ -57,20 +62,31 @@ class HistoryViewDialog :
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_history)
         )
         binding.recyclerHistoryView.adapter = adapter
-        model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner, { history ->
-            history?.let {
-                binding.buttonDeleteHistory.isVisible = it.isNotEmpty()
-                adapter.submitList(it) {
-                    // Handle item removal correctly (don't remove the date)
-                    if (itemJustRemoved) {
-                        adapter.notifyItemRangeChanged(itemRemovedPosition - 1, 3)
-                        itemJustRemoved = false
-                    }
-                }
+        if (args.isOverall) {
+            model.getHistory().observe(viewLifecycleOwner) { history ->
+                onListObserve(adapter, history, false)
             }
-        })
+        } else {
+            model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner) { history ->
+                onListObserve(adapter, history, true)
+            }
+        }
         binding.buttonDeleteHistory.setOnClickListener {
             showDeleteDialog()
+        }
+    }
+
+    private fun onListObserve(adapter: HistoryViewAdapter, history: List<History>?,
+                              deleteVisibility: Boolean) {
+        history?.let {
+            binding.buttonDeleteHistory.isVisible = if (deleteVisibility) it.isNotEmpty() else false
+            adapter.submitList(it) {
+                // Handle item removal correctly (don't remove the date)
+                if (itemJustRemoved) {
+                    adapter.notifyItemRangeChanged(itemRemovedPosition - 1, 3)
+                    itemJustRemoved = false
+                }
+            }
         }
     }
 
@@ -81,9 +97,7 @@ class HistoryViewDialog :
                 .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
                     model.deletePillHistory(args.pillId).observe(viewLifecycleOwner, {
                         dialog.dismiss()
-                        if (it) {
-                            this.dismiss()
-                        }
+                        this.dismiss()
                     })
                 }
                 .setNegativeButton(getString(R.string.no)) { dialog, _ ->

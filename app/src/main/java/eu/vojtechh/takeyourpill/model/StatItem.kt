@@ -4,7 +4,7 @@ import android.content.Context
 import eu.vojtechh.takeyourpill.R
 
 data class StatItem(
-        val pillId: Long,
+        val pillId: Long?,
         val reminded: Int,
         val confirmed: Int,
         val missed: Int
