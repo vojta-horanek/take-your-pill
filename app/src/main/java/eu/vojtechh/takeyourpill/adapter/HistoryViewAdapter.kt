@@ -17,8 +17,9 @@ import eu.vojtechh.takeyourpill.model.History
 import java.util.*
 
 class HistoryViewAdapter(
-    private val listener: ItemListener,
-    private val emptyDrawable: Drawable?,
+        private val listener: ItemListener,
+        private val emptyDrawable: Drawable?,
+        private val showNames: Boolean
 ) : ListAdapter<BaseModel, RecyclerView.ViewHolder>(BaseModel.DiffCallback) {
 
     interface ItemListener {
@@ -34,16 +35,17 @@ class HistoryViewAdapter(
                     (getItemOrNull(position - 1) as History?)?.let {
                         val day = it.reminded.get(Calendar.DAY_OF_YEAR)
                         val dayCurrent =
-                            currentHistoryItem.reminded.get(Calendar.DAY_OF_YEAR)
+                                currentHistoryItem.reminded.get(Calendar.DAY_OF_YEAR)
                         if (dayCurrent == day) {
                             isFirstOfDate = false
                         }
                     }
                     holder.bind(
-                        currentHistoryItem,
-                        currentList.firstOrNull() == currentHistoryItem,
-                        isFirstOfDate,
-                        position
+                            currentHistoryItem,
+                            currentList.firstOrNull() == currentHistoryItem,
+                            isFirstOfDate,
+                            position,
+                            showNames
                     )
                 }
             }
@@ -54,37 +56,27 @@ class HistoryViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             BaseModel.ItemTypes.EMPTY.ordinal -> EmptyViewHolder(
-                LayoutViewEmptyBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                ),
-                "", emptyDrawable
+                    LayoutViewEmptyBinding.inflate(
+                            LayoutInflater.from(parent.context),
+                            parent,
+                            false
+                    ),
+                    "", emptyDrawable
             )
             BaseModel.ItemTypes.HISTORY_ITEM.ordinal -> HistoryItemViewHolder(
-                ItemHistoryBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                ),
-                listener
+                    ItemHistoryBinding.inflate(
+                            LayoutInflater.from(parent.context),
+                            parent,
+                            false
+                    ),
+                    listener
             )
             else -> throw RuntimeException("Unknown view holder")
         }
     }
 
-    override fun submitList(list: List<BaseModel>?) {
-        list?.let {
-            if (it.isEmpty()) {
-                val newList = list.toMutableList()
-                newList.add(EmptyItem())
-                super.submitList(newList)
-            } else {
-                super.submitList(list)
-            }
-        } ?: super.submitList(list)
-
-    }
+    override fun submitList(list: List<BaseModel>?) =
+            submitList(list, null)
 
     override fun submitList(list: List<BaseModel>?, commitCallback: Runnable?) {
         list?.let {

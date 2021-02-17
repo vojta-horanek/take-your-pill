@@ -1,9 +1,6 @@
 package eu.vojtechh.takeyourpill.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import java.util.*
 
 /**
@@ -33,6 +30,9 @@ data class History(
         @ColumnInfo(index = true)
         var pillId: Long
 ) : BaseModel() {
+
+    @Ignore
+    var pillName: String = ""
 
     val hasBeenConfirmed: Boolean
         get() = confirmed?.let { true } ?: false

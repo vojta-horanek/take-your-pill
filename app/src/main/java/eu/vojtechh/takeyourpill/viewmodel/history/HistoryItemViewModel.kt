@@ -62,4 +62,16 @@ class HistoryItemViewModel @Inject constructor(
 
         }
     }
+
+    fun addNames(history: List<History>?) = liveData {
+        history?.let { history ->
+            val pills = pillRepository.getAllPillsIncludingDeletedSync()
+            emit(history.map { hist ->
+                hist.pillName = pills.find {
+                    it.id == hist.pillId
+                }?.name ?: "N/A"
+                hist
+            })
+        } ?: emit(history)
+    }
 }

@@ -1,42 +1,49 @@
 package eu.vojtechh.takeyourpill.adapter.viewholder
 
-import androidx.core.os.ConfigurationCompat.getLocales
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryBinding
+import eu.vojtechh.takeyourpill.klass.setDateText
+import eu.vojtechh.takeyourpill.klass.setTimeText
+import eu.vojtechh.takeyourpill.klass.setVerticalBias
 import eu.vojtechh.takeyourpill.model.History
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 
 class HistoryItemViewHolder(
-    private val binding: ItemHistoryBinding,
-    private val listener: HistoryViewAdapter.ItemListener
+        private val binding: ItemHistoryBinding,
+        private val listener: HistoryViewAdapter.ItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(history: History, isFirstInList: Boolean, isFirstOfDate: Boolean, position: Int) {
+    fun bind(history: History, isFirstInList: Boolean, isFirstOfDate: Boolean, position: Int,
+             showNames: Boolean) {
         binding.history = history
         binding.listener = listener
         binding.position = position
         with(binding) {
 
-            textHistoryReminded.text = DateFormat.getTimeInstance(DateFormat.SHORT)
-                .format(history.reminded.time)
-
-            textHistoryConfirmed.text = history.confirmed?.let {
-                DateFormat.getTimeInstance(DateFormat.SHORT).format(it.time)
+            textHistoryReminded.setTimeText(history.reminded.time)
+            history.confirmed?.let {
+                textHistoryConfirmed.setTimeText(it.time)
             }
 
-            val pattern = "dd. MM."
-            val primaryLocale = getLocales(binding.root.context.resources.configuration).get(0)
-            val dateFormat = SimpleDateFormat(pattern, primaryLocale)
-            textDate.text = dateFormat.format(history.reminded.time)
+            textDate.setDateText(history.reminded.time)
 
-            textDate.isInvisible = !isFirstOfDate
+            textPillName.text = history.pillName
+            textPillName.isVisible = showNames
+
             // Should this item show a divider
             divider.isVisible = isFirstOfDate || isFirstInList
+            dividerPill.isVisible = !isFirstOfDate
 
-            listOf(frameLayoutAmount, frameLayoutConfirm, frameLayoutReminder).forEach {
+            if (showNames) {
+                textHistoryConfirmed.setVerticalBias(1.0f)
+                textDate.isVisible = isFirstOfDate
+            } else {
+                textHistoryConfirmed.setVerticalBias(0.5f)
+                textDate.isInvisible = !isFirstOfDate
+            }
+
+            listOf(imageAmount, imageConfirm, imageReminder).forEach {
                 it.isVisible = isFirstInList
             }
             executePendingBindings()

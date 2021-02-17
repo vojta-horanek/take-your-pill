@@ -6,18 +6,22 @@ import android.content.res.ColorStateList
 import android.content.res.Resources.Theme
 import android.graphics.Color
 import android.util.TypedValue
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.PopupMenu
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.use
+import androidx.core.os.ConfigurationCompat
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.textfield.TextInputLayout
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -118,6 +122,24 @@ fun Context.getAttr(res: Int): Int {
 }
 
 fun Any?.isNull() = this == null
+
+fun View.setVerticalBias(bias: Float) {
+    val params = layoutParams
+    if (params is ConstraintLayout.LayoutParams) {
+        params.verticalBias = bias
+        layoutParams = params
+    }
+}
+
+fun TextView.setDateText(date: Date, pattern: String = "dd. MM.") {
+    val primaryLocale = ConfigurationCompat.getLocales(context.resources.configuration).get(0)
+    val dateFormat = SimpleDateFormat(pattern, primaryLocale)
+    text = dateFormat.format(date)
+}
+
+fun TextView.setTimeText(date: Date) {
+    text = DateFormat.getTimeInstance(DateFormat.SHORT).format(date)
+}
 
 // Inline functions
 inline fun tryIgnore(action: () -> Unit) {

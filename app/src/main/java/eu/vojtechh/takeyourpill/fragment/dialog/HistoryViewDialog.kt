@@ -59,12 +59,16 @@ class HistoryViewDialog :
     private fun initViews() {
         val adapter = HistoryViewAdapter(
                 this,
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_history)
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_history),
+                args.isOverall
         )
+
         binding.recyclerHistoryView.adapter = adapter
         if (args.isOverall) {
             model.getHistory().observe(viewLifecycleOwner) { history ->
-                onListObserve(adapter, history, false)
+                model.addNames(history).observe(viewLifecycleOwner) { namedHistory ->
+                    onListObserve(adapter, namedHistory, false)
+                }
             }
         } else {
             model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner) { history ->
