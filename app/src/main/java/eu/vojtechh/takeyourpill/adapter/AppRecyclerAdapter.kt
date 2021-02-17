@@ -38,7 +38,7 @@ class AppRecyclerAdapter(
                 (getItem(position) as HeaderItem).title
             )
             BaseModel.ItemTypes.HISTORY.ordinal -> if (holder is HistoryViewHolder) holder.bind(
-                getItem(position) as Pill
+                    getItem(position) as HistoryPillItem
             )
             BaseModel.ItemTypes.EMPTY.ordinal -> if (holder is EmptyViewHolder) holder.bind()
         }

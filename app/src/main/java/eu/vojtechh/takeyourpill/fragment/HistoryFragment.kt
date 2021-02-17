@@ -32,14 +32,12 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.overview)
-                1 -> getString(R.string.stats)
-                2 -> getString(R.string.charts)
+                1 -> getString(R.string.charts)
                 else -> getString(R.string.history)
             }
             tab.icon = ResourcesCompat.getDrawable(resources, when (position) {
                 0 -> R.drawable.ic_list_alt
-                1 -> R.drawable.ic_stats
-                2 -> R.drawable.ic_pie_chart
+                1 -> R.drawable.ic_pie_chart
                 else -> R.drawable.ic_history
             }, context?.theme)
         }.attach()

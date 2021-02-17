@@ -116,3 +116,5 @@ fun Context.getAttr(res: Int): Int {
     theme.resolveAttribute(res, typedValue, true)
     return typedValue.data
 }
+
+fun Any?.isNull() = this == null

@@ -1,28 +1,25 @@
 package eu.vojtechh.takeyourpill.model
 
 import android.content.Context
-import androidx.recyclerview.widget.DiffUtil
 import eu.vojtechh.takeyourpill.R
 
 data class StatItem(
-        val id: Long,
-        val name: String,
+        val pillId: Long,
         val reminded: Int,
         val confirmed: Int,
-        val missed: Int,
-        val color: Int? = null
+        val missed: Int
 ) {
 
-    fun getNameText(context: Context) = context.getString(R.string.stat_name, name)
     fun getRemindedText(context: Context) = context.getString(R.string.stat_reminded, reminded)
     fun getConfirmedText(context: Context) = context.getString(R.string.stat_confirmed, confirmed)
     fun getMissedText(context: Context) = context.getString(R.string.stat_missed, missed)
+    fun getSummaryText(context: Context) =
+            listOf(
+                    getRemindedText(context),
+                    getConfirmedText(context),
+                    getMissedText(context)
+            ).joinToString(separator = System.lineSeparator())
 
-    object DiffCallback : DiffUtil.ItemCallback<StatItem>() {
-        override fun areItemsTheSame(oldItem: StatItem, newItem: StatItem) =
-                oldItem.id == newItem.id
-
-        override fun areContentsTheSame(oldItem: StatItem, newItem: StatItem) =
-                oldItem.reminded == newItem.reminded
-    }
+    val hasStats
+        get() = reminded != 0
 }
