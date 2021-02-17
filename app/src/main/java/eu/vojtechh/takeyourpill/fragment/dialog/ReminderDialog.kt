@@ -12,6 +12,7 @@ import eu.vojtechh.takeyourpill.databinding.DialogNewReminderBinding
 import eu.vojtechh.takeyourpill.klass.Builders
 import eu.vojtechh.takeyourpill.klass.NumberPickerHelper
 import eu.vojtechh.takeyourpill.klass.setDrawableTint
+import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
@@ -22,6 +23,7 @@ class ReminderDialog : RoundedDialogFragment() {
     private var confirmListener: (Reminder, Boolean) -> Unit = { _, _ -> }
     private lateinit var reminder: Reminder
     private var isEditing = false
+    private var accentColor = PillColor.default()
 
     fun setConfirmListener(listener: (Reminder, Boolean) -> Unit): ReminderDialog {
         this.confirmListener = listener
@@ -35,6 +37,11 @@ class ReminderDialog : RoundedDialogFragment() {
 
     fun setIsEditing(editing: Boolean): ReminderDialog {
         this.isEditing = editing
+        return this
+    }
+
+    fun setAccentColor(color: PillColor): ReminderDialog {
+        this.accentColor = color
         return this
     }
 
@@ -59,21 +66,27 @@ class ReminderDialog : RoundedDialogFragment() {
 
         binding.run {
 
-            numberPickerAmount.minValue = 1
-            numberPickerAmount.maxValue = NumberPickerHelper.getDisplayValues().size
-            numberPickerAmount.displayedValues = NumberPickerHelper.getDisplayValues().toTypedArray()
-            numberPickerAmount.value = NumberPickerHelper.convertToPosition(reminder.amount)
-            textConfirm.setOnClickListener { confirmListener(reminder, isEditing) }
-
-            numberPickerAmount.setOnValueChangedListener { _, _, value ->
-                reminder.amount = NumberPickerHelper.convertToString(value)
-                setTexts()
+            numberPickerAmount.apply {
+                minValue = 1
+                maxValue = NumberPickerHelper.getDisplayValues().size
+                displayedValues =
+                    NumberPickerHelper.getDisplayValues().toTypedArray()
+                value = NumberPickerHelper.convertToPosition(reminder.amount)
+                setOnValueChangedListener { _, _, value ->
+                    reminder.amount = NumberPickerHelper.convertToString(value)
+                    setTexts()
+                }
+                val colorRes = accentColor.getColor(requireContext())
+                dividerColor = colorRes
+                selectedTextColor = colorRes
             }
 
             textTime.setOnClickListener {
                 snackbar.dismiss()
                 showTimeDialog()
             }
+            textConfirm.setOnClickListener { confirmListener(reminder, isEditing) }
+
         }
 
         return binding.root

@@ -3,6 +3,7 @@ package eu.vojtechh.takeyourpill.fragment
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -30,6 +31,7 @@ import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.ReminderDialog
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
@@ -141,7 +143,10 @@ class EditFragment : Fragment() {
     private fun initViews() {
         model.initFields()
 
-        model.pillColors.observe(viewLifecycleOwner) { colorAdapter.submitList(it) }
+        model.pillColors.observe(viewLifecycleOwner) {
+            colorAdapter.submitList(it)
+            setUiColor(model.pill.color)
+        }
         model.reminders.observe(viewLifecycleOwner) { reminderAdapter.submitList(it) }
 
         binding.run {
@@ -174,6 +179,37 @@ class EditFragment : Fragment() {
             imageDeletePhoto.setOnClickListener { onImageDelete() }
         }
 
+    }
+
+    private fun setUiColor(checkedColor: PillColor) {
+        val color = checkedColor.getColor(requireContext())
+        val colorStateList = ColorStateList.valueOf(color)
+        binding.run {
+            buttonSave.backgroundTintList = colorStateList
+            listOf(
+                inputName, inputDescription, inputCycleCount, inputCycleToday, inputRestore,
+                inputDayNumber
+            )
+                .forEach {
+                    it.highlightColor = color
+                }
+            listOf(
+                inputNameLayout, inputDescriptionLayout, inputCycleCountLayout,
+                inputCycleTodayLayout, inputRestoreLayout, inputDayNumberLayout
+            )
+                .forEach {
+                    it.boxStrokeColor = color
+                    it.hintTextColor = colorStateList
+                }
+
+            listOf(checkCycleCount, checkDayLimit, checkRestoreAfter).forEach {
+                it.buttonTintList = colorStateList
+            }
+            buttonAddReminder.strokeColor = colorStateList
+            buttonAddReminder.iconTint = colorStateList
+            buttonAddReminder.rippleColor = colorStateList
+            buttonAddReminder.setTextColor(color)
+        }
     }
 
     private fun onBackPressed() {
@@ -213,6 +249,7 @@ class EditFragment : Fragment() {
         .setConfirmListener { rem, edit -> onNewReminderConfirmed(rem, edit) }
         .setIsEditing(editing)
         .setReminder(reminder)
+        .setAccentColor(model.pill.color)
         .show(childFragmentManager, Constants.TAG_REMINDER_DIALOG)
 
 
