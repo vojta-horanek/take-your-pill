@@ -53,10 +53,14 @@ class HistoryOverviewViewModel @Inject constructor(
             statList.add(StatItem(pillId, pillReminded, pillConfirmed, pillMissed))
         }
 
-        val mergedList = pills.map { pill ->
-            pill.itemType = BaseModel.ItemTypes.HISTORY
-            HistoryPillItem(pill, statList.find { statItem -> statItem.pillId == pill.id })
-        }
+        val mergedList = sequence {
+            pills.forEach { pill ->
+                pill.itemType = BaseModel.ItemTypes.HISTORY
+                statList.find { statItem -> statItem.pillId == pill.id }?.let { statItem ->
+                    yield(HistoryPillItem(pill, statItem))
+                }
+            }
+        }.toList()
 
         emit(CallResult.success(mergedList))
     }
