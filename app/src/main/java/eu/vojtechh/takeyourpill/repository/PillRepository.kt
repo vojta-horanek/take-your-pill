@@ -13,6 +13,7 @@ class PillRepository @Inject constructor(
 ) {
     fun getAllPills() = pillDao.getAll()
     fun getAllPillsIncludingDeleted() = pillDao.getAllIncludingDeleted()
+    suspend fun getAllPillsIncludingDeletedSync() = pillDao.getAllIncludingDeletedSync()
     fun getPill(pillId: Long) = pillDao.getById(pillId)
     suspend fun getPillSync(pillId: Long) = pillDao.getByIdSync(pillId)
 

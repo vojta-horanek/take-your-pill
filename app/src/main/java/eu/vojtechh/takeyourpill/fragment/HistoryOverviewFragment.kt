@@ -13,7 +13,6 @@ import eu.vojtechh.takeyourpill.databinding.FragmentHistoryOverviewBinding
 import eu.vojtechh.takeyourpill.klass.tryIgnore
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.BaseModel
-import eu.vojtechh.takeyourpill.model.HistoryPillItem
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.history.HistoryOverviewViewModel
 
@@ -37,26 +36,15 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
 
         binding.recyclerHistory.adapter = appAdapter
 
-        // FIXME This is pretty bad lol
         // TODO Add all pills item
-        model.allPills.observe(viewLifecycleOwner) { pills ->
-            if (pills.isEmpty()) {
+        model.getStatsData().observe(viewLifecycleOwner) { result ->
+            result.onSuccess {
+                appAdapter.submitList(it)
+            }.onFailure {
                 tryIgnore { (requireParentFragment() as HistoryFragment).disableTabs() }
                 appAdapter.submitList(listOf()) // Submit an empty list to show the adapter
             }
-            model.allHistory.observe(viewLifecycleOwner) { history ->
-                if (history.isNotEmpty()) {
-                    model.getStatsData(history, requireActivity().applicationContext).observe(viewLifecycleOwner) { stats ->
-                        val mergedList = pills.map { pill ->
-                            pill.itemType = BaseModel.ItemTypes.HISTORY
-                            HistoryPillItem(pill, stats.find { statItem -> statItem.pillId == pill.id })
-                        }
-
-                    }
-                }
-            }
         }
-
 
     }
 

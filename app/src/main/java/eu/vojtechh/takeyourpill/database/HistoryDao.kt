@@ -12,6 +12,9 @@ interface HistoryDao {
     @Query("SELECT * FROM history ORDER BY pillId ASC")
     fun getAllOrderedById(): LiveData<List<History>>
 
+    @Query("SELECT * FROM history ORDER BY pillId ASC")
+    suspend fun getAllOrderedByIdSync(): List<History>
+
     @Query("SELECT * FROM history WHERE historyId = (:historyId)")
     fun getWithId(historyId: Long): LiveData<History?>
 

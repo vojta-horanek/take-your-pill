@@ -10,6 +10,7 @@ class HistoryRepository @Inject constructor(
     fun getHistoryItem(historyId: Long) = historyDao.getWithId(historyId)
     fun getHistory() = historyDao.getAll()
     fun getHistoryOrderedById() = historyDao.getAllOrderedById()
+    suspend fun getHistoryOrderedByIdSync() = historyDao.getAllOrderedByIdSync()
     fun getHistoryForPill(pillId: Long) = historyDao.getWithPillId(pillId)
     suspend fun getByPillIdAndTime(pillId: Long, remindedTime: Long) =
         historyDao.getWithPillIdAndTime(pillId, remindedTime)

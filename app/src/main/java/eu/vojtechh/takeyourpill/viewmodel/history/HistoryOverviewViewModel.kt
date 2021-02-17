@@ -1,10 +1,11 @@
 package eu.vojtechh.takeyourpill.viewmodel.history
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import eu.vojtechh.takeyourpill.model.History
+import eu.vojtechh.takeyourpill.klass.CallResult
+import eu.vojtechh.takeyourpill.model.BaseModel
+import eu.vojtechh.takeyourpill.model.HistoryPillItem
 import eu.vojtechh.takeyourpill.model.StatItem
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
@@ -13,35 +14,50 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryOverviewViewModel @Inject constructor(
-        pillRepository: PillRepository,
-        historyRepository: HistoryRepository
+        private val pillRepository: PillRepository,
+        private val historyRepository: HistoryRepository
 ) : ViewModel() {
-    val allPills = pillRepository.getAllPillsIncludingDeleted()
 
-    val allHistory = historyRepository.getHistoryOrderedById()
+    fun getStatsData() = liveData(Dispatchers.IO) {
+        val pills = pillRepository.getAllPillsIncludingDeletedSync()
 
-    fun getStatsData(history: List<History>, context: Context) =
-            liveData(Dispatchers.IO) {
-                val statList = mutableListOf<StatItem>()
+        if (pills.isEmpty()) {
+            emit(CallResult.failure<List<BaseModel>>())
+            return@liveData
+        }
 
-                val totalReminded = history.size
-                val totalConfirmed = history.count { it.hasBeenConfirmed }
-                val totalMissed = totalReminded - totalConfirmed
+        val history = historyRepository.getHistoryOrderedByIdSync()
 
-                //statList.add(0, StatItem(totalReminded, totalConfirmed, totalMissed))
+        if (history.isEmpty()) {
+            emit(CallResult.failure<List<BaseModel>>())
+            return@liveData
+        }
 
-                val pillsHistory = history.groupBy { it.pillId }.values
-                // Iterate for each pill
-                pillsHistory.forEach { pillHistory ->
+        val statList = mutableListOf<StatItem>()
 
-                    val pillReminded = pillHistory.size
-                    val pillConfirmed = pillHistory.count { it.hasBeenConfirmed }
-                    val pillMissed = pillReminded - pillConfirmed
+        val totalReminded = history.size
+        val totalConfirmed = history.count { it.hasBeenConfirmed }
+        val totalMissed = totalReminded - totalConfirmed
 
-                    statList.add(StatItem(pillHistory.first().pillId, pillReminded, pillConfirmed,
-                            pillMissed))
-                }
+        //statList.add(0, StatItem(totalReminded, totalConfirmed, totalMissed))
 
-                emit(statList)
-            }
+        val pillsHistory = history.groupBy { it.pillId }.values
+        // Iterate over each pill
+        pillsHistory.forEach { pillHistory ->
+
+            val pillId = pillHistory.first().pillId
+            val pillReminded = pillHistory.size
+            val pillConfirmed = pillHistory.count { it.hasBeenConfirmed }
+            val pillMissed = pillReminded - pillConfirmed
+
+            statList.add(StatItem(pillId, pillReminded, pillConfirmed, pillMissed))
+        }
+
+        val mergedList = pills.map { pill ->
+            pill.itemType = BaseModel.ItemTypes.HISTORY
+            HistoryPillItem(pill, statList.find { statItem -> statItem.pillId == pill.id })
+        }
+
+        emit(CallResult.success(mergedList))
+    }
 }
