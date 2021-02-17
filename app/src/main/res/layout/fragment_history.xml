@@ -28,6 +28,7 @@
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabIndicatorFullWidth="false"
         app:tabMode="scrollable"
+        app:tabGravity="start"
         app:tabInlineLabel="true"
         app:tabTextAppearance="@style/AppTheme.Text.TabLayoutText">
 
