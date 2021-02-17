@@ -45,8 +45,9 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     }
 
     fun disableTabs() {
-        binding.pager.isUserInputEnabled = false
-        binding.tabLayout.isVisible = false
+        binding.pager.isUserInputEnabled = false // Disable sliding
+        binding.tabLayout.isVisible = false // Hide tabs
+        binding.tabContentDivider.isVisible = false // Hide divider bellow tabs
     }
 
 }

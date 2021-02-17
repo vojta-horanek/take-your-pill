@@ -28,10 +28,10 @@ import java.util.*
 @ColorInt
 @SuppressLint("Recycle")
 fun Context.themeColor(
-    @AttrRes themeAttrId: Int
+        @AttrRes themeAttrId: Int
 ): Int {
     return obtainStyledAttributes(
-        intArrayOf(themeAttrId)
+            intArrayOf(themeAttrId)
     ).use {
         it.getColor(0, Color.MAGENTA)
     }
@@ -91,8 +91,8 @@ fun Calendar.addDay(amount: Int): Calendar {
 fun PopupMenu.forcePopUpMenuToShowIcons() {
     try {
         val method = menu.javaClass.getDeclaredMethod(
-            "setOptionalIconsVisible",
-            Boolean::class.javaPrimitiveType
+                "setOptionalIconsVisible",
+                Boolean::class.javaPrimitiveType
         )
         method.isAccessible = true
         method.invoke(menu, true)
@@ -118,3 +118,11 @@ fun Context.getAttr(res: Int): Int {
 }
 
 fun Any?.isNull() = this == null
+
+// Inline functions
+inline fun tryIgnore(action: () -> Unit) {
+    try {
+        action()
+    } catch (t: Throwable) {
+    }
+}

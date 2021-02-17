@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryOverviewBinding
+import eu.vojtechh.takeyourpill.klass.tryIgnore
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.HistoryPillItem
@@ -40,10 +41,8 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
         // TODO Add all pills item
         model.allPills.observe(viewLifecycleOwner) { pills ->
             if (pills.isEmpty()) {
-                try {
-                    (requireParentFragment() as HistoryFragment).disableTabs()
-                } catch (e: Exception) {
-                }
+                tryIgnore { (requireParentFragment() as HistoryFragment).disableTabs() }
+                appAdapter.submitList(listOf()) // Submit an empty list to show the adapter
             }
             model.allHistory.observe(viewLifecycleOwner) { history ->
                 if (history.isNotEmpty()) {
@@ -52,7 +51,7 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
                             pill.itemType = BaseModel.ItemTypes.HISTORY
                             HistoryPillItem(pill, stats.find { statItem -> statItem.pillId == pill.id })
                         }
-                        appAdapter.submitList(mergedList)
+
                     }
                 }
             }
