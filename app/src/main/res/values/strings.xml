@@ -112,7 +112,7 @@
     <string name="stats">Stats</string>
     <string name="all_pills_chart">All pills</string>
     <string name="missed_pills">Missed pills</string>
-    <string name="stat_overall">Overall</string>
+    <string name="stat_overall">All pills</string>
     <string name="stat_name" translatable="false">%1$s:</string>
     <string name="stat_reminded">\u2022 Reminded %1$d times</string>
     <string name="stat_confirmed">\u2022 Confirmed %1$d times</string>
