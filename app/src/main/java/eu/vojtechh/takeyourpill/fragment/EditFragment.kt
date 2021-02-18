@@ -245,12 +245,12 @@ class EditFragment : Fragment() {
     private fun showReminderDialog(
         reminder: Reminder = Reminder.create(pillId = model.pill.id),
         editing: Boolean = false
-    ) = ReminderDialog()
-        .setConfirmListener { rem, edit -> onNewReminderConfirmed(rem, edit) }
-        .setIsEditing(editing)
-        .setReminder(reminder)
-        .setAccentColor(model.pill.color)
-        .show(childFragmentManager, Constants.TAG_REMINDER_DIALOG)
+    ) = ReminderDialog().apply {
+        onConfirm { rem, edit -> onNewReminderConfirmed(rem, edit) }
+        isEditing = editing
+        this.reminder = reminder
+        accentColor = model.pill.color
+    }.show(childFragmentManager, Constants.TAG_REMINDER_DIALOG)
 
 
     private fun onNewReminderConfirmed(reminder: Reminder, editing: Boolean) {

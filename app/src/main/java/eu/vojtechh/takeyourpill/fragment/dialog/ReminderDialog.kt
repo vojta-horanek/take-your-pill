@@ -1,64 +1,44 @@
 package eu.vojtechh.takeyourpill.fragment.dialog
 
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.DialogNewReminderBinding
 import eu.vojtechh.takeyourpill.klass.Builders
 import eu.vojtechh.takeyourpill.klass.NumberPickerHelper
+import eu.vojtechh.takeyourpill.klass.getAttr
 import eu.vojtechh.takeyourpill.klass.setDrawableTint
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
 class ReminderDialog : RoundedDialogFragment() {
-    private lateinit var snackbar: Snackbar
     private lateinit var binding: DialogNewReminderBinding
 
-    private var confirmListener: (Reminder, Boolean) -> Unit = { _, _ -> }
-    private lateinit var reminder: Reminder
-    private var isEditing = false
-    private var accentColor = PillColor.default()
+    private lateinit var snackbar: Snackbar
 
-    fun setConfirmListener(listener: (Reminder, Boolean) -> Unit): ReminderDialog {
-        this.confirmListener = listener
-        return this
-    }
+    var confirmListener: (Reminder, Boolean) -> Unit = { _, _ -> }
+    lateinit var reminder: Reminder
+    var isEditing = false
+    var accentColor = PillColor.default()
 
-    fun setReminder(reminder: Reminder): ReminderDialog {
-        this.reminder = reminder
-        return this
-    }
-
-    fun setIsEditing(editing: Boolean): ReminderDialog {
-        this.isEditing = editing
-        return this
-    }
-
-    fun setAccentColor(color: PillColor): ReminderDialog {
-        this.accentColor = color
-        return this
-    }
-
-    fun showError(msg: String) {
-        snackbar.apply { setText(msg) }.show()
-        val redColor = resources.getColor(R.color.colorRed, requireContext().theme)
-        binding.textTime.apply {
-            setTextColor(redColor)
-            setDrawableTint(redColor)
-        }
+    fun onConfirm(action: (Reminder, Boolean) -> Unit) {
+        confirmListener = action
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
+
+        if (!this::reminder.isInitialized) {
+            throw IllegalStateException("A reminder must be set!")
+        }
+
         binding = DialogNewReminderBinding.inflate(inflater, container, false)
         snackbar = Snackbar.make(binding.coordinatorNewReminder, "", Snackbar.LENGTH_SHORT)
 
@@ -112,28 +92,23 @@ class ReminderDialog : RoundedDialogFragment() {
     private fun setTexts(error: Boolean = false) {
         binding.run {
             if (!error) {
-                val normalColor = textConfirm.textColors
-                val typedValue = TypedValue()
-                requireContext().theme.resolveAttribute(
-                        R.attr.colorControlNormal,
-                        typedValue,
-                        true
-                )
-                val color = ContextCompat.getColor(requireContext(), typedValue.resourceId)
                 textTime.apply {
-                    setTextColor(normalColor)
-                    setDrawableTint(color)
+                    setTextColor(textConfirm.textColors)
+                    setDrawableTint(requireContext().getAttr(R.attr.colorControlNormal))
                 }
             }
-            textAmount.text = getString(
-                    R.string.set_amount_format,
-                    reminder.amount
-            )
-            textTime.text = resources.getString(
-                    R.string.set_time_format,
-                    reminder.timeString
-            )
+            textAmount.text = getString(R.string.set_amount_format, reminder.amount)
+            textTime.text = getString(R.string.set_time_format, reminder.timeString)
 
+        }
+    }
+
+    fun showError(msg: String) {
+        snackbar.apply { setText(msg) }.show()
+        val redColor = resources.getColor(R.color.colorRed, requireContext().theme)
+        binding.textTime.apply {
+            setTextColor(redColor)
+            setDrawableTint(redColor)
         }
     }
 }
