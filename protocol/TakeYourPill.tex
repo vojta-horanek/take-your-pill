@@ -1,0 +1,99 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage{setspace}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{textcomp}
+\usepackage{parskip}
+
+\usepackage[autostyle]{csquotes}
+
+\usepackage{fontspec}
+\setmainfont{Linux Libertine O}
+
+\usepackage[ddmmyyyy]{datetime}
+\renewcommand{\dateseparator}{.}
+
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+\title{Take Your Pill}
+\author{Vojtěch Hořánek}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\pagenumbering{gobble}
+
+\begin{document}
+
+% Uzlabina title page
+\begin{titlepage}
+    \large
+    \centering
+    \vspace*{\fill}
+    {\LARGE Take Your Pill}
+    \vskip 1mm
+    {\Large mobilní aplikace}
+    \vskip1cm
+    {\large SPŠE V Úžlabině}
+    \vskip 20pt
+    \includegraphics[width=4cm]{uzlabina.png}
+    \vskip 40pt
+    Vojtěch Hořánek \\
+    I4.D
+    \vskip 15pt
+    \today
+    \vfill
+\end{titlepage}
+
+
+% Podpis
+\vspace*{\fill}
+\enquote{Prohlašuji, že jsem tuto práci vypracoval samostatně a použil jsem literárnı́ch pramenů a informacı́, které cituji a uvádı́m v seznamu použité literatury a zdrojů informacı́.}\hfill \break
+V Praze dne
+{
+  \addfontfeature{LetterSpace=20.0}
+  ....................\hfill....................
+}
+\begin{flushright}
+    \setstretch{0.5}
+    podpis autora
+\end{flushright} 
+
+% konec podpisu
+
+% anotace
+\newpage
+\section*{Anotace}
+Předložená práce je mobilní aplikace pro systém Android, která slouží k připomínání užití léků. V aplikaci je implementovaná historie připomínání a užívání léků, statistiky a grafy. Uživatel snadno získá přehled, jaké a kdy léky vynechává a může si nastavit opakované připomínání, aby již lék nezmeškal. Design aplikace je udělán tak, aby odpovídal material designu a jeho nejnovějším trendům. Aplikace je napsána v jazyce Kotlin a využívá moderních knihoven a technologií.
+\vspace*{\fill}
+\section*{Anotation}
+The presented work is a mobile application for the Android operating system which reminds its users to take their pills. History, statistics, and graphs are implemented in the application. The user can effortlessly get an overview of which pills at what time did they miss and can set repeating reminders, so they do not forget them the next time. The application follows the material design guidelines and its latest trends. Kotlin was used as the programming language and utilizes modern libraries and technologies.
+
+% konec anotace
+
+\tableofcontents
+
+\pagenumbering{arabic}
+
+\chapter*{Úvod}
+\addcontentsline{toc}{chapter}{Úvod}  
+
+Cílem této práce bylo vytvořit aplikaci, která uživatelům usnadní pravidelné užívání léků jejich připomínáním a sledováním statistik a historie užívání.
+
+Práce se skládá z mobilní aplikace pro systém android. Aplikace je navržena co nejjednodušeji a rozdělena do dvou hlavních sekcí: prášky a historie. U prášků se dá nastavit pozastavení a obnovení připomínání po určitém počtu dní s určitým počtem cyklů. Součástí práce je i propagační a informační plakát. 
+
+\chapter{Použité technologie}
+
+Pro naprogramování této aplikace jsem použil bohaté spektrum technologií. Jelikož jazyk Kotlin je preferovaným a většinově používaným programovacím jazykem, rozhodl jsem se ho pro tuto aplikaci použít. Jelikož android je z veliké většiny vyvíjen společností Google, mnoho zde použitých knihoven je z dílen této společnosti.
+
+\end{document}
