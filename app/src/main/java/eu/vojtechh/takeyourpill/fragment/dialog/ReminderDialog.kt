@@ -98,7 +98,8 @@ class ReminderDialog : RoundedDialogFragment() {
                 }
             }
             textAmount.text = getString(R.string.set_amount_format, reminder.amount)
-            textTime.text = getString(R.string.set_time_format, reminder.timeString)
+            textTime.text =
+                getString(R.string.set_time_format, reminder.getTimeString(requireContext()))
 
         }
     }

@@ -22,16 +22,16 @@ class PillViewHolder(
         binding.pill = pill
         binding.transitionId = "${pill.id}"
         binding.pillDescription.text = getFormattedDescription(pill, binding.root.context)
-        setCardConfirm(pill)
+        setCardConfirm(pill, binding.root.context)
         binding.executePendingBindings()
     }
 
-    private fun setCardConfirm(pill: Pill) {
+    private fun setCardConfirm(pill: Pill, context: Context) {
         pill.getCloseReminder()?.let {
             binding.textQuestionTake.text = binding.root.context.getString(
-                    R.string.pill_taken_question,
-                    it.amount,
-                    it.timeString
+                R.string.pill_taken_question,
+                it.amount,
+                it.getTimeString(context)
             )
 
             binding.nextReminder = it

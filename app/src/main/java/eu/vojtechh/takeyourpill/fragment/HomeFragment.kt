@@ -101,7 +101,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
     }
 
     override fun onPillNotConfirmClicked(view: View, reminder: Reminder) {
-        Snackbar.make(view, "DISMISS" + reminder.timeString, Snackbar.LENGTH_SHORT)
+        Snackbar.make(
+            view,
+            "DISMISS" + reminder.getTimeString(requireContext()),
+            Snackbar.LENGTH_SHORT
+        )
             .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
 
     }

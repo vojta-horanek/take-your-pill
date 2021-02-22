@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources.Theme
 import android.graphics.Color
+import android.text.format.DateFormat
 import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
@@ -21,7 +22,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.textfield.TextInputLayout
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -138,7 +138,14 @@ fun TextView.setDateText(date: Date, pattern: String = "dd. MM.") {
 }
 
 fun TextView.setTimeText(date: Date) {
-    text = DateFormat.getTimeInstance(DateFormat.SHORT).format(date)
+    text = date.getTimeString(context)
+}
+
+fun Date.getTimeString(context: Context): String {
+    val pattern = if (DateFormat.is24HourFormat(context)) "HH:mm" else "hh:mm a"
+    val primaryLocale = ConfigurationCompat.getLocales(context.resources.configuration).get(0)
+    val dateFormat = SimpleDateFormat(pattern, primaryLocale)
+    return dateFormat.format(this)
 }
 
 // Inline functions

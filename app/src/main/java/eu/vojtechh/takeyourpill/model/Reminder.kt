@@ -7,6 +7,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.klass.getTimeString
 import eu.vojtechh.takeyourpill.klass.hour
 import eu.vojtechh.takeyourpill.klass.minute
 import java.text.DateFormat
@@ -65,7 +66,10 @@ data class Reminder(
     val timeString: String
         get() = DateFormat.getTimeInstance(DateFormat.SHORT).format(time.time)
 
-    fun formattedString(context: Context) = context.getString(R.string.reminder_text, timeString, amount)
+    fun getTimeString(context: Context) = time.time.getTimeString(context)
+
+    fun formattedString(context: Context) =
+        context.getString(R.string.reminder_text, getTimeString(context), amount)
 
 
     // Always update list -> this must be used for instant change while editing reminders

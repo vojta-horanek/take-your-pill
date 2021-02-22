@@ -119,7 +119,7 @@ data class Pill(
         return sorted.joinToString {
             context.resources.getString(
                 R.string.pill_time_reminders_format,
-                it.amount, it.timeString
+                it.amount, it.getTimeString(context)
             )
         }
     }
