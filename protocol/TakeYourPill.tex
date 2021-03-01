@@ -13,6 +13,8 @@
 \usepackage{url}
 \usepackage{textcomp}
 \usepackage{parskip}
+\usepackage{tocloft}
+
 
 \usepackage[autostyle]{csquotes}
 
@@ -25,6 +27,9 @@
 \setmainfont{Latin Modern Roman}
 \setsansfont{Latin Modern Sans}
 \setmonofont{Latin Modern Mono}
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
 
 \title{Take Your Pill}
 \author{Vojtěch Hořánek}
@@ -56,7 +61,7 @@
 \end{titlepage}
 
 
-% Podpis
+% Cestne prohlaseni
 \vspace*{\fill}
 \enquote{Prohlašuji, že jsem tuto práci vypracoval samostatně a použil jsem literárnı́ch pramenů a informacı́, které cituji a uvádı́m v seznamu použité literatury a zdrojů informacı́.}\hfill \break
 V Praze dne
@@ -81,6 +86,10 @@ The presented work is a mobile application for the Android operating system whic
 
 % konec anotace
 
+\renewcommand\cftsecafterpnum{\vskip10pt}
+\renewcommand\cftsubsecafterpnum{\vskip10pt}
+\renewcommand\cftsubsubsecafterpnum{\vskip10pt}
+\newpage
 \tableofcontents % obsah
 
 \chapter*{Úvod}
@@ -92,8 +101,28 @@ Práce se skládá z mobilní aplikace pro systém android. Aplikace je navržen
 
 \pagenumbering{arabic} % start page numbering on Úvod
 
-\chapter{Použité technologie}
+
+
+\chapter{Metodika}
 
 Pro naprogramování této aplikace jsem použil bohaté spektrum technologií. Jelikož jazyk Kotlin je preferovaným a většinově používaným programovacím jazykem, rozhodl jsem se ho pro tuto aplikaci použít. Jelikož android je z veliké většiny vyvíjen společností Google, mnoho zde použitých knihoven je z dílen této společnosti.
+
+\chapter{Návrh aplikace}
+\chapter{Implementace aplikace}
+\section{Uživatelské rozhraní}
+\subsection{Úvodní obrazovka}
+\subsection{Domovská obrazovka}
+\subsubsection{Nový lék}
+\subsubsection{Detail léku}
+\subsection{Historie}
+\subsubsection{Přehled}
+\subsubsection{Grafy}
+\subsection{Nastavení}
+\section{Programová implementace}
+\subsection{Databáze}
+\subsection{Připomínání}
+
+\chapter*{Závěr}
+\addcontentsline{toc}{chapter}{Závěr}  
 
 \end{document}
