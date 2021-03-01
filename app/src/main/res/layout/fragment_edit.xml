@@ -161,7 +161,7 @@
                                     android:layout_gravity="center"
                                     android:contentDescription="@string/add_photo"
                                     android:elevation="5dp"
-                                    app:srcCompat="@drawable/ic_photo_add"
+                                    app:srcCompat="@drawable/ic_image"
                                     app:tint="@android:color/white" />
 
                                 <androidx.appcompat.widget.AppCompatImageView
