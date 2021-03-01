@@ -23,7 +23,6 @@
     </style>
 
     <color name="colorDivider">#1f000000</color>
-    <color name="ucrop_color_widget_active">@color/colorAccent</color>
 
     <style name="AppTheme.Theme.CustomBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppTheme.Widget.CustomBottomSheet</item>
