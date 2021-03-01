@@ -34,9 +34,9 @@
                     android:id="@+id/textPillName"
                     style="@style/AppTheme.Widget.Header"
                     android:layout_width="0dp"
-                    android:maxLines="2"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/screen_margin_horizontal_small"
+                    android:maxLines="2"
                     android:text="@{pill.name}"
                     app:layout_constraintEnd_toStartOf="@+id/viewPillColor"
                     app:layout_constraintStart_toStartOf="parent"
@@ -97,11 +97,11 @@
                         android:id="@+id/imagePillPhoto"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:foreground="?attr/selectableItemBackground"
                         android:scaleType="centerCrop"
                         android:src="@{pill.getPhotoDrawable(context)}"
                         tools:ignore="ContentDescription"
-                        tools:src="@drawable/photo_default"
-                        android:foreground="?attr/selectableItemBackground" />
+                        tools:src="@drawable/photo_default" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -115,7 +115,7 @@
                     android:textAppearance="@style/AppTheme.Text.BodyTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardPhoto" />
+                    app:layout_constraintTop_toBottomOf="@+id/gridInfo" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerReminders"
@@ -130,6 +130,79 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_reminder" />
 
+                <GridLayout
+                    android:id="@+id/gridInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_margin_vertical"
+                    android:columnCount="3"
+                    android:rowCount="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardPhoto">
+
+                    <TextView
+                        android:id="@+id/infoDayLimit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        android:gravity="center"
+                        android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                        tools:text="1 of 10" />
+
+                    <TextView
+                        android:id="@+id/infoResumeAfter"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        android:gravity="center"
+                        android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                        tools:text="5" />
+
+                    <TextView
+                        android:id="@+id/infoCycleCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        android:gravity="center"
+                        android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                        tools:text="1 of 3" />
+
+                    <TextView
+                        android:id="@+id/infoDayLimitDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        android:gravity="center"
+                        android:text="@string/day_limit"
+                        android:textAppearance="@style/AppTheme.Text.Description" />
+
+                    <TextView
+                        android:id="@+id/infoResumeAfterDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        android:gravity="center"
+                        android:text="@string/resume_after"
+                        android:textAppearance="@style/AppTheme.Text.Description" />
+
+                    <TextView
+                        android:id="@+id/infoCycleCountDesc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        android:gravity="center"
+                        android:text="@string/cycle_count"
+                        android:textAppearance="@style/AppTheme.Text.Description" />
+
+                </GridLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
@@ -140,8 +213,8 @@
 
             <com.nambimobile.widgets.efab.Overlay
                 android:layout_width="match_parent"
-                app:overlay_color="?attr/colorSurface"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:overlay_color="?attr/colorSurface" />
 
             <com.nambimobile.widgets.efab.ExpandableFab
                 android:id="@+id/efab"
@@ -150,39 +223,39 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="@dimen/screen_margin_horizontal"
                 android:layout_marginBottom="@dimen/screen_margin_vertical"
-                app:efab_closingAnticipateTension="0"
-                app:efab_openingAnimationDurationMs="75"
                 app:efab_closingAnimationDurationMs="75"
+                app:efab_closingAnticipateTension="0"
                 app:efab_icon="@drawable/ic_more"
-                app:efab_iconAnimationRotationDeg="180" />
+                app:efab_iconAnimationRotationDeg="180"
+                app:efab_openingAnimationDurationMs="75" />
 
             <com.nambimobile.widgets.efab.FabOption
                 android:id="@+id/buttonEdit"
-                app:label_hiddenToVisibleAnimationDurationMs="75"
-                app:fab_openingAnimationDurationMs="75"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:fab_icon="@drawable/ic_edit"
+                app:fab_openingAnimationDurationMs="75"
+                app:label_hiddenToVisibleAnimationDurationMs="75"
                 app:label_text="@string/edit" />
 
             <com.nambimobile.widgets.efab.FabOption
                 android:id="@+id/buttonHistory"
-                app:label_hiddenToVisibleAnimationDurationMs="75"
-                app:fab_openingAnimationDurationMs="75"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:fab_icon="@drawable/ic_history"
+                app:fab_openingAnimationDurationMs="75"
+                app:label_hiddenToVisibleAnimationDurationMs="75"
                 app:label_text="@string/history" />
 
             <com.nambimobile.widgets.efab.FabOption
                 android:id="@+id/buttonDelete"
-                app:fab_color="@color/colorRed"
-                app:label_backgroundColor="@color/colorRed"
-                app:label_hiddenToVisibleAnimationDurationMs="75"
-                app:fab_openingAnimationDurationMs="75"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:fab_color="@color/colorRed"
                 app:fab_icon="@drawable/ic_delete"
+                app:fab_openingAnimationDurationMs="75"
+                app:label_backgroundColor="@color/colorRed"
+                app:label_hiddenToVisibleAnimationDurationMs="75"
                 app:label_text="@string/delete" />
 
         </com.nambimobile.widgets.efab.ExpandableFabLayout>

@@ -109,4 +109,11 @@
     <string name="intro_history">Podívejte se na historii užívání</string>
     <string name="intro_history_description">V sekci \"Historie\" uvidíte statistiky, grafy a Vaší kompletní historii užívání léků včetně času připomenutí, času potvrzení a množstí léku.</string>
 
+    <string name="cycle_count">Počet cuklů</string>
+    <string name="resume_after">Obnovit po</string>
+    <string name="day_limit">Limit dní</string>
+
+    <string name="cycle_count_format">%1$d z %2$d</string>
+    <string name="resume_after_format">%1$d z %2$d</string>
+    <string name="day_limit_format">%1$d z %2$d</string>
 </resources>

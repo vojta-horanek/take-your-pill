@@ -111,4 +111,12 @@
     <string name="input_restore_description">Set this field to the number of days when this pill will not be reminding, before it starts reminding again</string>
     <string name="cycle_count_description">If you want to limit the cycle count, check the following box</string>
     <string name="input_cycle_count_description">Set this field to the number of cycles (reminding ✕ not reminding) that you want this pill to be limited to</string>
+    <string name="cycle_count">Cycle count</string>
+    <string name="resume_after">Resume after</string>
+    <string name="day_limit">Day limit</string>
+
+    <string name="cycle_count_format">%1$d of %2$d</string>
+    <string name="resume_after_format">%1$d of %2$d</string>
+    <string name="day_limit_format">%1$d of %2$d</string>
+
 </resources>

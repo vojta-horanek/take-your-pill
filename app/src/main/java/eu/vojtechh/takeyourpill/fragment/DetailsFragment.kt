@@ -22,6 +22,7 @@ import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.disableAnimations
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
+import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -87,6 +88,42 @@ class DetailsFragment : Fragment(),
                 buttonEdit.setOnClickListener { navigateToEdit() }
                 buttonHistory.setOnClickListener { navigateToHistory() }
                 buttonDelete.setOnClickListener { navigateToDelete() }
+
+                gridInfo.isVisible = it.options.limitDays != ReminderOptions.NO_DAY_LIMIT
+
+                if (it.optionsChanging.limitDays <= it.options.limitDays) {
+                    infoDayLimit.text = getString(
+                        R.string.day_limit_format,
+                        it.optionsChanging.limitDays,
+                        it.options.limitDays
+                    )
+                } else {
+                    infoDayLimit.text = it.options.limitDays.toString()
+                }
+
+                infoResumeAfter.isVisible = it.options.breakDays != ReminderOptions.NO_BREAK
+                infoResumeAfterDesc.isVisible = it.options.breakDays != ReminderOptions.NO_BREAK
+
+                if (it.optionsChanging.breakDays == 0) {
+                    infoResumeAfter.text = it.options.breakDays.toString()
+                } else {
+                    infoResumeAfter.text = getString(
+                        R.string.resume_after_format,
+                        it.optionsChanging.breakDays,
+                        it.options.breakDays
+                    )
+                }
+
+                infoCycleCount.isVisible = it.options.repeatCount != ReminderOptions.REPEAT_FOREVER
+                infoCycleCountDesc.isVisible =
+                    it.options.repeatCount != ReminderOptions.REPEAT_FOREVER
+                infoCycleCount.text = getString(
+                    R.string.cycle_count_format,
+                    it.optionsChanging.repeatCount,
+                    it.options.repeatCount
+                )
+
+
             }
 
             cardPhoto.setOnTouchListener { _, event ->
