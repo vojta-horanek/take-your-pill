@@ -14,6 +14,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.use
 import androidx.core.os.ConfigurationCompat
 import androidx.core.widget.NestedScrollView
@@ -114,11 +115,11 @@ fun RecyclerView.disableAnimations() {
     }
 }
 
-fun Context.getAttr(res: Int): Int {
+fun Context.getAttrColor(res: Int): Int {
     val typedValue = TypedValue()
     val theme: Theme = this.theme
     theme.resolveAttribute(res, typedValue, true)
-    return typedValue.data
+    return ContextCompat.getColor(this, typedValue.resourceId)
 }
 
 fun Any?.isNull() = this == null

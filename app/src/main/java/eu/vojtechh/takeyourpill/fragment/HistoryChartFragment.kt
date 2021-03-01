@@ -10,7 +10,7 @@ import com.github.mikephil.charting.data.PieData
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryChartBinding
-import eu.vojtechh.takeyourpill.klass.getAttr
+import eu.vojtechh.takeyourpill.klass.getAttrColor
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.history.HistoryChartViewModel
 
@@ -29,7 +29,7 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
             listOf(pieChartAll, pieChartMissed, pieChartAllConfirmed).forEach {
                 it.apply {
                     description.isEnabled = false
-                    legend.textColor = requireContext().getAttr(R.attr.colorOnSurface)
+                    legend.textColor = requireContext().getAttrColor(R.attr.colorOnSurface)
                     legend.isWordWrapEnabled = true
                     legend.textSize = 12f
                     legend.isEnabled = false

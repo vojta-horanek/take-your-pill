@@ -9,7 +9,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.DialogNewReminderBinding
 import eu.vojtechh.takeyourpill.klass.Builders
 import eu.vojtechh.takeyourpill.klass.NumberPickerHelper
-import eu.vojtechh.takeyourpill.klass.getAttr
+import eu.vojtechh.takeyourpill.klass.getAttrColor
 import eu.vojtechh.takeyourpill.klass.setDrawableTint
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
@@ -94,7 +94,7 @@ class ReminderDialog : RoundedDialogFragment() {
             if (!error) {
                 textTime.apply {
                     setTextColor(textConfirm.textColors)
-                    setDrawableTint(requireContext().getAttr(R.attr.colorControlNormal))
+                    setDrawableTint(requireContext().getAttrColor(R.attr.colorControlNormal))
                 }
             }
             textAmount.text = getString(R.string.set_amount_format, reminder.amount)
