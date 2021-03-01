@@ -33,7 +33,7 @@
     <string name="restore_after">Obnovit po počtu dní</string>
     <string name="how_many_days_to_restore">Po kolika dnech obnovit</string>
     <string name="cycle_forever">Opakovat donekonečna</string>
-    <string name="num_of_cycles">Počet opakování cyklu</string>
+    <string name="num_of_cycles">Počet cyklů</string>
     <string name="add_reminder">Přidat připomínku</string>
     <string name="storage_perm_rationale">Aplikace potřebuje opravnění na čtení úložiště, aby přečetla fotku</string>
     <string name="no_reminders_set">Prosím, přidejte alespoň jednu připomínku</string>
@@ -106,4 +106,14 @@
     <string name="error_opening_image">Nastala chyba při otevírání obrázku</string>
     <string name="confirmed_missed_pills">Potvrzené ✕ Vynechané</string>
     <string name="missed">Vynecháno</string>
+    <string name="limit_cycle_count">Omezit počet cyklů</string>
+    <string name="day_limit_description">Pokud chcete, aby se lék připomínal pouze určitý počet dní, zaškrtněte následující políčko.</string>
+    <string name="day_number_description">Do tohoto políčka napište počet dní, po který se má lék připomínat.</string>
+    <string name="cycle_today_description">Do tohoto políčka napište, kolikáty den z počtu dní, kdy se lék připomíná, je dnes.</string>
+    <string name="restore_after_description">Pokud chcete, aby se po skončení připomínání léku začalo znovu připomínat, zaškrtnětě následující políčko.</string>
+    <string name="cycle_count_description">Pokud chcete omezit počet cylků připomínání a pozastavování, zašktněte následující políčko.</string>
+    <string name="input_cycle_count_description">Do tohoto políčka napište počet cyklů (připomínání ✕ nepřipomínání) na který chcete lék omezit.</string>
+    <string name="input_restore_description">Do tohoto políčka napište, kolik dní se lék nebude po skončení připomínání připomínat, než se znovu připomínat začne.</string>
+
+
 </resources>

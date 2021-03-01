@@ -304,7 +304,7 @@ class EditFragment : Fragment() {
         with(model.pill.options) {
             checkDayLimit.isChecked = limitDays != ReminderOptions.NO_DAY_LIMIT
             checkRestoreAfter.isChecked = breakDays != ReminderOptions.NO_BREAK
-            checkCycleCount.isChecked = repeatCount == ReminderOptions.REPEAT_FOREVER
+            checkCycleCount.isChecked = repeatCount != ReminderOptions.REPEAT_FOREVER
         }
 
         checkDayLimit.setOnCheckedChangeListener { _, b ->
@@ -313,7 +313,7 @@ class EditFragment : Fragment() {
             model.hasPillBeenEdited = true
         }
         checkRestoreAfter.setOnCheckedChangeListener { _, b ->
-            onRestoreAfterCheck(b)
+            onRestoreAfterChecked(b)
             scrollToBottom()
             model.hasPillBeenEdited = true
         }
@@ -325,7 +325,7 @@ class EditFragment : Fragment() {
 
         // Set to initial state
         onLimitDayChecked(checkDayLimit.isChecked)
-        onRestoreAfterCheck(checkRestoreAfter.isChecked)
+        onRestoreAfterChecked(checkRestoreAfter.isChecked)
         onCycleCountChecked(checkCycleCount.isChecked)
     }
 
@@ -338,31 +338,35 @@ class EditFragment : Fragment() {
         groupLimit.isVisible = checked
 
         checkRestoreAfter.isVisible = checked
+        checkRestoreAfterDesc.isVisible = checked
         if (checked) {
             groupRestore.isVisible = checkRestoreAfter.isChecked
             checkCycleCount.isVisible = checkRestoreAfter.isChecked
-            groupCycle.isVisible = !checkCycleCount.isChecked
+            checkCycleCountDesc.isVisible = checkRestoreAfter.isChecked
+            groupCycle.isVisible = checkCycleCount.isChecked
         } else {
             groupRestore.isVisible = false
             checkCycleCount.isVisible = false
+            checkCycleCountDesc.isVisible = false
             groupCycle.isVisible = false
         }
     }
 
 
-    private fun onRestoreAfterCheck(checked: Boolean) = binding.run {
+    private fun onRestoreAfterChecked(checked: Boolean) = binding.run {
         groupRestore.isVisible = checked
 
         checkCycleCount.isVisible = checked
+        checkCycleCountDesc.isVisible = checked
         if (checked) {
-            groupCycle.isVisible = !checkCycleCount.isChecked
+            groupCycle.isVisible = checkCycleCount.isChecked
         } else {
             groupCycle.isVisible = false
         }
     }
 
     private fun onCycleCountChecked(checked: Boolean) {
-        binding.groupCycle.isVisible = !checked
+        binding.groupCycle.isVisible = checked
     }
 
     private fun onPillSave() = binding.run {
@@ -411,7 +415,7 @@ class EditFragment : Fragment() {
     private fun getReminderOptions(): ReminderOptions = binding.run {
         if (checkDayLimit.isChecked) {
             if (checkRestoreAfter.isChecked) {
-                return if (!checkCycleCount.isChecked) {
+                return if (checkCycleCount.isChecked) {
                     ReminderOptions.finiteRepeating(
                         inputDayNumber.getNumber(),
                         inputRestore.getNumber(),

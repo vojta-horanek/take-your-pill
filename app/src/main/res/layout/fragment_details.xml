@@ -61,7 +61,7 @@
                     android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
                     android:layout_marginTop="@dimen/appbar_margin_vertical"
                     android:text="@{pill.description}"
-                    android:textAppearance="@style/AppTheme.Text.Description"
+                    android:textAppearance="@style/AppTheme.Text.PillDescription"
                     app:isVisible="@{pill.descriptionVisible}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

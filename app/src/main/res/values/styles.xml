@@ -124,7 +124,9 @@
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
-    <style name="AppTheme.Text.Description" parent="TextAppearance.MaterialComponents.Subtitle1" />
+    <style name="AppTheme.Text.PillDescription" parent="TextAppearance.MaterialComponents.Subtitle1" />
+
+    <style name="AppTheme.Text.Description" parent="TextAppearance.MaterialComponents.Caption" />
 
     <style name="AppTheme.Shape.Oval" parent="">
         <item name="cornerSize">50%</item>
