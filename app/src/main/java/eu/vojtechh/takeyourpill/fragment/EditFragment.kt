@@ -209,6 +209,7 @@ class EditFragment : Fragment() {
             buttonAddReminder.iconTint = colorStateList
             buttonAddReminder.rippleColor = colorStateList
             buttonAddReminder.setTextColor(color)
+            progress.setIndicatorColor(color)
         }
     }
 
