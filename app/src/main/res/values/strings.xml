@@ -73,14 +73,13 @@
     <string name="try_to_add_a_pill_first">Try to add a pill first!</string>
 
     <string name="intro">Intro</string>
-    <string name="intro_welcome">Welcome!</string>
-    <string name="intro_welcome_description">Take Your Pill reminds you about yor pills so that you never forget</string>
+    <string name="intro_welcome_description">This app will remind you about taking your pills. From now on, you should never forget it. You will be able to see your medication history, graphs and statistics.</string>
     <string name="intro_new_pill">Start by adding a pill</string>
-    <string name="intro_new_pill_description">Click the \"New Pill\" button</string>
-    <string name="intro_reminder">Get reminder</string>
-    <string name="intro_reminder_description">Set reminders for your pills and record your taking habits</string>
-    <string name="intro_history">See history</string>
-    <string name="intro_history_description">Look at the history of your pill taking and get data on your accuracy</string>
+    <string name="intro_new_pill_description">Click the \"New Pill\" button, enter pill details, set a color, add an image and most importantly set its reminders.</string>
+    <string name="intro_reminder">Stop worrying about taking pills</string>
+    <string name="intro_reminder_description">The app will remind you so you can just forget about taking your pills and think about more important stuff.</string>
+    <string name="intro_history">See your medication history</string>
+    <string name="intro_history_description">In the \"History\" section you will be able to see statistics, graphs and your complete medication taking history including the pill reminded time, confirmed time and its amount.</string>
 
     <string name="confirm">Confirm</string>
     <string name="saving">Saving…</string>
@@ -129,4 +128,5 @@
     <string name="input_restore_description">Set this field to the number of days when this pill will not be reminding, before it starts reminding again</string>
     <string name="cycle_count_description">If you want to limit the cycle count, check the following box</string>
     <string name="input_cycle_count_description">Set this field to the number of cycles (reminding ✕ not reminding) that you want this pill to be limited to</string>
+    <string name="visit_website">Visit website</string>
 </resources>

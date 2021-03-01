@@ -115,5 +115,14 @@
     <string name="input_cycle_count_description">Do tohoto políčka napište počet cyklů (připomínání ✕ nepřipomínání) na který chcete lék omezit.</string>
     <string name="input_restore_description">Do tohoto políčka napište, kolik dní se lék nebude po skončení připomínání připomínat, než se znovu připomínat začne.</string>
 
+    <string name="intro">Úvodní obrazovka</string>
+
+    <string name="intro_welcome_description">Tato aplikace Vám bude připomínat užívání léků. Od této chvíle si už nezapomenete vzít žádný prášek. Budete moci sledovat Vaši historii užití, grafy a statistiky.</string>
+    <string name="intro_new_pill">Začněte přidáním léku</string>
+    <string name="intro_new_pill_description">Klikněte na tlačítko \"Nový lék\", zadejte informace, nastavte barvu, přidejte obrázek a hlavně nastavte připomínky.</string>
+    <string name="intro_reminder">Přestantě si dělat starosti s léky</string>
+    <string name="intro_reminder_description">Aplikace Vám pošle připomínky, takže na kontrolování čašu a užívání léků můžete zapomenout a myslet na důležitější věci.</string>
+    <string name="intro_history">Podívejte se na historii užívání</string>
+    <string name="intro_history_description">V sekci \"Historie\" uvidíte statistiky, grafy a Vaší kompletní historii užívání léků včetně času připomenutí, času potvrzení a množstí léku.</string>
 
 </resources>

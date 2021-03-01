@@ -26,10 +26,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (Pref.firstRun) {
+       // if (Pref.firstRun) {
             val intent = Intent(this, AppIntroActivity::class.java)
             startActivityForResult(intent, requestCodeIntro)
-        }
+        //    }
 
         setTheme(R.style.AppTheme)
         setContentView(binding.root)
