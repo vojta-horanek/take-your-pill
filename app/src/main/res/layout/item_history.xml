@@ -33,11 +33,10 @@
             android:id="@+id/divider"
             style="@style/AppTheme.Widget.Divider"
             android:layout_width="0dp"
-            android:layout_marginTop="12dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_confirm"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginTop="0dp"
             tools:visibility="visible" />
 
@@ -60,10 +59,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/jost_medium"
+            android:gravity="center"
+            android:minHeight="32dp"
             android:textAppearance="@style/AppTheme.Text.BodyNormal"
             android:textSize="22sp"
-            android:minHeight="32dp"
-            android:gravity="center"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/textPillName"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +78,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:minHeight="32dp"
@@ -91,21 +91,7 @@
             app:layout_constraintStart_toStartOf="@+id/textDate"
             app:layout_constraintTop_toBottomOf="@+id/textDate"
             app:layout_goneMarginStart="16dp"
-            android:ellipsize="end"
             tools:text="Xyzal" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_reminder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_confirm"
-            app:layout_constraintEnd_toEndOf="@+id/textHistoryReminded"
-            app:layout_constraintStart_toStartOf="@+id/textHistoryReminded"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/ic_notifications"
-            tools:ignore="ContentDescription" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textHistoryReminded"
@@ -122,18 +108,6 @@
             app:layout_constraintEnd_toStartOf="@+id/textHistoryAmount"
             app:layout_constraintTop_toTopOf="@+id/textHistoryConfirmed"
             tools:text="16:00" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="@+id/textHistoryConfirmed"
-            app:layout_constraintStart_toStartOf="@+id/textHistoryConfirmed"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/ic_check"
-            tools:ignore="ContentDescription" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textHistoryConfirmed"
@@ -153,19 +127,6 @@
             app:layout_goneMarginBottom="16dp"
             tools:text="16:33" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_reminder"
-            app:layout_constraintEnd_toEndOf="@+id/textHistoryAmount"
-            app:layout_constraintStart_toStartOf="@+id/textHistoryAmount"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/ic_pill"
-            tools:ignore="ContentDescription" />
-
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textHistoryAmount"
             android:layout_width="wrap_content"
@@ -183,7 +144,6 @@
             app:layout_constraintTop_toTopOf="@+id/textHistoryReminded"
             tools:text="1" />
 
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/buttonShowMore"
             android:layout_width="wrap_content"
@@ -195,6 +155,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textHistoryAmount"
             app:srcCompat="@drawable/ic_more" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

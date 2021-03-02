@@ -24,6 +24,9 @@ class HistoryItemViewHolder(
             textHistoryReminded.setTimeText(history.reminded.time)
             history.confirmed?.let {
                 textHistoryConfirmed.setTimeText(it.time)
+            } ?: run {
+                textHistoryConfirmed.setTimeText(history.reminded.time)
+                textHistoryConfirmed.isInvisible = true
             }
 
             textDate.setDateText(history.reminded.time)
@@ -32,7 +35,7 @@ class HistoryItemViewHolder(
             textPillName.isVisible = showNames
 
             // Should this item show a divider
-            divider.isVisible = isFirstOfDate || isFirstInList
+            divider.isVisible = isFirstOfDate && !isFirstInList
             dividerPill.isVisible = !isFirstOfDate
 
             if (showNames) {
@@ -43,9 +46,6 @@ class HistoryItemViewHolder(
                 textDate.isInvisible = !isFirstOfDate
             }
 
-            listOf(imageAmount, imageConfirm, imageReminder).forEach {
-                it.isVisible = isFirstInList
-            }
             executePendingBindings()
         }
     }
