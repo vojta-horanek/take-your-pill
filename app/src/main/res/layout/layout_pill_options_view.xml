@@ -35,6 +35,7 @@
         style="@style/AppTheme.Widget.Divider"
         android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
         android:layout_marginBottom="@dimen/screen_margin_vertical_little"
+        android:layout_marginTop="@dimen/screen_margin_vertical_little"
         android:id="@+id/divider" />
 
     <LinearLayout
@@ -59,7 +60,7 @@
 
         <TextView
             android:id="@+id/x_days_count_duration"
-            style="@style/AppTheme.Text.BodySecondary"
+            style="@style/AppTheme.Text.Description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="21" />
@@ -95,7 +96,7 @@
 
             <TextView
                 android:id="@+id/cycle_count_active"
-                style="@style/AppTheme.Text.BodySecondary"
+                style="@style/AppTheme.Text.Description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="21" />
@@ -121,7 +122,7 @@
 
             <TextView
                 android:id="@+id/cycle_count_inactive"
-                style="@style/AppTheme.Text.BodySecondary"
+                style="@style/AppTheme.Text.Description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="1" />
@@ -147,7 +148,7 @@
 
             <TextView
                 android:id="@+id/cycle_count_today"
-                style="@style/AppTheme.Text.BodySecondary"
+                style="@style/AppTheme.Text.Description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="1" />
