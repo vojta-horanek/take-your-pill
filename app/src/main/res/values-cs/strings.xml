@@ -116,4 +116,13 @@
     <string name="cycle_count_format">%1$d z %2$d</string>
     <string name="resume_after_format">%1$d z %2$d</string>
     <string name="day_limit_format">%1$d z %2$d</string>
+
+    <string name="pill_options_indefinitely">Na dobu neurčitou</string>
+    <string name="pill_options_for_x_days">Po dobu X dní</string>
+    <string name="pill_options_cycle">Cyklus: X dní aktivní, Y dní pozastaveno</string>
+    <string name="intake_options">Nastavení příjmu</string>
+    <string name="duration">Doba trvání</string>
+    <string name="days_active">Aktivní dny</string>
+    <string name="days_inactive">Pozastavené dny</string>
+    <string name="today_is_cycle_day">Dnes je den cyklu</string>
 </resources>
