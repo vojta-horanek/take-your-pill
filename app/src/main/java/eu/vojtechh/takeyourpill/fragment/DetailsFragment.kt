@@ -22,7 +22,6 @@ import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.disableAnimations
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
-import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -89,32 +88,45 @@ class DetailsFragment : Fragment(),
                 buttonHistory.setOnClickListener { navigateToHistory() }
                 buttonDelete.setOnClickListener { navigateToDelete() }
 
-                gridInfo.isVisible = it.options.daysActive != ReminderOptions.NO_DAY_LIMIT
 
-                if (it.optionsChanging.daysActive <= it.options.daysActive) {
-                    infoDayLimit.text = getString(
-                        R.string.day_limit_format,
-                        it.optionsChanging.daysActive,
-                        it.options.daysActive
-                    )
-                } else {
-                    infoDayLimit.text = it.options.daysActive.toString()
+
+                with(it.options) {
+                    when {
+                        isIndefinite() -> {
+                            gridInfo.isVisible = false
+                        }
+                        isFinite() -> {
+                            infoResumeAfter.isVisible = false
+                            infoResumeAfterDesc.isVisible = false
+                            if (isInactive()) {
+                                infoDayLimit.text = getString(R.string.inactive)
+                            } else {
+                                infoDayLimit.text = getString(
+                                    R.string.day_limit_format,
+                                    todayCycle,
+                                    daysActive
+                                )
+                            }
+                        }
+                        isCycle() -> {
+                            if (isInactive()) {
+                                infoDayLimit.text = daysActive.toString()
+                                infoResumeAfter.text = getString(
+                                    R.string.resume_after_format,
+                                    todayCycle - daysActive,
+                                    daysInactive
+                                )
+                            } else {
+                                infoDayLimit.text = getString(
+                                    R.string.day_limit_format,
+                                    todayCycle,
+                                    daysActive
+                                )
+                                infoResumeAfter.text = daysInactive.toString()
+                            }
+                        }
+                    }
                 }
-
-                infoResumeAfter.isVisible = it.options.daysInactive != ReminderOptions.NO_BREAK
-                infoResumeAfterDesc.isVisible = it.options.daysInactive != ReminderOptions.NO_BREAK
-
-                if (it.optionsChanging.daysInactive == 0) {
-                    infoResumeAfter.text = it.options.daysInactive.toString()
-                } else {
-                    infoResumeAfter.text = getString(
-                        R.string.resume_after_format,
-                        it.optionsChanging.daysInactive,
-                        it.options.daysInactive
-                    )
-                }
-
-
             }
 
             cardPhoto.setOnTouchListener { _, event ->

@@ -32,7 +32,6 @@ data class Pill(
                 PillColor.default(),
                 false,
                 ReminderOptions.empty(),
-                ReminderOptions.empty()
             ), listOf()
         )
     }
@@ -80,12 +79,6 @@ data class Pill(
         get() = pillEntity.options
         set(value) {
             pillEntity.options = value
-        }
-
-    var optionsChanging
-        get() = pillEntity.optionsChanging
-        set(value) {
-            pillEntity.optionsChanging = value
         }
 
     val isPhotoVisible
@@ -144,7 +137,6 @@ data class Pill(
                     this.color == newItem.color &&
                     this.deleted == newItem.deleted &&
                     this.options == newItem.options &&
-                    this.optionsChanging == newItem.optionsChanging &&
                     this.reminders == newItem.reminders
 
         } else false

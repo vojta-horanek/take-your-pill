@@ -44,6 +44,8 @@ class PillOptionsView @JvmOverloads constructor(
     private lateinit var cycleCountInactive: TextView
     private lateinit var cycleCountToday: TextView
 
+    private lateinit var divider: View
+
     private var reminderOptions = ReminderOptions.empty()
 
     private fun init(attrs: AttributeSet?) {
@@ -69,6 +71,8 @@ class PillOptionsView @JvmOverloads constructor(
         cycleCountInactive = view.findViewById(R.id.cycle_count_inactive)
         cycleCountToday = view.findViewById(R.id.cycle_count_today)
 
+        divider = view.findViewById(R.id.divider)
+
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.PillOptionsView)
         try {
             val accentColor = attributes.getColor(
@@ -81,20 +85,7 @@ class PillOptionsView @JvmOverloads constructor(
         }
 
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            setOptions(
-                when (checkedId) {
-                    R.id.radio_indefinitely -> {
-                        ReminderOptions.indefinite()
-                    }
-                    R.id.radio_x_days -> {
-                        ReminderOptions.finite(21)
-                    }
-                    R.id.radio_cycle -> {
-                        ReminderOptions.cycling(21, 7, 1)
-                    }
-                    else -> ReminderOptions.empty()
-                }, false
-            )
+            onCheckedChange(checkedId)
         }
 
         layoutXDays.setOnClickListener {
@@ -147,10 +138,29 @@ class PillOptionsView @JvmOverloads constructor(
 
     }
 
+    private fun onCheckedChange(checkedId: Int) {
+        setOptions(
+            when (checkedId) {
+                R.id.radio_indefinitely -> {
+                    ReminderOptions.indefinite()
+                }
+                R.id.radio_x_days -> {
+                    ReminderOptions.finite(21)
+                }
+                R.id.radio_cycle -> {
+                    ReminderOptions.cycling(21, 7, 1)
+                }
+                else -> ReminderOptions.empty()
+            }, false
+        )
+    }
+
     private fun setContentVisibility(
         xDays: Boolean = false,
         cycle: Boolean = false
     ) {
+
+        divider.isVisible = !(!xDays && !cycle)
         layoutXDays.isVisible = xDays
         layoutCycle.isVisible = cycle
     }
@@ -167,7 +177,7 @@ class PillOptionsView @JvmOverloads constructor(
 
     private fun setFinite() {
         setContentVisibility(xDays = true, cycle = false)
-        xDaysCountDuration.text = reminderOptions.displayLimit.toString()
+        xDaysCountDuration.text = reminderOptions.daysActive.toString()
     }
 
     private fun setCycle() {
@@ -179,6 +189,9 @@ class PillOptionsView @JvmOverloads constructor(
 
     fun setOptions(options: ReminderOptions, toggleRadio: Boolean = true) {
         reminderOptions = options
+
+        // Temporary remove check listener
+        radioGroup.setOnCheckedChangeListener { _, _ -> }
 
         when {
             reminderOptions.isIndefinite() -> {
@@ -195,6 +208,10 @@ class PillOptionsView @JvmOverloads constructor(
             }
         }
 
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            onCheckedChange(checkedId)
+        }
+
     }
 
     fun getOptions() = reminderOptions
@@ -203,6 +220,7 @@ class PillOptionsView @JvmOverloads constructor(
         setAccentColor(color)
     }
 
+    @Suppress("SameParameterValue")
     private fun showChangeItemDialog(
         title: String,
         minValue: Int,

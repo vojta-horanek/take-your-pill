@@ -14,7 +14,6 @@ data class PillEntity(
     var photo: Bitmap?,
     var color: PillColor,
     var deleted: Boolean = false,
-    @Embedded(prefix = "constant_") var options: ReminderOptions,
-    @Embedded(prefix = "current_") var optionsChanging: ReminderOptions,
+    @Embedded var options: ReminderOptions,
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "pillId") val id: Long = 0
 )

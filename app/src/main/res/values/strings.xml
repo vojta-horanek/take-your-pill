@@ -126,5 +126,6 @@
     <string name="days_active">Days active</string>
     <string name="days_inactive">Days inactive</string>
     <string name="today_is_cycle_day">Today is cycle day</string>
+    <string name="inactive">Inactive</string>
 
 </resources>
