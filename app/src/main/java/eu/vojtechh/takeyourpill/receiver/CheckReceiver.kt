@@ -6,8 +6,6 @@ import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
-import eu.vojtechh.takeyourpill.klass.getTimeString
-import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
@@ -39,20 +37,6 @@ class CheckReceiver : BroadcastReceiver() {
 
             val remindedTime = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDED_TIME, -1L)
             if (remindedTime == -1L) return
-
-            val delayByMillis = intent.getLongExtra(Constants.INTENT_EXTRA_TIME_DELAY, -1L)
-            if (delayByMillis != -1L) {
-                ReminderManager.setCheckForConfirmation(
-                    context,
-                    reminderId,
-                    delayByMillis,
-                    remindedTime
-                )
-                Timber.d("Set check alarm to start in %s minutes", delayByMillis.getTimeString())
-                NotificationManager.cancelNotification(context, reminderId)
-                return
-            }
-
 
             Timber.d(
                 "Received reminder id: %d, remindedTime: %d",

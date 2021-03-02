@@ -12,6 +12,7 @@ import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.receiver.CheckReceiver
 import eu.vojtechh.takeyourpill.receiver.ConfirmReceiver
+import eu.vojtechh.takeyourpill.receiver.DelayReceiver
 import eu.vojtechh.takeyourpill.receiver.ReminderReceiver
 import timber.log.Timber
 
@@ -47,16 +48,18 @@ object ReminderUtil {
     private fun getNotificationDelayIntent(
         context: Context,
         reminderId: Long,
-        delayByMillis: Long
+        delayByMillis: Long,
+        remindedTime: Long
     ): PendingIntent =
-        Intent(context, CheckReceiver::class.java).let { intent ->
+        Intent(context, DelayReceiver::class.java).let { intent ->
             intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
             intent.putExtra(Constants.INTENT_EXTRA_TIME_DELAY, delayByMillis)
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDED_TIME, remindedTime)
             PendingIntent.getBroadcast(
                 context,
                 reminderId.toInt(),
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT
             )
         }
 
@@ -104,7 +107,8 @@ object ReminderUtil {
             delayPendingIntent = getNotificationDelayIntent(
                 context,
                 reminder.id,
-                Pref.buttonDelay.toLong() * 1000 * 60
+                Pref.buttonDelay.toLong() * 1000 * 60,
+                reminder.getCalendarWithTodayDate().timeInMillis
             ),
             notificationId = reminder.id,
             channelId = pill.id.toString(),

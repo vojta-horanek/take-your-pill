@@ -37,6 +37,7 @@
 
         <receiver android:name=".receiver.ReminderReceiver" />
         <receiver android:name=".receiver.CheckReceiver" />
+        <receiver android:name=".receiver.DelayReceiver" />
         <receiver android:name=".receiver.ConfirmReceiver" />
         <receiver
             android:name=".receiver.BootReceiver"
