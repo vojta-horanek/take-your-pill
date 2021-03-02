@@ -29,13 +29,15 @@ import eu.vojtechh.takeyourpill.adapter.ColorAdapter
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.ReminderDialog
-import eu.vojtechh.takeyourpill.klass.*
+import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.disableAnimations
+import eu.vojtechh.takeyourpill.klass.showError
+import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
-import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -165,7 +167,7 @@ class EditFragment : Fragment() {
 
             colorAdapter.onColorClicked { _, pillColor -> model.setActivePillColor(pillColor) }
 
-            setReminderOptionsViews()
+            pillOptionsView.setOptions(model.pill.options)
 
             inputName.doOnTextChanged { text, _, _, _ ->
                 inputNameLayout.showError(
@@ -186,30 +188,21 @@ class EditFragment : Fragment() {
         val colorStateList = ColorStateList.valueOf(color)
         binding.run {
             buttonSave.backgroundTintList = colorStateList
-            listOf(
-                inputName, inputDescription, inputCycleCount, inputCycleToday, inputRestore,
-                inputDayNumber
-            )
-                .forEach {
-                    it.highlightColor = color
-                }
-            listOf(
-                inputNameLayout, inputDescriptionLayout, inputCycleCountLayout,
-                inputCycleTodayLayout, inputRestoreLayout, inputDayNumberLayout
-            )
-                .forEach {
-                    it.boxStrokeColor = color
-                    it.hintTextColor = colorStateList
-                }
-
-            listOf(checkCycleCount, checkDayLimit, checkRestoreAfter).forEach {
-                it.buttonTintList = colorStateList
+            listOf(inputName, inputDescription).forEach {
+                it.highlightColor = color
             }
+            listOf(inputNameLayout, inputDescriptionLayout).forEach {
+                it.boxStrokeColor = color
+                it.hintTextColor = colorStateList
+            }
+
             buttonAddReminder.strokeColor = colorStateList
             buttonAddReminder.iconTint = colorStateList
             buttonAddReminder.rippleColor = colorStateList
             buttonAddReminder.setTextColor(color)
+
             progress.setIndicatorColor(color)
+            pillOptionsView.setButtonTint(color)
         }
     }
 
@@ -301,75 +294,6 @@ class EditFragment : Fragment() {
         }
     }
 
-    private fun setReminderOptionsViews() = binding.run {
-        with(model.pill.options) {
-            checkDayLimit.isChecked = limitDays != ReminderOptions.NO_DAY_LIMIT
-            checkRestoreAfter.isChecked = breakDays != ReminderOptions.NO_BREAK
-            checkCycleCount.isChecked = repeatCount != ReminderOptions.REPEAT_FOREVER
-        }
-
-        checkDayLimit.setOnCheckedChangeListener { _, b ->
-            onLimitDayChecked(b)
-            scrollToBottom()
-            model.hasPillBeenEdited = true
-        }
-        checkRestoreAfter.setOnCheckedChangeListener { _, b ->
-            onRestoreAfterChecked(b)
-            scrollToBottom()
-            model.hasPillBeenEdited = true
-        }
-        checkCycleCount.setOnCheckedChangeListener { _, b ->
-            onCycleCountChecked(b)
-            scrollToBottom()
-            model.hasPillBeenEdited = true
-        }
-
-        // Set to initial state
-        onLimitDayChecked(checkDayLimit.isChecked)
-        onRestoreAfterChecked(checkRestoreAfter.isChecked)
-        onCycleCountChecked(checkCycleCount.isChecked)
-    }
-
-
-    private fun scrollToBottom() = binding.layoutEdit.post {
-        binding.scrollEdit.scrollToBottom()
-    }
-
-    private fun onLimitDayChecked(checked: Boolean) = binding.run {
-        groupLimit.isVisible = checked
-
-        checkRestoreAfter.isVisible = checked
-        checkRestoreAfterDesc.isVisible = checked
-        if (checked) {
-            groupRestore.isVisible = checkRestoreAfter.isChecked
-            checkCycleCount.isVisible = checkRestoreAfter.isChecked
-            checkCycleCountDesc.isVisible = checkRestoreAfter.isChecked
-            groupCycle.isVisible = checkCycleCount.isChecked
-        } else {
-            groupRestore.isVisible = false
-            checkCycleCount.isVisible = false
-            checkCycleCountDesc.isVisible = false
-            groupCycle.isVisible = false
-        }
-    }
-
-
-    private fun onRestoreAfterChecked(checked: Boolean) = binding.run {
-        groupRestore.isVisible = checked
-
-        checkCycleCount.isVisible = checked
-        checkCycleCountDesc.isVisible = checked
-        if (checked) {
-            groupCycle.isVisible = checkCycleCount.isChecked
-        } else {
-            groupCycle.isVisible = false
-        }
-    }
-
-    private fun onCycleCountChecked(checked: Boolean) {
-        binding.groupCycle.isVisible = checked
-    }
-
     private fun onPillSave() = binding.run {
         // Does Pill have a name?
         if (model.pill.name.isBlank()) {
@@ -386,7 +310,7 @@ class EditFragment : Fragment() {
         // TODO Use WorkManager for saving
         layoutLoading.isVisible = true
 
-        model.pill.options = getReminderOptions()
+        model.pill.options = pillOptionsView.getOptions()
 
         if (isCreatingNewPill) {
             model.addAndGetPill(model.pill).observe(viewLifecycleOwner) {
@@ -411,31 +335,6 @@ class EditFragment : Fragment() {
             pill.name
         )
         ReminderManager.planNextReminder(requireContext(), pill.reminders)
-    }
-
-    private fun getReminderOptions(): ReminderOptions = binding.run {
-        if (checkDayLimit.isChecked) {
-            if (checkRestoreAfter.isChecked) {
-                return if (checkCycleCount.isChecked) {
-                    ReminderOptions.finiteRepeating(
-                        inputDayNumber.getNumber(),
-                        inputRestore.getNumber(),
-                        inputCycleCount.getNumber()
-                    )
-                } else {
-                    ReminderOptions.infiniteBreak(
-                        inputDayNumber.getNumber(),
-                        inputRestore.getNumber()
-                    )
-                }
-            } else {
-                return ReminderOptions.finite(
-                    inputDayNumber.getNumber()
-                )
-            }
-        } else {
-            return ReminderOptions.infinite()
-        }
     }
 
     private fun showSnackbar(msg: String) =

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:parentTag="LinearLayout">
+
+    <RadioGroup
+        android:id="@+id/pill_options_view_radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/radio_indefinitely"
+        android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_indefinitely"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pill_options_indefinitely" />
+
+        <RadioButton
+            android:id="@+id/radio_x_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pill_options_for_x_days" />
+
+        <RadioButton
+            android:id="@+id/radio_cycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pill_options_cycle" />
+
+    </RadioGroup>
+
+    <View
+        style="@style/AppTheme.Widget.Divider"
+        android:layout_marginBottom="@dimen/screen_margin_vertical_little" />
+
+    <LinearLayout
+        android:id="@+id/layout_x_days"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center_vertical"
+        android:minHeight="64dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+
+        <TextView
+            style="@style/AppTheme.Text.BodyNormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/duration" />
+
+        <TextView
+            android:id="@+id/x_days_count_duration"
+            style="@style/AppTheme.Text.BodySecondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="21" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_cycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/layout_cycle_active"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center_vertical"
+            android:minHeight="64dp"
+            android:orientation="vertical"
+
+            android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+
+            <TextView
+                style="@style/AppTheme.Text.BodyNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_active" />
+
+            <TextView
+                android:id="@+id/cycle_count_active"
+                style="@style/AppTheme.Text.BodySecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="21" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_cycle_inactive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center_vertical"
+            android:minHeight="64dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+
+            <TextView
+                style="@style/AppTheme.Text.BodyNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_inactive" />
+
+            <TextView
+                android:id="@+id/cycle_count_inactive"
+                style="@style/AppTheme.Text.BodySecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_cycle_today"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center_vertical"
+            android:minHeight="64dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+
+            <TextView
+                style="@style/AppTheme.Text.BodyNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today_is_cycle_day" />
+
+            <TextView
+                android:id="@+id/cycle_count_today"
+                style="@style/AppTheme.Text.BodySecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1" />
+        </LinearLayout>
+    </LinearLayout>
+</merge>

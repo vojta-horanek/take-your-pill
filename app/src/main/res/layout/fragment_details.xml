@@ -135,7 +135,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/screen_margin_vertical"
-                    android:columnCount="3"
+                    android:columnCount="2"
                     android:rowCount="2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -162,16 +162,6 @@
                         tools:text="5" />
 
                     <TextView
-                        android:id="@+id/infoCycleCount"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="center"
-                        android:textAppearance="@style/AppTheme.Text.BodyTitle"
-                        tools:text="1 of 3" />
-
-                    <TextView
                         android:id="@+id/infoDayLimitDesc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -189,16 +179,6 @@
                         android:layout_gravity="fill_horizontal"
                         android:gravity="center"
                         android:text="@string/resume_after"
-                        android:textAppearance="@style/AppTheme.Text.Description" />
-
-                    <TextView
-                        android:id="@+id/infoCycleCountDesc"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="center"
-                        android:text="@string/cycle_count"
                         android:textAppearance="@style/AppTheme.Text.Description" />
 
                 </GridLayout>

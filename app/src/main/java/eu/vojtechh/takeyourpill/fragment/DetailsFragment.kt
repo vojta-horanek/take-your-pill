@@ -89,39 +89,30 @@ class DetailsFragment : Fragment(),
                 buttonHistory.setOnClickListener { navigateToHistory() }
                 buttonDelete.setOnClickListener { navigateToDelete() }
 
-                gridInfo.isVisible = it.options.limitDays != ReminderOptions.NO_DAY_LIMIT
+                gridInfo.isVisible = it.options.daysActive != ReminderOptions.NO_DAY_LIMIT
 
-                if (it.optionsChanging.limitDays <= it.options.limitDays) {
+                if (it.optionsChanging.daysActive <= it.options.daysActive) {
                     infoDayLimit.text = getString(
                         R.string.day_limit_format,
-                        it.optionsChanging.limitDays,
-                        it.options.limitDays
+                        it.optionsChanging.daysActive,
+                        it.options.daysActive
                     )
                 } else {
-                    infoDayLimit.text = it.options.limitDays.toString()
+                    infoDayLimit.text = it.options.daysActive.toString()
                 }
 
-                infoResumeAfter.isVisible = it.options.breakDays != ReminderOptions.NO_BREAK
-                infoResumeAfterDesc.isVisible = it.options.breakDays != ReminderOptions.NO_BREAK
+                infoResumeAfter.isVisible = it.options.daysInactive != ReminderOptions.NO_BREAK
+                infoResumeAfterDesc.isVisible = it.options.daysInactive != ReminderOptions.NO_BREAK
 
-                if (it.optionsChanging.breakDays == 0) {
-                    infoResumeAfter.text = it.options.breakDays.toString()
+                if (it.optionsChanging.daysInactive == 0) {
+                    infoResumeAfter.text = it.options.daysInactive.toString()
                 } else {
                     infoResumeAfter.text = getString(
                         R.string.resume_after_format,
-                        it.optionsChanging.breakDays,
-                        it.options.breakDays
+                        it.optionsChanging.daysInactive,
+                        it.options.daysInactive
                     )
                 }
-
-                infoCycleCount.isVisible = it.options.repeatCount != ReminderOptions.REPEAT_FOREVER
-                infoCycleCountDesc.isVisible =
-                    it.options.repeatCount != ReminderOptions.REPEAT_FOREVER
-                infoCycleCount.text = getString(
-                    R.string.cycle_count_format,
-                    it.optionsChanging.repeatCount,
-                    it.options.repeatCount
-                )
 
 
             }

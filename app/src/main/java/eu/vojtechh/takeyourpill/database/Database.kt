@@ -8,8 +8,8 @@ import eu.vojtechh.takeyourpill.model.PillEntity
 import eu.vojtechh.takeyourpill.model.Reminder
 
 @Database(
-        entities = [PillEntity::class, Reminder::class, History::class],
-        version = 3
+    entities = [PillEntity::class, Reminder::class, History::class],
+    version = 4
 )
 @TypeConverters(Converters::class)
 abstract class Database : RoomDatabase() {

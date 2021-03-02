@@ -212,154 +212,20 @@
                             app:strokeColor="@color/colorPrimary" />
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textOptionsTitle"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/appbar_margin_vertical"
                             android:layout_marginTop="@dimen/screen_margin_vertical"
-                            android:text="@string/day_limit_description"
-                            android:textAppearance="@style/AppTheme.Text.Description" />
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/checkDayLimit"
-                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
-                            android:text="@string/limit_to_x_days" />
+                            android:text="@string/intake_options"
+                            android:textAppearance="@style/AppTheme.Text.BodyTitle" />
 
-                        <LinearLayout
-                            android:id="@+id/groupLimit"
+                        <eu.vojtechh.takeyourpill.view.PillOptionsView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/inputDayNumberLayout"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/number_of_days"
-                                app:helperText="@string/day_number_description">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/inputDayNumber"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number"
-                                    android:text="@{Integer.toString(pill.options.displayLimit)}" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/inputCycleTodayLayout"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/screen_margin_vertical_little"
-                                android:hint="@string/start_from_day"
-                                app:helperText="@string/cycle_today_description">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/inputCycleToday"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number"
-                                    android:text="@{Integer.toString(pill.optionsChanging.displayLimit)}" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                            <View
-                                style="@style/AppTheme.Widget.Divider"
-                                android:layout_marginTop="8dp" />
-
-                        </LinearLayout>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:id="@+id/checkRestoreAfterDesc"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/appbar_margin_vertical"
+                            android:id="@+id/pillOptionsView"
                             android:layout_marginTop="@dimen/screen_margin_vertical_small"
-                            android:text="@string/restore_after_description"
-                            android:textAppearance="@style/AppTheme.Text.Description" />
+                            android:layout_height="wrap_content" />
 
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/checkRestoreAfter"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
-                            android:text="@string/restore_after" />
-
-                        <LinearLayout
-                            android:id="@+id/groupRestore"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/inputRestoreLayout"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/how_many_days_to_restore"
-                                app:helperText="@string/input_restore_description">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/inputRestore"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number"
-                                    android:text="@{Integer.toString(pill.options.displayBreak)}" />
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                            <View
-                                style="@style/AppTheme.Widget.Divider"
-                                android:layout_marginTop="8dp" />
-
-                        </LinearLayout>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:id="@+id/checkCycleCountDesc"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/appbar_margin_vertical"
-                            android:layout_marginTop="@dimen/screen_margin_vertical_small"
-                            android:text="@string/cycle_count_description"
-                            android:textAppearance="@style/AppTheme.Text.Description" />
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:id="@+id/checkCycleCount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
-                            android:text="@string/limit_cycle_count" />
-
-                        <LinearLayout
-                            android:id="@+id/groupCycle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/inputCycleCountLayout"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/num_of_cycles"
-                                app:helperText="@string/input_cycle_count_description">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/inputCycleCount"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number"
-                                    android:text="@{Integer.toString(pill.options.displayRepeat)}" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>

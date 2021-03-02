@@ -18,52 +18,52 @@ class PreferencesViewModel @Inject constructor(
 ) : ViewModel() {
     fun addTestData() = viewModelScope.launch {
         val pills = listOf(
-                Pill(
-                        PillEntity(
-                                name = "Xyzal",
-                                description = "Na alergii, ve skříni",
-                                photo = null, /* TODO Add a photo */
-                                color = PillColor.default(),
-                                deleted = false,
-                                options = ReminderOptions.infinite(),
-                                optionsChanging = ReminderOptions.infinite()
-                        ),
-                        listOf(
-                                Reminder.create(pillId = -1),
-                                Reminder.create(hour = 9, pillId = -1),
-                                Reminder.create(hour = 10, pillId = -1),
-                        )
+            Pill(
+                PillEntity(
+                    name = "Xyzal",
+                    description = "Na alergii, ve skříni",
+                    photo = null, /* TODO Add a photo */
+                    color = PillColor.default(),
+                    deleted = false,
+                    options = ReminderOptions.indefinite(),
+                    optionsChanging = ReminderOptions.indefinite()
                 ),
-                Pill(
-                        PillEntity(
-                                name = "Nasivin",
-                                description = "Na rýmu, na poličce",
-                                photo = null, /* TODO Add a photo */
-                                color = PillColor.teal(),
-                                deleted = false,
-                                options = ReminderOptions.infinite(),
-                                optionsChanging = ReminderOptions.infinite()
-                        ),
-                        listOf(
-                                Reminder.create(pillId = -1),
-                                Reminder.create(hour = 12, pillId = -1),
-                                Reminder.create(hour = 22, pillId = -1),
-                        )
-                ),
-                Pill(
-                        PillEntity(
-                                name = "Vitamín C",
-                                description = null,
-                                photo = null, /* TODO Add a photo */
-                                color = PillColor.red(),
-                                deleted = false,
-                                options = ReminderOptions.finite(7),
-                                optionsChanging = ReminderOptions.finite(7)
-                        ),
-                        listOf(
-                                Reminder.create(hour = 7, pillId = -1),
-                        )
+                listOf(
+                    Reminder.create(pillId = -1),
+                    Reminder.create(hour = 9, pillId = -1),
+                    Reminder.create(hour = 10, pillId = -1),
                 )
+            ),
+            Pill(
+                PillEntity(
+                    name = "Nasivin",
+                    description = "Na rýmu, na poličce",
+                    photo = null, /* TODO Add a photo */
+                    color = PillColor.teal(),
+                    deleted = false,
+                    options = ReminderOptions.indefinite(),
+                    optionsChanging = ReminderOptions.indefinite()
+                ),
+                listOf(
+                    Reminder.create(pillId = -1),
+                    Reminder.create(hour = 12, pillId = -1),
+                    Reminder.create(hour = 22, pillId = -1),
+                )
+            ),
+            Pill(
+                PillEntity(
+                    name = "Vitamín C",
+                    description = null,
+                    photo = null, /* TODO Add a photo */
+                    color = PillColor.red(),
+                    deleted = false,
+                    options = ReminderOptions.finite(7),
+                    optionsChanging = ReminderOptions.finite(7)
+                ),
+                listOf(
+                    Reminder.create(hour = 7, pillId = -1),
+                )
+            )
         )
 
         val pillIds = mutableListOf<Long>()

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PillOptionsView">
+        <attr format="color" name="accentColor" />
+    </declare-styleable>
+</resources>
