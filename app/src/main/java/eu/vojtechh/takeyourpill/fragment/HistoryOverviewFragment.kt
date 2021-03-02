@@ -29,23 +29,24 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
         super.onViewCreated(view, savedInstanceState)
 
         val appAdapter = AppRecyclerAdapter(
-                this,
-                null,
-                getString(R.string.no_history),
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_fab_history)
+            this,
+            null,
+            getString(R.string.no_history),
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_fab_history)
         )
 
         binding.recyclerHistory.adapter = appAdapter
 
-        model.getStatsData().observe(viewLifecycleOwner) { result ->
-            result.onSuccess {
-                appAdapter.submitList(it)
-            }.onFailure {
-                tryIgnore { (requireParentFragment() as HistoryFragment).disableTabs() }
-                appAdapter.submitList(listOf()) // Submit an empty list to show the adapter
+        model.history.observe(viewLifecycleOwner) { history ->
+            model.getStatsData(history).observe(viewLifecycleOwner) { result ->
+                result.onSuccess {
+                    appAdapter.submitList(it)
+                }.onFailure {
+                    tryIgnore { (requireParentFragment() as HistoryFragment).disableTabs() }
+                    appAdapter.submitList(listOf()) // Submit an empty list to show the adapter
+                }
             }
         }
-
     }
 
     override fun onItemClicked(view: View, item: BaseModel) {

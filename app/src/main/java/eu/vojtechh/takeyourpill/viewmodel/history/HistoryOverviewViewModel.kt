@@ -4,10 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.klass.CallResult
-import eu.vojtechh.takeyourpill.model.BaseModel
-import eu.vojtechh.takeyourpill.model.HistoryOverallItem
-import eu.vojtechh.takeyourpill.model.HistoryPillItem
-import eu.vojtechh.takeyourpill.model.StatItem
+import eu.vojtechh.takeyourpill.model.*
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
@@ -15,11 +12,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryOverviewViewModel @Inject constructor(
-        private val pillRepository: PillRepository,
-        private val historyRepository: HistoryRepository
+    private val pillRepository: PillRepository,
+    historyRepository: HistoryRepository
 ) : ViewModel() {
 
-    fun getStatsData() = liveData(Dispatchers.IO) {
+    val history = historyRepository.getHistoryOrderedById()
+
+    fun getStatsData(_history: List<History>) = liveData(Dispatchers.IO) {
+
+        if (_history.isEmpty()) {
+            emit(CallResult.failure<List<BaseModel>>())
+            return@liveData
+        }
+
         val pills = pillRepository.getAllPillsIncludingDeletedSync()
 
         if (pills.isEmpty()) {
@@ -27,22 +32,15 @@ class HistoryOverviewViewModel @Inject constructor(
             return@liveData
         }
 
-        val history = historyRepository.getHistoryOrderedByIdSync()
-
-        if (history.isEmpty()) {
-            emit(CallResult.failure<List<BaseModel>>())
-            return@liveData
-        }
-
         val statList = mutableListOf<StatItem>()
 
-        val totalReminded = history.size
-        val totalConfirmed = history.count { it.hasBeenConfirmed }
+        val totalReminded = _history.size
+        val totalConfirmed = _history.count { it.hasBeenConfirmed }
         val totalMissed = totalReminded - totalConfirmed
 
         val overallStat = StatItem(null, totalReminded, totalConfirmed, totalMissed)
 
-        val pillsHistory = history.groupBy { it.pillId }.values
+        val pillsHistory = _history.groupBy { it.pillId }.values
         // Iterate over each pill
         pillsHistory.forEach { pillHistory ->
 
