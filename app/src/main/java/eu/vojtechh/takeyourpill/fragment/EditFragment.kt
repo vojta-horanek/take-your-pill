@@ -153,9 +153,9 @@ class EditFragment : Fragment() {
 
         binding.run {
 
+            refreshImage()
             model.photoBitmap.observe(viewLifecycleOwner) {
-                imagePillPhoto.setImageDrawable(model.pill.getPhotoDrawable(requireContext()))
-                imageDeletePhoto.isVisible = model.pill.isPhotoVisible
+                refreshImage()
             }
 
             recyclerReminders.adapter = reminderAdapter
@@ -177,10 +177,15 @@ class EditFragment : Fragment() {
             inputDescription.doOnTextChanged { text, _, _, _ -> model.onDescriptionChanged(text) }
             buttonSave.setOnClickListener { onPillSave() }
             buttonAddReminder.setOnClickListener { showReminderDialog() }
-            imagePillPhoto.setOnClickListener { onPickImage() }
-            imageDeletePhoto.setOnClickListener { onImageDelete() }
+            imageChooser.setOnImageClickListener { onPickImage() }
+            imageChooser.setOnDeleteClickListener { onImageDelete() }
         }
 
+    }
+
+    private fun refreshImage() {
+        binding.imageChooser.setImageDrawable(model.pill.getPhotoDrawable(requireContext()))
+        binding.imageChooser.setDeleteVisible(model.pill.isPhotoVisible)
     }
 
     private fun setUiColor(checkedColor: PillColor) {

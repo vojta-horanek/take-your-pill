@@ -116,70 +116,13 @@
                             android:text="@string/photo"
                             android:textAppearance="@style/AppTheme.Text.BodyTitle" />
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cardPhoto"
+                        <eu.vojtechh.takeyourpill.view.ImageChooserView
                             android:layout_width="match_parent"
-                            android:layout_height="180dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageChooser"
                             android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
                             android:layout_marginTop="@dimen/screen_margin_vertical_small"
-                            android:layout_marginBottom="@dimen/screen_margin_vertical"
-                            android:background="?attr/colorBackgroundFloating"
-                            android:clickable="true"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:focusable="true"
-                            app:cardCornerRadius="8dp"
-                            app:cardElevation="0dp"
-                            app:cardPreventCornerOverlap="true"
-                            app:strokeColor="@color/stroke_color"
-                            app:strokeWidth="1dp">
-
-                            <FrameLayout
-                                android:id="@+id/layoutPhoto"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:clipChildren="false"
-                                android:clipToPadding="false">
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/imagePillPhoto"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:scaleType="centerCrop"
-                                    android:src="@{pill.getPhotoDrawable(context)}"
-                                    app:tint="#8C000000"
-                                    app:tintMode="src_over"
-                                    tools:ignore="ContentDescription"
-                                    tools:src="@drawable/photo_default" />
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="48dp"
-                                    android:layout_height="48dp"
-                                    android:layout_gravity="center"
-                                    android:contentDescription="@string/add_photo"
-                                    android:elevation="5dp"
-                                    app:srcCompat="@drawable/ic_image"
-                                    app:tint="@android:color/white" />
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/imageDeletePhoto"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:layout_gravity="top|end"
-                                    android:layout_margin="8dp"
-                                    android:contentDescription="@string/delete"
-                                    android:elevation="5dp"
-                                    app:isVisible="@{pill.photoVisible}"
-                                    app:srcCompat="@drawable/ic_delete"
-                                    app:tint="@android:color/white"
-                                    tools:visibility="visible" />
-
-                            </FrameLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
+                            android:layout_marginBottom="@dimen/screen_margin_vertical" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/textReminderTimes"
