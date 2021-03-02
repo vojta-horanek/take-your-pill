@@ -125,4 +125,5 @@
     <string name="days_active">Aktivní dny</string>
     <string name="days_inactive">Pozastavené dny</string>
     <string name="today_is_cycle_day">Dnes je den cyklu</string>
+    <string name="inactive">Neaktivní</string>
 </resources>
