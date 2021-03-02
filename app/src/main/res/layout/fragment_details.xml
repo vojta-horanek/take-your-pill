@@ -168,7 +168,7 @@
                         android:layout_columnWeight="1"
                         android:layout_gravity="fill_horizontal"
                         android:gravity="center"
-                        android:text="@string/day_limit"
+                        android:text="@string/days_active"
                         android:textAppearance="@style/AppTheme.Text.Description" />
 
                     <TextView
@@ -178,7 +178,7 @@
                         android:layout_columnWeight="1"
                         android:layout_gravity="fill_horizontal"
                         android:gravity="center"
-                        android:text="@string/resume_after"
+                        android:text="@string/days_inactive"
                         android:textAppearance="@style/AppTheme.Text.Description" />
 
                 </GridLayout>
