@@ -41,7 +41,7 @@ object ReminderUtil {
                 context,
                 reminderId.toInt(),
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT //FLAG_UPDATE_CURRENT
             )
         }
 
@@ -59,7 +59,7 @@ object ReminderUtil {
                 context,
                 reminderId.toInt(),
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT //FLAG_UPDATE_CURRENT
             )
         }
 
@@ -75,17 +75,15 @@ object ReminderUtil {
 
     fun getAlarmIntent(
         context: Context,
-        reminderId: Long,
-        reminderTime: Long
+        reminderId: Long
     ): PendingIntent =
         Intent(context, ReminderReceiver::class.java).let { intent ->
-            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_TIME, reminderTime)
-            // TODO Test if this is working correctly
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
             PendingIntent.getBroadcast(
                 context,
                 reminderId.toInt(),
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT //FLAG_UPDATE_CURRENT
             )
         }
 
@@ -102,17 +100,17 @@ object ReminderUtil {
                 context,
                 reminder.id,
                 pill.id,
-                reminder.getMillisWithTodayDate()
+                reminder.getTodayMillis()
             ),
             delayPendingIntent = getNotificationDelayIntent(
                 context,
                 reminder.id,
                 Pref.buttonDelay.toLong() * 1000 * 60,
-                reminder.getCalendarWithTodayDate().timeInMillis
+                reminder.getTodayCalendar().timeInMillis
             ),
             notificationId = reminder.id,
             channelId = pill.id.toString(),
-            whenMillis = reminder.getMillisWithTodayDate()
+            whenMillis = reminder.getTodayMillis()
         )
     }
 }

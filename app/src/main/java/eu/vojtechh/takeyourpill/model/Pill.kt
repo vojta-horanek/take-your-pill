@@ -24,14 +24,14 @@ data class Pill(
 
     companion object {
 
-        fun getEmpty() = Pill(
+        fun new() = Pill(
             PillEntity(
                 "",
                 "",
                 null,
                 PillColor.default(),
                 false,
-                ReminderOptions.empty()
+                ReminderOptions.empty(),
             ), listOf()
         )
     }
@@ -49,10 +49,10 @@ data class Pill(
         }
 
     fun getNotificationDescription(context: Context, reminder: Reminder) =
-            context.getString(
-                    R.string.it_is_time_to_take,
-                    reminder.amount
-            )
+        context.getString(
+            R.string.it_is_time_to_take,
+            reminder.amount
+        )
 
     var photo
         get() = pillEntity.photo

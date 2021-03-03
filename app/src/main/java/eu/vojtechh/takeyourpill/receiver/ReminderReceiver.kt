@@ -6,7 +6,6 @@ import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
-import eu.vojtechh.takeyourpill.klass.getTimeString
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
@@ -33,46 +32,54 @@ class ReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         intent.let {
-            val reminderTime = it.getLongExtra(Constants.INTENT_EXTRA_REMINDER_TIME, -1L)
-            if (reminderTime == -1L) return
 
-            Timber.d("Reminder time: %s", reminderTime.getTimeString())
+            val reminderId = it.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1L)
+            if (reminderId == -1L) {
+                Timber.e("Haven't received a reminder ID, exiting...")
+                return
+            }
+
+            Timber.d("Received reminder ID: %s", reminderId)
 
             GlobalScope.launch(Dispatchers.IO) {
-                // We probably don't need this anymore since we are creating reminders on pill bases
-                val reminders = reminderRepository.getRemindersBasedOnTime(reminderTime)
-                Timber.d("Reminder count: %s", reminders.count().toString())
 
-                for (reminder in reminders) {
-                    val pill = pillRepository.getPillSync(reminder.pillId)
+                val reminder = reminderRepository.getReminder(reminderId)
+                val pill = pillRepository.getPillSync(reminder.pillId)
 
-                    if (pill.options.isActive()) {
+                // If pill is active, create a notification, insert history and schedule a check
+                if (pill.options.isActive()) {
 
-                        val remindedCalendar = reminder.getCalendarWithTodayDate()
-                        ReminderUtil.createReminderNotification(context, pill, reminder)
+                    val todayCalendar = reminder.getTodayCalendar()
 
-                        val history = History(
-                            pillId = pill.id,
-                            reminded = remindedCalendar,
-                            amount = reminder.amount
+                    ReminderUtil.createReminderNotification(context, pill, reminder)
+
+                    val history = History(
+                        pillId = pill.id,
+                        reminded = todayCalendar,
+                        amount = reminder.amount
+                    )
+                    historyRepository.insertHistoryItem(history)
+
+                    // Schedule a check reminder if enabled
+                    if (Pref.remindAgain) {
+                        ReminderManager.createCheckAlarm(
+                            context,
+                            reminder.id,
+                            todayCalendar.timeInMillis
                         )
-                        historyRepository.insertHistoryItem(history)
-                        if (Pref.remindAgain) {
-                            ReminderManager.setCheckForConfirmation(
-                                context,
-                                reminder.id,
-                                remindedCalendar.timeInMillis
-                            )
-                        }
-                    } else {
-                        if (pill.options.isFinite()) {
-                            return@launch
-                        }
                     }
 
-                    val newPill = ReminderManager.planNextPillReminder(context, pill)
-                    pillRepository.updatePill(newPill)
+                } else { // If pill is not active, check if it is finite
+                    if (pill.options.isFinite()) {
+                        // If the pill is finite and inactive, it means we will not be reminding it anymore
+                        return@launch
+                    }
                 }
+
+                // Plan next reminder and update the pill in db with new options
+                val newPill = ReminderManager.planNextPillReminder(context, pill)
+                pillRepository.updatePill(newPill)
+
             }
         }
     }

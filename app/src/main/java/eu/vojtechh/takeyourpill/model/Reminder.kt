@@ -10,7 +10,6 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.klass.getTimeString
 import eu.vojtechh.takeyourpill.klass.hour
 import eu.vojtechh.takeyourpill.klass.minute
-import java.text.DateFormat
 import java.util.*
 
 @Entity(
@@ -42,9 +41,9 @@ data class Reminder(
 
     fun hasSameTime(other: Reminder) = hour == other.hour && minute == other.minute
 
-    fun getMillisWithTodayDate() = getCalendarWithTodayDate().timeInMillis
+    fun getTodayMillis() = getTodayCalendar().timeInMillis
 
-    fun getCalendarWithTodayDate(): Calendar {
+    fun getTodayCalendar(): Calendar {
         val time = Calendar.getInstance()
         time.set(Calendar.HOUR_OF_DAY, hour)
         time.set(Calendar.MINUTE, minute)
@@ -62,9 +61,6 @@ data class Reminder(
             return Reminder(time = calendar, amount = amount, pillId = pillId)
         }
     }
-
-    val timeString: String
-        get() = DateFormat.getTimeInstance(DateFormat.SHORT).format(time.time)
 
     fun getTimeString(context: Context) = time.time.getTimeString(context)
 

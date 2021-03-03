@@ -18,26 +18,28 @@ class DelayReceiver : BroadcastReceiver() {
         intent.let {
 
             val reminderId = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1L)
-            if (reminderId == -1L) return
-
             val remindedTime = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDED_TIME, -1L)
-            if (remindedTime == -1L) return
-
             val delayByMillis = intent.getLongExtra(Constants.INTENT_EXTRA_TIME_DELAY, -1L)
-            if (delayByMillis != -1L) {
 
-                // Cancel check reminder
-                ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime).cancel()
-
-                ReminderManager.setCheckForConfirmation(
-                    context,
-                    reminderId,
-                    remindedTime,
-                    delayByMillis
-                )
-                Timber.d("Set check alarm to start in %s minutes", delayByMillis.getTimeString())
-                NotificationManager.cancelNotification(context, reminderId)
+            if (delayByMillis == -1L || remindedTime == -1L || reminderId == -1L) {
+                Timber.e("Invalid number of extras passed, exiting...")
+                return
             }
+            // Cancel check reminder
+            ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime).cancel()
+
+            ReminderManager.createCheckAlarm(
+                context,
+                reminderId,
+                remindedTime,
+                delayByMillis
+            )
+            Timber.d(
+                "Check alarm has been set to start in %s minutes",
+                delayByMillis.getTimeString()
+            )
+            NotificationManager.cancelNotification(context, reminderId)
+
         }
     }
 }

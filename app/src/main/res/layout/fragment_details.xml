@@ -205,8 +205,8 @@
                 android:layout_marginBottom="@dimen/screen_margin_vertical"
                 app:efab_closingAnimationDurationMs="75"
                 app:efab_closingAnticipateTension="0"
-                app:efab_icon="@drawable/ic_add"
-                app:efab_iconAnimationRotationDeg="45"
+                app:efab_icon="@drawable/ic_edit"
+                app:efab_iconAnimationRotationDeg="180"
                 app:efab_openingAnimationDurationMs="75" />
 
             <com.nambimobile.widgets.efab.FabOption

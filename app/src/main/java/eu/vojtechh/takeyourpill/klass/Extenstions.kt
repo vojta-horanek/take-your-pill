@@ -93,11 +93,17 @@ fun Calendar.addDay(amount: Int): Calendar {
     return this
 }
 
+var Calendar.DayOfYear: Int
+    get() = this.get(Calendar.DAY_OF_YEAR)
+    set(value) {
+        this.set(Calendar.DAY_OF_YEAR, value)
+    }
+
 fun PopupMenu.forcePopUpMenuToShowIcons() {
     try {
         val method = menu.javaClass.getDeclaredMethod(
-                "setOptionalIconsVisible",
-                Boolean::class.javaPrimitiveType
+            "setOptionalIconsVisible",
+            Boolean::class.javaPrimitiveType
         )
         method.isAccessible = true
         method.invoke(menu, true)

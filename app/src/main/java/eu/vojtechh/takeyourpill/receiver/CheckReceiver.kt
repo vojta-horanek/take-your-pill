@@ -33,10 +33,12 @@ class CheckReceiver : BroadcastReceiver() {
         intent.let {
 
             val reminderId = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1L)
-            if (reminderId == -1L) return
-
             val remindedTime = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDED_TIME, -1L)
-            if (remindedTime == -1L) return
+
+            if (remindedTime == -1L || reminderId == -1L) {
+                Timber.e("Invalid number of extras passed, exiting...")
+                return
+            }
 
             Timber.d(
                 "Received reminder id: %d, remindedTime: %d",
@@ -51,9 +53,10 @@ class CheckReceiver : BroadcastReceiver() {
 
                 ReminderUtil.createReminderNotification(context, pill, reminder)
 
+                // If this reminder has not been confirmed and remindAgain is enabled, schedule check alarm
                 historyRepository.getByPillIdAndTime(pill.id, remindedTime)?.let { history ->
                     if (Pref.remindAgain && !history.hasBeenConfirmed) {
-                        ReminderManager.setCheckForConfirmation(context, reminderId, remindedTime)
+                        ReminderManager.createCheckAlarm(context, reminderId, remindedTime)
                     }
                 }
             }

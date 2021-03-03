@@ -6,8 +6,8 @@ data class ReminderOptions(
     var todayCycle: Int = 1
 ) {
     companion object {
-        const val NO_DAY_LIMIT = -1
-        const val NO_BREAK = -1
+        private const val NO_DAY_LIMIT = -1
+        private const val NO_BREAK = -1
 
         fun indefinite() =
             ReminderOptions()
@@ -28,12 +28,13 @@ data class ReminderOptions(
     fun isIndefinite() = daysActive == NO_DAY_LIMIT && daysInactive == NO_BREAK
     fun isFinite() = daysActive != NO_DAY_LIMIT && daysInactive == NO_BREAK
     fun isCycle() = daysActive != NO_DAY_LIMIT && daysInactive != NO_BREAK
-    fun isInactive(): Boolean {
-        return if (isIndefinite()) false
-        else todayCycle > daysActive
+
+    fun isActive() = when {
+        isIndefinite() -> true
+        else -> todayCycle <= daysActive
     }
 
-    fun isActive() = !isInactive()
+    fun isInactive() = !isActive()
 
     fun nextCycleIteration() {
         todayCycle++

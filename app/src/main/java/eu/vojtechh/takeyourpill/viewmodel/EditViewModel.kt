@@ -33,7 +33,7 @@ class EditViewModel @Inject constructor(
 
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
 
-    fun getNewEmptyPill() = Pill.getEmpty()
+    fun getNewEmptyPill() = Pill.new()
 
     var hasPillBeenEdited = false
     lateinit var pill: Pill

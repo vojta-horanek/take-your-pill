@@ -13,6 +13,7 @@ import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -27,22 +28,33 @@ class ConfirmReceiver : BroadcastReceiver() {
             val reminderId = it.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1L)
             val pillId = it.getLongExtra(Constants.INTENT_EXTRA_PILL_ID, -1L)
             val remindedTime = it.getLongExtra(Constants.INTENT_EXTRA_REMINDED_TIME, -1L)
-            if (reminderId == -1L) return
-            if (pillId == -1L) return
-            if (remindedTime == -1L) return
+
+            if (reminderId == -1L || pillId == -1L || remindedTime == -1L) {
+                Timber.e("Invalid number of extras passed, exiting...")
+                return
+            }
+
+            // Hide notification
+            NotificationManager.cancelNotification(context, reminderId)
 
             GlobalScope.launch(Dispatchers.IO) {
 
                 historyRepository.getByPillIdAndTime(pillId, remindedTime)?.let { history ->
                     history.confirmed = Calendar.getInstance()
                     historyRepository.updateHistoryItem(history)
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.confirmed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } ?: run {
+                    Timber.e("Couldn't find the correct history item, exiting...")
                 }
-
+                // Cancel check alarm
                 ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime).cancel()
             }
-            NotificationManager.cancelNotification(context, reminderId)
-            Toast.makeText(context, context.getString(R.string.confirmed), Toast.LENGTH_SHORT)
-                .show()
+
+
         }
     }
 }

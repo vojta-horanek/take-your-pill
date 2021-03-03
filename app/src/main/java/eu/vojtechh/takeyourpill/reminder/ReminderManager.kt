@@ -3,6 +3,7 @@ package eu.vojtechh.takeyourpill.reminder
 import android.app.AlarmManager
 import android.content.Context
 import android.os.SystemClock
+import eu.vojtechh.takeyourpill.klass.DayOfYear
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.getDateTimeString
 import eu.vojtechh.takeyourpill.klass.getTimeString
@@ -13,61 +14,61 @@ import java.util.*
 
 object ReminderManager {
 
+    fun planNextPillReminder(context: Context, pill: Pill): Pill {
+        val today = Calendar.getInstance()
+        // If last reminder date is null, then this is the first reminder
+        pill.lastReminderDate?.let { lastDate ->
+            // Only add next cycle if this is the first reminder today
+            if (lastDate.DayOfYear != today.DayOfYear) {
+                pill.options.nextCycleIteration()
+                pill.lastReminderDate = today
+            }
+        } ?: run {
+            pill.lastReminderDate = today
+        }
+        planNextReminder(context, pill.reminders)
+        return pill
+    }
+
     /**
      * Takes [reminders] and checks which reminder should be the next to fire.
-     * If it finds one it creates a reminder with [createReminder]
+     * If it finds one it creates a reminder with [createAlarm]
      * If it does not find one it uses the first [Reminder] in a day and plans a reminder with
      * the same time but tomorrows date
      */
     private fun planNextReminder(context: Context, reminders: List<Reminder>) {
-        val sortedByTime = reminders.sortedBy { rem -> rem.time.time }
-        val calendar = Calendar.getInstance()
-
         Timber.d("Planning next reminder")
 
+        val sortedByTime = reminders.sortedBy { it.time.timeInMillis }
+
         // Go trough reminders from 00:00 to 23:59 basically
-        sortedByTime.forEach {
+        val today = Calendar.getInstance()
+        sortedByTime.forEach { reminder ->
+            val remindTime = reminder.getTodayMillis()
             // Only plan if the reminder time is past the current time
-            if (it.getMillisWithTodayDate() > calendar.timeInMillis) {
-                Timber.d(
-                    "Next reminder is today at %s",
-                    it.getMillisWithTodayDate().getDateTimeString()
-                )
-                createReminder(context, it)
+            if (remindTime > today.timeInMillis) {
+                Timber.d("Next reminder is today at %s", remindTime.getDateTimeString())
+                createAlarm(context, reminder)
                 return@planNextReminder
             }
         }
 
         // no reminder for today if we get here, plan the first one for tomorrow
         val firstTomorrow = sortedByTime.firstOrNull()
-        firstTomorrow?.let {
-            calendar.timeInMillis = it.getMillisWithTodayDate()
-            calendar.add(Calendar.DAY_OF_YEAR, 1)
-            Timber.d("Next reminder is tomorrow at %s", calendar.timeInMillis.getDateTimeString())
-            createReminder(context, it.id, calendar.timeInMillis, it.time.timeInMillis)
+        firstTomorrow?.let { reminder ->
+            val triggerAtCalendar = Calendar.getInstance()
+            triggerAtCalendar.timeInMillis = reminder.getTodayMillis()
+            triggerAtCalendar.add(Calendar.DAY_OF_YEAR, 1)
+
+            Timber.d(
+                "Next reminder is tomorrow at %s",
+                triggerAtCalendar.timeInMillis.getDateTimeString()
+            )
+
+            createAlarm(context, reminder.id, triggerAtCalendar.timeInMillis)
         } ?: run {
             Timber.e("No reminder found")
         }
-    }
-
-    fun planNextPillReminder(context: Context, pill: Pill): Pill {
-        val today = Calendar.getInstance()
-        with(pill.options) {
-            // if this is this pill first reminder today
-            pill.lastReminderDate?.let {
-                if (it.get(Calendar.DAY_OF_YEAR) !=
-                    today.get(Calendar.DAY_OF_YEAR)
-                ) {
-                    nextCycleIteration()
-                    pill.lastReminderDate = today
-                }
-            } ?: run {
-                pill.lastReminderDate = today
-            }
-
-            planNextReminder(context, pill.reminders)
-        }
-        return pill
     }
 
     /**
@@ -76,7 +77,7 @@ object ReminderManager {
      * with a pending intent from [ReminderUtil.getAlarmAgainIntent] and a trigger value of [remindAfterMillis]
      * works on reminder by reminder bases => each reminder has its own Alarm
      */
-    fun setCheckForConfirmation(
+    fun createCheckAlarm(
         context: Context,
         reminderId: Long,
         remindedTime: Long,
@@ -92,26 +93,17 @@ object ReminderManager {
         )
     }
 
-    /**
-     * takes [reminderTime] that a reminder or multiple reminders should be triggered with
-     * [reminderId] only represents a single reminder and is only used to fire the PendingIntent for
-     * [eu.vojtechh.takeyourpill.receiver.ReminderReceiver]
-     * sets a ExactAndAllowWhileIdle [AlarmManager.RTC_WAKEUP] alarm using [AlarmManager]
-     * with a pending intent from [ReminderUtil.getAlarmIntent] and a trigger value of [triggerAtMillis]
-     * works on a time bases, more reminders can have the same fire time, this function should be able to handle that
-     */
-    private fun createReminder(
+    private fun createAlarm(
         context: Context,
         reminderId: Long,
-        triggerAtMillis: Long,
-        reminderTime: Long
+        triggerAtMillis: Long
     ) {
         Timber.d(
             "Creating a reminder for ReminderReceiver to trigger at %s",
             triggerAtMillis.getDateTimeString()
         )
 
-        val alarmIntent = ReminderUtil.getAlarmIntent(context, reminderId, reminderTime)
+        val alarmIntent = ReminderUtil.getAlarmIntent(context, reminderId)
 
         getAlarmManager(context).setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
@@ -120,12 +112,11 @@ object ReminderManager {
         )
     }
 
-    private fun createReminder(context: Context, reminder: Reminder) =
-        createReminder(
+    private fun createAlarm(context: Context, reminder: Reminder) =
+        createAlarm(
             context,
             reminder.id,
-            reminder.getMillisWithTodayDate(),
-            reminder.time.timeInMillis
+            reminder.getTodayMillis(),
         )
 
     private fun getAlarmManager(context: Context) =
