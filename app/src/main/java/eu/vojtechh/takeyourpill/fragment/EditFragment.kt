@@ -262,16 +262,16 @@ class EditFragment : Fragment() {
         val reminderDialog =
             childFragmentManager.findFragmentByTag(Constants.TAG_REMINDER_DIALOG) as ReminderDialog
 
-        model.pill.reminders.find { reminder.hasSameTime(it) }?.let {
-            // There is a reminder that has the same time
-            if ((editing && it != reminder) || !editing) {
-                reminderDialog.showError(getString(R.string.two_reminders_same_time))
-            }
-        } ?: run {
-            if (editing) model.editReminder(reminder)
-            else model.addReminder(reminder)
-            reminderDialog.dismiss()
+        val sameReminder = model.pill.reminders.find { reminder.hasSameTime(it) }
+        // There is a reminder that has the same time
+        if (sameReminder != null && ((editing && sameReminder != reminder) || !editing)) {
+            reminderDialog.showError(getString(R.string.two_reminders_same_time))
+            return
         }
+        reminderDialog.dismiss()
+        if (editing) model.editReminder(reminder)
+        else model.addReminder(reminder)
+
 
     }
 
