@@ -3,7 +3,6 @@ package eu.vojtechh.takeyourpill.reminder
 import android.app.AlarmManager
 import android.content.Context
 import android.os.SystemClock
-import eu.vojtechh.takeyourpill.klass.DayOfYear
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.getDateTimeString
 import eu.vojtechh.takeyourpill.klass.getTimeString
@@ -14,20 +13,9 @@ import java.util.*
 
 object ReminderManager {
 
-    fun planNextPillReminder(context: Context, pill: Pill): Pill {
-        val today = Calendar.getInstance()
-        // If last reminder date is null, then this is the first reminder
-        pill.lastReminderDate?.let { lastDate ->
-            // Only add next cycle if this is the first reminder today
-            if (lastDate.DayOfYear != today.DayOfYear) {
-                pill.options.nextCycleIteration()
-                pill.lastReminderDate = today
-            }
-        } ?: run {
-            pill.lastReminderDate = today
-        }
+    // Only allow planning reminders per pill bases
+    fun planNextPillReminder(context: Context, pill: Pill) {
         planNextReminder(context, pill.reminders)
-        return pill
     }
 
     /**

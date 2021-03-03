@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.DayOfYear
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
@@ -16,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -46,16 +48,38 @@ class ReminderReceiver : BroadcastReceiver() {
                 val reminder = reminderRepository.getReminder(reminderId)
                 val pill = pillRepository.getPillSync(reminder.pillId)
 
+                Timber.d("Pill before change: %s", pill.options.toString())
+                Timber.d("Pill before change: %s", pill.lastReminderDate.toString())
+
+                val today = Calendar.getInstance()
+                // If last reminder date is null, then this is the first reminder
+                pill.lastReminderDate?.let { lastDate ->
+                    // Only add next cycle if this is the first reminder today
+                    if (lastDate.DayOfYear != today.DayOfYear) {
+                        pill.options.nextCycleIteration()
+                        pill.lastReminderDate = today
+                    }
+                } ?: run {
+                    pill.lastReminderDate = today
+                }
+
+                pillRepository.updatePill(pill)
+
+                Timber.d("Pill after change: %s", pill.options.toString())
+                Timber.d("Pill after change: %s", pill.lastReminderDate.toString())
+
                 // If pill is active, create a notification, insert history and schedule a check
                 if (pill.options.isActive()) {
 
-                    val todayCalendar = reminder.getTodayCalendar()
+                    Timber.d("This pill is active, lets remind...")
+
+                    val todayReminderCalendar = reminder.getTodayCalendar()
 
                     ReminderUtil.createReminderNotification(context, pill, reminder)
 
                     val history = History(
                         pillId = pill.id,
-                        reminded = todayCalendar,
+                        reminded = todayReminderCalendar,
                         amount = reminder.amount
                     )
                     historyRepository.insertHistoryItem(history)
@@ -65,21 +89,21 @@ class ReminderReceiver : BroadcastReceiver() {
                         ReminderManager.createCheckAlarm(
                             context,
                             reminder.id,
-                            todayCalendar.timeInMillis
+                            todayReminderCalendar.timeInMillis
                         )
                     }
 
                 } else { // If pill is not active, check if it is finite
                     if (pill.options.isFinite()) {
+                        Timber.d("This pill is finite and inactive -> not planing any reminder")
                         // If the pill is finite and inactive, it means we will not be reminding it anymore
+                        // we can exit so we do not plan the next reminder
                         return@launch
                     }
                 }
 
-                // Plan next reminder and update the pill in db with new options
-                val newPill = ReminderManager.planNextPillReminder(context, pill)
-                pillRepository.updatePill(newPill)
-
+                // Plan next reminder
+                ReminderManager.planNextPillReminder(context, pill)
             }
         }
     }

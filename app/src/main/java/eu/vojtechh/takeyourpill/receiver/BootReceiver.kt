@@ -21,8 +21,7 @@ class BootReceiver : BroadcastReceiver() {
             if (intent.action == "android.intent.action.BOOT_COMPLETED") {
                 val pills = pillRepository.getAllPillsSync()
                 pills.forEach {
-                    val pill = ReminderManager.planNextPillReminder(context, it)
-                    pillRepository.updatePill(pill)
+                    ReminderManager.planNextPillReminder(context, it)
                 }
             }
         }

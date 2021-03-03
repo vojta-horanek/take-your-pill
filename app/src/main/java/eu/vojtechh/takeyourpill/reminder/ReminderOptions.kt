@@ -1,9 +1,12 @@
 package eu.vojtechh.takeyourpill.reminder
 
+import java.util.*
+
 data class ReminderOptions(
     var daysActive: Int = NO_DAY_LIMIT,
     var daysInactive: Int = NO_BREAK,
-    var todayCycle: Int = 1
+    var todayCycle: Int = 1,
+    var lastReminderDate: Calendar? = null
 ) {
     companion object {
         private const val NO_DAY_LIMIT = -1

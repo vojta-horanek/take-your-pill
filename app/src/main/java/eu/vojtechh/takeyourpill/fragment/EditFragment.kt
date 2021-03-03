@@ -43,6 +43,7 @@ import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import kotlinx.coroutines.Dispatchers
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import timber.log.Timber
 
 @AndroidEntryPoint
 class EditFragment : Fragment() {
@@ -337,16 +338,17 @@ class EditFragment : Fragment() {
     }
 
     private fun setReminding(pill: Pill, action: () -> Unit) {
+        Timber.d("lastRemindTime: %s", pill.lastReminderDate)
         liveData(Dispatchers.IO) {
             NotificationManager.createNotificationChannel(
                 requireContext(),
                 pill.id.toString(),
                 pill.name
             )
-            val newPill = ReminderManager.planNextPillReminder(requireContext(), pill)
-            model.updatePill(newPill)
+            ReminderManager.planNextPillReminder(requireContext(), pill)
             emit(true)
         }.observe(viewLifecycleOwner) {
+            Timber.d("lastRemindTime: %s", pill.lastReminderDate)
             action()
         }
     }

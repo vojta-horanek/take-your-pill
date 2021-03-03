@@ -37,23 +37,33 @@ class ConfirmReceiver : BroadcastReceiver() {
             // Hide notification
             NotificationManager.cancelNotification(context, reminderId)
 
+            var success = false;
             GlobalScope.launch(Dispatchers.IO) {
 
                 historyRepository.getByPillIdAndTime(pillId, remindedTime)?.let { history ->
                     history.confirmed = Calendar.getInstance()
                     historyRepository.updateHistoryItem(history)
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.confirmed),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    success = true
                 } ?: run {
-                    Timber.e("Couldn't find the correct history item, exiting...")
+                    Timber.e("Couldn't find the correct history item...")
                 }
                 // Cancel check alarm
                 ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime).cancel()
             }
 
+            if (success) {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.confirmed),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.error),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
         }
     }
