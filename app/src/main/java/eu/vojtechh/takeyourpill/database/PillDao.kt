@@ -12,6 +12,10 @@ interface PillDao {
     fun getAll(): LiveData<List<Pill>>
 
     @Transaction
+    @Query("SELECT * FROM pill WHERE deleted = 0 ORDER BY pillId ASC")
+    suspend fun getAllSync(): List<Pill>
+
+    @Transaction
     @Query("SELECT * FROM pill ORDER BY pillId ASC")
     fun getAllIncludingDeleted(): LiveData<List<Pill>>
 

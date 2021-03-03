@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.liveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
@@ -39,6 +40,7 @@ import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
+import kotlinx.coroutines.Dispatchers
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -319,27 +321,34 @@ class EditFragment : Fragment() {
 
         if (isCreatingNewPill) {
             model.addAndGetPill(model.pill).observe(viewLifecycleOwner) {
-                setReminding(it)
-                exitTransition = Slide().addTarget(R.id.layoutEdit)
-                findNavController().popBackStack()
+                setReminding(it) {
+                    exitTransition = Slide().addTarget(R.id.layoutEdit)
+                    findNavController().popBackStack()
+                }
             }
         } else {
             model.updateAndGetPill(model.pill).observe(viewLifecycleOwner) {
-                setReminding(it)
-                returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-                findNavController().popBackStack()
+                setReminding(it) {
+                    returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+                    findNavController().popBackStack()
+                }
             }
         }
     }
 
-    // FIXME Should be fixed in "plan_reminder_overhaul"
-    private fun setReminding(pill: Pill) {
-        NotificationManager.createNotificationChannel(
-            requireContext(),
-            pill.id.toString(),
-            pill.name
-        )
-        ReminderManager.planNextReminder(requireContext(), pill.reminders)
+    private fun setReminding(pill: Pill, action: () -> Unit) {
+        liveData(Dispatchers.IO) {
+            NotificationManager.createNotificationChannel(
+                requireContext(),
+                pill.id.toString(),
+                pill.name
+            )
+            val newPill = ReminderManager.planNextPillReminder(requireContext(), pill)
+            model.updatePill(newPill)
+            emit(true)
+        }.observe(viewLifecycleOwner) {
+            action()
+        }
     }
 
     private fun showSnackbar(msg: String) =

@@ -24,10 +24,12 @@ class EditViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun addAndGetPill(pill: Pill) =
-            liveData(Dispatchers.IO) { emitSource(pillRepository.insertPillReturn(pill)) }
+        liveData(Dispatchers.IO) { emitSource(pillRepository.insertPillReturn(pill)) }
 
     fun updateAndGetPill(pill: Pill) =
-            liveData(Dispatchers.IO) { emitSource(pillRepository.updatePillReturn(pill)) }
+        liveData(Dispatchers.IO) { emitSource(pillRepository.updatePillReturn(pill)) }
+
+    suspend fun updatePill(pill: Pill) = pillRepository.updatePill(pill)
 
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
 

@@ -6,6 +6,7 @@ import android.os.SystemClock
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.getDateTimeString
 import eu.vojtechh.takeyourpill.klass.getTimeString
+import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import timber.log.Timber
 import java.util.*
@@ -18,13 +19,13 @@ object ReminderManager {
      * If it does not find one it uses the first [Reminder] in a day and plans a reminder with
      * the same time but tomorrows date
      */
-    fun planNextReminder(context: Context, reminders: List<Reminder>) {
+    private fun planNextReminder(context: Context, reminders: List<Reminder>) {
         val sortedByTime = reminders.sortedBy { rem -> rem.time.time }
         val calendar = Calendar.getInstance()
 
         Timber.d("Planning next reminder")
 
-        // Go trough reminders from the 00:00 to 23:59 basically
+        // Go trough reminders from 00:00 to 23:59 basically
         sortedByTime.forEach {
             // Only plan if the reminder time is past the current time
             if (it.getMillisWithTodayDate() > calendar.timeInMillis) {
@@ -43,15 +44,30 @@ object ReminderManager {
             calendar.timeInMillis = it.getMillisWithTodayDate()
             calendar.add(Calendar.DAY_OF_YEAR, 1)
             Timber.d("Next reminder is tomorrow at %s", calendar.timeInMillis.getDateTimeString())
-            createReminder(
-                context,
-                it.id,
-                calendar.timeInMillis,
-                it.time.timeInMillis
-            )
+            createReminder(context, it.id, calendar.timeInMillis, it.time.timeInMillis)
         } ?: run {
             Timber.e("No reminder found")
         }
+    }
+
+    fun planNextPillReminder(context: Context, pill: Pill): Pill {
+        val today = Calendar.getInstance()
+        with(pill.options) {
+            // if this is this pill first reminder today
+            pill.lastReminderDate?.let {
+                if (it.get(Calendar.DAY_OF_YEAR) !=
+                    today.get(Calendar.DAY_OF_YEAR)
+                ) {
+                    nextCycleIteration()
+                    pill.lastReminderDate = today
+                }
+            } ?: run {
+                pill.lastReminderDate = today
+            }
+
+            planNextReminder(context, pill.reminders)
+        }
+        return pill
     }
 
     /**

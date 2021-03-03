@@ -28,5 +28,19 @@ data class ReminderOptions(
     fun isIndefinite() = daysActive == NO_DAY_LIMIT && daysInactive == NO_BREAK
     fun isFinite() = daysActive != NO_DAY_LIMIT && daysInactive == NO_BREAK
     fun isCycle() = daysActive != NO_DAY_LIMIT && daysInactive != NO_BREAK
-    fun isInactive() = todayCycle > daysActive
+    fun isInactive(): Boolean {
+        return if (isIndefinite()) false
+        else todayCycle > daysActive
+    }
+
+    fun isActive() = !isInactive()
+
+    fun nextCycleIteration() {
+        todayCycle++
+        if (isCycle()) {
+            if (todayCycle > daysActive + daysInactive) {
+                todayCycle = 1
+            }
+        }
+    }
 }

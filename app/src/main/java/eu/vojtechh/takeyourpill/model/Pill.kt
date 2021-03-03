@@ -31,7 +31,7 @@ data class Pill(
                 null,
                 PillColor.default(),
                 false,
-                ReminderOptions.empty(),
+                ReminderOptions.empty()
             ), listOf()
         )
     }
@@ -79,6 +79,12 @@ data class Pill(
         get() = pillEntity.options
         set(value) {
             pillEntity.options = value
+        }
+
+    var lastReminderDate
+        get() = pillEntity.lastReminderDate
+        set(value) {
+            pillEntity.lastReminderDate = value
         }
 
     val isPhotoVisible

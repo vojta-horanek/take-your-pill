@@ -6,6 +6,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
+import java.util.*
 
 @Entity(tableName = "pill")
 data class PillEntity(
@@ -15,5 +16,6 @@ data class PillEntity(
     var color: PillColor,
     var deleted: Boolean = false,
     @Embedded var options: ReminderOptions,
+    var lastReminderDate: Calendar? = null,
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "pillId") val id: Long = 0
 )
