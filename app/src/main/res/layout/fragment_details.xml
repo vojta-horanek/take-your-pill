@@ -115,7 +115,7 @@
                     android:textAppearance="@style/AppTheme.Text.BodyTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/gridInfo" />
+                    app:layout_constraintTop_toBottomOf="@+id/cardPhoto" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerReminders"
@@ -130,58 +130,68 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_reminder" />
 
-                <GridLayout
-                    android:id="@+id/gridInfo"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textIntakeOptions"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
                     android:layout_marginTop="@dimen/screen_margin_vertical"
-                    android:columnCount="2"
-                    android:rowCount="2"
+                    android:text="@string/intake"
+                    android:textAppearance="@style/AppTheme.Text.BodyTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardPhoto">
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerReminders" />
+
+                <LinearLayout
+                    android:id="@+id/intakeDaysActive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                    style="@style/AppTheme.Widget.ListItem"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textIntakeOptions">
+
+                    <TextView
+                        style="@style/AppTheme.Text.BodyNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/days_active" />
 
                     <TextView
                         android:id="@+id/infoDayLimit"
-                        android:layout_width="0dp"
+                        style="@style/AppTheme.Text.Description"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="center"
-                        android:textAppearance="@style/AppTheme.Text.BodyTitle"
-                        tools:text="1 of 10" />
+                        tools:text="21" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/intakeDaysInactive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    style="@style/AppTheme.Widget.ListItem"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/intakeDaysActive">
+
+                    <TextView
+                        style="@style/AppTheme.Text.BodyNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/days_inactive" />
 
                     <TextView
                         android:id="@+id/infoResumeAfter"
-                        android:layout_width="0dp"
+                        style="@style/AppTheme.Text.Description"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="center"
-                        android:textAppearance="@style/AppTheme.Text.BodyTitle"
-                        tools:text="5" />
+                        tools:text="7" />
 
-                    <TextView
-                        android:id="@+id/infoDayLimitDesc"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="center"
-                        android:text="@string/days_active"
-                        android:textAppearance="@style/AppTheme.Text.Description" />
-
-                    <TextView
-                        android:id="@+id/infoResumeAfterDesc"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="center"
-                        android:text="@string/days_inactive"
-                        android:textAppearance="@style/AppTheme.Text.Description" />
-
-                </GridLayout>
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

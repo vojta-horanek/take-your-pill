@@ -88,16 +88,15 @@ class DetailsFragment : Fragment(),
                 buttonHistory.setOnClickListener { navigateToHistory() }
                 buttonDelete.setOnClickListener { navigateToDelete() }
 
-
-
                 with(it.options) {
                     when {
                         isIndefinite() -> {
-                            gridInfo.isVisible = false
+                            textIntakeOptions.isVisible = false
+                            intakeDaysActive.isVisible = false
+                            intakeDaysInactive.isVisible = false
                         }
                         isFinite() -> {
-                            infoResumeAfter.isVisible = false
-                            infoResumeAfterDesc.isVisible = false
+                            intakeDaysInactive.isVisible = false
                             if (isInactive()) {
                                 infoDayLimit.text = getString(R.string.inactive)
                             } else {

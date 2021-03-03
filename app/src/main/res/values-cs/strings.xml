@@ -113,9 +113,8 @@
     <string name="resume_after">Obnovit po</string>
     <string name="day_limit">Limit dní</string>
 
-    <string name="cycle_count_format">%1$d z %2$d</string>
-    <string name="resume_after_format">%1$d z %2$d</string>
-    <string name="day_limit_format">%1$d z %2$d</string>
+    <string name="resume_after_format">Den %1$d z %2$d dní</string>
+    <string name="day_limit_format">Den %1$d z %2$d dní</string>
 
     <string name="pill_options_indefinitely">Na dobu neurčitou</string>
     <string name="pill_options_for_x_days">Po dobu X dní</string>
@@ -126,4 +125,6 @@
     <string name="days_inactive">Pozastavené dny</string>
     <string name="today_is_cycle_day">Dnes je den cyklu</string>
     <string name="inactive">Neaktivní</string>
+    <string name="error">Chyba</string>
+    <string name="intake">Příjem</string>
 </resources>

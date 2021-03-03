@@ -115,9 +115,8 @@
     <string name="resume_after">Resume after</string>
     <string name="day_limit">Day limit</string>
 
-    <string name="cycle_count_format">%1$d of %2$d</string>
-    <string name="resume_after_format">%1$d of %2$d</string>
-    <string name="day_limit_format">%1$d of %2$d</string>
+    <string name="resume_after_format">Day %1$d out of %2$d day(s)</string>
+    <string name="day_limit_format">Day %1$d out of %2$d day(s)</string>
     <string name="pill_options_indefinitely">Indefinitely</string>
     <string name="pill_options_for_x_days">For X days</string>
     <string name="pill_options_cycle">Cycle: X days active, Y days inactive</string>
@@ -128,5 +127,6 @@
     <string name="today_is_cycle_day">Today is cycle day</string>
     <string name="inactive">Inactive</string>
     <string name="error">Error</string>
+    <string name="intake">Intake</string>
 
 </resources>

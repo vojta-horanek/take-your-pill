@@ -42,15 +42,10 @@
         android:id="@+id/layout_x_days"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?selectableItemBackground"
-        android:gravity="center_vertical"
-        android:minHeight="64dp"
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible"
-        android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+        style="@style/AppTheme.Widget.ListItem.Clickable">
 
         <TextView
             style="@style/AppTheme.Text.BodyNormal"
@@ -79,14 +74,8 @@
             android:id="@+id/layout_cycle_active"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center_vertical"
-            android:minHeight="64dp"
-            android:orientation="vertical"
-
-            android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+            style="@style/AppTheme.Widget.ListItem.Clickable"
+            android:orientation="vertical">
 
             <TextView
                 style="@style/AppTheme.Text.BodyNormal"
@@ -106,13 +95,8 @@
             android:id="@+id/layout_cycle_inactive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center_vertical"
-            android:minHeight="64dp"
             android:orientation="vertical"
-            android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+            style="@style/AppTheme.Widget.ListItem.Clickable">
 
             <TextView
                 style="@style/AppTheme.Text.BodyNormal"
@@ -132,13 +116,8 @@
             android:id="@+id/layout_cycle_today"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center_vertical"
-            android:minHeight="64dp"
             android:orientation="vertical"
-            android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+            style="@style/AppTheme.Widget.ListItem.Clickable">
 
             <TextView
                 style="@style/AppTheme.Text.BodyNormal"

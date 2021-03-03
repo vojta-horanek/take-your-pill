@@ -25,6 +25,7 @@ class PillOptionsView @JvmOverloads constructor(
         init(attrs)
     }
 
+    private var onChangeAction: () -> Unit = {}
     private lateinit var radioGroup: RadioGroup
     private lateinit var radioIndefinitely: RadioButton
     private lateinit var radioXDays: RadioButton
@@ -96,6 +97,7 @@ class PillOptionsView @JvmOverloads constructor(
             ) {
                 reminderOptions.daysActive = it
                 xDaysCountDuration.text = it.toString()
+                onChangeAction()
             }
         }
 
@@ -108,6 +110,7 @@ class PillOptionsView @JvmOverloads constructor(
             ) {
                 reminderOptions.daysActive = it
                 cycleCountActive.text = it.toString()
+                onChangeAction()
             }
         }
 
@@ -120,6 +123,7 @@ class PillOptionsView @JvmOverloads constructor(
             ) {
                 reminderOptions.daysInactive = it
                 cycleCountInactive.text = it.toString()
+                onChangeAction()
             }
         }
 
@@ -132,12 +136,14 @@ class PillOptionsView @JvmOverloads constructor(
             ) {
                 reminderOptions.todayCycle = it
                 cycleCountToday.text = it.toString()
+                onChangeAction()
             }
         }
 
     }
 
     private fun onCheckedChange(checkedId: Int) {
+        onChangeAction()
         setOptions(
             when (checkedId) {
                 R.id.radio_indefinitely -> {
@@ -250,5 +256,9 @@ class PillOptionsView @JvmOverloads constructor(
         numberPickerAmount.setOnValueChangedListener { _, _, newVal -> amount = newVal }
 
         dialog.show()
+    }
+
+    fun onChange(action: () -> Unit) {
+        onChangeAction = action
     }
 }

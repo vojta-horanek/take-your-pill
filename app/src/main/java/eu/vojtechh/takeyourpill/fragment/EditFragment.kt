@@ -171,6 +171,9 @@ class EditFragment : Fragment() {
             colorAdapter.onColorClicked { _, pillColor -> model.setActivePillColor(pillColor) }
 
             pillOptionsView.setOptions(model.pill.options)
+            pillOptionsView.onChange {
+                model.hasPillBeenEdited = true
+            }
 
             inputName.doOnTextChanged { text, _, _, _ ->
                 inputNameLayout.showError(
