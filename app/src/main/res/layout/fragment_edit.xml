@@ -12,7 +12,7 @@
         android:background="?attr/colorSurface"
         android:clipToPadding="false">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollEdit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -152,7 +152,7 @@
                     android:layout_marginTop="@dimen/screen_margin_vertical_small" />
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/buttonSave"
