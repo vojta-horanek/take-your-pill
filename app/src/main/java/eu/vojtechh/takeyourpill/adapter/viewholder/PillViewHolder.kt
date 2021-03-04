@@ -8,6 +8,8 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
 import eu.vojtechh.takeyourpill.klass.DayOfYear
+import eu.vojtechh.takeyourpill.klass.getTimeString
+import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
 import java.util.*
 
@@ -23,7 +25,7 @@ class PillViewHolder(
     fun bind(pill: Pill) {
         binding.pill = pill
         binding.transitionId = "${pill.id}"
-        val description = getFormattedDescription(pill, binding.root.context)
+        val description = getFormattedDescription(pill)
 
         if (description.isBlank()) {
             binding.pillDescription.isVisible = false
@@ -41,7 +43,7 @@ class PillViewHolder(
         }
 
         setIntakeOptions(pill, binding.root.context)
-        setCardConfirm(pill, binding.root.context)
+        setCardConfirm(pill.closeHistory, binding.root.context)
         binding.executePendingBindings()
     }
 
@@ -84,17 +86,16 @@ class PillViewHolder(
         }
     }
 
-    private fun setCardConfirm(pill: Pill, context: Context) {
-        pill.getCloseReminder()?.let {
+    private fun setCardConfirm(latestHistory: History?, context: Context) {
+        latestHistory?.let { history ->
             binding.textQuestionTake.text = binding.root.context.getString(
                 R.string.pill_taken_question,
-                it.amount,
-                it.getTimeString(context)
+                history.amount,
+                history.reminded.time.getTimeString(context)
             )
 
-            binding.nextReminder = it
             binding.buttonTaken.setOnClickListener { v ->
-                listener.onPillConfirmClicked(v, it)
+                listener.onPillConfirmClicked(v, history)
                 hideConfirmCard()
             }
         } ?: run {
@@ -106,7 +107,7 @@ class PillViewHolder(
         binding.pillConfirm.isVisible = false
     }
 
-    private fun getFormattedDescription(pill: Pill, context: Context): CharSequence {
+    private fun getFormattedDescription(pill: Pill): CharSequence {
         return pill.description?.let { desc ->
             var oneLineDesc = desc.split("\n")[0]
             if (desc.contains("\n")) {

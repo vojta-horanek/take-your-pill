@@ -8,7 +8,6 @@ import androidx.room.Ignore
 import androidx.room.Relation
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
-import java.util.*
 
 data class Pill(
     @Embedded val pillEntity: PillEntity,
@@ -92,26 +91,8 @@ data class Pill(
     val isDescriptionVisible
         get() = pillEntity.description?.isNotBlank() ?: false
 
-    fun getCloseReminder(): Reminder? {
-        // TODO Also include if user confirmed already
-        val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-        calendar.clear()
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
-        val timeOffset = (10 /* minutes */ * 60 * 1000)
-        reminders.forEach {
-            if (LongRange(
-                    calendar.timeInMillis - timeOffset,
-                    calendar.timeInMillis + timeOffset
-                ).contains(it.time.timeInMillis)
-            ) {
-                return it
-            }
-        }
-        return null
-    }
+    @Ignore
+    var closeHistory: History? = null
 
     fun getPhotoDrawable(context: Context) =
         if (pillEntity.photo != null) BitmapDrawable(context.resources, pillEntity.photo)

@@ -13,10 +13,6 @@
             type="eu.vojtechh.takeyourpill.model.Pill" />
 
         <variable
-            name="nextReminder"
-            type="eu.vojtechh.takeyourpill.model.Reminder" />
-
-        <variable
             name="transition_id"
             type="java.lang.String" />
 

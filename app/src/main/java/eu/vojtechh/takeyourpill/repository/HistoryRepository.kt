@@ -12,12 +12,13 @@ class HistoryRepository @Inject constructor(
     fun getHistoryOrderedById() = historyDao.getAllOrderedById()
     suspend fun getHistoryOrderedByIdSync() = historyDao.getAllOrderedByIdSync()
     fun getHistoryForPill(pillId: Long) = historyDao.getWithPillId(pillId)
+    suspend fun getLatestWithPillIdSync(pillId: Long) = historyDao.getLatestWithPillIdSync(pillId)
     suspend fun getByPillIdAndTime(pillId: Long, remindedTime: Long) =
         historyDao.getWithPillIdAndTime(pillId, remindedTime)
 
-    suspend fun updateHistoryItem(historyEntity: History) = historyDao.insert(historyEntity)
-    suspend fun insertHistoryItem(historyEntity: History) = historyDao.insert(historyEntity)
+    suspend fun updateHistoryItem(history: History) = historyDao.insert(history)
+    suspend fun insertHistoryItem(history: History) = historyDao.insert(history)
     suspend fun insertHistories(histories: List<History>) = historyDao.insert(histories)
-    suspend fun deleteHistoryItem(historyEntity: History) = historyDao.delete(historyEntity)
+    suspend fun deleteHistoryItem(history: History) = historyDao.delete(history)
     suspend fun deleteHistoryForPill(pillId: Long) = historyDao.deleteByPillId(pillId)
 }

@@ -18,6 +18,7 @@ import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.BaseModel
+import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
@@ -69,9 +70,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
             openNewPill()
         }
 
-        model.allPills.observe(viewLifecycleOwner, {
-            appAdapter.submitList(it)
-        })
+        model.allPills.observe(viewLifecycleOwner) { allPills ->
+            model.processPills(allPills).observe(viewLifecycleOwner) { pills ->
+                appAdapter.submitList(pills)
+            }
+        }
 
     }
 
@@ -94,8 +97,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         }
     }
 
-    override fun onPillConfirmClicked(view: View, reminder: Reminder) {
-        model.confirmPill(reminder)
+    override fun onPillConfirmClicked(view: View, history: History) {
+        model.confirmPill(history)
         Snackbar.make(view, getString(R.string.confirmed), Snackbar.LENGTH_SHORT)
             .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
     }
