@@ -128,5 +128,7 @@
     <string name="inactive">Inactive</string>
     <string name="error">Error</string>
     <string name="intake">Intake</string>
+    <string name="cycle_today_info">If you set this pill after it\'s last reminder, the today cycle day will in fact start tomorrow. This is a normal behaviour and should be thought of when setting up a pill.</string>
+    <string name="cycle_x_days_info">If you set this pill after it\'s last reminder, the duration will start counting tomorrow. This is a normal behaviour and should be thought of when setting up a pill.</string>
 
 </resources>

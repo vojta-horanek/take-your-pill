@@ -34,6 +34,8 @@ class PillOptionsView @JvmOverloads constructor(
     private lateinit var layoutXDays: LinearLayout
     private lateinit var layoutCycle: LinearLayout
 
+    private lateinit var layoutXDaysDuration: LinearLayout
+
     private lateinit var layoutCycleActive: LinearLayout
     private lateinit var layoutCycleInactive: LinearLayout
     private lateinit var layoutCycleToday: LinearLayout
@@ -60,6 +62,8 @@ class PillOptionsView @JvmOverloads constructor(
 
         layoutXDays = view.findViewById(R.id.layout_x_days)
         layoutCycle = view.findViewById(R.id.layout_cycle)
+
+        layoutXDaysDuration = view.findViewById(R.id.layout_x_days_duration)
 
         layoutCycleActive = view.findViewById(R.id.layout_cycle_active)
         layoutCycleInactive = view.findViewById(R.id.layout_cycle_inactive)
@@ -88,7 +92,7 @@ class PillOptionsView @JvmOverloads constructor(
             onCheckedChange(checkedId)
         }
 
-        layoutXDays.setOnClickListener {
+        layoutXDaysDuration.setOnClickListener {
             showChangeItemDialog(
                 context.getString(R.string.duration),
                 1,

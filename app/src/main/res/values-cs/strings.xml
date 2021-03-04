@@ -15,7 +15,7 @@
     <string name="cancel">Zrušit</string>
     <string name="description">Popis</string>
     <string name="name">Název</string>
-    <string name="photo">Fotka</string>
+    <string name="photo">Fotografie</string>
     <string name="edit_pill">Upravit lék</string>
     <string name="enter_field">Prosím, zadejte hodnotu</string>
     <string name="reminders">Připomínky</string>
@@ -26,9 +26,9 @@
     <string name="how_many_days_to_restore">Po kolika dnech obnovit</string>
     <string name="num_of_cycles">Počet cyklů</string>
     <string name="add_reminder">Přidat připomínku</string>
-    <string name="storage_perm_rationale">Aplikace potřebuje opravnění na čtení úložiště, aby přečetla fotku</string>
+    <string name="storage_perm_rationale">Aplikace potřebuje opravnění na čtení úložiště, aby přečetla fotografii</string>
     <string name="no_reminders_set">Prosím, přidejte alespoň jednu připomínku</string>
-    <string name="add_photo">Přidat fotku</string>
+    <string name="add_photo">Přidat fotografii</string>
     <string name="set_time_format">Nastavit čas připomínky (%1$s)</string>
     <string name="save_reminder">Uložit připomínku</string>
     <string name="set_a_reminder">Nastavit připomínku</string>
@@ -74,8 +74,8 @@
     <string name="change_amount">Změnit množství</string>
     <string name="confirm_delete_history">Doopravdy to chcete udělat?</string>
     <string name="confirm_delete_history_description">Toto smaže celou historii pro tento lék.</string>
-    <string name="confirm_delete_photo">Doopravdy chcete smazat fotku?</string>
-    <string name="confirm_delete_photo_description">Toto smaže fotku u tohoto léku.</string>
+    <string name="confirm_delete_photo">Doopravdy chcete smazat fotografii?</string>
+    <string name="confirm_delete_photo_description">Toto smaže fotogragii u tohoto léku.</string>
     <string name="confirm_exit_edit">Doopravdy chcete odejít?</string>
     <string name="confirm_exit_edit_description">Toto zahodí všechny Vaše úpravy.</string>
     <string name="overview">Přehled</string>
@@ -103,7 +103,7 @@
 
     <string name="intro_welcome_description">Tato aplikace Vám bude připomínat užívání léků. Od této chvíle si už nezapomenete vzít žádný prášek. Budete moci sledovat Vaši historii užití, grafy a statistiky.</string>
     <string name="intro_new_pill">Začněte přidáním léku</string>
-    <string name="intro_new_pill_description">Klikněte na tlačítko \"Nový lék\", zadejte informace, nastavte barvu, přidejte obrázek a hlavně nastavte připomínky.</string>
+    <string name="intro_new_pill_description">Klikněte na tlačítko \"Nový lék\", zadejte informace, nastavte barvu, přidejte fotografii a hlavně nastavte připomínky.</string>
     <string name="intro_reminder">Přestantě si dělat starosti s léky</string>
     <string name="intro_reminder_description">Aplikace Vám pošle připomínky, takže na kontrolování čašu a užívání léků můžete zapomenout a myslet na důležitější věci.</string>
     <string name="intro_history">Podívejte se na historii užívání</string>
@@ -127,4 +127,8 @@
     <string name="inactive">Neaktivní</string>
     <string name="error">Chyba</string>
     <string name="intake">Příjem</string>
+
+    <string name="cycle_today_info">Pokud lék nastavíte po jeho poslední připomínce, dnešní den cyklu de facto začně až zítra. Toto je normální chování a při nastavování léku by se na něj mělo myslet.</string>
+    <string name="cycle_x_days_info">Pokud lék nastavíte po jeho poslední připomínce, doba trvání se začne odečítat až zítra. Toto je normální chování a při nastavování léku by se na něj mělo myslet.</string>
+
 </resources>
