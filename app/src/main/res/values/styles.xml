@@ -183,6 +183,14 @@
         <item name="android:textAppearance">@style/AppTheme.Text.ButtonSmall</item>
     </style>
 
+    <style name="AppTheme.Widget.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAppearance">@style/AppTheme.Text.ButtonSmall</item>
+    </style>
+
+    <style name="AppTheme.Widget.Button.Full" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAppearance">@style/AppTheme.Text.ButtonSmall</item>
+    </style>
+
     <style name="AppTheme.Widget.Button.Positive" parent="AppTheme.Widget.Button">
         <item name="rippleColor">@color/colorGreen</item>
         <item name="strokeColor">@color/colorGreen</item>

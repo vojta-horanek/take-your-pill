@@ -144,11 +144,11 @@
 
                 <LinearLayout
                     android:id="@+id/intakeDaysActive"
+                    style="@style/AppTheme.Widget.ListItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="@dimen/screen_margin_vertical_small"
-                    style="@style/AppTheme.Widget.ListItem"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textIntakeOptions">
@@ -170,10 +170,10 @@
 
                 <LinearLayout
                     android:id="@+id/intakeDaysInactive"
+                    style="@style/AppTheme.Widget.ListItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    style="@style/AppTheme.Widget.ListItem"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/intakeDaysActive">
@@ -197,58 +197,58 @@
 
         </ScrollView>
 
-        <com.nambimobile.widgets.efab.ExpandableFabLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="?attr/colorSurface">
 
-            <com.nambimobile.widgets.efab.Overlay
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:overlay_color="?attr/colorSurface" />
+            <View
+                android:id="@+id/divider"
+                style="@style/AppTheme.Widget.Divider"
+                android:layout_marginTop="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <com.nambimobile.widgets.efab.ExpandableFab
-                android:id="@+id/efab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="@dimen/screen_margin_horizontal"
-                android:layout_marginBottom="@dimen/screen_margin_vertical"
-                app:efab_closingAnimationDurationMs="75"
-                app:efab_closingAnticipateTension="0"
-                app:efab_icon="@drawable/ic_menu"
-                app:efab_iconAnimationRotationDeg="90"
-                app:efab_openingAnimationDurationMs="75" />
-
-            <com.nambimobile.widgets.efab.FabOption
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonEdit"
+                style="@style/AppTheme.Widget.Button.Full"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_icon="@drawable/ic_edit"
-                app:fab_openingAnimationDurationMs="75"
-                app:label_hiddenToVisibleAnimationDurationMs="75"
-                app:label_text="@string/edit" />
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/edit"
+                app:elevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
 
-            <com.nambimobile.widgets.efab.FabOption
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonHistory"
+                style="@style/AppTheme.Widget.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_icon="@drawable/ic_history"
-                app:fab_openingAnimationDurationMs="75"
-                app:label_hiddenToVisibleAnimationDurationMs="75"
-                app:label_text="@string/history" />
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/history"
+                app:layout_constraintEnd_toStartOf="@id/buttonEdit"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
 
-            <com.nambimobile.widgets.efab.FabOption
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDelete"
+                style="@style/AppTheme.Widget.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_color="@color/colorRed"
-                app:fab_icon="@drawable/ic_delete"
-                app:fab_openingAnimationDurationMs="75"
-                app:label_backgroundColor="@color/colorRed"
-                app:label_hiddenToVisibleAnimationDurationMs="75"
-                app:label_text="@string/delete" />
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/delete"
+                app:layout_constraintEnd_toStartOf="@id/buttonHistory"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
 
-        </com.nambimobile.widgets.efab.ExpandableFabLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
             android:id="@+id/imageFullscreen"

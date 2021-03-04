@@ -1,6 +1,7 @@
 package eu.vojtechh.takeyourpill.fragment
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -79,16 +80,21 @@ class DetailsFragment : Fragment(),
             recyclerReminders.adapter = reminderAdapter
             recyclerReminders.disableAnimations()
 
-            pill?.let {
-                efab.efabColor = it.colorResource(requireContext())
-                buttonEdit.fabOptionColor = efab.efabColor
-                buttonHistory.fabOptionColor = efab.efabColor
+            pill?.let { pill ->
+
+                val accent = pill.colorResource(requireContext())
+                val accentList = ColorStateList.valueOf(accent)
+                listOf(buttonDelete, buttonHistory).forEach {
+                    it.setTextColor(accent)
+                    it.rippleColor = accentList
+                }
+                buttonEdit.backgroundTintList = accentList
 
                 buttonEdit.setOnClickListener { navigateToEdit() }
                 buttonHistory.setOnClickListener { navigateToHistory() }
                 buttonDelete.setOnClickListener { navigateToDelete() }
 
-                with(it.options) {
+                with(pill.options) {
                     when {
                         isIndefinite() -> {
                             textIntakeOptions.isVisible = false
