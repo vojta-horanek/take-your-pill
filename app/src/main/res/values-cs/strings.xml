@@ -131,4 +131,9 @@
     <string name="cycle_today_info">Pokud lék nastavíte po jeho poslední připomínce, dnešní den cyklu de facto začně až zítra. Toto je normální chování a při nastavování léku by se na něj mělo myslet.</string>
     <string name="cycle_x_days_info">Pokud lék nastavíte po jeho poslední připomínce, doba trvání se začne odečítat až zítra. Toto je normální chování a při nastavování léku by se na něj mělo myslet.</string>
 
+    <string name="cycle">Cyklus</string>
+    <string name="intake_options_cycle">%1$d dní aktivní, %2$d dní pozastaveno, den cyklu %3$d</string>
+    <string name="intake_options_x_days">Omezené</string>
+    <string name="intake_options_x_days_text">Doba trvání %1$d dní, %2$d dní zbývá</string>
+
 </resources>

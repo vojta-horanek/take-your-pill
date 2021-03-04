@@ -193,14 +193,12 @@
 
     <style name="AppTheme.Widget.Button.Positive" parent="AppTheme.Widget.Button">
         <item name="rippleColor">@color/colorGreen</item>
-        <item name="strokeColor">@color/colorGreen</item>
         <item name="iconTint">@color/colorGreen</item>
         <item name="android:textColor">@color/colorGreen</item>
     </style>
 
     <style name="AppTheme.Widget.Button.Negative" parent="AppTheme.Widget.Button">
         <item name="rippleColor">@color/colorRed</item>
-        <item name="strokeColor">@color/colorRed</item>
         <item name="iconTint">@color/colorRed</item>
         <item name="android:textColor">@color/colorRed</item>
     </style>

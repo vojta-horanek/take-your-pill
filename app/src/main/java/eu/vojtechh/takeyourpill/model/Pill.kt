@@ -113,16 +113,6 @@ data class Pill(
         return null
     }
 
-    fun getRemindersString(context: Context): String {
-        val sorted = reminders.sortedBy { rem -> rem.time.time }.toMutableList()
-        return sorted.joinToString {
-            context.resources.getString(
-                R.string.pill_time_reminders_format,
-                it.amount, it.getTimeString(context)
-            )
-        }
-    }
-
     fun getPhotoDrawable(context: Context) =
         if (pillEntity.photo != null) BitmapDrawable(context.resources, pillEntity.photo)
         else ContextCompat.getDrawable(context, R.drawable.photo_default)

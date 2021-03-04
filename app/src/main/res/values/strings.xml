@@ -130,5 +130,9 @@
     <string name="intake">Intake</string>
     <string name="cycle_today_info">If you set this pill after it\'s last reminder, the today cycle day will in fact start tomorrow. This is a normal behaviour and should be thought of when setting up a pill.</string>
     <string name="cycle_x_days_info">If you set this pill after it\'s last reminder, the duration will start counting tomorrow. This is a normal behaviour and should be thought of when setting up a pill.</string>
+    <string name="cycle">Cycle</string>
+    <string name="intake_options_cycle">%1$d day(s) active, %2$d day(s) inactive, cycle day %3$d</string>
+    <string name="intake_options_x_days">Limited</string>
+    <string name="intake_options_x_days_text">Duration %1$d day(s), %2$d day(s) remaining</string>
 
 </resources>

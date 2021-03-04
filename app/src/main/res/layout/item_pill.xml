@@ -25,136 +25,219 @@
             type="eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter.ItemListener" />
     </data>
 
-    <LinearLayout
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_margin_horizontal_small"
+        android:layout_marginBottom="@dimen/screen_margin_vertical"
         android:animateLayoutChanges="true"
+        android:background="?attr/colorBackgroundFloating"
+        android:clickable="true"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/screen_margin_horizontal_small"
-        android:paddingBottom="@dimen/screen_margin_vertical">
+        android:focusable="true"
+        android:onClick="@{(view) -> listener.onItemClicked(view, pill)}"
+        android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
+        app:cardCornerRadius="@dimen/standard_corner_radius"
+        app:cardElevation="@dimen/standard_card_elevation"
+        app:cardPreventCornerOverlap="true">
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorBackgroundFloating"
-            android:clickable="true"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:focusable="true"
-            android:onClick="@{(view) -> listener.onItemClicked(view, pill)}"
-            android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
-            app:cardCornerRadius="@dimen/standard_corner_radius"
-            app:cardElevation="@dimen/standard_card_elevation"
-            app:cardPreventCornerOverlap="true">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pillHeader"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="76dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="16dp"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <View
                     android:id="@+id/imagePillColor"
-                    android:layout_width="@dimen/color_dot_size"
-                    android:layout_height="@dimen/color_dot_size"
-                    android:layout_marginEnd="@dimen/screen_margin_horizontal_small"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/shape_oval"
+                    android:foreground="@drawable/ic_pill"
+                    android:foregroundGravity="center"
+                    android:foregroundTint="?colorSurface"
                     app:backgroundColorShaped="@{pill.colorResource(context)}"
-                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayout"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textPillName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toTopOf="@+id/imagePillPhoto"
-                    app:layout_constraintEnd_toStartOf="@+id/imagePillColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{pill.name}"
+                    android:textAppearance="@style/AppTheme.Text.Header6"
+                    app:layout_constraintBottom_toTopOf="@id/pillDescription"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imagePillColor"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Xyzal" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/textPillName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{pill.name}"
-                        android:textAppearance="@style/AppTheme.Text.Header6"
-                        tools:text="Xyzal" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/pillDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                        tools:text="For certain issues\n8:00, 14:00" />
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imagePillPhoto"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/pillDescription"
                     android:layout_width="0dp"
-                    android:layout_height="180dp"
-                    android:scaleType="centerCrop"
-                    android:src="@{pill.getPhotoDrawable(context)}"
-                    app:isVisible="@{pill.photoVisible}"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:visibility="visible"
+                    android:paddingTop="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="ContentDescription"
-                    tools:src="@drawable/ic_launcher_background" />
+                    app:layout_constraintStart_toEndOf="@+id/imagePillColor"
+                    app:layout_constraintTop_toBottomOf="@id/textPillName"
+                    tools:text="For certain issues" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardConfirmTake"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-8dp"
-            android:animateLayoutChanges="true"
-            app:cardElevation="@dimen/minimal_card_elevation"
-            app:shapeAppearanceOverlay="@style/AppTheme.Shape.RoundedCornersConfirmCard">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imagePillPhoto"
+                android:layout_width="0dp"
+                android:layout_height="194dp"
+                android:scaleType="centerCrop"
+                android:src="@{pill.getPhotoDrawable(context)}"
+                app:isVisible="@{pill.photoVisible}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pillHeader"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/textIntakeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="bottom"
+                android:minHeight="42dp"
+                android:textAppearance="@style/AppTheme.Text.BodyTitleSmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imagePillPhoto"
+                tools:text="Cycle" />
+
+            <TextView
+                android:id="@+id/textIntakeOptions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="bottom"
+                android:paddingTop="14dp"
+                android:textAppearance="@style/AppTheme.Text.Description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textIntakeTitle"
+                tools:text="21 active, 7 inactive, cycle day 2" />
+
+            <View
+                android:id="@+id/divider"
+                style="@style/AppTheme.Widget.Divider"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textIntakeOptions" />
+
+            <TextView
+                android:id="@+id/titleReminders"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="bottom"
+                android:minHeight="36dp"
+                android:text="@string/reminders"
+                android:textAppearance="@style/AppTheme.Text.BodyTitleSmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipsLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="16dp"
+                android:paddingBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleReminders">
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:text="2 v 5:00"
+                    tools:visibility="visible" />
+
+            </com.google.android.material.chip.ChipGroup>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pillConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp">
+                android:paddingBottom="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chipsLayout">
+
+                <View
+                    android:id="@+id/divider2"
+                    style="@style/AppTheme.Widget.Divider"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textQuestionTake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:textAppearance="@style/AppTheme.Text.BodyTitleSmall"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider2"
                     tools:text="Have you taken 1 pill at 8:00?" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonTaken"
-                    style="@style/AppTheme.Widget.Button.Positive"
-                    android:layout_width="0dp"
+                    style="@style/AppTheme.Widget.Button.Text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="4dp"
-                    android:text="@string/yes"
-                    app:icon="@drawable/ic_check"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    android:text="@string/confirm"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textQuestionTake" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

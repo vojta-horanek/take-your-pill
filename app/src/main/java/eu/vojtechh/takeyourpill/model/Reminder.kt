@@ -13,25 +13,25 @@ import eu.vojtechh.takeyourpill.klass.minute
 import java.util.*
 
 @Entity(
-        tableName = "reminder",
-        foreignKeys = [ForeignKey(
-                entity = PillEntity::class,
-                parentColumns = arrayOf("pillId"),
-                childColumns = arrayOf("pillId"),
-                onDelete = ForeignKey.CASCADE
-        )]
+    tableName = "reminder",
+    foreignKeys = [ForeignKey(
+        entity = PillEntity::class,
+        parentColumns = arrayOf("pillId"),
+        childColumns = arrayOf("pillId"),
+        onDelete = ForeignKey.CASCADE
+    )]
 )
 data class Reminder(
-        var time: Calendar,
+    var time: Calendar,
 
-        var amount: String,
+    var amount: String,
 
-        @ColumnInfo(index = true)
-        var pillId: Long,
+    @ColumnInfo(index = true)
+    var pillId: Long,
 
-        @PrimaryKey(autoGenerate = true)
-        @ColumnInfo(name = "reminderId")
-        val id: Long = 0
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "reminderId")
+    val id: Long = 0
 ) {
     val hour
         get() = time.hour
@@ -66,6 +66,10 @@ data class Reminder(
 
     fun formattedString(context: Context) =
         context.getString(R.string.reminder_text, getTimeString(context), amount)
+
+    fun getAmountTimeString(context: Context) = context.resources.getString(
+        R.string.pill_time_reminders_format, amount, getTimeString(context)
+    )
 
 
     // Always update list -> this must be used for instant change while editing reminders
