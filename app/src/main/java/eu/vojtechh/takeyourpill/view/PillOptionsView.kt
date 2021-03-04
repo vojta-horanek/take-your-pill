@@ -198,6 +198,7 @@ class PillOptionsView @JvmOverloads constructor(
 
     fun setOptions(options: ReminderOptions, toggleRadio: Boolean = true) {
         reminderOptions = options
+        reminderOptions.lastReminderDate = null // Reset last date
 
         // Temporary remove check listener
         radioGroup.setOnCheckedChangeListener { _, _ -> }
