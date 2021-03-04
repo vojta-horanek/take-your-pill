@@ -48,7 +48,10 @@ import timber.log.Timber
 @AndroidEntryPoint
 class EditFragment : Fragment() {
 
-    private lateinit var binding: FragmentEditBinding
+    // Can't use delegate because of transition endView
+    private var _binding: FragmentEditBinding? = null
+    private val binding get() = _binding!!
+
     private val model: EditViewModel by viewModels()
     private val args: EditFragmentArgs by navArgs()
 
@@ -63,8 +66,7 @@ class EditFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentEditBinding.inflate(inflater, container, false)
-
+        _binding = FragmentEditBinding.inflate(inflater, container, false)
         if (isCreatingNewPill) {
             enterTransition = MaterialContainerTransform().apply {
                 startView = requireActivity().findViewById(R.id.floatingActionButton)
@@ -83,6 +85,10 @@ class EditFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -96,7 +102,6 @@ class EditFragment : Fragment() {
             if (!model.isPillInitialized) {
                 model.pill = model.getNewEmptyPill()
             }
-            binding.pill = model.pill
             model.firstNameEdit = false
             model.firstDescriptionEdit = false
             initViews()
@@ -106,12 +111,10 @@ class EditFragment : Fragment() {
             if (!model.isPillInitialized) {
                 model.getPillById(args.pillId).observe(viewLifecycleOwner, {
                     model.pill = it
-                    binding.pill = it
                     initViews()
                     startPostponedEnterTransition()
                 })
             } else {
-                binding.pill = model.pill
                 initViews()
                 startPostponedEnterTransition()
             }
@@ -155,6 +158,9 @@ class EditFragment : Fragment() {
         model.reminders.observe(viewLifecycleOwner) { reminderAdapter.submitList(it) }
 
         binding.run {
+
+            inputName.setText(model.pill.name)
+            inputDescription.setText(model.pill.description)
 
             refreshImage()
             model.photoBitmap.observe(viewLifecycleOwner) {
