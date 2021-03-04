@@ -11,9 +11,7 @@ import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,7 +44,7 @@ class CheckReceiver : BroadcastReceiver() {
                 remindedTime
             )
 
-            GlobalScope.launch(Dispatchers.IO) {
+            runBlocking {
 
                 val reminder = reminderRepository.getReminder(reminderId)
                 val pill = pillRepository.getPillSync(reminder.pillId)

@@ -13,9 +13,7 @@ import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -43,7 +41,7 @@ class ReminderReceiver : BroadcastReceiver() {
 
             Timber.d("Received reminder ID: %s", reminderId)
 
-            GlobalScope.launch(Dispatchers.IO) {
+            runBlocking {
 
                 val reminder = reminderRepository.getReminder(reminderId)
                 val pill = pillRepository.getPillSync(reminder.pillId)
@@ -98,7 +96,7 @@ class ReminderReceiver : BroadcastReceiver() {
                         Timber.d("This pill is finite and inactive -> not planing any reminder")
                         // If the pill is finite and inactive, it means we will not be reminding it anymore
                         // we can exit so we do not plan the next reminder
-                        return@launch
+                        return@runBlocking
                     }
                 }
 
