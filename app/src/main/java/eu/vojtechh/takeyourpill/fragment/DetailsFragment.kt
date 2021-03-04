@@ -20,12 +20,14 @@ import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.ConfirmationDialog
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.DayOfYear
 import eu.vojtechh.takeyourpill.klass.disableAnimations
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
@@ -93,6 +95,14 @@ class DetailsFragment : Fragment(),
                 buttonEdit.setOnClickListener { navigateToEdit() }
                 buttonHistory.setOnClickListener { navigateToHistory() }
                 buttonDelete.setOnClickListener { navigateToDelete() }
+
+                // If last reminder date is null, then this is the first reminder
+                pill.lastReminderDate?.let { lastDate ->
+                    // Only add next cycle if this is the first reminder today
+                    if (lastDate.DayOfYear != Calendar.getInstance().DayOfYear) {
+                        pill.options.nextCycleIteration()
+                    }
+                }
 
                 with(pill.options) {
                     when {
