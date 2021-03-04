@@ -10,9 +10,7 @@ import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -34,11 +32,8 @@ class ConfirmReceiver : BroadcastReceiver() {
                 return
             }
 
-            // Hide notification
-            NotificationManager.cancelNotification(context, reminderId)
-
-            var success = false;
-            GlobalScope.launch(Dispatchers.IO) {
+            var success = false
+            runBlocking {
 
                 historyRepository.getByPillIdAndTime(pillId, remindedTime)?.let { history ->
                     history.confirmed = Calendar.getInstance()
@@ -49,21 +44,24 @@ class ConfirmReceiver : BroadcastReceiver() {
                 }
                 // Cancel check alarm
                 ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime).cancel()
+
+                if (success) {
+                    // Hide notification
+                    NotificationManager.cancelNotification(context, reminderId)
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.confirmed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
-            if (success) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.confirmed),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.error),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
 
         }
     }
