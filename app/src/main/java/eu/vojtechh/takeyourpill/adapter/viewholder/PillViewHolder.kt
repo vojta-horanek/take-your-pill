@@ -65,12 +65,17 @@ class PillViewHolder(
                     binding.divider.isVisible = false
                 }
                 isFinite() -> {
-                    binding.textIntakeTitle.text = context.getString(R.string.intake_options_x_days)
-                    binding.textIntakeOptions.text = context.getString(
-                        R.string.intake_options_x_days_text,
-                        daysActive,
-                        daysActive - todayCycle
-                    )
+                    binding.textIntakeTitle.text =
+                        context.getString(R.string.intake_options_x_days)
+                    if (isActive()) {
+                        binding.textIntakeOptions.text = context.getString(
+                            R.string.intake_options_x_days_text,
+                            daysActive,
+                            daysActive - todayCycle + 1
+                        )
+                    } else {
+                        binding.textIntakeOptions.text = context.getString(R.string.inactive)
+                    }
                 }
                 isCycle() -> {
                     binding.textIntakeTitle.text = context.getString(R.string.cycle)
