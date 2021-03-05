@@ -22,6 +22,7 @@ import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemListener {
@@ -54,12 +55,28 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
             adapter = appAdapter
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+                private var recyclerScrollY = 0
+
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0) {
-                        binding.floatingActionButton.shrink()
-                    } else {
-                        binding.floatingActionButton.extend()
+
+                    val offset = binding.recyclerHome.computeVerticalScrollOffset()
+                    Timber.d(offset.toString())
+
+                    when (binding.floatingActionButton.isExtended) {
+                        true -> {
+                            if (offset - recyclerScrollY > 60) {
+                                binding.floatingActionButton.shrink()
+                            }
+                        }
+                        false -> {
+                            if (offset == 0) {
+                                binding.floatingActionButton.extend()
+                            }
+                        }
                     }
+
+                    recyclerScrollY = offset
                     super.onScrolled(recyclerView, dx, dy)
                 }
             })
