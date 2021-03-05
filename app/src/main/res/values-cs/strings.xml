@@ -63,8 +63,8 @@
     <string name="settings_notification_options_summary">Otevře android nastavení a umožní nastavit možnosti oznámení, například zvuk nebo priorita, pro každý lék zvlášť</string>
     <string name="settings_delay_by">Čas odložení</string>
     <string name="settings_delay_summary">Nastavte o kolik minut se připomínka odloží při kliknutí na tlačítko v oznámení</string>
-    <string name="alarm_settings">Zobrazovat upozornění jako alarm</string>
-    <string name="alert_style_summary">Při připomínce zobrazit výstrahu na celou obrazovku</string>
+    <string name="alarm_settings">Zobrazovat připomínky maximální prioritou</string>
+    <string name="alert_style_summary">Při připomínce se zobrazí oznámení trvalé oznámení, případně se otevře potvrzovací obrazovka (toto nastavení se nevztahuje na odložené připomínky).</string>
     <string name="saving">Ukládání…</string>
     <string name="confirm">Potvrdit</string>
     <string name="confirmed">Potvrzeno</string>

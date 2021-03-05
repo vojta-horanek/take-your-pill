@@ -7,7 +7,7 @@
     <string name="edit">Edit</string>
     <string name="details">Details</string>
     <string name="pills">Pills</string>
-    <string name="alarm_settings">Use alarm-like alert style</string>
+    <string name="alarm_settings">Display reminders with the highest priority</string>
     <string name="pill_item_transition_name" translatable="false">pill_item_%1$s</string>
     <string name="pill_details_transition_name" translatable="false">pill_item_detail</string>
     <string name="color">Color</string>
@@ -71,7 +71,7 @@
 
     <string name="confirm">Confirm</string>
     <string name="saving">Saving…</string>
-    <string name="alert_style_summary">Display a fullscreen alert when a reminder is shown</string>
+    <string name="alert_style_summary">When a reminder is fired a persistent notification or a confirm screen will be shown (this settings does not apply to delayed reminders)</string>
     <string name="settings_delay_summary">Chose how many minutes to delay when clicking the delay button in a notification</string>
     <string name="settings_delay_by">Delay by</string>
     <string name="settings_notification_options">Set notification options</string>

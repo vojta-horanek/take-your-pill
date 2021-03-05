@@ -13,6 +13,7 @@ import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
+import eu.vojtechh.takeyourpill.service.FullscreenService
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
@@ -73,8 +74,11 @@ class ReminderReceiver : BroadcastReceiver() {
 
                     val todayReminderCalendar = reminder.getTodayCalendar()
 
-                    ReminderUtil.createReminderNotification(context, pill, reminder)
-
+                    if (Pref.alertStyle) {
+                        FullscreenService.startService(context, reminderId)
+                    } else {
+                        ReminderUtil.createReminderNotification(context, pill, reminder)
+                    }
                     val history = History(
                         pillId = pill.id,
                         reminded = todayReminderCalendar,
@@ -82,8 +86,8 @@ class ReminderReceiver : BroadcastReceiver() {
                     )
                     historyRepository.insertHistoryItem(history)
 
-                    // Schedule a check reminder if enabled
-                    if (Pref.remindAgain) {
+                    // Schedule a check reminder if enabled and fullscreen intent is disabled
+                    if (Pref.remindAgain && !Pref.alertStyle) {
                         ReminderManager.createCheckAlarm(
                             context,
                             reminder.id,

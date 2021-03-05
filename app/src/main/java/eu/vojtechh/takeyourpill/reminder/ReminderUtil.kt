@@ -1,11 +1,13 @@
 package eu.vojtechh.takeyourpill.reminder
 
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.NavDeepLinkBuilder
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.activity.AboutActivity
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.model.Pill
@@ -41,7 +43,7 @@ object ReminderUtil {
                 context,
                 reminderId.toInt(),
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT //FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT
             )
         }
 
@@ -59,7 +61,22 @@ object ReminderUtil {
                 context,
                 reminderId.toInt(),
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT //FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT
+            )
+        }
+
+    private fun getNotificationFullscreenIntent(
+        context: Context,
+        reminderId: Long
+    ): PendingIntent = // FIXME Make a confirm class
+        Intent(context, AboutActivity::class.java).let { intent ->
+            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            PendingIntent.getActivity(
+                context,
+                reminderId.toInt(),
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT
             )
         }
 
@@ -85,13 +102,13 @@ object ReminderUtil {
                 context,
                 reminderId.toInt(),
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT //FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT
             )
         }
 
     fun createReminderNotification(context: Context, pill: Pill, reminder: Reminder) {
         Timber.d("Creating reminder notification")
-        NotificationManager.createAndShowNotification(
+        NotificationManager.showNotification(
             context,
             title = pill.name,
             description = pill.getNotificationDescription(context, reminder),
@@ -110,7 +127,35 @@ object ReminderUtil {
                 Pref.buttonDelay.toLong() * 1000 * 60,
                 reminder.getTodayCalendar().timeInMillis
             ),
+            fullscreenPendingIntent = getNotificationFullscreenIntent(context, reminder.id),
             notificationId = reminder.id,
+            channelId = pill.id.toString(),
+            whenMillis = reminder.getTodayMillis()
+        )
+    }
+
+    fun getFullscreenNotification(context: Context, pill: Pill, reminder: Reminder): Notification {
+        Timber.d("Creating fullscreen notification")
+        return NotificationManager.createNotification(
+            context,
+            title = pill.name,
+            description = pill.getNotificationDescription(context, reminder),
+            color = pill.color.getColor(context),
+            bitmap = pill.photo,
+            pendingIntent = getNotificationClickIntent(context, pill.id),
+            confirmPendingIntent = getNotificationConfirmIntent(
+                context,
+                reminder.id,
+                pill.id,
+                reminder.getTodayMillis()
+            ),
+            delayPendingIntent = getNotificationDelayIntent(
+                context,
+                reminder.id,
+                Pref.buttonDelay.toLong() * 1000 * 60,
+                reminder.getTodayCalendar().timeInMillis
+            ),
+            fullscreenPendingIntent = getNotificationFullscreenIntent(context, reminder.id),
             channelId = pill.id.toString(),
             whenMillis = reminder.getTodayMillis()
         )

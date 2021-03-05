@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.getTimeString
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
+import eu.vojtechh.takeyourpill.service.FullscreenService
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -25,8 +27,13 @@ class DelayReceiver : BroadcastReceiver() {
                 Timber.e("Invalid number of extras passed, exiting...")
                 return
             }
-            // Cancel check reminder
-            ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
+
+            if (Pref.alertStyle) {
+                FullscreenService.stopService(context)
+            } else {
+                // Cancel check reminder
+                ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
+            }
 
             ReminderManager.createCheckAlarm(
                 context,

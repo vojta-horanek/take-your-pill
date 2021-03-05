@@ -7,9 +7,11 @@ import android.widget.Toast
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
+import eu.vojtechh.takeyourpill.service.FullscreenService
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
@@ -42,10 +44,14 @@ class ConfirmReceiver : BroadcastReceiver() {
                 } ?: run {
                     Timber.e("Couldn't find the correct history item...")
                 }
-                // Cancel check alarm
-                ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
+
+                if (Pref.alertStyle) {
+                    FullscreenService.stopService(context)
+                }
 
                 if (success) {
+                    // Cancel check alarm
+                    ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
                     // Hide notification
                     NotificationManager.cancelNotification(context, reminderId)
                     Toast.makeText(
