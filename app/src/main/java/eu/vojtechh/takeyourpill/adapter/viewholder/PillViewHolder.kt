@@ -39,6 +39,9 @@ class PillViewHolder(
             chip.isFocusable = false
             chip.isClickable = false
             chip.foreground = null
+            chip.setChipStrokeColorResource(R.color.stroke_color)
+            chip.setChipStrokeWidthResource(R.dimen.stroke_width)
+            chip.chipBackgroundColor = null
             binding.chipsLayout.addView(chip)
         }
 
