@@ -69,9 +69,11 @@ object ReminderManager {
         context: Context,
         reminderId: Long,
         remindedTime: Long,
+        checkCount: Long,
         remindAfterMillis: Long = 1000 * 60 * Pref.remindAgainAfter.toLong(),
     ) {
-        val alarmIntent = ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime)
+        val alarmIntent =
+            ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, checkCount)
         // Trigger after [interval] minutes, then repeat every [interval] minutes
         Timber.d("Setting check alarm to start in %s minutes", remindAfterMillis.getTimeString())
         getAlarmManager(context).setExactAndAllowWhileIdle(

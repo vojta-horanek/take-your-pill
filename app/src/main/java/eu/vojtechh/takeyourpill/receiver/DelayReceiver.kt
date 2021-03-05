@@ -26,12 +26,13 @@ class DelayReceiver : BroadcastReceiver() {
                 return
             }
             // Cancel check reminder
-            ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime).cancel()
+            ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
 
             ReminderManager.createCheckAlarm(
                 context,
                 reminderId,
                 remindedTime,
+                0, // Reset check counter
                 delayByMillis
             )
             Timber.d(

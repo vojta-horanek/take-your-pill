@@ -43,7 +43,7 @@ class ConfirmReceiver : BroadcastReceiver() {
                     Timber.e("Couldn't find the correct history item...")
                 }
                 // Cancel check alarm
-                ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime).cancel()
+                ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
 
                 if (success) {
                     // Hide notification

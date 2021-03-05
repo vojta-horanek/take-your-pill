@@ -67,9 +67,11 @@ object ReminderUtil {
         context: Context,
         reminderId: Long,
         remindedTime: Long,
+        checkCount: Long,
     ): PendingIntent = Intent(context, CheckReceiver::class.java).let { intent ->
         intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
         intent.putExtra(Constants.INTENT_EXTRA_REMINDED_TIME, remindedTime)
+        intent.putExtra(Constants.INTENT_CHECK_COUNT, checkCount)
         PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_ONE_SHOT)
     }
 

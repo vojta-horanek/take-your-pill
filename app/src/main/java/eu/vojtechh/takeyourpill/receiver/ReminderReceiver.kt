@@ -87,7 +87,8 @@ class ReminderReceiver : BroadcastReceiver() {
                         ReminderManager.createCheckAlarm(
                             context,
                             reminder.id,
-                            todayReminderCalendar.timeInMillis
+                            todayReminderCalendar.timeInMillis,
+                            0
                         )
                     }
 
