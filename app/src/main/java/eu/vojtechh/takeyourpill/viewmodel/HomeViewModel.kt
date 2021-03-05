@@ -5,7 +5,6 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.History
-import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
@@ -15,10 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-        pillRepository: PillRepository,
-        private val historyRepository: HistoryRepository
+    private val pillRepository: PillRepository,
+    private val historyRepository: HistoryRepository
 ) : ViewModel() {
-    val allPills = pillRepository.getAllPills()
     var isReturningFromPillDetails = false
 
     fun confirmPill(history: History) = viewModelScope.launch(Dispatchers.IO) {
@@ -26,7 +24,9 @@ class HomeViewModel @Inject constructor(
         historyRepository.updateHistoryItem(history)
     }
 
-    fun processPills(pills: List<Pill>) = liveData {
+    fun getPills() = liveData {
+        val pills = pillRepository.getAllPillsSync()
+
         val now = Calendar.getInstance()
         val timeOffset = (30 /* minutes */ * 60 * 1000)
 
@@ -40,7 +40,6 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
-
         }
         emit(pills)
     }
