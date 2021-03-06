@@ -22,6 +22,8 @@
             android:id="@+id/detailsView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="64dp"
+            android:clipToPadding="false"
             android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,7 +78,7 @@
                     android:layout_marginTop="@dimen/screen_margin_vertical"
                     android:background="?attr/colorBackgroundFloating"
                     android:clickable="true"
-                    android:clipChildren="false"
+                    android:clipChildren="true"
                     android:clipToPadding="false"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
