@@ -59,7 +59,7 @@ class DetailsViewModel @Inject constructor(
             } else {
                 emit(null)
             }
-        }
+        } ?: emit(null)
     }
 
     fun confirmPill(history: History) = viewModelScope.launch(Dispatchers.IO) {

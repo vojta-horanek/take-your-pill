@@ -22,7 +22,6 @@ import eu.vojtechh.takeyourpill.fragment.dialog.ConfirmationDialog
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
-import timber.log.Timber
 import java.util.*
 
 @AndroidEntryPoint
@@ -59,8 +58,6 @@ class DetailsFragment : Fragment(),
 
         launchedFromNotification =
             requireArguments().getBoolean(Constants.INTENT_EXTRA_LAUNCHED_FROM_NOTIFICATION, false)
-
-        Timber.d("Launched from notification: %s", launchedFromNotification.toString())
 
         var pillId = requireArguments().getLong(Constants.INTENT_EXTRA_PILL_ID, -1L)
         if (pillId == -1L) pillId = args.pillId
