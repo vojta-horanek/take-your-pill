@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnNavigationItemReselectedListener { }
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
+
+        model.planReminders(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
