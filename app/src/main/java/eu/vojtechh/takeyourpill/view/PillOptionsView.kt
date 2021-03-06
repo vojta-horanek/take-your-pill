@@ -96,7 +96,7 @@ class PillOptionsView @JvmOverloads constructor(
             showChangeItemDialog(
                 context.getString(R.string.duration),
                 1,
-                1000,
+                999,
                 reminderOptions.daysActive,
             ) {
                 reminderOptions.daysActive = it
@@ -109,7 +109,7 @@ class PillOptionsView @JvmOverloads constructor(
             showChangeItemDialog(
                 context.getString(R.string.days_active),
                 1,
-                1000,
+                999,
                 reminderOptions.daysActive,
             ) {
                 reminderOptions.daysActive = it
@@ -122,7 +122,7 @@ class PillOptionsView @JvmOverloads constructor(
             showChangeItemDialog(
                 context.getString(R.string.days_inactive),
                 1,
-                1000,
+                999,
                 reminderOptions.daysInactive,
             ) {
                 reminderOptions.daysInactive = it
