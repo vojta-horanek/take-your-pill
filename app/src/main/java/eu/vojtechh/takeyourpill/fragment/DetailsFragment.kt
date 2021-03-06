@@ -5,10 +5,10 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
@@ -25,15 +25,12 @@ import eu.vojtechh.takeyourpill.klass.disableAnimations
 import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
     ConfirmationDialog.DeleteListener {
 
-    private var fullscreenImageUp: Boolean = false
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
     private lateinit var binding: FragmentDetailsBinding
@@ -144,26 +141,23 @@ class DetailsFragment : Fragment(),
                 }
             }
 
-            cardPhoto.setOnTouchListener { _, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        lifecycleScope.launch {
-                            fullscreenImageUp = false
-                            delay(ViewConfiguration.getLongPressTimeout().toLong())
-                            if (!fullscreenImageUp) {
-                                imageFullscreen.isVisible = true
-                            }
-                        }
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        fullscreenImageUp = true
-                        imageFullscreen.isVisible = false
-                    }
-                    else -> {
-                    }
-                }
+            cardPhoto.setOnLongClickListener {
+                imageFullscreen.isVisible = true
                 true
             }
+
+            imageFullscreen.setOnClickListener {
+                imageFullscreen.isVisible = false
+            }
+
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                if (imageFullscreen.isVisible) {
+                    imageFullscreen.isVisible = false
+                } else {
+                    findNavController().popBackStack()
+                }
+            }
+
         }
 
         model.setReminders(model.pill.reminders)
