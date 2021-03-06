@@ -86,8 +86,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
 
         model.allPills.observe(viewLifecycleOwner) { pills ->
             appAdapter.submitList(pills)
-            model.getPills(pills).observe(viewLifecycleOwner) { allPills ->
-                appAdapter.submitList(allPills)
+            if (pills.isNotEmpty()) {
+                model.addConfirmCards(pills).observe(viewLifecycleOwner) { allPills ->
+                    appAdapter.submitList(allPills)
+                }
             }
         }
 
