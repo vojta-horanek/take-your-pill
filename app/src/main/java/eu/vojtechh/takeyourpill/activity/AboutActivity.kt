@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.mikepenz.aboutlibraries.LibsBuilder
 import eu.vojtechh.takeyourpill.BuildConfig
 import eu.vojtechh.takeyourpill.R
@@ -27,12 +28,33 @@ class AboutActivity : AppCompatActivity() {
             )
             startActivity(browserIntent)
         }
+
+        binding.buttonIcons.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://github.com/ShimonHoranek/material-icons")
+            )
+            startActivity(browserIntent)
+        }
+
+        binding.buttonLicence.setOnClickListener {
+            val isVisible = binding.fragmentLibs.isVisible
+            binding.fragmentLibs.isVisible = !isVisible
+            val drawable = if (isVisible) R.drawable.ic_expand_more else R.drawable.ic_expand_less
+            binding.buttonLicence.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_article,
+                0,
+                drawable,
+                0
+            )
+        }
+
         binding.textVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
 
         val fragment = LibsBuilder()
-            .withAboutMinimalDesign(true)
             .withAboutIconShown(false)
             .withVersionShown(false)
+            .withShowLoadingProgress(true)
             .supportFragment()
 
         supportFragmentManager

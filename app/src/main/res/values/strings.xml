@@ -134,5 +134,7 @@
     <string name="intake_options_cycle">%1$d day(s) active, %2$d day(s) inactive, cycle day %3$d</string>
     <string name="intake_options_x_days">Limited</string>
     <string name="intake_options_x_days_text">Duration %1$d day(s), %2$d day(s) remaining</string>
+    <string name="open_source_libraries">Open source libraries</string>
+    <string name="used_graphics">Used graphics</string>
 
 </resources>

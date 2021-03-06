@@ -5,16 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:animateLayoutChanges="true"
     tools:context=".activity.AboutActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:animateLayoutChanges="true"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
+            android:animateLayoutChanges="true"
             android:layout_marginBottom="52dp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -71,11 +74,19 @@
                 app:layout_constraintStart_toStartOf="@+id/textAppName"
                 app:layout_constraintTop_toBottomOf="@+id/textAppName" />
 
+            <View
+                style="@style/AppTheme.Widget.Divider"
+                app:layout_constraintTop_toBottomOf="@id/textMadeBy"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:id="@id/divider" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/buttonGithub"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_margin_vertical"
+                android:layout_marginTop="4dp"
                 android:drawablePadding="@dimen/screen_margin_horizontal_small"
                 android:focusable="true"
                 android:foreground="?selectableItemBackground"
@@ -86,19 +97,64 @@
                 android:text="@string/view_on_github"
                 android:textAppearance="@style/AppTheme.Text.BodyNormal"
                 app:drawableStartCompat="@drawable/ic_github"
+                app:drawableEndCompat="@drawable/ic_open_in_new"
                 app:drawableTint="?attr/colorOnSurface"
                 app:layout_constraintEnd_toEndOf="@+id/textMadeBy"
                 app:layout_constraintStart_toStartOf="@+id/textMadeBy"
-                app:layout_constraintTop_toBottomOf="@+id/textMadeBy" />
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/buttonIcons"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/screen_margin_horizontal_small"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:padding="@dimen/screen_margin_vertical"
+                android:paddingStart="@dimen/screen_margin_horizontal"
+                android:paddingEnd="@dimen/screen_margin_horizontal"
+                android:text="@string/used_graphics"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:drawableStartCompat="@drawable/ic_image"
+                app:drawableEndCompat="@drawable/ic_open_in_new"
+                app:drawableTint="?attr/colorOnSurface"
+                app:layout_constraintEnd_toEndOf="@+id/buttonGithub"
+                app:layout_constraintStart_toStartOf="@+id/buttonGithub"
+                app:layout_constraintTop_toBottomOf="@+id/buttonGithub" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/buttonLicence"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/screen_margin_horizontal_small"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:padding="@dimen/screen_margin_vertical"
+                android:paddingStart="@dimen/screen_margin_horizontal"
+                android:paddingEnd="@dimen/screen_margin_horizontal"
+                android:text="@string/open_source_libraries"
+                android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                app:drawableStartCompat="@drawable/ic_article"
+                app:drawableEndCompat="@drawable/ic_expand_more"
+                app:drawableTint="?attr/colorOnSurface"
+                app:layout_constraintEnd_toEndOf="@+id/buttonIcons"
+                app:layout_constraintStart_toStartOf="@+id/buttonIcons"
+                app:layout_constraintTop_toBottomOf="@+id/buttonIcons" />
 
             <FrameLayout
                 android:id="@+id/fragmentLibs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/buttonGithub"
+                app:layout_constraintTop_toBottomOf="@id/buttonLicence"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textVersion"

@@ -15,4 +15,17 @@
     <string name="ucrop_no">No</string>
     <string name="ucrop_yes">Yes</string>
 
+
+    <string name="define_plu_myLibrary">2021;Yalantis</string>
+    <string name="library_myLibrary_author">Yalantis</string>
+    <string name="library_myLibrary_authorWebsite">https://github.com/Yalantis</string>
+    <string name="library_myLibrary_libraryName">uCrop</string>
+    <string name="library_myLibrary_libraryDescription">Android Library for cropping images (modified)</string>
+    <string name="library_myLibrary_libraryVersion">2.2.5-native</string>
+    <string name="library_myLibrary_libraryWebsite">https://github.com/Yalantis/uCrop</string>
+    <string name="library_myLibrary_licenseIds">apache_2_0</string>
+    <string name="library_myLibrary_isOpenSource">true</string>
+    <string name="library_myLibrary_repositoryLink">https://github.com/Yalantis/uCrop</string>
+
+
 </resources>
