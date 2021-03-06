@@ -41,6 +41,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         if (model.isReturningFromPillDetails) {
             exitTransition = MaterialFadeThrough()
             postponeEnterTransition()
+            view.doOnPreDraw { startPostponedEnterTransition() }
             model.isReturningFromPillDetails = false
         }
 
@@ -83,9 +84,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
             openNewPill()
         }
 
-        model.getPills().observe(viewLifecycleOwner) { allPills ->
-            appAdapter.submitList(allPills)
-            view.doOnPreDraw { startPostponedEnterTransition() }
+        model.allPills.observe(viewLifecycleOwner) { pills ->
+            appAdapter.submitList(pills)
+            model.getPills(pills).observe(viewLifecycleOwner) { allPills ->
+                appAdapter.submitList(allPills)
+            }
         }
 
     }
