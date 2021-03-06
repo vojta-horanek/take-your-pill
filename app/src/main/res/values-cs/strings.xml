@@ -32,8 +32,8 @@
     <string name="set_time_format">Nastavit čas připomínky (%1$s)</string>
     <string name="save_reminder">Uložit připomínku</string>
     <string name="set_a_reminder">Nastavit připomínku</string>
-    <string name="set_amount_format">Vzít si %1$s prášek(y)</string>
-    <string name="change_amount_format">Nastavit množství na %1$s prášek(u)</string>
+    <string name="set_amount_format">Nastavit množství (%1$s)</string>
+    <string name="change_amount_format">Nastavit množství na %1$s prášek(y)</string>
     <string name="reminder_text">%1$s: %2$s prášek(y)</string>
     <string name="it_is_time_to_take">Je čas si vzít %1$s prášek(y)!</string>
     <plurals name="delay">

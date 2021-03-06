@@ -245,7 +245,7 @@ class PillOptionsView @JvmOverloads constructor(
         val dialog = MaterialAlertDialogBuilder(context).apply {
             setView(view)
             setTitle(title)
-            setPositiveButton(R.string.confirm) { dialog, _ ->
+            setPositiveButton(android.R.string.ok) { dialog, _ ->
                 callback(amount)
                 dialog.dismiss()
             }

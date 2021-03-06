@@ -45,7 +45,7 @@
     <string name="save_reminder">Save reminder</string>
     <string name="set_a_reminder">Set a reminder</string>
     <string name="delete_pill">Delete pill</string>
-    <string name="set_amount_format">Take %1$s pill(s)</string>
+    <string name="set_amount_format">Set amount (%1$s)</string>
     <string name="change_amount_format">Set amount to %1$s pill(s)</string>
     <string name="reminder_text">%1$s: %2$s pill(s)</string>
     <string name="it_is_time_to_take">It is time to take %1$s pill(s)!</string>

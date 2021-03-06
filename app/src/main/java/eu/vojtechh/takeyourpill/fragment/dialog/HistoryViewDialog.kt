@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.shawnlin.numberpicker.NumberPicker
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
@@ -155,35 +154,14 @@ class HistoryViewDialog :
 
     private fun showChangeAmountDialog(item: History) {
 
-        var amount = item.amount
+        Builders.getAmountPickerDialog(
+            requireContext(),
+            binding.root as ViewGroup,
+            item.amount
+        ) {
+            model.setHistoryAmount(item, it)
+        }.show()
 
-        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_change_amount,
-                binding.root as ViewGroup, false)
-
-        val dialog = MaterialAlertDialogBuilder(requireContext()).apply {
-            setView(view)
-            setTitle(R.string.change_amount)
-            setMessage(getString(R.string.change_amount_format, amount))
-            setPositiveButton(R.string.confirm) { dialog, _ ->
-                model.setHistoryAmount(item, amount)
-                dialog.dismiss()
-            }
-            setNegativeButton(R.string.cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-        }.create()
-        val numberPickerAmount = view.findViewById<NumberPicker>(R.id.numberPickerAmount)
-
-        numberPickerAmount.minValue = 1
-        numberPickerAmount.maxValue = NumberPickerHelper.getDisplayValues().size
-        numberPickerAmount.displayedValues = NumberPickerHelper.getDisplayValues().toTypedArray()
-        numberPickerAmount.value = NumberPickerHelper.convertToPosition(amount)
-        numberPickerAmount.setOnValueChangedListener { _, _, value ->
-            amount = NumberPickerHelper.convertToString(value)
-            dialog.setMessage(getString(R.string.change_amount_format, amount))
-        }
-
-        dialog.show()
     }
 
     private fun showChangeConfirmTimeDialog(item: History) {

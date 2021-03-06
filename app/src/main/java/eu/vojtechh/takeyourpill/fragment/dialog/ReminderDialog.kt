@@ -8,7 +8,6 @@ import com.google.android.material.snackbar.Snackbar
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.DialogNewReminderBinding
 import eu.vojtechh.takeyourpill.klass.Builders
-import eu.vojtechh.takeyourpill.klass.NumberPickerHelper
 import eu.vojtechh.takeyourpill.klass.getAttrColor
 import eu.vojtechh.takeyourpill.klass.setDrawableTint
 import eu.vojtechh.takeyourpill.model.PillColor
@@ -46,24 +45,20 @@ class ReminderDialog : RoundedDialogFragment() {
 
         binding.run {
 
-            numberPickerAmount.apply {
-                minValue = 1
-                maxValue = NumberPickerHelper.getDisplayValues().size
-                displayedValues =
-                    NumberPickerHelper.getDisplayValues().toTypedArray()
-                value = NumberPickerHelper.convertToPosition(reminder.amount)
-                setOnValueChangedListener { _, _, value ->
-                    reminder.amount = NumberPickerHelper.convertToString(value)
-                    setTexts()
-                }
-                val colorRes = accentColor.getColor(requireContext())
-                dividerColor = colorRes
-                selectedTextColor = colorRes
-            }
-
             textTime.setOnClickListener {
                 snackbar.dismiss()
                 showTimeDialog()
+            }
+
+            textAmount.setOnClickListener {
+                Builders.getAmountPickerDialog(
+                    requireContext(),
+                    binding.root as ViewGroup,
+                    reminder.amount
+                ) {
+                    reminder.amount = it
+                    setTexts()
+                }.show()
             }
             textConfirm.setOnClickListener { confirmListener(reminder, isEditing) }
 
