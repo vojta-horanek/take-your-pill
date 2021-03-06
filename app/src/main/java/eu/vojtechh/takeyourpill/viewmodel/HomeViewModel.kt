@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
         historyRepository.updateHistoryItem(history)
     }
 
-    fun getPills(pills: List<Pill>) = liveData {
+    fun addConfirmCards(pills: List<Pill>) = liveData {
         val now = Calendar.getInstance()
         val timeOffset = (30 /* minutes */ * 60 * 1000)
 
