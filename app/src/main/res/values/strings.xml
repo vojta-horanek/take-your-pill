@@ -63,7 +63,7 @@
     <string name="intro">Intro</string>
     <string name="intro_welcome_description">This app will remind you about taking your pills. From now on, you should never forget it. You will be able to see your medication history, graphs and statistics.</string>
     <string name="intro_new_pill">Start by adding a pill</string>
-    <string name="intro_new_pill_description">Click the \"New Pill\" button, enter pill details, set a color, add an image and most importantly set its reminders.</string>
+    <string name="intro_new_pill_description">Click the \"Add Pill\" button, enter pill details, set a color, add an image and most importantly set its reminders.</string>
     <string name="intro_reminder">Stop worrying about taking pills</string>
     <string name="intro_reminder_description">The app will remind you so you can just forget about taking your pills and think about more important stuff.</string>
     <string name="intro_history">See your medication history</string>

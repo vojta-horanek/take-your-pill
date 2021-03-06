@@ -103,7 +103,7 @@
 
     <string name="intro_welcome_description">Tato aplikace Vám bude připomínat užívání léků. Od této chvíle si už nezapomenete vzít žádný prášek. Budete moci sledovat Vaši historii užití, grafy a statistiky.</string>
     <string name="intro_new_pill">Začněte přidáním léku</string>
-    <string name="intro_new_pill_description">Klikněte na tlačítko \"Nový lék\", zadejte informace, nastavte barvu, přidejte fotografii a hlavně nastavte připomínky.</string>
+    <string name="intro_new_pill_description">Klikněte na tlačítko \"Přidat lék\", zadejte informace, nastavte barvu, přidejte fotografii a hlavně nastavte připomínky.</string>
     <string name="intro_reminder">Přestantě si dělat starosti s léky</string>
     <string name="intro_reminder_description">Aplikace Vám pošle připomínky, takže na kontrolování čašu a užívání léků můžete zapomenout a myslet na důležitější věci.</string>
     <string name="intro_history">Podívejte se na historii užívání</string>
