@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mikepenz.aboutlibraries.LibsBuilder
 import eu.vojtechh.takeyourpill.BuildConfig
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityAboutBinding
@@ -27,5 +28,16 @@ class AboutActivity : AppCompatActivity() {
             startActivity(browserIntent)
         }
         binding.textVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+
+        val fragment = LibsBuilder()
+            .withAboutMinimalDesign(true)
+            .withAboutIconShown(false)
+            .withVersionShown(false)
+            .supportFragment()
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.fragmentLibs, fragment, "fragment_libs")
+            .commit()
     }
 }
