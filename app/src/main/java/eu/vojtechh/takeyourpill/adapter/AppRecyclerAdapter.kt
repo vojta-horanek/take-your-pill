@@ -26,7 +26,6 @@ class AppRecyclerAdapter(
     interface ItemListener {
         fun onItemClicked(view: View, item: BaseModel)
         fun onPillConfirmClicked(view: View, history: History) {}
-        fun onPillNotConfirmClicked(view: View, reminder: Reminder) {}
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

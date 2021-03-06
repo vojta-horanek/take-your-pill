@@ -20,7 +20,6 @@ import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
-import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
 
 @AndroidEntryPoint
@@ -114,15 +113,5 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         model.confirmPill(history)
         Snackbar.make(view, getString(R.string.confirmed), Snackbar.LENGTH_SHORT)
             .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
-    }
-
-    override fun onPillNotConfirmClicked(view: View, reminder: Reminder) {
-        Snackbar.make(
-            view,
-            "DISMISS" + reminder.getTimeString(requireContext()),
-            Snackbar.LENGTH_SHORT
-        )
-            .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
-
     }
 }
