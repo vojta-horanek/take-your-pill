@@ -57,7 +57,7 @@
     </plurals>
 
     <string name="two_reminders_same_time">There can only be one reminder with the same time. Please set a different time.</string>
-    <string name="nothing_to_see_here">Nothing to see here… 🧐</string>
+    <string name="nothing_to_see_here">Nothing to see here…</string>
     <string name="try_to_add_a_pill_first">Try to add a pill first!</string>
 
     <string name="intro">Intro</string>

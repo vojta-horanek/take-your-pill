@@ -31,11 +31,14 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textEmptyTitle"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingHorizontal="16dp"
+            android:drawablePadding="8dp"
             android:paddingVertical="8dp"
+            app:drawableEndCompat="@drawable/ic_robot"
+            app:drawableTint="@color/colorAccent"
             android:text="@string/nothing_to_see_here"
             android:textAppearance="@style/AppTheme.Text.BodyTitle"
             app:layout_constraintBottom_toTopOf="@id/textEmptyDescription"
@@ -45,7 +48,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textEmptyDescription"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingHorizontal="16dp"

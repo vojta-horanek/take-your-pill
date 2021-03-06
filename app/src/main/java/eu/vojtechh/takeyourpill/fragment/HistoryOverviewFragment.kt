@@ -32,7 +32,7 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
             this,
             null,
             getString(R.string.no_history),
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_fab_history)
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_hourglass_empty)
         )
 
         binding.recyclerHistory.adapter = appAdapter
