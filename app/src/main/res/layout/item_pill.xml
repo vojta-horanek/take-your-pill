@@ -46,7 +46,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/pillHeader"
                 android:layout_width="match_parent"
-                android:layout_height="76dp"
+                android:layout_height="wrap_content"
+                android:minHeight="76dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:padding="16dp"
