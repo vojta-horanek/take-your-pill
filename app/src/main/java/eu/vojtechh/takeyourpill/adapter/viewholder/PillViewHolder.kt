@@ -38,6 +38,7 @@ class PillViewHolder(
             chip.text = reminder.getAmountTimeString(binding.root.context)
             chip.isFocusable = false
             chip.isClickable = false
+            chip.isCheckable = false
             chip.foreground = null
             chip.setChipStrokeColorResource(R.color.stroke_color)
             chip.setChipStrokeWidthResource(R.dimen.stroke_width)
