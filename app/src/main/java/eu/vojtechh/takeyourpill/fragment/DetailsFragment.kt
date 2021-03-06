@@ -19,12 +19,10 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.ConfirmationDialog
-import eu.vojtechh.takeyourpill.klass.Constants
-import eu.vojtechh.takeyourpill.klass.DayOfYear
-import eu.vojtechh.takeyourpill.klass.disableAnimations
-import eu.vojtechh.takeyourpill.klass.themeColor
+import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
+import timber.log.Timber
 import java.util.*
 
 @AndroidEntryPoint
@@ -35,6 +33,8 @@ class DetailsFragment : Fragment(),
     private val args: DetailsFragmentArgs by navArgs()
     private lateinit var binding: FragmentDetailsBinding
     private val reminderAdapter = ReminderAdapter(showDelete = false, showRipple = false)
+
+    var launchedFromNotification = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +56,11 @@ class DetailsFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
+
+        launchedFromNotification =
+            requireArguments().getBoolean(Constants.INTENT_EXTRA_LAUNCHED_FROM_NOTIFICATION, false)
+
+        Timber.d("Launched from notification: %s", launchedFromNotification.toString())
 
         var pillId = requireArguments().getLong(Constants.INTENT_EXTRA_PILL_ID, -1L)
         if (pillId == -1L) pillId = args.pillId
@@ -88,6 +93,7 @@ class DetailsFragment : Fragment(),
                     it.rippleColor = accentList
                 }
                 buttonEdit.backgroundTintList = accentList
+                buttonTaken.backgroundTintList = accentList
 
                 buttonEdit.setOnClickListener { navigateToEdit() }
                 buttonHistory.setOnClickListener { navigateToHistory() }
@@ -165,6 +171,23 @@ class DetailsFragment : Fragment(),
         model.reminders.observe(viewLifecycleOwner) {
             reminderAdapter.submitList(it) {
                 startPostponedEnterTransition()
+            }
+        }
+
+        model.getLatestHistory(!launchedFromNotification).observe(viewLifecycleOwner) { history ->
+            if (history == null) {
+                binding.layoutConfirm.isVisible = false
+            } else {
+                binding.textQuestionTake.text = binding.root.context.getString(
+                    R.string.pill_taken_question,
+                    history.amount,
+                    history.reminded.time.getTimeString(requireContext())
+                )
+                binding.buttonTaken.setOnClickListener {
+                    model.confirmPill(history)
+                    binding.layoutConfirm.isVisible = false
+                }
+
             }
         }
 

@@ -22,14 +22,72 @@
             android:id="@+id/detailsView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="64dp"
             android:clipToPadding="false"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:paddingBottom="64dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipChildren="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?colorSurface"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textConfirm"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                        android:layout_marginTop="@dimen/screen_margin_vertical"
+                        android:text="@string/confirm_reminder"
+                        android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textQuestionTake"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/screen_margin_horizontal"
+                        android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                        android:layout_marginEnd="@dimen/screen_margin_horizontal"
+                        android:textAppearance="@style/AppTheme.Text.BodyNormal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textConfirm"
+                        tools:text="Have you taken 1 pill at 8:00?" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonTaken"
+                        style="@style/AppTheme.Widget.Button.Full"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/confirm"
+                        app:icon="@drawable/ic_check"
+                        app:iconGravity="top"
+                        app:layout_constraintEnd_toEndOf="@+id/textQuestionTake"
+                        app:layout_constraintStart_toStartOf="@+id/textQuestionTake"
+                        app:layout_constraintTop_toBottomOf="@+id/textQuestionTake" />
+
+                    <View
+                        android:id="@+id/divider2"
+                        style="@style/AppTheme.Widget.Divider"
+                        android:layout_marginTop="@dimen/screen_margin_vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/buttonTaken" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textPillName"
@@ -41,7 +99,7 @@
                     android:text="@{pill.name}"
                     app:layout_constraintEnd_toStartOf="@+id/viewPillColor"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layoutConfirm"
                     tools:text="Xyzal" />
 
                 <View
@@ -60,7 +118,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
-                    android:layout_marginTop="@dimen/appbar_margin_vertical"
+                    android:layout_marginTop="@dimen/screen_margin_vertical"
                     android:text="@{pill.description}"
                     android:textAppearance="@style/AppTheme.Text.PillDescription"
                     app:isVisible="@{pill.descriptionVisible}"

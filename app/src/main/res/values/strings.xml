@@ -136,5 +136,6 @@
     <string name="intake_options_x_days_text">Duration %1$d day(s), %2$d day(s) remaining</string>
     <string name="open_source_libraries">Open source libraries</string>
     <string name="used_graphics">Used graphics</string>
+    <string name="confirm_reminder">Confirm reminder</string>
 
 </resources>

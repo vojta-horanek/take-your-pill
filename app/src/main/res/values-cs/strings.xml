@@ -137,5 +137,7 @@
     <string name="intake_options_x_days_text">Doba trvání %1$d dní, %2$d dní zbývá</string>
     <string name="open_source_libraries">Open source knihovny</string>
     <string name="used_graphics">Použitá grafika</string>
+    <string name="confirm_reminder">Potvrdit připomínku</string>
+
 
 </resources>

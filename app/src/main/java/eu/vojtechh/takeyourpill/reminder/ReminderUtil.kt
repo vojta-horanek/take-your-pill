@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.NavDeepLinkBuilder
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.activity.AboutActivity
 import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.model.Pill
@@ -22,6 +21,7 @@ object ReminderUtil {
     private fun getNotificationClickIntent(context: Context, pillId: Long): PendingIntent {
         val args = Bundle()
         args.putLong(Constants.INTENT_EXTRA_PILL_ID, pillId)
+        args.putBoolean(Constants.INTENT_EXTRA_LAUNCHED_FROM_NOTIFICATION, true)
         return NavDeepLinkBuilder(context)
             .setGraph(R.navigation.navigation_graph)
             .setDestination(R.id.details)
@@ -58,21 +58,6 @@ object ReminderUtil {
             intent.putExtra(Constants.INTENT_EXTRA_TIME_DELAY, delayByMillis)
             intent.putExtra(Constants.INTENT_EXTRA_REMINDED_TIME, remindedTime)
             PendingIntent.getBroadcast(
-                context,
-                reminderId.toInt(),
-                intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
-            )
-        }
-
-    private fun getNotificationFullscreenIntent(
-        context: Context,
-        reminderId: Long
-    ): PendingIntent = // FIXME Make a confirm class
-        Intent(context, AboutActivity::class.java).let { intent ->
-            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            PendingIntent.getActivity(
                 context,
                 reminderId.toInt(),
                 intent,
@@ -127,7 +112,7 @@ object ReminderUtil {
                 Pref.buttonDelay.toLong() * 1000 * 60,
                 reminder.getTodayCalendar().timeInMillis
             ),
-            fullscreenPendingIntent = getNotificationFullscreenIntent(context, reminder.id),
+            fullscreenPendingIntent = getNotificationClickIntent(context, pill.id),
             notificationId = reminder.id,
             channelId = pill.id.toString(),
             whenMillis = reminder.getTodayMillis()
@@ -155,7 +140,7 @@ object ReminderUtil {
                 Pref.buttonDelay.toLong() * 1000 * 60,
                 reminder.getTodayCalendar().timeInMillis
             ),
-            fullscreenPendingIntent = getNotificationFullscreenIntent(context, reminder.id),
+            fullscreenPendingIntent = getNotificationClickIntent(context, pill.id),
             channelId = pill.id.toString(),
             whenMillis = reminder.getTodayMillis()
         )
