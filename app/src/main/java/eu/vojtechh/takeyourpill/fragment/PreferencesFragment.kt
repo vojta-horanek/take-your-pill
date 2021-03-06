@@ -6,12 +6,15 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.OVER_SCROLL_NEVER
 import androidx.fragment.app.viewModels
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.BuildConfig
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.activity.AboutActivity
+import eu.vojtechh.takeyourpill.klass.Pref
+import eu.vojtechh.takeyourpill.klass.Utils
 import eu.vojtechh.takeyourpill.viewmodel.PreferencesViewModel
 
 @AndroidEntryPoint
@@ -58,6 +61,12 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
         findPreference<Preference>("addTestData")?.setOnPreferenceClickListener {
             model.addTestData(requireContext())
+            true
+        }
+
+        findPreference<ListPreference>("themeKey")?.setOnPreferenceChangeListener { _, newValue ->
+            Pref.theme = newValue.toString() // Doesn't save?
+            Utils.setTheme(Pref.theme)
             true
         }
 

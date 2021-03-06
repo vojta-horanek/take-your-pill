@@ -36,6 +36,14 @@
             app:title="@string/settings_notification_options" />
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/miscellaneous">
+        <ListPreference
+            app:title="@string/app_theme"
+            app:summary="@string/set_app_theme"
+            app:key="themeKey"
+            app:icon="@drawable/ic_paint"
+            app:entries="@array/pref_theme"
+            app:defaultValue="0"
+            app:entryValues="@array/pref_theme_values" />
         <Preference
             app:icon="@drawable/ic_info"
             app:key="showAbout"
@@ -44,6 +52,6 @@
         <Preference
             app:icon="@drawable/ic_pill"
             app:key="addTestData"
-            app:title="Add test data" />
+            app:title="@string/add_test_data" />
     </PreferenceCategory>
 </PreferenceScreen>

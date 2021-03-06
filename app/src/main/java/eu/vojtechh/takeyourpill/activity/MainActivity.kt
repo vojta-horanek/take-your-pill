@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
 import eu.vojtechh.takeyourpill.klass.Pref
+import eu.vojtechh.takeyourpill.klass.Utils
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         setTheme(R.style.AppTheme)
         setContentView(binding.root)
+
+        Utils.setTheme(Pref.theme)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
