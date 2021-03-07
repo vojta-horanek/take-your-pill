@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,15 +21,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
-import eu.vojtechh.takeyourpill.fragment.dialog.ConfirmationDialog
+import eu.vojtechh.takeyourpill.fragment.dialog.DeleteDialog
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 import java.util.*
 
 @AndroidEntryPoint
-class DetailsFragment : Fragment(),
-    ConfirmationDialog.DeleteListener {
+class DetailsFragment : Fragment() {
 
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
@@ -189,10 +190,8 @@ class DetailsFragment : Fragment(),
                         }
                     }
                 }
-
             }
         }
-
     }
 
     private fun navigateToEdit() {
@@ -212,26 +211,22 @@ class DetailsFragment : Fragment(),
 
 
     private fun navigateToDelete() {
-        ConfirmationDialog.newInstance(
-            getString(R.string.delete_pill),
-            getString(R.string.delete_only_pil),
-            getString(R.string.delete_pill_and_history),
-            R.drawable.ic_delete,
-            R.drawable.ic_delete_history,
-        ).apply {
-            setListener(this@DetailsFragment) // FIXME the listener get deleted when BottomS.. open and theme is changed
+        DeleteDialog().apply {
+            setUserListener { what ->
+                when (what) {
+                    true -> {
+                        model.deletePillWithHistory(model.pill)
+                        exitOnDelete()
+                    }
+                    false -> {
+                        model.deletePill(model.pill.pillEntity)
+                        exitOnDelete()
+                    }
+                }
+            }
         }.show(childFragmentManager, "confirm_delete")
     }
 
-    override fun onDeletePill(view: View) {
-        model.deletePill(model.pill.pillEntity)
-        exitOnDelete()
-    }
-
-    override fun onDeletePillHistory(view: View) {
-        model.deletePillWithHistory(model.pill)
-        exitOnDelete()
-    }
 
     private fun exitOnDelete() {
         NotificationManager.removeNotificationChannel(requireContext(), model.pill.id.toString())
