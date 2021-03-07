@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -114,9 +115,21 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         }
     }
 
-    override fun onPillConfirmClicked(view: View, history: History) {
-        model.confirmPill(history)
-        Snackbar.make(view, getString(R.string.confirmed), Snackbar.LENGTH_SHORT)
-            .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
+    override fun onPillConfirmClicked(confirmCard: View, history: History) {
+        model.confirmPill(requireContext(), history).observe(viewLifecycleOwner) {
+            when (it) {
+                true -> confirmCard.isVisible = false
+                false -> showMessage(getString(R.string.error))
+            }
+        }
+
+    }
+
+    private fun showMessage(msg: String) {
+        Snackbar
+            .make(binding.root, msg, Snackbar.LENGTH_SHORT)
+            .apply {
+                anchorView = requireActivity().findViewById(R.id.bottomNavigation)
+            }.show()
     }
 }

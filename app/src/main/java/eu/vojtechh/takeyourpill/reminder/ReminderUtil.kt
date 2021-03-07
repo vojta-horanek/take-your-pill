@@ -29,23 +29,29 @@ object ReminderUtil {
             .createPendingIntent()
     }
 
+    fun getConfirmIntent(
+        context: Context,
+        reminderId: Long,
+        pillId: Long,
+        remindedTime: Long
+    ) = Intent(context, ConfirmReceiver::class.java).apply {
+        putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
+        putExtra(Constants.INTENT_EXTRA_PILL_ID, pillId)
+        putExtra(Constants.INTENT_EXTRA_REMINDED_TIME, remindedTime)
+    }
+
+
     private fun getNotificationConfirmIntent(
         context: Context,
         reminderId: Long,
         pillId: Long,
         remindedTime: Long
-    ): PendingIntent =
-        Intent(context, ConfirmReceiver::class.java).let { intent ->
-            intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
-            intent.putExtra(Constants.INTENT_EXTRA_PILL_ID, pillId)
-            intent.putExtra(Constants.INTENT_EXTRA_REMINDED_TIME, remindedTime)
-            PendingIntent.getBroadcast(
-                context,
-                reminderId.toInt(),
-                intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
-            )
-        }
+    ) = PendingIntent.getBroadcast(
+        context,
+        reminderId.toInt(),
+        getConfirmIntent(context, reminderId, pillId, remindedTime),
+        PendingIntent.FLAG_CANCEL_CURRENT
+    )
 
     private fun getNotificationDelayIntent(
         context: Context,

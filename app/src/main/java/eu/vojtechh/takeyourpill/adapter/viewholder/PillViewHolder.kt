@@ -104,16 +104,11 @@ class PillViewHolder(
             )
 
             binding.buttonTaken.setOnClickListener { v ->
-                listener.onPillConfirmClicked(v, history)
-                hideConfirmCard()
+                listener.onPillConfirmClicked(binding.pillConfirm, history)
             }
         } ?: run {
             binding.pillConfirm.isVisible = false
         }
-    }
-
-    private fun hideConfirmCard() {
-        binding.pillConfirm.isVisible = false
     }
 
     private fun getFormattedDescription(pill: Pill): CharSequence {

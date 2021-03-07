@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
@@ -181,8 +182,12 @@ class DetailsFragment : Fragment(),
                     history.reminded.time.getTimeString(requireContext())
                 )
                 binding.buttonTaken.setOnClickListener {
-                    model.confirmPill(history)
-                    binding.layoutConfirm.isVisible = false
+                    model.confirmPill(requireContext(), history).observe(viewLifecycleOwner) {
+                        when (it) {
+                            true -> binding.layoutConfirm.isVisible = false
+                            false -> showMessage(getString(R.string.error))
+                        }
+                    }
                 }
 
             }
@@ -235,5 +240,9 @@ class DetailsFragment : Fragment(),
         }
         sharedElementEnterTransition = null
         findNavController().navigateUp()
+    }
+
+    private fun showMessage(msg: String) {
+        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
     }
 }
