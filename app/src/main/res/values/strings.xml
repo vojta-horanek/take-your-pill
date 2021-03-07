@@ -57,8 +57,8 @@
     </plurals>
 
     <string name="two_reminders_same_time">There can only be one reminder with the same time. Please set a different time.</string>
-    <string name="nothing_to_see_here">Nothing to see here…</string>
-    <string name="try_to_add_a_pill_first">Try to add a pill first!</string>
+    <string name="nothing_to_see_here">Nothing to see here</string>
+    <string name="try_to_add_a_pill_first">Your pills will show up here.</string>
 
     <string name="intro">Intro</string>
     <string name="intro_welcome_description">This app will remind you about taking your pills. From now on, you should never forget it. You will be able to see your medication history, graphs and statistics.</string>
