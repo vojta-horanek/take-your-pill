@@ -33,6 +33,7 @@ class PillViewHolder(
             binding.pillDescription.text = description
         }
 
+        binding.chipsLayout.removeAllViews()
         pill.reminders.sortedBy { rem -> rem.time.time }.forEach { reminder ->
             val chip = Chip(binding.root.context)
             chip.text = reminder.getAmountTimeString(binding.root.context)

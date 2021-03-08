@@ -21,7 +21,6 @@ import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemListener {
@@ -85,7 +84,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         }
 
         model.allPills.observe(viewLifecycleOwner) { pills ->
-            Timber.d("Observe")
             model.addConfirmCards(pills).observe(viewLifecycleOwner) { allPills ->
                 appAdapter.submitList(allPills) // Resets scroll, but better than buggy reminder list
                 startPostponedEnterTransition()

@@ -82,5 +82,9 @@ data class Reminder(
         override fun areContentsTheSame(oldItem: Reminder, newItem: Reminder) = false
         //(oldItem.time == newItem.time) && (oldItem.amount == newItem.amount)
     }
+
+    override fun toString(): String {
+        return "${time.hour}:${time.minute}, $amount"
+    }
 }
 
