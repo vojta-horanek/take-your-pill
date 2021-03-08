@@ -97,6 +97,7 @@ class PillViewHolder(
 
     private fun setCardConfirm(latestHistory: History?, context: Context) {
         latestHistory?.let { history ->
+            binding.pillConfirm.isVisible = true
             binding.textQuestionTake.text = binding.root.context.getString(
                 R.string.pill_taken_question,
                 history.amount,
@@ -106,8 +107,6 @@ class PillViewHolder(
             binding.buttonTaken.setOnClickListener { v ->
                 listener.onPillConfirmClicked(binding.pillConfirm, history)
             }
-        } ?: run {
-            binding.pillConfirm.isVisible = false
         }
     }
 

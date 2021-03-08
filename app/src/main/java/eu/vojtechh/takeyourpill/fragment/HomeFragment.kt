@@ -3,7 +3,6 @@ package eu.vojtechh.takeyourpill.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,6 +21,7 @@ import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemListener {
@@ -42,7 +42,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         if (model.isReturningFromPillDetails) {
             exitTransition = MaterialFadeThrough()
             postponeEnterTransition()
-            view.doOnPreDraw { startPostponedEnterTransition() }
             model.isReturningFromPillDetails = false
         }
 
@@ -86,14 +85,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         }
 
         model.allPills.observe(viewLifecycleOwner) { pills ->
-            appAdapter.submitList(pills)
-            if (pills.isNotEmpty()) {
-                model.addConfirmCards(pills).observe(viewLifecycleOwner) { allPills ->
-                    appAdapter.submitList(allPills)
-                }
+            Timber.d("Observe")
+            model.addConfirmCards(pills).observe(viewLifecycleOwner) { allPills ->
+                appAdapter.submitList(allPills) // Resets scroll, but better than buggy reminder list
+                startPostponedEnterTransition()
             }
         }
-
     }
 
     private fun openNewPill() {

@@ -19,7 +19,7 @@ interface HistoryDao {
     fun getWithId(historyId: Long): LiveData<History?>
 
     @Query(
-            """
+        """
         SELECT * FROM history
         WHERE
             pillId = (:pillId) AND
@@ -45,6 +45,18 @@ interface HistoryDao {
         ORDER BY history.reminded DESC LIMIT 1"""
     )
     suspend fun getLatestWithPillIdSync(pillId: Long): History?
+
+    @Query(
+        """
+        SELECT * FROM (
+            SELECT * FROM history
+            WHERE confirmed IS NULL
+            ORDER BY reminded DESC
+        )
+        GROUP BY pillId
+        """
+    )
+    suspend fun getLatestMissed(): List<History>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(historyEntity: List<History>)

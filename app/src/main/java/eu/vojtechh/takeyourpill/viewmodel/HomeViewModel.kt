@@ -48,20 +48,25 @@ class HomeViewModel @Inject constructor(
         }
 
     fun addConfirmCards(pills: List<Pill>) = liveData {
+
+        if (pills.isEmpty()) {
+            emit(pills)
+            return@liveData
+        }
+
         val now = Calendar.getInstance()
         val timeOffset = (30 /* minutes */ * 60 * 1000)
 
+        val latestMissed = historyRepository.getLatestMissed()
         pills.forEach { pill ->
-            val latestHistory = historyRepository.getLatestWithPillIdSync(pill.id)
-
-            latestHistory?.let { history ->
-                if (!history.hasBeenConfirmed) {
-                    if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
-                        pill.closeHistory = history
-                    }
+            pill.closeHistory = null
+            latestMissed.find { it.pillId == pill.id }?.let { history ->
+                if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
+                    pill.closeHistory = history
                 }
             }
         }
+
         emit(pills)
     }
 
