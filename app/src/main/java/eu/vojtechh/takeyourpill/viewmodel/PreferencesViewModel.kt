@@ -75,51 +75,33 @@ class PreferencesViewModel @Inject constructor(
         val histories = listOf(
             listOf(
                 History(
-                    reminded = Reminder.create(pillId = -1).getTodayCalendar(),
+                    reminded = Reminder.create(pillId = -1).getTodayCalendar().addDay(-1),
                     confirmed = Reminder.create(minute = 10, pillId = -1)
-                        .getTodayCalendar(),
+                        .getTodayCalendar().addDay(-1),
                     pillId = pillIds[0]
                 ),
                 History(
-                    reminded = Reminder.create(hour = 9, pillId = -1).getTodayCalendar(),
+                    reminded = Reminder.create(hour = 9, pillId = -1).getTodayCalendar().addDay(-1),
                     confirmed = null,
                     pillId = pillIds[0]
                 ),
                 History(
-                    reminded = Reminder.create(hour = 10, pillId = -1).getTodayCalendar(),
+                    reminded = Reminder.create(hour = 10, pillId = -1).getTodayCalendar()
+                        .addDay(-1),
                     confirmed = Reminder.create(hour = 11, minute = 5, pillId = -1)
-                        .getTodayCalendar(),
+                        .getTodayCalendar().addDay(-1),
                     pillId = pillIds[0]
                 ),
                 History(
-                    reminded = Reminder.create(pillId = -1).getTodayCalendar().addDay(-1),
+                    reminded = Reminder.create(pillId = -1).getTodayCalendar().addDay(-2),
                     confirmed = Reminder.create(minute = 8, pillId = -1).getTodayCalendar()
-                        .addDay(-1),
+                        .addDay(-2),
                     pillId = pillIds[0]
                 ),
                 History(
                     reminded = Reminder.create(hour = 9, pillId = -1).getTodayCalendar()
-                        .addDay(-1),
+                        .addDay(-2),
                     confirmed = Reminder.create(hour = 9, minute = 2, pillId = -1)
-                        .getTodayCalendar().addDay(-1),
-                    pillId = pillIds[0]
-                ),
-                History(
-                    reminded = Reminder.create(hour = 10, pillId = -1).getTodayCalendar()
-                        .addDay(-1),
-                    confirmed = null,
-                    pillId = pillIds[0]
-                ),
-                History(
-                    reminded = Reminder.create(pillId = -1).getTodayCalendar().addDay(-2),
-                    confirmed = Reminder.create(minute = 8, pillId = -1).getTodayCalendar()
-                        .addDay(-2),
-                    pillId = pillIds[0]
-                ),
-                History(
-                    reminded = Reminder.create(hour = 9, pillId = -1).getTodayCalendar()
-                        .addDay(-2),
-                    confirmed = Reminder.create(hour = 11, minute = 2, pillId = -1)
                         .getTodayCalendar().addDay(-2),
                     pillId = pillIds[0]
                 ),
@@ -138,7 +120,7 @@ class PreferencesViewModel @Inject constructor(
                 History(
                     reminded = Reminder.create(hour = 9, pillId = -1).getTodayCalendar()
                         .addDay(-3),
-                    confirmed = Reminder.create(hour = 1, minute = 2, pillId = -1)
+                    confirmed = Reminder.create(hour = 11, minute = 2, pillId = -1)
                         .getTodayCalendar().addDay(-3),
                     pillId = pillIds[0]
                 ),
@@ -148,42 +130,43 @@ class PreferencesViewModel @Inject constructor(
                     confirmed = null,
                     pillId = pillIds[0]
                 ),
+                History(
+                    reminded = Reminder.create(pillId = -1).getTodayCalendar().addDay(-4),
+                    confirmed = Reminder.create(minute = 8, pillId = -1).getTodayCalendar()
+                        .addDay(-4),
+                    pillId = pillIds[0]
+                ),
+                History(
+                    reminded = Reminder.create(hour = 9, pillId = -1).getTodayCalendar()
+                        .addDay(-4),
+                    confirmed = Reminder.create(hour = 1, minute = 2, pillId = -1)
+                        .getTodayCalendar().addDay(-4),
+                    pillId = pillIds[0]
+                ),
+                History(
+                    reminded = Reminder.create(hour = 10, pillId = -1).getTodayCalendar()
+                        .addDay(-4),
+                    confirmed = null,
+                    pillId = pillIds[0]
+                ),
             ), listOf(
-                History(
-                    reminded = Reminder.create(pillId = -1).getTodayCalendar(),
-                    confirmed = Reminder.create(minute = 10, pillId = -1)
-                        .getTodayCalendar(),
-                    pillId = pillIds[1]
-                ),
-                History(
-                    reminded = Reminder.create(hour = 12, pillId = -1).getTodayCalendar(),
-                    confirmed = Reminder.create(hour = 12, minute = 12, pillId = -1)
-                        .getTodayCalendar(),
-                    pillId = pillIds[1]
-                ),
-                History(
-                    reminded = Reminder.create(hour = 22, pillId = -1).getTodayCalendar(),
-                    confirmed = Reminder.create(hour = 22, minute = 5, pillId = -1)
-                        .getTodayCalendar(),
-                    pillId = pillIds[1]
-                ),
                 History(
                     reminded = Reminder.create(pillId = -1).getTodayCalendar().addDay(-1),
-                    confirmed = Reminder.create(minute = 8, pillId = -1).getTodayCalendar()
-                        .addDay(-1),
+                    confirmed = Reminder.create(minute = 10, pillId = -1)
+                        .getTodayCalendar().addDay(-1),
                     pillId = pillIds[1]
                 ),
                 History(
                     reminded = Reminder.create(hour = 12, pillId = -1).getTodayCalendar()
                         .addDay(-1),
-                    confirmed = Reminder.create(hour = 12, minute = 2, pillId = -1)
+                    confirmed = Reminder.create(hour = 12, minute = 12, pillId = -1)
                         .getTodayCalendar().addDay(-1),
                     pillId = pillIds[1]
                 ),
                 History(
                     reminded = Reminder.create(hour = 22, pillId = -1).getTodayCalendar()
                         .addDay(-1),
-                    confirmed = Reminder.create(hour = 22, minute = 7, pillId = -1)
+                    confirmed = Reminder.create(hour = 22, minute = 5, pillId = -1)
                         .getTodayCalendar().addDay(-1),
                     pillId = pillIds[1]
                 ),
@@ -227,28 +210,48 @@ class PreferencesViewModel @Inject constructor(
                         .getTodayCalendar().addDay(-3),
                     pillId = pillIds[1]
                 ),
+                History(
+                    reminded = Reminder.create(pillId = -1).getTodayCalendar().addDay(-4),
+                    confirmed = Reminder.create(minute = 8, pillId = -1).getTodayCalendar()
+                        .addDay(-4),
+                    pillId = pillIds[1]
+                ),
+                History(
+                    reminded = Reminder.create(hour = 12, pillId = -1).getTodayCalendar()
+                        .addDay(-4),
+                    confirmed = Reminder.create(hour = 12, minute = 2, pillId = -1)
+                        .getTodayCalendar().addDay(-4),
+                    pillId = pillIds[1]
+                ),
+                History(
+                    reminded = Reminder.create(hour = 22, pillId = -1).getTodayCalendar()
+                        .addDay(-4),
+                    confirmed = Reminder.create(hour = 22, minute = 7, pillId = -1)
+                        .getTodayCalendar().addDay(-4),
+                    pillId = pillIds[1]
+                ),
             ), listOf(
                 History(
-                    reminded = Reminder.create(hour = 7, pillId = -1).getTodayCalendar(),
+                    reminded = Reminder.create(hour = 7, pillId = -1).getTodayCalendar().addDay(-1),
                     confirmed = Reminder.create(hour = 7, minute = 12, pillId = -1)
-                        .getTodayCalendar(),
-                    pillId = pillIds[2]
-                ), History(
-                    reminded = Reminder.create(hour = 7, pillId = -1).getTodayCalendar()
-                        .addDay(-1),
-                    confirmed = Reminder.create(hour = 7, minute = 2, pillId = -1)
                         .getTodayCalendar().addDay(-1),
                     pillId = pillIds[2]
                 ), History(
                     reminded = Reminder.create(hour = 7, pillId = -1).getTodayCalendar()
                         .addDay(-2),
-                    confirmed = null,
+                    confirmed = Reminder.create(hour = 7, minute = 2, pillId = -1)
+                        .getTodayCalendar().addDay(-2),
                     pillId = pillIds[2]
                 ), History(
                     reminded = Reminder.create(hour = 7, pillId = -1).getTodayCalendar()
                         .addDay(-3),
+                    confirmed = null,
+                    pillId = pillIds[2]
+                ), History(
+                    reminded = Reminder.create(hour = 7, pillId = -1).getTodayCalendar()
+                        .addDay(-4),
                     confirmed = Reminder.create(hour = 8, minute = 2, pillId = -1)
-                        .getTodayCalendar().addDay(-3),
+                        .getTodayCalendar().addDay(-4),
                     pillId = pillIds[2]
                 )
             )
