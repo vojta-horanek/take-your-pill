@@ -60,6 +60,8 @@ class PillRepository @Inject constructor(
     }
 
     suspend fun markPillDeleted(pillEntity: PillEntity) {
+        // Delete all reminders based on pill (removes orphaned)
+        reminderDao.deleteByPillId(pillEntity.id)
         pillEntity.deleted = true
         pillDao.updatePill(pillEntity)
     }
