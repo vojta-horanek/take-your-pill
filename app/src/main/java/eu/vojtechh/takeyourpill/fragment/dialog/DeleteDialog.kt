@@ -28,6 +28,6 @@ class DeleteDialog : RoundedDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonPillOnly.setOnClickListener { listener(false) }
-        binding.buttonPillHistory.setOnClickListener { listener(false) }
+        binding.buttonPillHistory.setOnClickListener { listener(true) }
     }
 }
