@@ -11,6 +11,7 @@ import eu.vojtechh.takeyourpill.klass.DayOfYear
 import eu.vojtechh.takeyourpill.klass.getTimeString
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
 
@@ -33,8 +34,15 @@ class PillViewHolder(
             binding.pillDescription.text = description
         }
 
+        addReminderChips(pill.reminders)
+        setIntakeOptions(pill, binding.root.context)
+        setCardConfirm(pill.closeHistory, binding.root.context)
+        binding.executePendingBindings()
+    }
+
+    private fun addReminderChips(reminders: List<Reminder>) {
         binding.chipsLayout.removeAllViews()
-        pill.reminders.sortedBy { rem -> rem.time.time }.forEach { reminder ->
+        reminders.sortedBy { rem -> rem.time.time }.forEach { reminder ->
             val chip = Chip(binding.root.context)
             chip.text = reminder.getAmountTimeString(binding.root.context)
             chip.isFocusable = false
@@ -46,10 +54,6 @@ class PillViewHolder(
             chip.chipBackgroundColor = null
             binding.chipsLayout.addView(chip)
         }
-
-        setIntakeOptions(pill, binding.root.context)
-        setCardConfirm(pill.closeHistory, binding.root.context)
-        binding.executePendingBindings()
     }
 
     private fun setIntakeOptions(pill: Pill, context: Context) {
@@ -97,6 +101,7 @@ class PillViewHolder(
     }
 
     private fun setCardConfirm(latestHistory: History?, context: Context) {
+        binding.pillConfirm.isVisible = false
         latestHistory?.let { history ->
             binding.pillConfirm.isVisible = true
             binding.textQuestionTake.text = binding.root.context.getString(

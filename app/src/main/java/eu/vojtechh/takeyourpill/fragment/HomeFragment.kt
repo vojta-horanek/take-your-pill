@@ -30,6 +30,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
 
+    private lateinit var appAdapter: AppRecyclerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFadeThrough()
@@ -42,11 +44,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         if (model.isReturningFromPillDetails) {
             exitTransition = MaterialFadeThrough()
             postponeEnterTransition()
-            view.doOnPreDraw { startPostponedEnterTransition() }
             model.isReturningFromPillDetails = false
         }
 
-        val appAdapter = AppRecyclerAdapter(
+        appAdapter = AppRecyclerAdapter(
             this, getString(R.string.pills), getString(R.string.try_to_add_a_pill_first),
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_empty_view)
         )
@@ -86,9 +87,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         }
 
         model.allPills.observe(viewLifecycleOwner) { pills ->
-            appAdapter.submitList(pills)
             model.addConfirmCards(pills).observe(viewLifecycleOwner) { allPills ->
                 appAdapter.submitList(allPills)
+                view.doOnPreDraw { startPostponedEnterTransition() }
+                model.lastPills = allPills
             }
         }
     }
@@ -115,7 +117,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
     override fun onPillConfirmClicked(confirmCard: View, history: History) {
         model.confirmPill(requireContext(), history).observe(viewLifecycleOwner) {
             when (it) {
-                true -> confirmCard.isVisible = false
+                true -> {
+                    confirmCard.isVisible = false
+                    // Fixes card still visible after next observe
+                    model.addConfirmCards(model.lastPills).observe(viewLifecycleOwner) { pills ->
+                        appAdapter.submitList(pills)
+                    }
+                }
                 false -> showMessage(getString(R.string.error))
             }
         }

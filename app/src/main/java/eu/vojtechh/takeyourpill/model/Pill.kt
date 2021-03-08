@@ -114,7 +114,8 @@ data class Pill(
                     this.color == newItem.color &&
                     this.deleted == newItem.deleted &&
                     this.options == newItem.options &&
-                    this.reminders == newItem.reminders
+                    this.reminders == newItem.reminders &&
+                    this.closeHistory == newItem.closeHistory
 
         } else false
 

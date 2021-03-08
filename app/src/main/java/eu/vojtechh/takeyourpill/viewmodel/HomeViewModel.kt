@@ -12,6 +12,7 @@ import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -24,6 +25,7 @@ class HomeViewModel @Inject constructor(
     var isReturningFromPillDetails = false
     val allPills = pillRepository.getAllPills()
 
+    var lastPills = listOf<Pill>()
 
     fun confirmPill(context: Context, history: History) =
         liveData {
@@ -57,16 +59,19 @@ class HomeViewModel @Inject constructor(
         val now = Calendar.getInstance()
         val timeOffset = (30 /* minutes */ * 60 * 1000)
 
-        val latestMissed = historyRepository.getLatestMissed()
         pills.forEach { pill ->
+            val latestHistory = historyRepository.getLatestWithPillIdSync(pill.id)
+
             pill.closeHistory = null
-            latestMissed.find { it.pillId == pill.id }?.let { history ->
-                if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
-                    pill.closeHistory = history
+            latestHistory?.let { history ->
+                if (!history.hasBeenConfirmed) {
+                    if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
+                        pill.closeHistory = history
+                    }
                 }
             }
+            Timber.d(pill.closeHistory.toString())
         }
-
         emit(pills)
     }
 
