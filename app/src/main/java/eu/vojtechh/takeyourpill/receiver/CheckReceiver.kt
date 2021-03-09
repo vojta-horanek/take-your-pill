@@ -55,7 +55,7 @@ class CheckReceiver : BroadcastReceiver() {
 
                 // If this reminder has not been confirmed and remindAgain is enabled, schedule check alarm
                 historyRepository.getByPillIdAndTime(pill.id, remindedTime)?.let { history ->
-                    if (Pref.remindAgain && !history.hasBeenConfirmed && checkCount < Constants.MAX_CHECK_COUNT) {
+                    if (Pref.remindAgain && !history.hasBeenConfirmed && checkCount < Constants.MAX_CHECK_COUNT - 1) {
                         ReminderManager.createCheckAlarm(
                             context,
                             reminderId,
