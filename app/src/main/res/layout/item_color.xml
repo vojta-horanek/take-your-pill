@@ -12,10 +12,6 @@
             name="color"
             type="eu.vojtechh.takeyourpill.model.PillColor" />
 
-        <variable
-            name="listener"
-            type="eu.vojtechh.takeyourpill.adapter.ColorAdapter.ColorAdapterListener" />
-
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,24 +19,24 @@
         android:layout_height="@dimen/color_dot_size_big"
         android:layout_marginEnd="16dp"
         android:background="?attr/colorSurface"
-        android:onClick="@{(view) -> listener.onColorClicked(view, color)}">
+        android:id="@+id/pillColorFrame">
 
         <View
-            android:id="@+id/imagePillColor"
+            android:id="@+id/viewPillColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_oval"
-            app:background_color_shaped="@{color.getColor(context)}"
+            app:backgroundColorShaped="@{color.getColor(context)}"
             app:shapeAppearanceOverlay="@style/AppTheme.Shape.Oval" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="4dp"
+            app:isVisible="@{color.checked}"
             app:srcCompat="@drawable/ic_check"
-            android:visibility="@{color.checked ? View.VISIBLE : View.GONE}"
             app:tint="@android:color/white"
-            tools:visibility="visible"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:visibility="visible" />
     </FrameLayout>
 </layout>

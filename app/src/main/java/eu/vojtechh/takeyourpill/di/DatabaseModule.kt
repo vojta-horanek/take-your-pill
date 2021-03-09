@@ -33,4 +33,8 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideReminderDao(db: Database) = db.getReminderDao()
+
+    @Singleton
+    @Provides
+    fun provideHistoryDao(db: Database) = db.getHistoryDao()
 }

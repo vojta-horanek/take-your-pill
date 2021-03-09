@@ -16,9 +16,9 @@
             app:summary="@string/settings_delay_summary"
             app:title="@string/settings_delay_by" />
         <SwitchPreferenceCompat
+            app:defaultValue="true"
             app:icon="@drawable/ic_alarm"
             app:key="remindAgainKey"
-            app:defaultValue="true"
             app:summary="@string/settings_remind_again_summary"
             app:title="@string/settings_remind_again" />
         <SeekBarPreference
@@ -36,10 +36,22 @@
             app:title="@string/settings_notification_options" />
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/miscellaneous">
+        <ListPreference
+            app:title="@string/app_theme"
+            app:summary="@string/set_app_theme"
+            app:key="themeKey"
+            app:icon="@drawable/ic_paint"
+            app:entries="@array/pref_theme"
+            app:defaultValue="0"
+            app:entryValues="@array/pref_theme_values" />
         <Preference
             app:icon="@drawable/ic_info"
             app:key="showAbout"
             app:summary="@string/settings_about_application_summary"
             app:title="@string/settings_about_application" />
+        <Preference
+            app:icon="@drawable/ic_pill"
+            app:key="addTestData"
+            app:title="@string/add_test_data" />
     </PreferenceCategory>
 </PreferenceScreen>

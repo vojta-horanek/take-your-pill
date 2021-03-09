@@ -3,17 +3,22 @@
 
     <!-- https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=64ba69&secondary.color=FFC107 -->
     <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#38883C</color>
     <color name="colorAccent">#FFC107</color>
+    <color name="colorAccentDark">#FFA000</color>
 
     <color name="photoBackgroundDefault">?attr/colorBackgroundFloating</color>
 
     <color name="colorBlue">#1976D2</color>
+    <color name="_intro_colorBlueDark">#0D47A1</color>
     <color name="colorDarkBlue">#303F9F</color>
     <color name="colorTeal">#00796B</color>
     <color name="colorGreen">#388E3C</color>
     <color name="colorYellow">@color/colorAccent</color>
     <color name="colorOrange">#F57C00</color>
+    <color name="_intro_colorOrangeDark">#E65100</color>
     <color name="colorRed">#D32F2F</color>
+    <color name="colorDarkerSurface">#0F000000</color>
 
 
 </resources>

@@ -3,14 +3,10 @@ package eu.vojtechh.takeyourpill.database
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.model.PillColor
-import eu.vojtechh.takeyourpill.model.Reminder
 import java.io.ByteArrayOutputStream
 import java.util.*
-
 
 class Converters {
     @TypeConverter
@@ -57,27 +53,16 @@ class Converters {
     }
 
     @TypeConverter
-    fun jsonToList(listOfCReminder: String): MutableList<Reminder> {
-        return Gson().fromJson(
-            listOfCReminder,
-            object : TypeToken<MutableList<Reminder>>() {}.type
-        )
+    fun toCalendar(l: Long?): Calendar? {
+        l?.let {
+            val c: Calendar = Calendar.getInstance()
+            c.timeInMillis = it
+            return c
+        } ?: run { return null }
     }
 
     @TypeConverter
-    fun listToJson(listOfString: MutableList<Reminder>): String {
-        return Gson().toJson(listOfString)
-    }
-
-    @TypeConverter
-    fun toCalendar(l: Long): Calendar {
-        val c: Calendar = Calendar.getInstance()
-        c.timeInMillis = l
-        return c
-    }
-
-    @TypeConverter
-    fun fromCalendar(c: Calendar): Long {
-        return c.time.time
+    fun fromCalendar(c: Calendar?): Long? {
+        return c?.time?.time
     }
 }

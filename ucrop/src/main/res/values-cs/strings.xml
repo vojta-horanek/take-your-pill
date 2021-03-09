@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ucrop_label_original">Původní</string>
+    <string name="ucrop_label_edit_photo">Upravit fotku</string>
+    <string name="ucrop_menu_crop">Oříznout</string>
+    <string name="ucrop_rotate">Otočit</string>
+    <string name="ucrop_scale">Škálovat</string>
+    <string name="ucrop_crop">Oříznout</string>
+    <string name="ucrop_confirm_discard_photo">Doopravdy chcete odejít?</string>
+    <string name="ucrop_confirm_discard_photo_description">Toto zruší vaše úpravy a fotku nepřidá.</string>
+</resources>

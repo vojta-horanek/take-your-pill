@@ -4,33 +4,38 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.FileNotFoundException
 import java.io.InputStream
+import javax.inject.Inject
 
-class EditViewModel @ViewModelInject constructor(
-    private val pillRepository: PillRepository
+@HiltViewModel
+class EditViewModel @Inject constructor(
+        private val pillRepository: PillRepository
 ) : ViewModel() {
-    fun addPill(pill: Pill) = liveData { emit(pillRepository.insertPill(pill)) }
 
-    fun addPillReturn(pill: Pill) = liveData { emitSource(pillRepository.insertPillReturn(pill)) }
+    fun addAndGetPill(pill: Pill) =
+        liveData(Dispatchers.IO) { emitSource(pillRepository.insertPillReturn(pill)) }
 
-    fun updatePill(pill: Pill) = liveData { emit(pillRepository.updatePill(pill)) }
+    fun updateAndGetPill(pill: Pill) =
+        liveData(Dispatchers.IO) { emitSource(pillRepository.updatePillReturn(pill)) }
 
-    fun updatePillReturn(pill: Pill) =
-        liveData { emitSource(pillRepository.updatePillReturn(pill)) }
+    suspend fun updatePill(pill: Pill) = pillRepository.updatePill(pill)
 
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
 
-    fun getNewEmptyPill() = Pill.getEmpty()
+    fun getNewEmptyPill() = Pill.new()
 
+    var hasPillBeenEdited = false
     lateinit var pill: Pill
     val isPillInitialized
         get() = ::pill.isInitialized
@@ -43,13 +48,9 @@ class EditViewModel @ViewModelInject constructor(
         pill.color = it
         val colors = PillColor.getAllPillColorList()
         for (color in colors) {
-            color.checked = (color.resource == it.resource)
+            color.isChecked = (color.resource == it.resource)
         }
         colors
-    }
-
-    fun setActivePillColor(pillColor: PillColor) {
-        _activeColor.value = pillColor
     }
 
     private val _reminders: MutableLiveData<List<Reminder>> by lazy {
@@ -57,39 +58,8 @@ class EditViewModel @ViewModelInject constructor(
     }
 
     val reminders = Transformations.map(_reminders) {
-        pill.reminders = it.sortedBy { rem -> rem.calendar.time }.toMutableList()
+        pill.reminders = it.sortedBy { rem -> rem.time.time }.toMutableList()
         pill.reminders
-    }
-
-    fun setReminders(reminders: List<Reminder>) {
-        _reminders.value = reminders
-    }
-
-    fun addReminder(reminder: Reminder) {
-        val newList = _reminders.value?.toMutableList()
-        newList?.add(reminder)
-        _reminders.value = newList
-    }
-
-    fun removerReminder(reminder: Reminder) {
-        val newList = _reminders.value?.toMutableList()
-        newList?.remove(reminder)
-        _reminders.value = newList
-    }
-
-    fun editReminder(reminder: Reminder) {
-        val newList = _reminders.value?.toMutableList()
-        if (reminder.id != 0L) {
-            newList?.removeAll { r -> r.id == reminder.id }
-        } else {
-            newList?.remove(reminder)
-        }
-        newList?.add(reminder)
-        _reminders.value = newList
-    }
-
-    fun getReminderTimes(): MutableList<Reminder> {
-        return _reminders.value!!.toMutableList()
     }
 
     private val _photoBitmap: MutableLiveData<Bitmap?> by lazy {
@@ -101,27 +71,77 @@ class EditViewModel @ViewModelInject constructor(
         it
     }
 
-    fun setImage(data: Uri, context: Context) = viewModelScope.launch(Dispatchers.IO) {
+    fun setActivePillColor(pillColor: PillColor) {
+        _activeColor.value = pillColor
+        hasPillBeenEdited = true
+    }
+
+    fun addReminder(reminder: Reminder) {
+        val newList = _reminders.value?.toMutableList()
+        newList?.add(reminder)
+        hasPillBeenEdited = true
+        _reminders.value = newList
+    }
+
+    fun removeReminder(reminder: Reminder) {
+        val newList = _reminders.value?.toMutableList()
+        newList?.remove(reminder)
+        hasPillBeenEdited = true
+        _reminders.value = newList
+    }
+
+    fun editReminder(reminder: Reminder) {
+        val newList = _reminders.value?.toMutableList()
+        if (reminder.id != 0L) {
+            newList?.removeAll { r -> r.id == reminder.id }
+        } else {
+            newList?.remove(reminder)
+        }
+        newList?.add(reminder)
+        hasPillBeenEdited = true
+        _reminders.value = newList
+    }
+
+    fun setImage(data: Uri, context: Context) = liveData(Dispatchers.IO) {
         try {
-            val inputStream: InputStream? =
-                context.contentResolver.openInputStream(data)
-            // FIXME Fix rotation
-            val userBitmap = BitmapFactory.decodeStream(inputStream)
-            val scaledBitmap = Bitmap.createScaledBitmap(
-                userBitmap,
-                (userBitmap.width.toFloat() * 0.8).toInt(), // Downscale image
-                (userBitmap.height.toFloat() * 0.8).toInt(),
-                false
-            )
-            _photoBitmap.postValue(scaledBitmap)
+            val inputStream: InputStream? = context.contentResolver.openInputStream(data)
+            _photoBitmap.postValue(BitmapFactory.decodeStream(inputStream))
+            hasPillBeenEdited = true
+            emit(true)
         } catch (e: FileNotFoundException) {
-            // Ignore
+            emit(false)
         }
     }
 
     fun deleteImage() {
+        hasPillBeenEdited = true
         _photoBitmap.value = null
     }
 
+    fun initFields() {
+        _activeColor.value = pill.color
+        _reminders.value = pill.reminders
+    }
 
+    var firstNameEdit = true
+    var firstDescriptionEdit = true
+
+    fun onNameChanged(text: CharSequence?): Boolean {
+        text?.let { pill.name = it.trim().toString() }
+        if (firstNameEdit) {
+            firstNameEdit = false
+        } else {
+            hasPillBeenEdited = true
+        }
+        return text.isNullOrBlank()
+    }
+
+    fun onDescriptionChanged(text: CharSequence?) {
+        text?.let { pill.description = it.trim().toString() }
+        if (firstDescriptionEdit) {
+            firstDescriptionEdit = false
+        } else {
+            hasPillBeenEdited = true
+        }
+    }
 }

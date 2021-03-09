@@ -1,5 +1,6 @@
 package eu.vojtechh.takeyourpill.reminder
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -14,7 +15,7 @@ import timber.log.Timber
 
 object NotificationManager {
 
-    fun createAndShowNotification(
+    fun createNotification(
         context: Context,
         title: String,
         description: String,
@@ -23,12 +24,10 @@ object NotificationManager {
         pendingIntent: PendingIntent,
         confirmPendingIntent: PendingIntent,
         delayPendingIntent: PendingIntent,
-        notificationId: Long,
+        fullscreenPendingIntent: PendingIntent,
         channelId: String,
         whenMillis: Long
-    ) {
-
-        Timber.d("Creating notification for reminderId %d", notificationId)
+    ): Notification {
 
         val buttonDelay = Pref.buttonDelay
         // create notification
@@ -37,7 +36,6 @@ object NotificationManager {
             .setContentTitle(title)
             .setContentText(description)
             .setColor(color)
-            .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setShowWhen(true)
             .setWhen(whenMillis)
@@ -60,12 +58,13 @@ object NotificationManager {
                 )
             )
 
-        // FIXME Currently broken, must have a foreground service
-//        if (Pref.alertStyle) {
-//            Timber.d("Using fullscreen intent")
-//            builder.setFullScreenIntent(fullscreenPendingIntent, true)
-//            builder.setCategory(NotificationCompat.CATEGORY_ALARM)
-//        }
+        if (Pref.alertStyle) {
+            Timber.d("Using fullscreen intent")
+            builder.setFullScreenIntent(fullscreenPendingIntent, true)
+            builder.setCategory(NotificationCompat.CATEGORY_CALL)
+        } else {
+            builder.setContentIntent(pendingIntent)
+        }
 
         // set notification style to BigPicture if the pill has a photo
         bitmap?.let {
@@ -76,10 +75,42 @@ object NotificationManager {
                     .bigLargeIcon(null)
             )
         }
+        return builder.build()
+    }
+
+    fun showNotification(
+        context: Context,
+        title: String,
+        description: String,
+        color: Int,
+        bitmap: Bitmap?,
+        pendingIntent: PendingIntent,
+        confirmPendingIntent: PendingIntent,
+        delayPendingIntent: PendingIntent,
+        fullscreenPendingIntent: PendingIntent,
+        notificationId: Long,
+        channelId: String,
+        whenMillis: Long
+    ) {
+        Timber.d("Creating notification for reminderId %d", notificationId)
+
+        val notification = createNotification(
+            context,
+            title,
+            description,
+            color,
+            bitmap,
+            pendingIntent,
+            confirmPendingIntent,
+            delayPendingIntent,
+            fullscreenPendingIntent,
+            channelId,
+            whenMillis
+        )
 
         // show notification to the user
         with(NotificationManagerCompat.from(context)) {
-            notify(notificationId.toInt(), builder.build())
+            notify(notificationId.toInt(), notification)
         }
 
     }

@@ -1,2 +1,4 @@
+include ':ucrop'
+include ':imagepicker'
 include ':app'
 rootProject.name = "Take Your Pill"

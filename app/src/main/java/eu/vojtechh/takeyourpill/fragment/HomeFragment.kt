@@ -2,7 +2,9 @@ package eu.vojtechh.takeyourpill.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -16,19 +18,24 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.viewBinding
+import eu.vojtechh.takeyourpill.model.BaseModel
+import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
-import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.PillAdapterListener {
+class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemListener {
 
     private val model: HomeViewModel by viewModels()
-    private val view by viewBinding(FragmentHomeBinding::bind)
+
+    private val binding by viewBinding(FragmentHomeBinding::bind)
+
+    private lateinit var appAdapter: AppRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFadeThrough()
+        exitTransition = MaterialFadeThrough()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,63 +44,97 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.PillAd
         if (model.isReturningFromPillDetails) {
             exitTransition = MaterialFadeThrough()
             postponeEnterTransition()
-            view.doOnPreDraw { startPostponedEnterTransition() }
             model.isReturningFromPillDetails = false
         }
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setHasOptionsMenu(true)
+        appAdapter = AppRecyclerAdapter(
+            this, getString(R.string.pills), getString(R.string.try_to_add_a_pill_first),
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_empty_view)
+        )
 
-        val pillsAdapter = AppRecyclerAdapter(this, getString(R.string.pills))
-
-        view.recyclerHome.run {
-            adapter = pillsAdapter
+        binding.recyclerHome.run {
+            adapter = appAdapter
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+                private var recyclerScrollY = 0
+
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0) {
-                        view.floatingActionButton.shrink()
-                    } else {
-                        view.floatingActionButton.extend()
+
+                    val offset = binding.recyclerHome.computeVerticalScrollOffset()
+
+                    when (binding.floatingActionButton.isExtended) {
+                        true -> {
+                            if (offset - recyclerScrollY > 60) {
+                                binding.floatingActionButton.shrink()
+                            }
+                        }
+                        false -> {
+                            if (offset == 0) {
+                                binding.floatingActionButton.extend()
+                            }
+                        }
                     }
+
+                    recyclerScrollY = offset
                     super.onScrolled(recyclerView, dx, dy)
                 }
             })
         }
 
-        view.floatingActionButton.setOnClickListener {
-            exitTransition = MaterialElevationScale(false)
-            reenterTransition = MaterialElevationScale(true)
-            findNavController().navigate(R.id.edit)
+        binding.floatingActionButton.setOnClickListener {
+            openNewPill()
         }
 
-        model.allPills.observe(viewLifecycleOwner, {
-            pillsAdapter.submitList(it)
-        })
+        model.allPills.observe(viewLifecycleOwner) { pills ->
+            model.addConfirmCards(pills).observe(viewLifecycleOwner) { allPills ->
+                appAdapter.submitList(allPills)
+                view.doOnPreDraw { startPostponedEnterTransition() }
+                model.lastPills = allPills
+            }
+        }
     }
 
-    override fun onPillClicked(view: View, pill: Pill) {
-        model.isReturningFromPillDetails = true
-        exitTransition = MaterialElevationScale(false)
+    private fun openNewPill() {
+        exitTransition = null
         reenterTransition = MaterialElevationScale(true)
-        val pillDetailTransitionName = getString(R.string.pill_details_transition_name)
-        val extras = FragmentNavigatorExtras(view to pillDetailTransitionName)
-        val directions = HomeFragmentDirections.actionHomescreenToDetails(pill.id)
-        findNavController().navigate(directions, extras)
+        model.isReturningFromPillDetails = true
+        findNavController().navigate(R.id.edit)
     }
 
-    // TODO
-    override fun onPillConfirmClicked(view: View, reminder: Reminder) {
-        Snackbar.make(view, reminder.timeString, Snackbar.LENGTH_SHORT)
-            .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
+    override fun onItemClicked(view: View, item: BaseModel) {
+        if (item is Pill) {
+            model.isReturningFromPillDetails = true
+            exitTransition = MaterialElevationScale(false)
+            reenterTransition = MaterialElevationScale(true)
+            val pillDetailTransitionName = getString(R.string.pill_details_transition_name)
+            val extras = FragmentNavigatorExtras(view to pillDetailTransitionName)
+            val directions = HomeFragmentDirections.actionHomescreenToDetails(item.id)
+            findNavController().navigate(directions, extras)
+        }
     }
 
-    // TODO
-    override fun onPillNotConfirmClicked(view: View, reminder: Reminder) {
-        Snackbar.make(view, "DISMISS" + reminder.timeString, Snackbar.LENGTH_SHORT)
-            .apply { anchorView = requireActivity().findViewById(R.id.bottomNavigation) }.show()
+    override fun onPillConfirmClicked(confirmCard: View, history: History) {
+        model.confirmPill(requireContext(), history).observe(viewLifecycleOwner) {
+            when (it) {
+                true -> {
+                    confirmCard.isVisible = false
+                    // Fixes card still visible after next observe
+                    model.addConfirmCards(model.lastPills).observe(viewLifecycleOwner) { pills ->
+                        appAdapter.submitList(pills)
+                    }
+                }
+                false -> showMessage(getString(R.string.error))
+            }
+        }
 
+    }
+
+    private fun showMessage(msg: String) {
+        Snackbar
+            .make(binding.root, msg, Snackbar.LENGTH_SHORT)
+            .apply {
+                anchorView = requireActivity().findViewById(R.id.bottomNavigation)
+            }.show()
     }
 }

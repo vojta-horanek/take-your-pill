@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.content.Context" />
+
+        <variable
+            name="pill"
+            type="eu.vojtechh.takeyourpill.model.Pill" />
+
+        <variable
+            name="stat"
+            type="eu.vojtechh.takeyourpill.model.StatItem" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorBackgroundFloating"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:id="@+id/cardHistoryPill"
+            app:cardCornerRadius="@dimen/standard_corner_radius"
+            app:cardElevation="@dimen/standard_card_elevation"
+            app:cardPreventCornerOverlap="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingVertical="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textHistoryName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAppearance="@style/AppTheme.Text.Header6"
+                    app:layout_constraintEnd_toStartOf="@+id/viewPillColor"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread"
+                    tools:text="Xyzal" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textHistoryDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:ellipsize="end"
+                    android:text="@{stat.getSummaryText(context)}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    app:isVisible="@{stat.hasStats}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/textHistoryName"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/textHistoryName"
+                    app:layout_constraintTop_toBottomOf="@+id/textHistoryName"
+                    tools:text="Stats\nsadf" />
+
+                <View
+                    android:id="@+id/viewPillColor"
+                    android:layout_width="@dimen/color_dot_size"
+                    android:layout_height="@dimen/color_dot_size"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/shape_oval"
+                    app:backgroundColorShaped="@{pill.colorResource(context)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageNext"
+                    app:layout_constraintEnd_toStartOf="@id/imageNext"
+                    app:layout_constraintTop_toTopOf="@+id/imageNext" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageNext"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="@dimen/screen_margin_horizontal_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_next" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</layout>

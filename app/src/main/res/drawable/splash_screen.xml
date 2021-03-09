@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="?attr/colorSurface" />
+    <item
+        android:drawable="@drawable/ic_logo"
+        android:gravity="center"
+        android:bottom="32dp" />
+    <item
+        android:drawable="@drawable/app_name"
+        android:gravity="bottom|center"
+        android:bottom="96dp" />
+
+</layer-list>

@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:overScrollMode="never"
     android:transitionGroup="true"
-    tools:context=".fragment.HistoryFragment"
-    android:overScrollMode="never">
+    tools:context=".fragment.HistoryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
@@ -18,14 +18,14 @@
             style="@style/AppTheme.Widget.Header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings"
-            android:layout_marginBottom="0dp" />
+            android:layout_marginBottom="0dp"
+            android:text="@string/settings" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentPreferences"
             android:name="eu.vojtechh.takeyourpill.fragment.PreferencesFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

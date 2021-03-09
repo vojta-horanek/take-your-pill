@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:parentTag="LinearLayout">
+
+    <RadioGroup
+        android:id="@+id/pill_options_view_radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/radio_indefinitely"
+        android:paddingHorizontal="@dimen/appbar_margin_horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_indefinitely"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pill_options_indefinitely" />
+
+        <RadioButton
+            android:id="@+id/radio_x_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pill_options_for_x_days" />
+
+        <RadioButton
+            android:id="@+id/radio_cycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pill_options_cycle" />
+
+    </RadioGroup>
+
+    <View
+        android:id="@+id/divider"
+        style="@style/AppTheme.Widget.Divider"
+        android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+        android:layout_marginTop="@dimen/screen_margin_vertical_little"
+        android:layout_marginBottom="@dimen/screen_margin_vertical_little" />
+
+    <LinearLayout
+        android:id="@+id/layout_x_days"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/layout_x_days_duration"
+            style="@style/AppTheme.Widget.ListItem.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.Text.BodyNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/duration" />
+
+            <TextView
+                android:id="@+id/x_days_count_duration"
+                style="@style/AppTheme.Text.Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="21" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/AppTheme.Widget.Divider"
+            android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+            android:layout_marginTop="@dimen/screen_margin_vertical_little"
+            android:layout_marginBottom="@dimen/screen_margin_vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/screen_margin_horizontal_small"
+            android:paddingStart="@dimen/screen_margin_horizontal"
+            android:paddingEnd="@dimen/screen_margin_horizontal"
+            android:text="@string/cycle_x_days_info"
+            app:drawableStartCompat="@drawable/ic_help" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_cycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/layout_cycle_active"
+            style="@style/AppTheme.Widget.ListItem.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.Text.BodyNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_active" />
+
+            <TextView
+                android:id="@+id/cycle_count_active"
+                style="@style/AppTheme.Text.Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="21" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_cycle_inactive"
+            style="@style/AppTheme.Widget.ListItem.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.Text.BodyNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_inactive" />
+
+            <TextView
+                android:id="@+id/cycle_count_inactive"
+                style="@style/AppTheme.Text.Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_cycle_today"
+            style="@style/AppTheme.Widget.ListItem.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.Text.BodyNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today_is_cycle_day" />
+
+            <TextView
+                android:id="@+id/cycle_count_today"
+                style="@style/AppTheme.Text.Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1" />
+        </LinearLayout>
+
+        <View
+            style="@style/AppTheme.Widget.Divider"
+            android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+            android:layout_marginTop="@dimen/screen_margin_vertical_little"
+            android:layout_marginBottom="@dimen/screen_margin_vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/screen_margin_horizontal_small"
+            android:paddingStart="@dimen/screen_margin_horizontal"
+            android:paddingEnd="@dimen/screen_margin_horizontal"
+            android:text="@string/cycle_today_info"
+            app:drawableStartCompat="@drawable/ic_help" />
+    </LinearLayout>
+</merge>

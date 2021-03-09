@@ -4,19 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:orientation="vertical"
     android:transitionGroup="true"
     tools:context=".fragment.HistoryFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerHome"
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textTitle"
+        style="@style/AppTheme.Widget.Header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingBottom="@dimen/bottom_bar_height"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_history" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:text="@string/history" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabContentStart="@dimen/appbar_margin_horizontal"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable"
+        app:tabGravity="start"
+        app:tabInlineLabel="true"
+        app:tabTextAppearance="@style/AppTheme.Text.TabLayoutText">
+
+        <!-- These TabItems do not actually represent the tabs, they are here only for the Layout Inspector -->
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_list_alt"
+            android:text="@string/overview" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_pie_chart"
+            android:text="@string/charts" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <View
+        style="@style/AppTheme.Widget.Divider"
+        android:layout_marginTop="0dp"
+        android:id="@+id/tab_content_divider" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:clipToPadding="false" />
 
 </LinearLayout>

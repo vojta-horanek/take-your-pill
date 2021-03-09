@@ -1,26 +1,74 @@
 package eu.vojtechh.takeyourpill.receiver
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import dagger.hilt.android.AndroidEntryPoint
+import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
+import eu.vojtechh.takeyourpill.reminder.ReminderUtil
+import eu.vojtechh.takeyourpill.repository.HistoryRepository
+import eu.vojtechh.takeyourpill.service.FullscreenService
+import kotlinx.coroutines.runBlocking
+import timber.log.Timber
+import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ConfirmReceiver : HiltBroadcastReceiver() {
+class ConfirmReceiver : BroadcastReceiver() {
+
+    @Inject
+    lateinit var historyRepository: HistoryRepository
 
     override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
         intent.let {
             val reminderId = it.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1L)
-            if (reminderId == -1L) return
+            val pillId = it.getLongExtra(Constants.INTENT_EXTRA_PILL_ID, -1L)
+            val remindedTime = it.getLongExtra(Constants.INTENT_EXTRA_REMINDED_TIME, -1L)
 
-            Toast.makeText(context, "Confirmed", Toast.LENGTH_LONG).show()
+            if (reminderId == -1L || pillId == -1L || remindedTime == -1L) {
+                Timber.e("Invalid number of extras passed, exiting...")
+                return
+            }
 
-            NotificationManager.cancelNotification(context, reminderId)
+            var success = false
+            runBlocking {
 
-            // TODO Confirm Pill
+                historyRepository.getByPillIdAndTime(pillId, remindedTime)?.let { history ->
+                    history.confirmed = Calendar.getInstance()
+                    historyRepository.updateHistoryItem(history)
+                    success = true
+                } ?: run {
+                    Timber.e("Couldn't find the correct history item...")
+                }
+
+                if (Pref.alertStyle) {
+                    FullscreenService.stopService(context)
+                }
+
+                if (success) {
+                    // Cancel check alarm
+                    ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
+                    // Hide notification
+                    NotificationManager.cancelNotification(context, reminderId)
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.confirmed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+
         }
     }
 }

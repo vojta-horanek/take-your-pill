@@ -1,0 +1,161 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage{setspace}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{textcomp}
+\usepackage{parskip}
+\usepackage{tocloft}
+\usepackage[bottom]{footmisc}
+
+
+\usepackage[autostyle]{csquotes}
+
+\usepackage{fontspec}
+\setmainfont{Linux Libertine O}
+
+\usepackage[ddmmyyyy]{datetime}
+\renewcommand{\dateseparator}{.}
+
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\title{Take Your Pill}
+\author{Vojtěch Hořánek}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\pagenumbering{gobble}
+
+\begin{document}
+
+% Uzlabina title page
+\begin{titlepage}
+    \large
+    \centering
+    \vspace*{\fill}
+    {\LARGE Take Your Pill}
+    \vskip 1mm
+    {\Large mobilní aplikace}
+    \vskip1cm
+    {\large SPŠE V Úžlabině}
+    \vskip 20pt
+    \includegraphics[width=4cm]{uzlabina.png}
+    \vskip 40pt
+    Vojtěch Hořánek \\
+    I4.D
+    \vskip 15pt
+    \today
+    \vfill
+\end{titlepage}
+
+
+% Cestne prohlaseni
+\vspace*{\fill}
+\enquote{Prohlašuji, že jsem tuto práci vypracoval samostatně a použil jsem literárnı́ch pramenů a informacı́, které cituji a uvádı́m v seznamu použité literatury a zdrojů informacı́.}\hfill \break
+V Praze dne
+{
+  \addfontfeature{LetterSpace=20.0}
+  ....................\hfill....................
+}
+\begin{flushright}
+    \setstretch{0.5}
+    podpis autora
+\end{flushright} 
+
+% konec podpisu
+
+% anotace
+\newpage
+\section*{Anotace}
+Předložená práce je mobilní aplikace pro systém Android, která slouží k připomínání užití léků. V aplikaci je implementovaná historie připomínání a užívání léků, statistiky a grafy. Uživatel snadno získá přehled, jaké a kdy léky vynechává a může si nastavit opakované připomínání, aby již lék nezmeškal. Design aplikace je udělán tak, aby odpovídal material designu a jeho nejnovějším trendům. Aplikace je napsána v jazyce Kotlin a využívá moderních knihoven a technologií.
+\vspace*{\fill}
+\section*{Anotation}
+The presented work is a mobile application for the Android operating system which reminds its users to take their pills. History, statistics, and graphs are implemented in the application. The user can effortlessly get an overview of which pills at what time did they miss and can set repeating reminders, so they do not forget them the next time. The application follows the material design guidelines and its latest trends. Kotlin was used as the programming language and utilizes modern libraries and technologies.
+
+% konec anotace
+
+\renewcommand\cftsecafterpnum{\vskip10pt}
+\renewcommand\cftsubsecafterpnum{\vskip10pt}
+\renewcommand\cftsubsubsecafterpnum{\vskip10pt}
+\newpage
+\tableofcontents % obsah
+
+\chapter*{Úvod}
+\addcontentsline{toc}{chapter}{Úvod}  
+
+Cílem této práce bylo vytvořit aplikaci, která uživatelům usnadní pravidelné užívání léků jejich připomínáním, sledováním historie a statistik. Pro každý lék lze nastavit počet dní, po který se má připomínat, popř. počet dní, které vynechat, než se začne připomínat znovu a počet takovýchto cyklů.
+
+Práce se skládá z mobilní aplikace pro systém android. Aplikace je navržena co nejjednodušeji a rozdělena do dvou hlavních sekcí: léky a historie. V sekci \enquote{léky} uživatel nalezne léky, které si do aplikace přidal. V jejich seznamu je zobrazen jejich název, popis, barva, fotografie a časy připomínek. V sekci \enquote{historie} může uživatel sledovat užití svých léku, zobrazí se mu kompletní historie (včetně kdy a jestli si lék vzal, kdy mu byla poslána připomínka a kolik prášků si vzal) a grafy zobrazující souhrnné informace. Součástí práce je i propagační a informační plakát. 
+
+\pagenumbering{arabic} % start page numbering on Úvod
+
+
+\chapter{Návrh aplikace}
+
+Rozhraní jsem upravil pomocí vlastních stylů, které vycházejí ze stylů Material Design \cite{materialdesign}.
+\chapter{Implementace aplikace}
+
+Při vytváření aplikace jsem vycházel ze zadání a využil jsem vlastních znalostní a zkušeností. Na naprogramování aplikace jsem použil programovací jazyk Kotlin. Zvolil jsem ho proto, že je preferovaný společností Google a oproti jazyku Java má mnoho výhod. Mnoho android knihoven vychází právě pro jazyk Kotlin a tak mi jeho použití ulehčilo mnoho práce při programování. Jmenovitě knihovny z rodiny Android Jetpack \cite{jetpack} jsem použil hojně.
+
+Uživatelské rozhraní aplikace je napsáno v jazyce XML. Pro jeho manipulaci jsem použil knihovny \emph{ViewBinding} \cite{viewbinding} a \emph{DataBinding} \cite{databinding}.
+
+Při samotném vývoji jsem používal vývojové prostředí \emph{Android Studio} \cite{studio} a emulátor \emph{Android Emulator}.
+
+\section{Uživatelské rozhraní}
+
+Hlavní obrazovka\footnote{MainActivity} aplikace je rozdělena na tři části: \emph{Léky}, \emph{Historie} a \emph{Nastavení}. Uživatel mezi těmito sekcemi přepíná pomocí prvku \emph{BottomNavigationView}. Do sekce \emph{Historie} a na obrazovku \emph{Přidat lék} se může uživatel dostat i pomocí zkratky\footnote{App Shortcuts} z domovské obrazovky.
+
+\subsection{Úvodní obrazovka}
+\subsection{Domovská obrazovka}
+\subsubsection{Nový lék}
+\subsubsection{Detail léku}
+\subsection{Historie}
+\subsubsection{Přehled}
+\subsubsection{Grafy}
+\subsection{Nastavení}
+\section{Programová implementace}
+\subsection{Databáze}
+\subsection{Připomínání}
+
+\chapter*{Závěr}
+\addcontentsline{toc}{chapter}{Závěr}  
+
+\renewcommand\bibname{Bibliografie}
+\begin{thebibliography}{9}
+
+\bibitem{viewbinding} 
+View Binding
+\\\texttt{https://developer.android.com/topic/libraries/view-binding}
+
+\bibitem{databinding} 
+Data Binding Library
+\\\texttt{https://developer.android.com/topic/libraries/data-binding}
+
+\bibitem{materialdesign} 
+Material Design
+\\\texttt{https://material.io/design}
+
+\bibitem{jetpack} 
+Android Jetpack
+\\\texttt{https://developer.android.com/jetpack}
+
+\bibitem{studio} 
+Android Studio
+\\\texttt{https://developer.android.com/studio}
+
+\end{thebibliography}
+
+\end{document}

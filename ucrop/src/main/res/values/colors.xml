@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Palette-->
+    <color name="ucrop_color_black">#000</color>
+    <color name="ucrop_color_accent">#FFC107</color>
+
+    <!--uCrop Activity-->
+    <color name="ucrop_color_widget">?attr/colorOnSurface</color>
+    <color name="ucrop_color_widget_active">?attr/colorSurface</color>
+    <color name="ucrop_color_active_controls_color">@color/ucrop_color_accent</color>
+    <color name="ucrop_color_widget_rotate_mid_line">@color/ucrop_color_accent</color>
+    <color name="ucrop_color_active_aspect_ratio">@color/ucrop_color_accent</color>
+    <color name="ucrop_color_widget_text">@color/ucrop_color_accent</color>
+    <color name="ucrop_color_progress_wheel_line">?attr/colorOnSurface</color>
+    <color name="ucrop_color_crop_background">@color/ucrop_color_black</color>
+
+    <!--Crop View-->
+    <color name="ucrop_color_default_crop_grid">#80ffffff</color>
+    <color name="ucrop_color_default_crop_frame">#ffffff</color>
+    <color name="ucrop_color_default_dimmed">#8c000000</color>
+
+</resources>

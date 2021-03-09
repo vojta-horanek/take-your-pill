@@ -1,35 +1,41 @@
 package eu.vojtechh.takeyourpill.fragment
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnPreDraw
+import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
-import eu.vojtechh.takeyourpill.klass.Constants
-import eu.vojtechh.takeyourpill.klass.themeColor
+import eu.vojtechh.takeyourpill.fragment.dialog.DeleteDialog
+import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
+import java.util.*
 
 @AndroidEntryPoint
-class DetailsFragment : Fragment(),
-    FragmentConfirmation.DeleteListener, ReminderAdapter.ReminderAdapterListener {
+class DetailsFragment : Fragment() {
 
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
     private lateinit var binding: FragmentDetailsBinding
-    private val reminderAdapter = ReminderAdapter(this, showDelete = false, showRipple = false)
+    private val reminderAdapter = ReminderAdapter(showDelete = false, showRipple = false)
+
+    var launchedFromNotification = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,71 +58,186 @@ class DetailsFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
-        var pillId = requireArguments().getLong(Constants.INTENT_EXTRA_PILL_ID, -1L)
-        if (pillId == -1L) {
-            pillId = args.pillId
-        }
+        launchedFromNotification =
+            requireArguments().getBoolean(Constants.INTENT_EXTRA_LAUNCHED_FROM_NOTIFICATION, false)
 
-        model.getPillById(pillId).observe(viewLifecycleOwner, {
-            if (it != null) {
+        var pillId = requireArguments().getLong(Constants.INTENT_EXTRA_PILL_ID, -1L)
+        if (pillId == -1L) pillId = args.pillId
+
+        model.getPillById(pillId).observe(viewLifecycleOwner) { pill ->
+            pill?.let {
                 model.pill = it
-                binding.pill = model.pill
+                binding.pill = it
                 initViews()
             }
-        })
+        }
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initViews() {
 
-        binding.cardPhoto.visibility = model.pill.photoVisibility
-        binding.recyclerReminders.adapter = reminderAdapter
+        binding.run {
+            cardPhoto.isVisible = model.pill.isPhotoVisible
 
-        binding.buttonDelete.setOnClickListener {
-            FragmentConfirmation.newInstance(
-                getString(R.string.delete_pill),
-                getString(R.string.delete_only_pil),
-                getString(R.string.delete_pill_and_history),
-                R.drawable.ic_delete,
-                R.drawable.ic_delete_history,
-            ).apply {
-                setListener(this@DetailsFragment) // FIXME the listener get deleted when BottomS.. open and theme is changed
-            }.show(childFragmentManager, "confirm_delete")
-        }
+            recyclerReminders.adapter = reminderAdapter
+            recyclerReminders.disableAnimations()
 
-        binding.buttonEdit.setOnClickListener {
-            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-            val directions =
-                DetailsFragmentDirections.actionDetailsFragmentToEditFragment(model.pill.id)
-            findNavController().navigate(directions)
+            pill?.let { pill ->
+
+                val accent = pill.colorResource(requireContext())
+                val accentList = ColorStateList.valueOf(accent)
+                listOf(buttonDelete, buttonHistory).forEach {
+                    it.setTextColor(accent)
+                    it.rippleColor = accentList
+                }
+                buttonEdit.backgroundTintList = accentList
+                buttonTaken.backgroundTintList = accentList
+
+                buttonEdit.setOnClickListener { navigateToEdit() }
+                buttonHistory.setOnClickListener { navigateToHistory() }
+                buttonDelete.setOnClickListener { navigateToDelete() }
+
+                // If last reminder date is null, then this is the first reminder
+                pill.lastReminderDate?.let { lastDate ->
+                    // Only add next cycle if this is the first reminder today
+                    if (lastDate.DayOfYear != Calendar.getInstance().DayOfYear) {
+                        pill.options.nextCycleIteration()
+                    }
+                }
+
+                with(pill.options) {
+                    when {
+                        isIndefinite() -> {
+                            textIntakeOptions.isVisible = false
+                            intakeDaysActive.isVisible = false
+                            intakeDaysInactive.isVisible = false
+                        }
+                        isFinite() -> {
+                            intakeDaysInactive.isVisible = false
+                            if (isInactive()) {
+                                infoDayLimit.text = getString(R.string.inactive)
+                            } else {
+                                infoDayLimit.text = getString(
+                                    R.string.day_limit_format,
+                                    todayCycle,
+                                    daysActive
+                                )
+                            }
+                        }
+                        isCycle() -> {
+                            if (isInactive()) {
+                                infoDayLimit.text = daysActive.toString()
+                                infoResumeAfter.text = getString(
+                                    R.string.resume_after_format,
+                                    todayCycle - daysActive,
+                                    daysInactive
+                                )
+                            } else {
+                                infoDayLimit.text = getString(
+                                    R.string.day_limit_format,
+                                    todayCycle,
+                                    daysActive
+                                )
+                                infoResumeAfter.text = daysInactive.toString()
+                            }
+                        }
+                    }
+                }
+            }
+
+            cardPhoto.setOnLongClickListener {
+                imageFullscreen.isVisible = true
+                true
+            }
+
+            imageFullscreen.setOnClickListener {
+                imageFullscreen.isVisible = false
+            }
+
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                if (imageFullscreen.isVisible) {
+                    imageFullscreen.isVisible = false
+                } else {
+                    findNavController().popBackStack()
+                }
+            }
+
         }
 
         model.setReminders(model.pill.reminders)
-        model.reminders.observe(viewLifecycleOwner, {
-            reminderAdapter.submitList(it)
-            (binding.root.parent as? ViewGroup)?.doOnPreDraw {
+
+        model.reminders.observe(viewLifecycleOwner) {
+            reminderAdapter.submitList(it) {
                 startPostponedEnterTransition()
             }
-        })
+        }
 
+        model.getLatestHistory(!launchedFromNotification).observe(viewLifecycleOwner) { history ->
+            if (history == null) {
+                binding.layoutConfirm.isVisible = false
+            } else {
+                binding.textQuestionTake.text = binding.root.context.getString(
+                    R.string.pill_taken_question,
+                    history.amount,
+                    history.reminded.time.getTimeString(requireContext())
+                )
+                binding.buttonTaken.setOnClickListener {
+                    model.confirmPill(requireContext(), history).observe(viewLifecycleOwner) {
+                        when (it) {
+                            true -> binding.layoutConfirm.isVisible = false
+                            false -> showMessage(getString(R.string.error))
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    override fun onDeletePill(view: View) {
-        model.deletePill(model.pill.pill)
-        doOnDelete()
+    private fun navigateToEdit() {
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+        findNavController().navigate(
+            DetailsFragmentDirections.actionDetailsFragmentToEditFragment(
+                model.pill.id
+            )
+        )
     }
 
-    override fun onDeletePillHistory(view: View) {
-        model.deletePillWithHistory(model.pill)
-        doOnDelete()
+    private fun navigateToHistory() {
+        val directions =
+            DetailsFragmentDirections.actionDetailsToFragmentHistoryView(model.pill.id)
+        findNavController().navigate(directions)
     }
 
-    private fun doOnDelete() {
+
+    private fun navigateToDelete() {
+        DeleteDialog().apply {
+            setUserListener { what ->
+                when (what) {
+                    true -> {
+                        model.deletePillWithHistory(model.pill)
+                        exitOnDelete()
+                    }
+                    false -> {
+                        model.deletePill(model.pill.pillEntity)
+                        exitOnDelete()
+                    }
+                }
+            }
+        }.show(childFragmentManager, "confirm_delete")
+    }
+
+
+    private fun exitOnDelete() {
         NotificationManager.removeNotificationChannel(requireContext(), model.pill.id.toString())
         exitTransition = Slide().apply {
             addTarget(R.id.detailsView)
         }
         sharedElementEnterTransition = null
         findNavController().navigateUp()
+    }
+
+    private fun showMessage(msg: String) {
+        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
     }
 }

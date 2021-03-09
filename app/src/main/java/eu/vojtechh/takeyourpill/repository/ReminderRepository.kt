@@ -6,7 +6,7 @@ import javax.inject.Inject
 class ReminderRepository @Inject constructor(
     private val reminderDao: ReminderDao
 ) {
-    fun getReminder(reminderId: Long) = reminderDao.getById(reminderId)
-    fun getAllReminders() = reminderDao.getAll()
-    fun getRemindersBasedOnTime(time: Long) = reminderDao.getBasedOnTime(time)
+    suspend fun getReminder(reminderId: Long) = reminderDao.getById(reminderId)
+    suspend fun getAllReminders() = reminderDao.getAll()
+    suspend fun getRemindersBasedOnTime(time: Long) = reminderDao.getBasedOnTime(time)
 }

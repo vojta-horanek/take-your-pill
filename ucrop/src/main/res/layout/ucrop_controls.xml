@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:theme="@style/ucrop_AppTheme">
+
+    <FrameLayout
+        android:id="@+id/wrapper_controls"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ucrop_height_wrapper_controls"
+        android:background="@drawable/ucrop_wrapper_controls_shape">
+
+        <LinearLayout
+            android:id="@+id/layout_aspect_ratio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <include
+            android:id="@+id/layout_rotate_wheel"
+            layout="@layout/ucrop_layout_rotate_wheel" />
+
+        <include
+            android:id="@+id/layout_scale_wheel"
+            layout="@layout/ucrop_layout_scale_wheel" />
+
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/selectorMenu"
+        app:menu="@menu/ucrop_menu_selector"
+        style="@style/ucrop_Widgets.BottomNavigation"
+        app:elevation="0dp" />
+
+
+</LinearLayout>

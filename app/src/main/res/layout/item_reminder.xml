@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.content.Context" />
+
         <variable
             name="reminder"
             type="eu.vojtechh.takeyourpill.model.Reminder" />
-
-        <variable
-            name="listener"
-            type="eu.vojtechh.takeyourpill.adapter.ReminderAdapter.ReminderAdapterListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +21,7 @@
         android:clickable="true"
         android:focusable="true"
         android:orientation="horizontal"
-        android:onClick="@{(view) -> listener.onReminderClicked(view, reminder)}">
+        android:paddingHorizontal="@dimen/screen_margin_horizontal">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
@@ -43,7 +41,6 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@null"
-            android:onClick="@{(view) -> listener.onReminderDelete(view, reminder)}"
             android:src="@drawable/ic_delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

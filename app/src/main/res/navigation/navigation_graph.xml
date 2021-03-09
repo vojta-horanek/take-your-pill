@@ -21,25 +21,27 @@
         android:id="@id/history"
         android:name="eu.vojtechh.takeyourpill.fragment.HistoryFragment"
         android:label="@string/history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history">
+        <deepLink app:uri="eu.vojtechh.takeyourpill://history" />
+        <action
+            android:id="@+id/action_history_to_fragmentHistoryView"
+            app:destination="@id/fragmentHistoryView" />
+    </fragment>
     <fragment
         android:id="@id/settings"
         android:name="eu.vojtechh.takeyourpill.fragment.SettingsFragment"
-        android:label="@string/settings">
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings">
         <action
-            android:id="@+id/action_settings_to_about"
-            app:destination="@id/about" />
+            android:id="@+id/action_settings_to_aboutActivity"
+            app:destination="@id/aboutActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/about"
-        android:name="eu.vojtechh.takeyourpill.fragment.AboutFragment"
-        android:label="@string/about"
-        tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/edit"
         android:name="eu.vojtechh.takeyourpill.fragment.EditFragment"
         android:label="@string/edit"
         tools:layout="@layout/fragment_edit">
+        <deepLink app:uri="eu.vojtechh.takeyourpill://add_new_pill" />
         <action
             android:id="@+id/action_edit_to_details"
             app:destination="@id/details"
@@ -64,14 +66,26 @@
         <argument
             android:name="pillId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_details_to_fragmentHistoryView"
+            app:destination="@id/fragmentHistoryView" />
     </fragment>
+    <dialog
+        android:id="@+id/fragmentHistoryView"
+        android:name="eu.vojtechh.takeyourpill.fragment.dialog.HistoryViewDialog"
+        android:label="FragmentHistoryView"
+        tools:layout="@layout/dialog_history">
+        <argument
+            android:name="pillId"
+            app:argType="long" />
+        <argument
+            android:name="isOverall"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </dialog>
     <activity
-        android:id="@+id/introActivity"
-        android:name="eu.vojtechh.takeyourpill.activity.AppIntroActivity"
-        android:label="IntroActivity" />
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="eu.vojtechh.takeyourpill.activity.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        android:id="@+id/aboutActivity"
+        android:name="eu.vojtechh.takeyourpill.activity.AboutActivity"
+        android:label="activity_about"
+        tools:layout="@layout/activity_about" />
 </navigation>

@@ -2,6 +2,7 @@
 <resources>
     <dimen name="color_dot_size">16dp</dimen>
     <dimen name="color_dot_size_big">32dp</dimen>
+    <dimen name="history_status_icon_size">32dp</dimen>
     <dimen name="bottom_bar_height">56dp</dimen>
     <dimen name="elevation_color">8dp</dimen>
     <dimen name="appbar_margin_horizontal">24dp</dimen>
@@ -18,6 +19,9 @@
     <dimen name="standard_card_elevation">8dp</dimen>
     <dimen name="minimal_card_elevation">4dp</dimen>
     <dimen name="list_with_fab_padding">88dp</dimen>
-    <dimen name="list_with_fab_and_navigation_padding">144dp</dimen>
+    <dimen name="list_with_fab_and_navigation_padding">128dp</dimen>
     <dimen name="list_with_navigation_padding">56dp</dimen>
+    <dimen name="recycler_history_view_min_height">256dp</dimen>
+    <dimen name="chart_height">400dp</dimen>
+    <dimen name="stroke_width">1dp</dimen>
 </resources>

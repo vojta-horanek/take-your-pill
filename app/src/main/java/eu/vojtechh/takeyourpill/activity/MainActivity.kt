@@ -2,86 +2,56 @@ package eu.vojtechh.takeyourpill.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Slide
-import android.transition.TransitionManager
-import android.view.Gravity
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.transition.MaterialFadeThrough
+import androidx.navigation.ui.NavigationUI
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityMainBinding
-import eu.vojtechh.takeyourpill.fragment.HistoryFragment
-import eu.vojtechh.takeyourpill.fragment.HomeFragment
-import eu.vojtechh.takeyourpill.fragment.PreferencesFragment
+import eu.vojtechh.takeyourpill.klass.Pref
+import eu.vojtechh.takeyourpill.klass.Utils
 import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
-
-const val REQUEST_CODE_INTRO = 22
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private val requestCodeIntro = 22
+
     private val binding by viewBinding(ActivityMainBinding::inflate)
     private val model: MainViewModel by viewModels()
-
-    private val currentNavigationFragment: Fragment?
-        get() = supportFragmentManager.findFragmentById(R.id.navHostFragment)
-            ?.childFragmentManager
-            ?.fragments
-            ?.first()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (Pref.firstRun) {
+            val intent = Intent(this, AppIntroActivity::class.java)
+            startActivityForResult(intent, requestCodeIntro)
+        }
+
+        setTheme(R.style.AppTheme)
         setContentView(binding.root)
+
+        Utils.setTheme(Pref.theme)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // if (firstRun)
-        //val intent = Intent(this, AppIntroActivity::class.java)
-        //startActivityForResult(intent, REQUEST_CODE_INTRO)
-
-        supportFragmentManager.registerFragmentLifecycleCallbacks(object :
-            FragmentManager.FragmentLifecycleCallbacks() {
-            override fun onFragmentViewCreated(
-                fm: FragmentManager,
-                fragment: Fragment,
-                v: View,
-                savedInstanceState: Bundle?
-            ) {
-                TransitionManager.beginDelayedTransition(
-                    binding.root,
-                    Slide(Gravity.BOTTOM).excludeTarget(R.id.navHostFragment, true)
-                )
-                when (fragment) {
-                    is HomeFragment, is HistoryFragment, is PreferencesFragment -> {
-                        binding.bottomNavigation.visibility = View.VISIBLE
-                    }
-                    else -> {
-                        binding.bottomNavigation.visibility = View.INVISIBLE
-                    }
-                }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.bottomNavigation.isVisible = when (destination.id) {
+                R.id.homescreen, R.id.history, R.id.settings -> true
+                else -> false
             }
-        }, true)
-
-        binding.bottomNavigation.setOnNavigationItemReselectedListener { /* Disables reselection */ }
-        binding.bottomNavigation.setOnNavigationItemSelectedListener {
-            currentNavigationFragment?.apply {
-                exitTransition = MaterialFadeThrough()
-            }
-            true
         }
 
-        binding.bottomNavigation.setupWithNavController(navController)
+        binding.bottomNavigation.setOnNavigationItemReselectedListener { }
+        NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
+
+        model.planReminders(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -91,8 +61,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_INTRO) {
-            if (resultCode != RESULT_OK) {
+        if (requestCode == requestCodeIntro) {
+            if (resultCode == RESULT_OK) {
+                Pref.firstRun = false
+            } else {
                 finish()
             }
         }

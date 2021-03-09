@@ -1,53 +1,64 @@
 package eu.vojtechh.takeyourpill.fragment
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.liveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
-import com.kroegerama.imgpicker.BottomSheetImagePicker
-import com.kroegerama.imgpicker.ButtonType
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ColorAdapter
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
-import eu.vojtechh.takeyourpill.klass.*
+import eu.vojtechh.takeyourpill.fragment.dialog.ReminderDialog
+import eu.vojtechh.takeyourpill.klass.Constants
+import eu.vojtechh.takeyourpill.klass.disableAnimations
+import eu.vojtechh.takeyourpill.klass.showError
+import eu.vojtechh.takeyourpill.klass.themeColor
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
-import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
+import kotlinx.coroutines.Dispatchers
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-
+import timber.log.Timber
 
 @AndroidEntryPoint
-class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
-    ReminderAdapter.ReminderAdapterListener, BottomSheetImagePicker.OnImagesSelectedListener,
-    FragmentNewReminder.ConfirmListener {
+class EditFragment : Fragment() {
 
-    private lateinit var binding: FragmentEditBinding
+    // Can't use delegate because of transition endView
+    private var _binding: FragmentEditBinding? = null
+    private val binding get() = _binding!!
+
     private val model: EditViewModel by viewModels()
     private val args: EditFragmentArgs by navArgs()
 
-    private val colorAdapter = ColorAdapter(this)
-    private val reminderAdapter = ReminderAdapter(this)
+    private val colorAdapter = ColorAdapter()
+    private val reminderAdapter = ReminderAdapter()
 
-    private val isPillNew
+    private val isCreatingNewPill
         get() = args.pillId == -1L
 
     override fun onCreateView(
@@ -55,19 +66,18 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentEditBinding.inflate(inflater, container, false)
-        if (isPillNew) {
+        _binding = FragmentEditBinding.inflate(inflater, container, false)
+        if (isCreatingNewPill) {
             enterTransition = MaterialContainerTransform().apply {
                 startView = requireActivity().findViewById(R.id.floatingActionButton)
-                endView = requireActivity().findViewById(R.id.layoutEdit)
+                endView = binding.layoutEdit
                 scrimColor = Color.TRANSPARENT
                 containerColor = requireContext().themeColor(R.attr.colorSurface)
                 startContainerColor = requireContext().themeColor(R.attr.colorSecondary)
                 endContainerColor = requireContext().themeColor(R.attr.colorSurface)
             }
-            returnTransition = Slide().apply {
-                addTarget(R.id.layoutEdit)
-            }
+
+            returnTransition = Slide().addTarget(R.id.layoutEdit)
         } else {
             enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
             returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
@@ -75,15 +85,25 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (isPillNew) {
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            onBackPressed()
+        }
+
+        if (isCreatingNewPill) {
             binding.textNewPill.text = getString(R.string.new_pill)
             if (!model.isPillInitialized) {
                 model.pill = model.getNewEmptyPill()
             }
-            binding.pill = model.pill
+            model.firstNameEdit = false
+            model.firstDescriptionEdit = false
             initViews()
         } else {
             binding.textNewPill.text = getString(R.string.edit_pill)
@@ -91,120 +111,30 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
             if (!model.isPillInitialized) {
                 model.getPillById(args.pillId).observe(viewLifecycleOwner, {
                     model.pill = it
-                    binding.pill = model.pill
                     initViews()
                     startPostponedEnterTransition()
                 })
             } else {
-                binding.pill = model.pill
                 initViews()
                 startPostponedEnterTransition()
             }
         }
     }
 
-    private fun initViews() {
-        model.pillColors.observe(viewLifecycleOwner, {
-            colorAdapter.submitList(it)
-        })
-        model.setActivePillColor(model.pill.color)
-
-        model.setReminders(model.pill.reminders)
-        model.reminders.observe(viewLifecycleOwner, {
-            reminderAdapter.submitList(it)
-        })
-
-        model.photoBitmap.observe(viewLifecycleOwner, {
-            binding.imagePillPhoto.setImageDrawable(model.pill.photoDrawable(requireContext()))
-            binding.imageDeletePhoto.visibility = model.pill.photoVisibility
-        })
-
-        binding.run {
-            recyclerColor.adapter = colorAdapter
-            recyclerReminders.adapter = reminderAdapter
-
-            setReminderOptionsViews()
-
-            inputName.doOnTextChanged { text, _, _, _ ->
-                inputNameLayout.showError(
-                    if (text.isNullOrBlank()) getString(R.string.enter_field) else null
-                )
-                text?.let { model.pill.name = it.trim().toString() }
+    /**
+     * Called when imagepicker finishes
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                onNewImagePicked(data?.data!!)
             }
-
-            inputDescription.doOnTextChanged { text, _, _, _ ->
-                text?.let { model.pill.name = it.trim().toString() }
+            ImagePicker.RESULT_ERROR -> {
+                showSnackbar(ImagePicker.getError(data))
             }
-
-            buttonSave.setOnClickListener { savePill() }
-            buttonAddReminder.setOnClickListener { showReminderDialog() }
-            imagePillPhoto.setOnClickListener { pickImage() }
-            imageDeletePhoto.setOnClickListener { model.deleteImage() }
-        }
-    }
-
-    override fun onReminderClicked(view: View, reminder: Reminder) {
-        showReminderDialog(reminder, editing = true)
-    }
-
-    private fun showReminderDialog(
-        reminder: Reminder = Reminder.create(pillId = model.pill.id),
-        editing: Boolean = false
-    ) {
-        FragmentNewReminder()
-            .setListener(this)
-            .setEditing(editing)
-            .setReminder(reminder)
-            .show(childFragmentManager, "new_reminder")
-    }
-
-    override fun onNewReminderClicked(reminder: Reminder, editing: Boolean) {
-        val sheet =
-            (childFragmentManager.findFragmentByTag("new_reminder") as FragmentNewReminder)
-        val potentialMatch =
-            model.pill.reminders.find { it.hour == reminder.hour && it.minute == reminder.minute }
-        if (editing) {
-            if (potentialMatch != null && potentialMatch != reminder) {
-                sheet.showError(getString(R.string.two_reminders_same_time))
-                return
+            else -> {
             }
-            model.editReminder(reminder)
-        } else {
-            if (potentialMatch != null) {
-                sheet.showError(getString(R.string.two_reminders_same_time))
-                return
-            }
-            model.addReminder(reminder)
-
-        }
-        sheet.dismiss()
-    }
-
-    @AfterPermissionGranted(1)
-    private fun pickImage() {
-        if (EasyPermissions.hasPermissions(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        ) {
-            BottomSheetImagePicker.Builder(getString(R.string.file_provider))
-                .cameraButton(ButtonType.Tile)
-                .galleryButton(ButtonType.Tile)
-                .singleSelectTitle(R.string.select_image)
-                .show(childFragmentManager)
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.storage_perm_rationale),
-                1,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        }
-    }
-
-    override fun onImagesSelected(uris: List<Uri>, tag: String?) {
-        uris.forEach { uri ->
-            model.setImage(uri, requireContext())
         }
     }
 
@@ -218,111 +148,197 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
     }
 
 
-    private fun setReminderOptionsViews() {
+    private fun initViews() {
+        model.initFields()
+
+        model.pillColors.observe(viewLifecycleOwner) {
+            colorAdapter.submitList(it)
+            setUiColor(model.pill.color)
+        }
+        model.reminders.observe(viewLifecycleOwner) { reminderAdapter.submitList(it) }
+
         binding.run {
-            with(model.pill.options) {
-                checkDayLimit.isChecked = limitDays != ReminderOptions.NO_DAY_LIMIT
-                checkRestoreAfter.isChecked = breakDays != ReminderOptions.NO_BREAK
-                checkCycleCount.isChecked = repeatCount == ReminderOptions.REPEAT_FOREVER
+
+            inputName.setText(model.pill.name)
+            inputDescription.setText(model.pill.description)
+
+            refreshImage()
+            model.photoBitmap.observe(viewLifecycleOwner) {
+                refreshImage()
             }
 
-            checkDayLimit.setOnCheckedChangeListener { _, b ->
-                doOnLimitDayChecked(b)
-                scrollToBottom()
-            }
-            checkRestoreAfter.setOnCheckedChangeListener { _, b ->
-                doOnRestoreAfterCheck(b)
-                scrollToBottom()
-            }
-            checkCycleCount.setOnCheckedChangeListener { _, b ->
-                doOnCycleCountChecked(b)
-                scrollToBottom()
+            recyclerReminders.adapter = reminderAdapter
+            reminderAdapter.onReminderClicked { _, reminder -> showReminderDialog(reminder, true) }
+            reminderAdapter.onReminderDelete { _, reminder -> model.removeReminder(reminder) }
+
+            recyclerColor.adapter = colorAdapter
+            recyclerColor.disableAnimations()
+
+            colorAdapter.onColorClicked { _, pillColor -> model.setActivePillColor(pillColor) }
+
+            pillOptionsView.setOptions(model.pill.options)
+            pillOptionsView.onChange {
+                model.hasPillBeenEdited = true
             }
 
-            doOnLimitDayChecked(checkDayLimit.isChecked)
-            doOnRestoreAfterCheck(checkRestoreAfter.isChecked)
-            doOnCycleCountChecked(checkCycleCount.isChecked)
+            inputName.doOnTextChanged { text, _, _, _ ->
+                inputNameLayout.showError(
+                    if (model.onNameChanged(text)) getString(R.string.enter_field) else null
+                )
+            }
+            inputDescription.doOnTextChanged { text, _, _, _ -> model.onDescriptionChanged(text) }
+            buttonSave.setOnClickListener { onPillSave() }
+            buttonAddReminder.setOnClickListener { showReminderDialog() }
+            imageChooser.setOnImageClickListener { onPickImage() }
+            imageChooser.setOnDeleteClickListener { onImageDelete() }
+        }
+
+    }
+
+    private fun refreshImage() {
+        binding.imageChooser.setImageDrawable(model.pill.getPhotoDrawable(requireContext()))
+        binding.imageChooser.setDeleteVisible(model.pill.isPhotoVisible)
+    }
+
+    private fun setUiColor(checkedColor: PillColor) {
+        val color = checkedColor.getColor(requireContext())
+        val colorStateList = ColorStateList.valueOf(color)
+        binding.run {
+            buttonSave.backgroundTintList = colorStateList
+            listOf(inputName, inputDescription).forEach {
+                it.highlightColor = color
+            }
+            listOf(inputNameLayout, inputDescriptionLayout).forEach {
+                it.boxStrokeColor = color
+                it.hintTextColor = colorStateList
+            }
+
+            buttonAddReminder.strokeColor = colorStateList
+            buttonAddReminder.iconTint = colorStateList
+            buttonAddReminder.rippleColor = colorStateList
+            buttonAddReminder.setTextColor(color)
+
+            progress.setIndicatorColor(color)
+            pillOptionsView.setButtonTint(color)
         }
     }
 
-    private fun scrollToBottom() {
-        binding.layoutEdit.post {
-            binding.scrollEdit.scrollToBottom()
+    private fun onBackPressed() {
+        if (model.hasPillBeenEdited) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.confirm_exit_edit))
+                .setMessage(getString(R.string.confirm_exit_edit_description))
+                .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                    findNavController().popBackStack()
+
+                    dialog.dismiss()
+                }
+                .show()
+
+        } else {
+            findNavController().popBackStack()
         }
     }
 
-    private fun doOnLimitDayChecked(checked: Boolean) {
-        binding.run {
-            groupLimit.setVisible(checked)
+    private fun onImageDelete() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.confirm_delete_photo))
+            .setMessage(getString(R.string.confirm_delete_photo_description))
+            .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                model.deleteImage()
+                dialog.dismiss()
+            }
+            .show()
+    }
 
-            checkRestoreAfter.setVisible(checked)
-            if (checked) {
-                groupRestore.setVisible(checkRestoreAfter.isChecked)
-                checkCycleCount.setVisible(checkRestoreAfter.isChecked)
-                groupCycle.setVisible(!checkCycleCount.isChecked)
-            } else {
-                groupRestore.setVisible(false)
-                checkCycleCount.setVisible(false)
-                groupCycle.setVisible(false)
+    private fun showReminderDialog(
+        reminder: Reminder = Reminder.create(pillId = model.pill.id),
+        editing: Boolean = false
+    ) = ReminderDialog().apply {
+        onConfirm { rem, edit -> onNewReminderConfirmed(rem, edit) }
+        isEditing = editing
+        this.reminder = reminder
+        accentColor = model.pill.color
+    }.show(childFragmentManager, Constants.TAG_REMINDER_DIALOG)
+
+
+    private fun onNewReminderConfirmed(reminder: Reminder, editing: Boolean) {
+        val reminderDialog =
+            childFragmentManager.findFragmentByTag(Constants.TAG_REMINDER_DIALOG) as ReminderDialog
+
+        val sameReminder = model.pill.reminders.find { reminder.hasSameTime(it) }
+        // There is a reminder that has the same time
+        if (sameReminder != null && ((editing && sameReminder != reminder) || !editing)) {
+            reminderDialog.showError(getString(R.string.two_reminders_same_time))
+            return
+        }
+        reminderDialog.dismiss()
+        if (editing) model.editReminder(reminder)
+        else model.addReminder(reminder)
+
+
+    }
+
+    @AfterPermissionGranted(Constants.READ_EXTERNAL_STORAGE_PERMISSION_CODE)
+    private fun onPickImage() {
+        if (EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            ImagePicker.with(this)
+                .compress(Constants.IMAGE_MAX_SIZE)
+                .maxResultSize(Constants.IMAGE_MAX_WIDTH, Constants.IMAGE_MAX_HEIGHT)
+                .crop()
+                .start()
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.storage_perm_rationale),
+                Constants.READ_EXTERNAL_STORAGE_PERMISSION_CODE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    private fun onNewImagePicked(uri: Uri) {
+        model.setImage(uri, requireContext()).observe(viewLifecycleOwner) {
+            if (!it) {
+                showSnackbar(getString(R.string.error_opening_image))
             }
         }
     }
 
-    private fun doOnRestoreAfterCheck(checked: Boolean) {
-        binding.run {
-            groupRestore.setVisible(checked)
-
-            checkCycleCount.setVisible(checked)
-            if (checked) {
-                groupCycle.setVisible(!checkCycleCount.isChecked)
-            } else {
-                groupCycle.setVisible(false)
-            }
+    private fun onPillSave() = binding.run {
+        // Does Pill have a name?
+        if (model.pill.name.isBlank()) {
+            inputNameLayout.error = getString(R.string.enter_field)
+            return
         }
-    }
 
-    private fun doOnCycleCountChecked(checked: Boolean) {
-        binding.groupCycle.setVisible(!checked)
-    }
+        // Does Pill have at least one reminder?
+        if (model.pill.reminders.isEmpty()) {
+            showSnackbar(getString(R.string.no_reminders_set))
+            return
+        }
 
-    private fun savePill() {
-        binding.run {
-            // Does Pill have name?
-            if (model.pill.name.isBlank()) {
-                inputNameLayout.error = getString(R.string.enter_field)
-                return
-            }
+        // TODO Use WorkManager for saving
+        layoutLoading.isVisible = true
 
-            // Does Pill have at leas one reminder?
-            if (model.pill.reminders.isEmpty()) {
-                Snackbar.make(
-                    this.root,
-                    getString(R.string.no_reminders_set),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-                return
-            }
+        model.pill.options = pillOptionsView.getOptions()
 
-            progress.setIndicatorColor(model.pill.color.getColor(requireContext()))
-            layoutLoading.visibility = View.VISIBLE
-
-            val reminderOptions = getReminderOptions()
-            model.pill.apply {
-                options = reminderOptions
-                description = inputDescription.getString()
-            }
-
-            if (isPillNew) {
-                model.addPillReturn(model.pill).observe(viewLifecycleOwner) {
-                    setReminding(it)
-                    exitTransition = Slide().apply {
-                        addTarget(R.id.layoutEdit)
-                    }
+        if (isCreatingNewPill) {
+            model.addAndGetPill(model.pill).observe(viewLifecycleOwner) {
+                setReminding(it) {
+                    exitTransition = Slide().addTarget(R.id.layoutEdit)
                     findNavController().popBackStack()
                 }
-            } else {
-                model.updatePillReturn(model.pill).observe(viewLifecycleOwner) {
-                    setReminding(it)
+            }
+        } else {
+            model.updateAndGetPill(model.pill).observe(viewLifecycleOwner) {
+                setReminding(it) {
                     returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
                     findNavController().popBackStack()
                 }
@@ -330,48 +346,22 @@ class EditFragment : Fragment(), ColorAdapter.ColorAdapterListener,
         }
     }
 
-    private fun setReminding(pill: Pill) {
-        NotificationManager.createNotificationChannel(
-            requireContext(),
-            pill.id.toString(),
-            pill.name
-        )
-        ReminderManager.planNextReminder(requireContext(), pill.reminders)
-    }
-
-    private fun getReminderOptions(): ReminderOptions {
-        binding.run {
-            if (checkDayLimit.isChecked) {
-                if (checkRestoreAfter.isChecked) {
-                    return if (!checkCycleCount.isChecked) {
-                        ReminderOptions.finiteRepeating(
-                            inputDayNumber.getNumber(),
-                            inputRestore.getNumber(),
-                            inputCycleCount.getNumber()
-                        )
-                    } else {
-                        ReminderOptions.infiniteBreak(
-                            inputDayNumber.getNumber(),
-                            inputRestore.getNumber()
-                        )
-                    }
-                } else {
-                    return ReminderOptions.finite(
-                        inputDayNumber.getNumber()
-                    )
-                }
-            } else {
-                return ReminderOptions.infinite()
-            }
+    private fun setReminding(pill: Pill, action: () -> Unit) {
+        Timber.d("lastRemindTime: %s", pill.lastReminderDate)
+        liveData(Dispatchers.IO) {
+            NotificationManager.createNotificationChannel(
+                requireContext(),
+                pill.id.toString(),
+                pill.name
+            )
+            ReminderManager.planNextPillReminder(requireContext(), pill)
+            emit(true)
+        }.observe(viewLifecycleOwner) {
+            Timber.d("lastRemindTime: %s", pill.lastReminderDate)
+            action()
         }
     }
 
-    override fun onColorClicked(view: View, color: PillColor) {
-        model.setActivePillColor(color)
-    }
-
-    override fun onReminderDelete(view: View, reminder: Reminder) {
-        model.removerReminder(reminder)
-    }
-
+    private fun showSnackbar(msg: String) =
+        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
 }

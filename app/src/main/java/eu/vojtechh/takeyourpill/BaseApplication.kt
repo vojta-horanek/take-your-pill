@@ -5,15 +5,21 @@ import com.marcinmoskala.kotlinpreferences.PreferenceHolder
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
-import timber.log.Timber.DebugTree
-
 @HiltAndroidApp
 class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG) {
-            Timber.plant(DebugTree())
-        }
+        initLogger()
         PreferenceHolder.setContext(applicationContext)
+    }
+
+    private fun initLogger() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(object : Timber.DebugTree() {
+                override fun createStackElementTag(element: StackTraceElement): String {
+                    return "(${element.fileName}:${element.lineNumber})#${element.methodName}"
+                }
+            })
+        }
     }
 }

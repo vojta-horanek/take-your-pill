@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".BaseApplication"
@@ -14,9 +16,16 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activity.AboutActivity" />
+        android:theme="@style/AppTheme.Splash">
+
+        <activity
+            android:name=".activity.AboutActivity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".activity.MainActivity">
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+            <nav-graph android:value="@navigation/navigation_graph" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,10 +35,11 @@
         <activity
             android:name=".activity.AppIntroActivity"
             android:label="@string/intro"
-            android:theme="@style/Theme.Intro" />
+            android:theme="@style/AppTheme.Intro" />
 
         <receiver android:name=".receiver.ReminderReceiver" />
         <receiver android:name=".receiver.CheckReceiver" />
+        <receiver android:name=".receiver.DelayReceiver" />
         <receiver android:name=".receiver.ConfirmReceiver" />
         <receiver
             android:name=".receiver.BootReceiver"
@@ -38,6 +48,10 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".service.FullscreenService"
+            android:foregroundServiceType="phoneCall" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

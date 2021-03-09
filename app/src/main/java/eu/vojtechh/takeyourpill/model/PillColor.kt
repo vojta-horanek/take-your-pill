@@ -7,12 +7,14 @@ import eu.vojtechh.takeyourpill.R
 
 class PillColor(
     val resource: Int,
-    var checked: Boolean = false
+    var isChecked: Boolean = false
 ) {
     fun getColor(context: Context) = ContextCompat.getColor(context, resource)
 
     companion object {
         fun default() = PillColor(R.color.colorBlue)
+        fun teal() = PillColor(R.color.colorTeal)
+        fun red() = PillColor(R.color.colorRed)
 
         const val BLUE = 1
         const val DARK_BLUE = 2
@@ -38,6 +40,6 @@ class PillColor(
             oldItem.resource == newItem.resource
 
         override fun areContentsTheSame(oldItem: PillColor, newItem: PillColor) =
-            oldItem.checked == newItem.checked
+            oldItem.isChecked == newItem.isChecked
     }
 }

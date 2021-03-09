@@ -7,54 +7,69 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import eu.vojtechh.takeyourpill.R
-import java.text.DateFormat
+import eu.vojtechh.takeyourpill.klass.getTimeString
+import eu.vojtechh.takeyourpill.klass.hour
+import eu.vojtechh.takeyourpill.klass.minute
 import java.util.*
 
 @Entity(
     tableName = "reminder",
     foreignKeys = [ForeignKey(
-        entity = BasePill::class,
+        entity = PillEntity::class,
         parentColumns = arrayOf("pillId"),
         childColumns = arrayOf("pillId"),
         onDelete = ForeignKey.CASCADE
     )]
 )
 data class Reminder(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "reminderId") val id: Long = 0,
-    var calendar: Calendar,
-    var amount: Int,
-    @ColumnInfo(index = true) var pillId: Long
+    var time: Calendar,
+
+    var amount: String,
+
+    @ColumnInfo(index = true)
+    var pillId: Long,
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "reminderId")
+    val id: Long = 0
 ) {
     val hour
-        get() = calendar.get(Calendar.HOUR_OF_DAY)
+        get() = time.hour
 
     val minute
-        get() = calendar.get(Calendar.MINUTE)
+        get() = time.minute
 
-    fun getMillisWithTodayDate(): Long {
+    fun hasSameTime(other: Reminder) = hour == other.hour && minute == other.minute
+
+    fun getTodayMillis() = getTodayCalendar().timeInMillis
+
+    fun getTodayCalendar(): Calendar {
         val time = Calendar.getInstance()
         time.set(Calendar.HOUR_OF_DAY, hour)
         time.set(Calendar.MINUTE, minute)
         time.set(Calendar.SECOND, 0)
         time.set(Calendar.MILLISECOND, 0)
-        return time.timeInMillis
+        return time
     }
 
     companion object {
-        fun create(hour: Int = 8, minute: Int = 0, amount: Int = 1, pillId: Long): Reminder {
+        fun create(hour: Int = 8, minute: Int = 0, amount: String = "1", pillId: Long): Reminder {
             val calendar = Calendar.getInstance()
             calendar.clear()
             calendar.set(Calendar.HOUR_OF_DAY, hour)
             calendar.set(Calendar.MINUTE, minute)
-            return Reminder(calendar = calendar, amount = amount, pillId = pillId)
+            return Reminder(time = calendar, amount = amount, pillId = pillId)
         }
     }
 
-    val timeString: String
-        get() = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)
+    fun getTimeString(context: Context) = time.time.getTimeString(context)
 
     fun formattedString(context: Context) =
-        context.resources.getQuantityString(R.plurals.reminder_text, amount, timeString, amount)
+        context.getString(R.string.reminder_text, getTimeString(context), amount)
+
+    fun getAmountTimeString(context: Context) = context.resources.getString(
+        R.string.pill_time_reminders_format, amount, getTimeString(context)
+    )
 
 
     // Always update list -> this must be used for instant change while editing reminders
@@ -66,6 +81,10 @@ data class Reminder(
 
         override fun areContentsTheSame(oldItem: Reminder, newItem: Reminder) = false
         //(oldItem.time == newItem.time) && (oldItem.amount == newItem.amount)
+    }
+
+    override fun toString(): String {
+        return "${time.hour}:${time.minute}, $amount"
     }
 }
 

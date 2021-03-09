@@ -1,6 +1,11 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="BaseStyle">
+    <style name="AppTheme" parent="BaseTheme">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="AppTheme.Splash" parent="BaseTheme">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
