@@ -1,0 +1,10 @@
+\documentclass[../TakeYourPill.tex]{subfiles}
+\graphicspath{{\subfix{images/}}}
+
+\begin{document}
+
+Design aplikace jsem navrhoval před samotnou implementací, nutno ale dodat, že při implementaci prošel design několika iteracemi. Aplikaci jsem původně koncipoval jako jedinou hlavní obrazovku, kde by se uživateli ukázali všechny důležité informace. Postupem času se toto řešení ukázalo jako nevhodné a nepraktické, zvolil jsem proto více tradiční postup a to rozdělení aplikace do tří přehledných sekcí: \textit{Léky}, \textit{Historie} a \textit{Nastavení}. Každá obrazovka obsahuje velký nadpis a teprve potom samotný obsah. Mimo spodních dialogů\footnote{myšleno BottomSheetDialogFragment} není nadpis nijak ohraničen, pouze je odsazen. Změny mezi různými obrazovkami doprovázejí animace, které jsou implementovány podle Material Designu. Aplikace díky těmto animacím vypadá svižněji.
+
+Celé rozhraní jsem upravil pomocí vlastních stylů, které vycházejí ze stylů Material Design \cite{materialdesign}. Pro některé prvky aplikace, jmenovitě titulky a tlačítka, jsem použil písmo \textit{Jost} \cite{jost}. Ikony použité v aplikaci jsou z knihovny Material Design Icons \cite{icons}, ikonu aplikace jsem získal od Austina Andrewse \cite{pill-icon} a grafika léků je dostupná na GitHubu pod názvem \textit{material-icons} \cite{pills-icons}. Nechybí ani podpora světlého a tmavého designu, který se dá přepínat v nastavení (VOJTO TODO REFERENCE).
+
+\end{document}
