@@ -3,8 +3,19 @@
 
 \begin{document}
 
-Domovská obrazovka (\path{HomeFragment.kt}) je fragment obsahující pouze \textit{RecyclerView} (dále jen recycler) a \textit{ExtendedFloatingActionButton} (dále jen FAB). FAB se při posunutí recycleru zmenší. Zvětší se až když seznam posuneme na začátek. Recycler obsahuje karty, jejichž layout je definován v souboru \path{item_pill.xml}. Na kartě se zobrazují všechny potřebné informace o léku: název, popis, barva, fotografie, připomínky a příjem. Pokud uživatel nepotvrdil poslední připomínku v posledních 30 minutách, zobrazí se na kartě i výzva k potvrzení. Po kliknutí na kartu se otevře detail příslušného léku.
+Domovská obrazovka neboli sekce \enquote{Léky} (\path{HomeFragment.kt}) je fragment obsahující pouze \textit{RecyclerView} (dále jen recycler) a \textit{ExtendedFloatingActionButton} (dále jen FAB). FAB se při posunutí recycleru zmenší. Zvětší se až když seznam posuneme na začátek. 
 
-\paragraph{AppRecyclerAdapter} je \textit{RecyclerAdapter} založený na \textit{ListAdapter}. Tento adaptér se používá pro většinu seznamů v aplikaci, jelikož umožnujě přidat titulek a pokud je \textit{List} předaný do funkce \textit{submitList(list: List<BaseModel>)} prázdný, zobrazí grafiku s textem definovanou v \path{layout_view_empty.xml}. Adaptér podporuje všechny třídy, které dědí z \textit{BaseModel}, jmenovitě \textit{Pill}, \textit{HistoryPillItem} a \textit{HeaderItem}TODO
+Pro zobrazení dat v recycleru je potřeba mít \textit{RecyclerAdapter}. Tato třída se stará o zobrazování dat s příslušným \textit{ViewHolderem}. Adaptér, který je nastavený na tomto recycleru se jmenuje \textit{AppRecyclerAdapter}. Každý \emph{ViewHolder} pro třídy \emph{Pill} obsahuje kartu, jejichž layout je definován v souboru \path{item_pill.xml}. Na kartě se zobrazují všechny potřebné informace o léku: název, popis, barva, fotografie, připomínky a příjem. Pokud uživatel nepotvrdil poslední připomínku v posledních 30 minutách, zobrazí se na kartě i výzva k potvrzení. Po kliknutí na kartu se otevře detail příslušného léku. Snímek obrazovky sekce \enquote{Léky} lze vidět na straně \pageref{fig:intro} (\ref{fig:intro})
+TODO Tohle by nemělo být na nové straně
+
+\boxik{
+\textbf{ViewHolder} (doslovný překlad \enquote{držitel pohledu}) je třída, která se stará o zobrazení jedné položky v RecyclerView Adaptéru. Má za úkol nastavit layout tak, aby odpovídal vstupním datům (např. jednomu léku). Třídu si musíme definovat sami pro každý typ položky, které chceme zobrazovat.
+}
+
+
+\boxik{
+\textbf{AppRecyclerAdapter} je \textit{RecyclerAdapter} založený na \textit{ListAdapter}. Tento adaptér se používá pro většinu seznamů v aplikaci, jelikož umožnujě přidat titulek a zobrazit prázdný stav. Toto je dosaženo přepsáním funkce \textit{submitList} a dosazením speciálních položek (\textit{HeaderItem} a \textit{EmptyItem}). Adaptér podporuje třídy, které dědí z \textit{BaseModel}, jmenovitě \textit{Pill}, \textit{HistoryPillItem}, \textit{HeaderItem} a \textit{EmptyItem}.
+}
+
 
 \end{document}
