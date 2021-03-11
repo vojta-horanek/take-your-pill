@@ -3,7 +3,7 @@
 
 \begin{document}
 
-Při vytváření aplikace jsem vycházel ze zadání a využil jsem vlastních znalostní a zkušeností. Na naprogramování aplikace jsem použil programovací jazyk Kotlin. Zvolil jsem ho proto, že je preferovaný společností Google a oproti jazyku Java má mnoho výhod. Mnoho android knihoven vychází právě pro jazyk Kotlin a tak mi jeho použití ulehčilo mnoho práce při programování. Jmenovitě knihovny z rodiny Android Jetpack \cite{jetpack} jsem použil hojně.
+Při vytváření aplikace jsem vycházel ze zadání a využil jsem vlastních znalostní a zkušeností. Na naprogramování aplikace jsem použil programovací jazyk Kotlin. Zvolil jsem ho proto, že je preferovaný společností Google a oproti jazyku Java má mnoho výhod. Mnoho Android knihoven vychází právě pro Kotlin a tak mi jeho použití ulehčilo mnoho práce při programování. Jmenovitě knihovny z rodiny Android Jetpack \cite{jetpack} jsem použil hojně.
 
 Uživatelské rozhraní aplikace je napsáno v jazyce XML. Pro jeho manipulaci jsem použil knihovny \textit{ViewBinding} \cite{viewbinding} a \textit{DataBinding} \cite{databinding}.
 
@@ -11,7 +11,7 @@ Při samotném vývoji jsem používal vývojové prostředí \textit{Android St
 
 Aplikace je napsána tak, aby odpovídala architektuře \textbf{Model-View-ViewModel}. Znamená to, že každá obrazovka má svůj \textit{ViewModel} a každá datová sekce má svůj \textit{Repozitář}. Tyto třídy jsou odděleny od samotných fragmentů a aktivit.
 
-\vspace{6pt}
+
 \boxik{
 \textbf{ViewModel} je třída obsahující data a funkce pro její fragment/aktivitu, která má vlastní životní cyklus. Díky ViewModelu data přežijí změnu konfigurace jako například otočení obrazovky.
 }
