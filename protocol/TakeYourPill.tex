@@ -1,6 +1,8 @@
 \documentclass[a4paper,12pt]{report}
 \usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 \usepackage[czech]{babel}
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{bibliography}
 \usepackage{setspace}
 \usepackage{lmodern}
 \usepackage{amsmath}
@@ -97,6 +99,7 @@
 \subsubsection{Grafy}
 \subsection{Nastavení}
 \subsubsection{O aplikaci}
+
 \section{Programová implementace}
 \subsection{Databáze}
 \subsection{Připomínání}
@@ -107,6 +110,6 @@
 
 \subfile{sections/screenshots}
 
-\subfile{sections/bibliography}
+\printbibliography
 
 \end{document}
