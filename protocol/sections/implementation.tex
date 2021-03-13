@@ -9,16 +9,16 @@ Uživatelské rozhraní aplikace je napsáno v jazyce XML. Pro jeho manipulaci j
 
 Při samotném vývoji jsem používal vývojové prostředí \textit{Android Studio} \cite{studio} a emulátor \textit{Android Emulator}.
 
-Aplikace je napsána tak, aby odpovídala architektuře \textbf{Model-View-ViewModel}. Znamená to, že každá obrazovka má svůj \textit{ViewModel} a každá datová sekce má svůj \textit{Repozitář}. Tyto třídy jsou odděleny od samotných fragmentů a aktivit.
+Aplikace je napsána tak, aby odpovídala architektuře \textbf{Model-View-ViewModel}. Znamená to, že každá obrazovka má svůj \textit{ViewModel} a každá datová sekce má svůj \textit{Repozitář}. Tyto třídy jsou odděleny od samotných fragmentů a aktivit. Pro získávání dat asynchronně používá aplikace třídu \texttt{LiveData} \cite{livedata}
 
 
 \boxik{
-\textbf{ViewModel} je třída obsahující data a funkce pro její fragment/aktivitu, která má vlastní životní cyklus. Díky ViewModelu data přežijí změnu konfigurace jako například otočení obrazovky.
+\textbf{ViewModel} je třída obsahující data a metody pro její fragment/aktivitu, která má vlastní životní cyklus. Díky ViewModelu data přežijí změnu konfigurace jako například otočení obrazovky.
 }
 
 
 \boxik{
-\textbf{Repozitář} (repository) je třída, která shromažďuje data z různých zdrojů a nabízí je ve vhodné formě ostatním třídám (například může data uchovat v mezipaměti). V této aplikaci přistupuje repozitář pouze do databáze a ve většině případů přímo volá funkce implementované v databázové vrstvě.
+\textbf{Repozitář} (repository) je třída, která shromažďuje data z různých zdrojů a nabízí je ve vhodné formě ostatním třídám (například může data uchovat v mezipaměti). V této aplikaci přistupuje repozitář pouze do databáze a ve většině případů přímo volá metody implementované v databázové vrstvě.
 }
 
 \end{document}

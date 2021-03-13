@@ -18,6 +18,7 @@
 \usepackage[bottom, perpage]{footmisc}
 \usepackage[autostyle]{csquotes}
 \usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
 
 \usepackage{fontspec}
 \setmainfont{Linux Libertine O}
@@ -85,15 +86,21 @@
 \subfile{sections/homescreen}
 
 \subsubsection{Detail léku}
+\subfile{sections/pill-detail}
+
 \subsubsection{Nový lék}
+\subfile{sections/new-pill}
+
 \subsection{Historie}
 \subsubsection{Přehled}
+\label{sec:overview}
 \subsubsection{Grafy}
 \subsection{Nastavení}
 \subsubsection{O aplikaci}
 \section{Programová implementace}
 \subsection{Databáze}
 \subsection{Připomínání}
+\label{sec:reminder}
 
 \chapter*{Závěr}
 \addcontentsline{toc}{chapter}{Závěr}  
