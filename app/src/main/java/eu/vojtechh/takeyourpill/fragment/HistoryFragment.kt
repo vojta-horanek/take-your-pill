@@ -7,11 +7,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.transition.MaterialFadeThrough
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewPagerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryBinding
-import eu.vojtechh.takeyourpill.klass.viewBinding
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment(R.layout.fragment_history) {

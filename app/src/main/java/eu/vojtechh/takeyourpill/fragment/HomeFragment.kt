@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
-import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill

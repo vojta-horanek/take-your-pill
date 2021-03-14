@@ -7,11 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryChartBinding
 import eu.vojtechh.takeyourpill.klass.getAttrColor
-import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.viewmodel.history.HistoryChartViewModel
 
 

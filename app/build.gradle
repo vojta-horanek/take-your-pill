@@ -136,4 +136,7 @@ dependencies {
     implementation "com.mikepenz:aboutlibraries-core:${latestAboutLibsRelease}"
     implementation "com.mikepenz:aboutlibraries:${latestAboutLibsRelease}"
 
+    //ViewBinding delegate
+    implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
+
 }

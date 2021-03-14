@@ -6,12 +6,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryOverviewBinding
 import eu.vojtechh.takeyourpill.klass.tryIgnore
-import eu.vojtechh.takeyourpill.klass.viewBinding
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.HistoryOverallItem
 import eu.vojtechh.takeyourpill.model.Pill

@@ -3,10 +3,10 @@ package eu.vojtechh.takeyourpill.fragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.transition.MaterialFadeThrough
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.FragmentSettingsBinding
-import eu.vojtechh.takeyourpill.klass.viewBinding
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {

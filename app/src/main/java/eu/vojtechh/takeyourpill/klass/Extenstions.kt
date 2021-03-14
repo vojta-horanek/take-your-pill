@@ -7,11 +7,13 @@ import android.content.res.Resources.Theme
 import android.graphics.Color
 import android.text.format.DateFormat
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -22,6 +24,7 @@ import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.*
@@ -162,3 +165,10 @@ inline fun tryIgnore(action: () -> Unit) {
     } catch (t: Throwable) {
     }
 }
+
+inline fun <T : ViewBinding> AppCompatActivity.viewBinding(
+    crossinline bindingInflater: (LayoutInflater) -> T
+) =
+    lazy(LazyThreadSafetyMode.NONE) {
+        bindingInflater.invoke(layoutInflater)
+    }
