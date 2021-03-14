@@ -93,7 +93,7 @@
     <string name="error_opening_image">There was an error opening the image</string>
     <string name="overview">Overview</string>
     <string name="charts">Charts</string>
-    <string name="all_pills_chart">All pills</string>
+    <string name="all_pills_chart">All reminders</string>
     <string name="missed_pills">Missed pills</string>
     <string name="stat_overall">All pills</string>
     <string name="stat_reminded">\u2022 Reminded %1$d times</string>
