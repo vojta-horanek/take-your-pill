@@ -81,7 +81,7 @@
     <string name="overview">Přehled</string>
     <string name="charts">Grafy</string>
     <string name="all_pills_chart">Všechny připomínky</string>
-    <string name="missed_pills">Vynechané prášky</string>
+    <string name="missed_pills">Vynechané připomínky</string>
     <string name="stat_reminded">\u2022 Připomenuto %1$dkrát</string>
     <string name="stat_confirmed">\u2022 Potvrzeno %1$dkrát</string>
     <string name="stat_missed">\u2022 Vynecháno %1$dkrát</string>
