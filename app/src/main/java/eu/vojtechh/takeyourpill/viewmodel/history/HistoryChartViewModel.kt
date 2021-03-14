@@ -25,22 +25,21 @@ class HistoryChartViewModel @Inject constructor(
     private suspend fun getPill(pillId: Long) = pillRepository.getPillSync(pillId)
 
     fun getStatsData(history: List<History>, pieChart: PieChart, context: Context) = liveData(Dispatchers.IO) {
-        val totalReminded = history.size
         val totalConfirmed = history.count { it.hasBeenConfirmed }
-        val totalMissed = totalReminded - totalConfirmed
+        val totalMissed = history.size - totalConfirmed
 
         val colorsAll = mutableListOf<Int>()
         val colorsMissed = mutableListOf<Int>()
         val colorsConfirmed = mutableListOf(
-                context.getColor(R.color.colorGreen),
-                context.getColor(R.color.colorRed)
+            context.getColor(R.color.colorGreen),
+            context.getColor(R.color.colorRed)
         )
 
-        val allEntries: ArrayList<PieEntry> = ArrayList()
-        val missedEntries: ArrayList<PieEntry> = ArrayList()
+        val allEntries = ArrayList<PieEntry>()
+        val missedEntries = ArrayList<PieEntry>()
         val confirmedEntries: ArrayList<PieEntry> = arrayListOf(
-                PieEntry(totalConfirmed.toFloat(), context.getString(R.string.confirmed)),
-                PieEntry(totalMissed.toFloat(), context.getString(R.string.missed))
+            PieEntry(totalConfirmed.toFloat(), context.getString(R.string.confirmed)),
+            PieEntry(totalMissed.toFloat(), context.getString(R.string.missed))
         )
 
         val pillsHistory = history.groupBy { it.pillId }.values
@@ -52,9 +51,7 @@ class HistoryChartViewModel @Inject constructor(
             colorsAll.add(pill.colorResource(context))
             allEntries.add(PieEntry(pillHistory.size.toFloat(), pill.name))
 
-            val pillReminded = pillHistory.size
-            val pillConfirmed = pillHistory.count { it.hasBeenConfirmed }
-            val pillMissed = pillReminded - pillConfirmed
+            val pillMissed = pillHistory.count { !it.hasBeenConfirmed }
 
             if (pillMissed > 0) {
                 colorsMissed.add(pill.color.getColor(context))
