@@ -2,7 +2,7 @@
 \usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 \usepackage[czech]{babel}
 \usepackage[backend=bibtex]{biblatex}
-\addbibresource{bibliography}
+\addbibresource{bibliography.bib}
 \usepackage{setspace}
 \usepackage{lmodern}
 \usepackage{amsmath}
@@ -12,7 +12,6 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{color}
-\usepackage{xcolor}
 \usepackage{url}
 \usepackage{textcomp}
 \usepackage{parskip}
@@ -21,6 +20,27 @@
 \usepackage[autostyle]{csquotes}
 \usepackage{subcaption}
 \usepackage[hidelinks]{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{inconsolata}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+
+\lstdefinelanguage{Kotlin}{
+  comment=[l]{//},
+  commentstyle={\color{gray}\ttfamily},
+  emph={filter, first, firstOrNull, forEach, lazy, map, mapNotNull, println},
+  emphstyle={\color{OrangeRed}},
+  identifierstyle=\color{black},
+  keywords={!in, !is, abstract, actual, annotation, as, as?, break, by, catch, class, companion, const, constructor, continue, crossinline, data, delegate, do, dynamic, else, enum, expect, external, false, field, file, final, finally, for, fun, get, if, import, in, infix, init, inline, inner, interface, internal, is, lateinit, noinline, null, object, open, operator, out, override, package, param, private, property, protected, public, receiveris, reified, return, return@, sealed, set, setparam, super, suspend, tailrec, this, throw, true, try, typealias, typeof, val, var, vararg, when, where, while},
+  keywordstyle={\color{NavyBlue}\bfseries},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[s]{"""*}{*"""},
+  ndkeywords={@Deprecated, @JvmField, @JvmName, @JvmOverloads, @JvmStatic, @JvmSynthetic, Array, Byte, Double, Float, Int, Integer, Iterable, Long, Runnable, Short, String},
+  ndkeywordstyle={\color{BurntOrange}\bfseries},
+  sensitive=true,
+  stringstyle={\color{ForestGreen}\ttfamily},
+}
 
 \usepackage{fontspec}
 \setmainfont{Linux Libertine O}
@@ -94,9 +114,16 @@
 \subfile{sections/new-pill}
 
 \subsection{Historie}
+\subfile{sections/history}
+
+
 \subsubsection{Přehled}
 \label{sec:overview}
+\subfile{sections/overview}
+
 \subsubsection{Grafy}
+\subfile{sections/graphs}
+
 \subsection{Nastavení}
 \subsubsection{O aplikaci}
 

@@ -1,0 +1,12 @@
+\documentclass[../TakeYourPill.tex]{subfiles}
+\graphicspath{{\subfix{images/}}}
+
+\begin{document}
+
+Sekce \enquote{přehled} spadá pod sekci \enquote{historie} a je implementována jako fragment. Tento fragment se zobrazuje jako první položka v prvku \texttt{ViewPager2} v sekci \enquote{historie}. V tomto fragmentu je pouze prvek \texttt{RecyclerView}, který zobrazuje jak veškerou historii, tak historii pro jednotlivé léky. V seznamu se zobrazí karty s názvem a barvou léku a statistiky ukazující kolikrát byl lék připomenut, kolikrát byl potvrzen a kolikrát byl zmeškán. Po kliknutí jednu z karet se zobrazí \path{HistoryViewDialog}\label{sec:historydialog}. V tomto dialogu má uživatel k dispozici seznam připomínek, které lék obdržel (v případě vybrání karty \enquote{Všechny léky} se zobrazí seznam všech připomínek). Pro každou připomínku může uživatel rozbalit kontextové menu a provést jednu ze čtyř akcí. Uživatel může změnit stav potvrzení připomínky (potvrzená x nepotvrzená), může změnit čas potvrzení (pokud je připomínka potvrzena), může změnit množství, které si v daný čas vzal nebo měl vzít a v neposlední řadě může tuto připomínku smazat. Pokud by uživatel chtěl smazat všechny připomínky pro daný lék, může stisknout tlačítko smazat nacházející se v titulku dialogu.
+
+Pro tento seznam jsem zvolit odlišný způsob odlišení různých typů položek. Jelikož jsem potřeboval při zobrazení všech léku zobrazit i název léku a v případě první připomínky dne zobrazit i datum, zvolil jsem pouze jeden \texttt{ViewHolder}, který v sobě obsahuje všechny prvky. Toto se liší od způsobu odlišení různých položek v \path{AppRecyclerView}, kde je využito ViewHolderů několik. Layout jednotlivých položek je definovaný v \path{item_history.xml}. Jednotlivé prvku jsou skryty a zobrazeny podle potřeby a layout je udělán tak, aby vypadal konzistentně při všech typech zobrazení.
+
+Další specialitou tohoto seznamu je aktualizování okolních připomínek při odstraňování. Toto zajistí správné zobrazení data a předělové čáry.
+
+\end{document}

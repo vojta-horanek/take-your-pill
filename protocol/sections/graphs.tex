@@ -1,0 +1,54 @@
+\documentclass[../TakeYourPill.tex]{subfiles}
+\graphicspath{{\subfix{images/}}}
+
+\begin{document}
+
+Druhou sekcí historie je fragment \path{HistoryChartFragment}, který se stará o zobrazení grafů. Fragment obsahuje kartu se třemi koláčovými grafy, touto kartou lze posouvat pro zobrazení i těch grafů, které se na obrazovku nevešly. Pro grafy jsem využil knihovnu \textit{MPAndroidChart} \cite{chart} dovolující vytvoření velkého množství typů grafů. Já jsem použil jen graf koláčový, protože ostatní grafy by v této aplikaci nedávaly smysl. Pokud se v grafu zobrazují jednotlivé léky (prví a druhý graf), barva výseče souhlasí s barvou léku.
+
+\paragraph{Graf 1} Prvním grafem je graf s názvem \enquote{všechny připomínky}. Graf zobrazuje procentuální poměr připomínek jednotlivých léků. Data se získávají následujícím způsobem:
+
+\begin{lstlisting}[language=Kotlin]
+val allEntries = ArrayList<PieEntry>()
+val pillsHistory = history.groupBy { it.pillId }.values
+pillsHistory.forEach { pillHistory ->
+    val pill = getPill(pillHistory.first().pillId)
+    allEntries.add(PieEntry(pillHistory.size.toFloat(), pill.name))
+}
+\end{lstlisting}
+
+Tento kód vypočítá délku každé skupinu historie indikovanou podle ID léku a přidá jí do seznamu používaném pro vykreslení grafu.
+
+
+\paragraph{Graf 2} Druhý graf na obrazovce pod názvem \enquote{vynechané připomínky} zobrazuje procentuální poměr vynechaných připomínek pro jednotlivé léky. Pokud neexistují žádné vynechané připomínky, graf se nezobrazí. Data pro tento graf se získávají následovně (kód upraven pro snazší orientaci):
+
+\begin{lstlisting}[language=Kotlin]
+val missedEntries = ArrayList<PieEntry>()
+val pillsHistory = history.groupBy { it.pillId }.values
+pillsHistory.forEach { pillHistory ->
+    val pill = getPill(pillHistory.first().pillId)
+    val pillMissed = pillHistory.count { !it.hasBeenConfirmed }
+    if (pillMissed > 0) {
+        missedEntries.add(PieEntry(pillMissed, pill.name))
+    }
+}
+\end{lstlisting}
+
+Tento kód vypočítá počet nepotvrzených připomínek každé skupinu historie indikovanou podle ID léku a pokud je větší než nula, přidá jej do seznamu používaném pro vykreslení grafu.
+
+
+\paragraph{Graf 3} Poslední graf s názvem \enquote{potvrzené x vynechané} zobrazuje procentuální poměr potvrzených a vynechaných připomínek. Data pro poslední graf se získávají tímto způsobem (kód upraven pro snazší orientaci):
+\newpage
+\begin{lstlisting}[language=Kotlin]
+val totalConfirmed = history.count { it.hasBeenConfirmed }
+val totalMissed = history.size - totalConfirmed
+val confirmedEntries: ArrayList<PieEntry> = arrayListOf(
+        PieEntry(totalConfirmed, R.string.confirmed),
+        PieEntry(totalMissed, R.string.missed)
+)
+\end{lstlisting}
+
+Výpočet pro tento graf je nejjednodušší, pouze se vypočítá počet potvrzených a počet vynechaných (od velikosti veškeré historie odečtené potvrzené) a tyto hodnoty se přidají do seznamu používaném pro vykreslení grafu.
+
+I když jsem zde v textu kód rozdělil do tří sekcí, v aplikaci je kód na jednom místě (\path{HistoryChartViewModel}) a využívá pouze jeden cyklus, je tak efektivnější a méně se dotazuje databáze.
+
+\end{document}
