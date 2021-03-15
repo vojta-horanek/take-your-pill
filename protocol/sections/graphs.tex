@@ -3,7 +3,7 @@
 
 \begin{document}
 
-Druhou sekcí historie je fragment \path{HistoryChartFragment}, který se stará o zobrazení grafů. Fragment obsahuje kartu se třemi koláčovými grafy, touto kartou lze posouvat pro zobrazení i těch grafů, které se na obrazovku nevešly. Pro grafy jsem využil knihovnu \textit{MPAndroidChart} \cite{chart} dovolující vytvoření velkého množství typů grafů. Já jsem použil jen graf koláčový, protože ostatní grafy by v této aplikaci nedávaly smysl. Všechny grafy v aplikaci jsou procentuální a knihovna si procenta vypočítá sama, aplikace počítá pouze počet položek, nikoliv jejich procentuální množství. Pokud se v grafu zobrazují jednotlivé léky (první a druhý graf), barva výseče souhlasí s barvou léku. 
+Druhou sekcí historie je fragment \texttt{HistoryChartFragment}, který se stará o zobrazení grafů. Fragment obsahuje kartu se třemi koláčovými grafy, touto kartou lze posouvat pro zobrazení i těch grafů, které se na obrazovku nevešly. Pro grafy jsem využil knihovnu \textit{MPAndroidChart} \cite{chart} dovolující vytvoření velkého množství typů grafů. Já jsem použil jen graf koláčový, protože ostatní grafy by v této aplikaci nedávaly smysl. Všechny grafy v aplikaci jsou procentuální a knihovna si procenta vypočítá sama, aplikace počítá pouze počet položek, nikoliv jejich procentuální množství. Pokud se v grafu zobrazují jednotlivé léky (první a druhý graf), barva výseče souhlasí s barvou léku. 
 
 \paragraph{Graf 1} Prvním grafem je graf s názvem \enquote{všechny připomínky}. Graf zobrazuje procentuální poměr připomínek jednotlivých léků. Data se získávají následujícím způsobem:
 
@@ -49,6 +49,6 @@ val confirmedEntries: ArrayList<PieEntry> = arrayListOf(
 
 Výpočet pro tento graf je nejjednodušší, pouze se vypočítá počet potvrzených a počet vynechaných (od velikosti veškeré historie odečtené potvrzené) a tyto hodnoty se přidají do seznamu používaném pro vykreslení grafu.
 
-I když jsem zde v textu kód rozdělil do tří sekcí, v aplikaci je kód na jednom místě (\path{HistoryChartViewModel}) a využívá pouze jeden cyklus, je tak efektivnější a méně se dotazuje databáze. I když by veškeré získávání dat pro grafy bylo možné přepsat do databázové vrstvy do jazyka SQL, já jsem zvolil tento způsob zpracování dat.
+I když jsem zde v textu kód rozdělil do tří sekcí, v aplikaci je kód na jednom místě (\texttt{HistoryChartViewModel}) a využívá pouze jeden cyklus, je tak efektivnější a méně se dotazuje databáze. I když by veškeré získávání dat pro grafy bylo možné přepsat do databázové vrstvy do jazyka SQL, já jsem zvolil tento způsob zpracování dat.
 
 \end{document}

@@ -3,7 +3,7 @@
 
 \begin{document}
 
-Druhá hlavní sekce aplikace se nazývá \enquote{historie} a uživatel zde může pozorovat kdy mu přišli připomínky, kdy a jestli si lék vzal a jaké množství si vzal. V této sekci jsou dostupné i tři koláčové grafy, které uživateli vizuálně ukazují jeho statistiky. Sekce historie je implementována jako fragment, který je prvky \texttt{ViewPager2} a \texttt{TabLayout} rozdělen na dvě části. Tento fragment (\path{HistoryFragment}) neobsahuje žádnou logiku ohledně historie, pouze se stará o nastavení výše zmíněných prvků.
+Druhá hlavní sekce aplikace se nazývá \enquote{historie} a uživatel zde může pozorovat kdy mu přišli připomínky, kdy a jestli si lék vzal a jaké množství si vzal. V této sekci jsou dostupné i tři koláčové grafy, které uživateli vizuálně ukazují jeho statistiky. Sekce historie je implementována jako fragment, který je prvky \texttt{ViewPager2} a \texttt{TabLayout} rozdělen na dvě části. Tento fragment (\texttt{HistoryFragment}) neobsahuje žádnou logiku ohledně historie, pouze se stará o nastavení výše zmíněných prvků.
 
 \boxik{
 \textbf{ViewPager2} a \textbf{TabLayout} jsou prvky, které rozdělují obrazovku na dva panely, které jsou přepínatelné pomocí posouvání. \texttt{ViewPager2} je nová verze \texttt{ViewPager}, která interně využívá \texttt{RecyclerView} jehož položky jsou fragmenty. \texttt{TabLayout} pouze zobrazuje záložky nad panely a dovoluje jejich přepínání pomocí stisku.
