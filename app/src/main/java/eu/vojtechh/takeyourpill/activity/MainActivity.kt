@@ -2,6 +2,8 @@ package eu.vojtechh.takeyourpill.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         if (Pref.firstRun) {
             val intent = Intent(this, AppIntroActivity::class.java)
-            startActivityForResult(intent, requestCodeIntro)
+            introResult.launch(intent)
         }
 
         setTheme(R.style.AppTheme)
@@ -59,15 +61,13 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == requestCodeIntro) {
-            if (resultCode == RESULT_OK) {
+    val introResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
                 Pref.firstRun = false
             } else {
                 finish()
             }
         }
-    }
 
 }
