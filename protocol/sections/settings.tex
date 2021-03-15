@@ -1,0 +1,18 @@
+\documentclass[../TakeYourPill.tex]{subfiles}
+\graphicspath{{\subfix{images/}}}
+
+\begin{document}
+
+Poslední hlavní sekcí aplikace je sekce \enquote{nastavení}. Tato sekce je implementována pomocí dvou fragmentů: \texttt{SettingsFragment} a \texttt{PreferencesFragment}. První z těchto fragmentů je rodičem toho druhého. Jediné co obsahuje je titulek \enquote{Nastavení} a pod ním prvek \texttt{FragmentContainerView} do kterého se vkládá právě druhý z fragmentů (\texttt{PreferencesFragment}). Tento druhý fragment nedědí ze třídy \texttt{Fragment} jako všechny ostatní fragmenty v této aplikaci, nýbrž ze třídy \texttt{PreferenceFragmentCompat}. Díky této třídě nemusíme vymýšlet vlastní layout pro nastavení, pouze definujeme položky v nastavení v souboru \texttt{preferences.xml} (název souboru může být jakýkoliv) a tento soubor použijeme při volání metody \texttt{setPreferencesFromResource()}, o zbytek se postará třída. Dále můžeme jednotlivé položky nastavení dynamicky manipulovat, nebo můžeme nastavit akce po jejich stisknutí. Já jsem se postaral o následující nastavení položek:
+\begin{itemize}
+  \item \enquote{Nastavení možností oznámení} se skryje, pokud aplikace běží na zařízení se systémem starší než Android 8.0 Oreo.
+  \item Po kliknutí na \enquote{Nastavení možností oznámení} se otevře android nastavení s obrazovkou pro správu oznámení pro tuto aplikaci.
+  \item Po kliknutí na \enquote{O této aplikaci} se otevře \texttt{AboutActivity}.
+  \item Po kliknutí na \enquote{Přidat testovací data} se do aplikace přidají léky a historie určené na testování a demonstraci aplikace.
+  \item Po vybrání nového vzhledu aplikace se aplikace do tohoto vzhledu přepne.
+\end{itemize}
+
+Aby se fragment (\texttt{PreferencesFragment}) správně zobrazil ve fragmentu s titulkem (\texttt{SettingsFragment}), bylo nutné na jeho interním prvku\footnote{tento prvek nedefinuji já, ale třída \texttt{PreferenceFragmentCompat}} \texttt{listView} změnit určitá nastavení; jmenovitě vypnutí zobrazení \texttt{OVER\_SCROLL}\footnote{zobrazení zpětné vazby pokud uživatel seznam přesune na jeho začátek/konec}, vypnutí nastavení \texttt{clipToPadding} a přidání dolní mezery \textit{56dp}.
+Tento fragment vlastní i svůj \textit{ViewModel}, v něm je avšak implementováno pouze přidávání testovacích dat sloužících pro demonstraci aplikace.
+
+\end{document}
