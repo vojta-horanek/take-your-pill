@@ -37,7 +37,6 @@ import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import timber.log.Timber
 
 @AndroidEntryPoint
 class EditFragment : Fragment() {
@@ -191,7 +190,6 @@ class EditFragment : Fragment() {
 
             scrollEdit.setOnScrollChangeListener { _, _, _, _, _ ->
                 val offset = scrollEdit.scrollY
-                Timber.d(offset.toString())
                 when (buttonSave.isExtended) {
                     true -> {
                         if (offset > 60) {
