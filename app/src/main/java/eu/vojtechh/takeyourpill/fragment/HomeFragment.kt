@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
@@ -52,39 +51,24 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_empty_view)
         )
 
-        binding.recyclerHome.run {
-            adapter = appAdapter
+        binding.run {
 
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            floatingActionButton.setOnClickListener {
+                openNewPill()
+            }
 
-                private var recyclerScrollY = 0
+            recyclerHome.adapter = appAdapter
 
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-
-                    val offset = binding.recyclerHome.computeVerticalScrollOffset()
-
-                    when (binding.floatingActionButton.isExtended) {
-                        true -> {
-                            if (offset - recyclerScrollY > 60) {
-                                binding.floatingActionButton.shrink()
-                            }
-                        }
-                        false -> {
-                            if (offset == 0) {
-                                binding.floatingActionButton.extend()
-                            }
-                        }
-                    }
-
-                    recyclerScrollY = offset
-                    super.onScrolled(recyclerView, dx, dy)
+            recyclerHome.setOnScrollChangeListener { _, _, _, _, _ ->
+                val offset = recyclerHome.computeVerticalScrollOffset()
+                when (floatingActionButton.isExtended) {
+                    true -> if (offset > 0) floatingActionButton.shrink()
+                    false -> if (offset == 0) floatingActionButton.extend()
                 }
-            })
+            }
         }
 
-        binding.floatingActionButton.setOnClickListener {
-            openNewPill()
-        }
+
 
         model.allPills.observe(viewLifecycleOwner) { pills ->
             model.addConfirmCards(pills).observe(viewLifecycleOwner) { allPills ->

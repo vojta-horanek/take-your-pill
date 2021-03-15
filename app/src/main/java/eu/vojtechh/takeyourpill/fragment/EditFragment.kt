@@ -54,9 +54,6 @@ class EditFragment : Fragment() {
     private val isCreatingNewPill
         get() = args.pillId == -1L
 
-    private var scrollY = 0
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -191,16 +188,8 @@ class EditFragment : Fragment() {
             scrollEdit.setOnScrollChangeListener { _, _, _, _, _ ->
                 val offset = scrollEdit.scrollY
                 when (buttonSave.isExtended) {
-                    true -> {
-                        if (offset > 60) {
-                            buttonSave.shrink()
-                        }
-                    }
-                    false -> {
-                        if (offset == 0) {
-                            buttonSave.extend()
-                        }
-                    }
+                    true -> if (offset > 0) buttonSave.shrink()
+                    false -> if (offset == 0) buttonSave.extend()
                 }
             }
 
