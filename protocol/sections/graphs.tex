@@ -12,11 +12,11 @@ val allEntries = ArrayList<PieEntry>()
 val pillsHistory = history.groupBy { it.pillId }.values
 pillsHistory.forEach { pillHistory ->
     val pill = getPill(pillHistory.first().pillId)
-    allEntries.add(PieEntry(pillHistory.size.toFloat(), pill.name))
+    allEntries.add(PieEntry(pillHistory.size, pill.name))
 }
 \end{lstlisting}
 
-Tento kód vypočítá délku každé skupinu historie indikovanou podle ID léku a přidá jí do seznamu používaném pro vykreslení grafu.
+Tento kód vypočítá délku každé skupinu historie indikovanou podle ID léku a přidá ji do seznamu používaném pro vykreslení grafu.
 
 
 \paragraph{Graf 2} Druhý graf na obrazovce pod názvem \enquote{vynechané připomínky} zobrazuje procentuální poměr vynechaných připomínek pro jednotlivé léky. Pokud neexistují žádné vynechané připomínky, graf se nezobrazí. Data pro tento graf se získávají následovně (kód upraven pro snazší orientaci):
@@ -49,6 +49,6 @@ val confirmedEntries: ArrayList<PieEntry> = arrayListOf(
 
 Výpočet pro tento graf je nejjednodušší, pouze se vypočítá počet potvrzených a počet vynechaných (od velikosti veškeré historie odečtené potvrzené) a tyto hodnoty se přidají do seznamu používaném pro vykreslení grafu.
 
-I když jsem zde v textu kód rozdělil do tří sekcí, v aplikaci je kód na jednom místě (\path{HistoryChartViewModel}) a využívá pouze jeden cyklus, je tak efektivnější a méně se dotazuje databáze.
+I když jsem zde v textu kód rozdělil do tří sekcí, v aplikaci je kód na jednom místě (\path{HistoryChartViewModel}) a využívá pouze jeden cyklus, je tak efektivnější a méně se dotazuje databáze. I když by veškeré získávání dat pro grafy bylo možné přepsat do databázové vrstvy do jazyka SQL, já jsem zvolil tento způsob zpracování dat.
 
 \end{document}

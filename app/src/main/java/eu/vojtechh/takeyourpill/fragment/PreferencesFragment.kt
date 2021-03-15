@@ -10,7 +10,6 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
-import eu.vojtechh.takeyourpill.BuildConfig
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.activity.AboutActivity
 import eu.vojtechh.takeyourpill.klass.Pref
@@ -57,7 +56,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             true
         }
 
-        findPreference<Preference>("addTestData")?.isVisible = BuildConfig.DEBUG
+        // Uncomment after dlouhodobka
+        // findPreference<Preference>("addTestData")?.isVisible = BuildConfig.DEBUG
 
         findPreference<Preference>("addTestData")?.setOnPreferenceClickListener {
             model.addTestData(requireContext())
