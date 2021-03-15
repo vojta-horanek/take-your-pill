@@ -12,8 +12,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
+import eu.vojtechh.takeyourpill.reminder.NotificationManager
+import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.FileNotFoundException
 import java.io.InputStream
 import javax.inject.Inject
@@ -23,13 +27,24 @@ class EditViewModel @Inject constructor(
         private val pillRepository: PillRepository
 ) : ViewModel() {
 
-    fun addAndGetPill(pill: Pill) =
-        liveData(Dispatchers.IO) { emitSource(pillRepository.insertPillReturn(pill)) }
+    fun addPill(pill: Pill, applicationContext: Context) = GlobalScope.launch(Dispatchers.IO) {
+        val newPill = pillRepository.insertPillReturn(pill)
+        setReminding(newPill, applicationContext)
+    }
 
-    fun updateAndGetPill(pill: Pill) =
-        liveData(Dispatchers.IO) { emitSource(pillRepository.updatePillReturn(pill)) }
+    fun updatePill(pill: Pill, applicationContext: Context) = GlobalScope.launch(Dispatchers.IO) {
+        val newPill = pillRepository.updatePillReturn(pill)
+        setReminding(newPill, applicationContext)
+    }
 
-    suspend fun updatePill(pill: Pill) = pillRepository.updatePill(pill)
+    private fun setReminding(pill: Pill, context: Context) {
+        NotificationManager.createNotificationChannel(
+            context,
+            pill.id.toString(),
+            pill.name
+        )
+        ReminderManager.planNextPillReminder(context, pill)
+    }
 
     fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
 

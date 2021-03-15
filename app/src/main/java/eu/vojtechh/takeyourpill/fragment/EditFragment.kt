@@ -11,11 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.liveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
@@ -34,13 +32,9 @@ import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.disableAnimations
 import eu.vojtechh.takeyourpill.klass.showError
 import eu.vojtechh.takeyourpill.klass.themeColor
-import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
-import eu.vojtechh.takeyourpill.reminder.NotificationManager
-import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
-import kotlinx.coroutines.Dispatchers
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
@@ -60,6 +54,9 @@ class EditFragment : Fragment() {
 
     private val isCreatingNewPill
         get() = args.pillId == -1L
+
+    private var scrollY = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -191,6 +188,24 @@ class EditFragment : Fragment() {
             buttonAddReminder.setOnClickListener { showReminderDialog() }
             imageChooser.setOnImageClickListener { onPickImage() }
             imageChooser.setOnDeleteClickListener { onImageDelete() }
+
+            scrollEdit.setOnScrollChangeListener { _, _, _, _, _ ->
+                val offset = scrollEdit.scrollY
+                Timber.d(offset.toString())
+                when (buttonSave.isExtended) {
+                    true -> {
+                        if (offset > 60) {
+                            buttonSave.shrink()
+                        }
+                    }
+                    false -> {
+                        if (offset == 0) {
+                            buttonSave.extend()
+                        }
+                    }
+                }
+            }
+
         }
 
     }
@@ -218,7 +233,6 @@ class EditFragment : Fragment() {
             buttonAddReminder.rippleColor = colorStateList
             buttonAddReminder.setTextColor(color)
 
-            progress.setIndicatorColor(color)
             pillOptionsView.setButtonTint(color)
         }
     }
@@ -315,52 +329,28 @@ class EditFragment : Fragment() {
         // Does Pill have a name?
         if (model.pill.name.isBlank()) {
             inputNameLayout.error = getString(R.string.enter_field)
-            return
+            return@run
         }
 
         // Does Pill have at least one reminder?
         if (model.pill.reminders.isEmpty()) {
             showSnackbar(getString(R.string.no_reminders_set))
-            return
+            return@run
         }
-
-        // TODO Use WorkManager for saving
-        layoutLoading.isVisible = true
 
         model.pill.options = pillOptionsView.getOptions()
 
         if (isCreatingNewPill) {
-            model.addAndGetPill(model.pill).observe(viewLifecycleOwner) {
-                setReminding(it) {
-                    exitTransition = Slide().addTarget(R.id.layoutEdit)
-                    findNavController().popBackStack()
-                }
-            }
+            model.addPill(model.pill, requireActivity().applicationContext)
+            exitTransition = Slide().addTarget(R.id.layoutEdit)
         } else {
-            model.updateAndGetPill(model.pill).observe(viewLifecycleOwner) {
-                setReminding(it) {
-                    returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-                    findNavController().popBackStack()
-                }
-            }
+            model.updatePill(model.pill, requireActivity().applicationContext)
+            returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
         }
+        findNavController().popBackStack()
+
     }
 
-    private fun setReminding(pill: Pill, action: () -> Unit) {
-        Timber.d("lastRemindTime: %s", pill.lastReminderDate)
-        liveData(Dispatchers.IO) {
-            NotificationManager.createNotificationChannel(
-                requireContext(),
-                pill.id.toString(),
-                pill.name
-            )
-            ReminderManager.planNextPillReminder(requireContext(), pill)
-            emit(true)
-        }.observe(viewLifecycleOwner) {
-            Timber.d("lastRemindTime: %s", pill.lastReminderDate)
-            action()
-        }
-    }
 
     private fun showSnackbar(msg: String) =
         Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()

@@ -143,5 +143,6 @@
     <string name="auto">Automatically</string>
     <string name="day">Day</string>
     <string name="night">Night</string>
+    <string name="save">Save</string>
 
 </resources>

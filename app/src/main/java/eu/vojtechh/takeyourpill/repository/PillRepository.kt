@@ -1,6 +1,5 @@
 package eu.vojtechh.takeyourpill.repository
 
-import androidx.lifecycle.LiveData
 import eu.vojtechh.takeyourpill.database.PillDao
 import eu.vojtechh.takeyourpill.database.ReminderDao
 import eu.vojtechh.takeyourpill.model.Pill
@@ -32,13 +31,13 @@ class PillRepository @Inject constructor(
         return id
     }
 
-    suspend fun insertPillReturn(pill: Pill): LiveData<Pill> {
+    suspend fun insertPillReturn(pill: Pill): Pill {
         val id = pillDao.insertPill(pill.pillEntity)
         pill.reminders.forEach {
             it.pillId = id
         }
         reminderDao.insert(pill.reminders)
-        return pillDao.getById(id)
+        return pillDao.getByIdSync(id)
     }
 
     suspend fun updatePill(pill: Pill): Long {
@@ -50,13 +49,13 @@ class PillRepository @Inject constructor(
         return pill.id
     }
 
-    suspend fun updatePillReturn(pill: Pill): LiveData<Pill> {
+    suspend fun updatePillReturn(pill: Pill): Pill {
         // Delete all reminders based on pill (removes orphaned)
         reminderDao.deleteByPillId(pill.id)
         // Add all reminders (new, updated)
         reminderDao.insert(pill.reminders)
         pillDao.updatePill(pill.pillEntity)
-        return pillDao.getById(pill.id)
+        return pillDao.getByIdSync(pill.id)
     }
 
     suspend fun markPillDeleted(pillEntity: PillEntity) {

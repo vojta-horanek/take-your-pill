@@ -145,6 +145,7 @@
     <string name="auto">Automaticky</string>
     <string name="day">Den</string>
     <string name="night">Noc</string>
+    <string name="save">Uložit</string>
 
 
 </resources>
