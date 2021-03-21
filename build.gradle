@@ -4,7 +4,6 @@ buildscript {
     ext.latestAboutLibsRelease = '8.8.4'
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
@@ -30,7 +29,6 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }
     }
