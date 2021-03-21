@@ -147,7 +147,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 history?.let {
                     infoLastReminded.text = history.reminded.time.getDateTimeString()
                 } ?: run {
-                    textIntakeOptions.isVisible = false
+                    textIntakeOptions.isVisible = intakeDaysActive.isVisible
                     intakeLastReminded.isVisible = false
                 }
             }
