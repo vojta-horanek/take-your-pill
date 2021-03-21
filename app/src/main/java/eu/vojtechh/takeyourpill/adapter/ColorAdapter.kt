@@ -12,16 +12,15 @@ class ColorAdapter : ListAdapter<PillColor, ColorViewHolder>(PillColor.DiffCallb
 
     private var clickListener: (View, PillColor) -> Unit = { _, _ -> }
 
-    fun onColorClicked(listener: (View, PillColor) -> Unit) {
+    fun setOnColorClickedListener(listener: (View, PillColor) -> Unit) {
         clickListener = listener
     }
 
-    override fun onBindViewHolder(holder: ColorViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ColorViewHolder, position: Int) =
         holder.bind(getItem(position))
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder {
-        return ColorViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ColorViewHolder(
             ItemColorBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -29,5 +28,5 @@ class ColorAdapter : ListAdapter<PillColor, ColorViewHolder>(PillColor.DiffCallb
             ),
             clickListener
         )
-    }
+
 }

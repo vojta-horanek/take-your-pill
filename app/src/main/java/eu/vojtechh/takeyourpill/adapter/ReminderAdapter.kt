@@ -24,19 +24,14 @@ class ReminderAdapter(
         deleteListener = listener
     }
 
-    override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) =
         holder.bind(getItem(position), showDelete, showRipple)
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {
-        return ReminderViewHolder(
-            ItemReminderBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            ),
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ReminderViewHolder(
+            ItemReminderBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             clickListener,
             deleteListener
         )
-    }
 }

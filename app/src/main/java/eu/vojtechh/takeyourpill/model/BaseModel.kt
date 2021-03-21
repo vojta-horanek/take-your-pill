@@ -5,6 +5,7 @@ import androidx.room.Ignore
 
 abstract class BaseModel {
 
+
     enum class ItemTypes {
         PILL,
         HEADER,

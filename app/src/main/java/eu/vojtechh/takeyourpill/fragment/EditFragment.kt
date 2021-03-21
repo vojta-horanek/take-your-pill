@@ -164,7 +164,11 @@ class EditFragment : Fragment() {
             recyclerColor.adapter = colorAdapter
             recyclerColor.disableAnimations()
 
-            colorAdapter.onColorClicked { _, pillColor -> model.setActivePillColor(pillColor) }
+            colorAdapter.setOnColorClickedListener { _, pillColor ->
+                model.setActivePillColor(
+                    pillColor
+                )
+            }
 
             pillOptionsView.setOptions(model.pill.options)
             pillOptionsView.onChange {

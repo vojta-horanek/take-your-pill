@@ -18,8 +18,7 @@ import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.history.HistoryOverviewViewModel
 
 @AndroidEntryPoint
-class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
-    AppRecyclerAdapter.ItemListener {
+class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview) {
 
     private val model: HistoryOverviewViewModel by viewModels()
 
@@ -29,11 +28,12 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
         super.onViewCreated(view, savedInstanceState)
 
         val appAdapter = AppRecyclerAdapter(
-            this,
             null,
             getString(R.string.no_history),
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_hourglass_empty)
         )
+
+        appAdapter.setOnItemClickListener { _, item -> onHistoryClicked(item) }
 
         binding.recyclerHistory.adapter = appAdapter
 
@@ -47,7 +47,7 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
         }
     }
 
-    override fun onItemClicked(view: View, item: BaseModel) {
+    private fun onHistoryClicked(item: BaseModel) {
         if (item is Pill) {
             val directions = HistoryFragmentDirections.actionHistoryToFragmentHistoryView(item.id)
             findNavController().navigate(directions)

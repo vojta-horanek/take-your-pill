@@ -24,7 +24,7 @@ import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemListener {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val model: HomeViewModel by viewModels()
 
@@ -49,9 +49,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         }
 
         appAdapter = AppRecyclerAdapter(
-            this, getString(R.string.pills), getString(R.string.try_to_add_a_pill_first),
+            getString(R.string.pills), getString(R.string.try_to_add_a_pill_first),
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_empty_view)
         )
+
+        appAdapter.setOnItemClickListener(::onPillClicked)
+        appAdapter.setOnPillConfirmClickListener(::onConfirmClicked)
 
         binding.run {
 
@@ -82,7 +85,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         findNavController().navigate(R.id.edit)
     }
 
-    override fun onItemClicked(view: View, item: BaseModel) {
+    private fun onPillClicked(view: View, item: BaseModel) {
         if (item is Pill) {
             model.isReturningFromPillDetails = true
             exitTransition = MaterialElevationScale(false)
@@ -94,7 +97,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         }
     }
 
-    override fun onPillConfirmClicked(confirmCard: View, history: History) {
+    private fun onConfirmClicked(history: History) {
         model.confirmPill(applicationContext, history).observe(viewLifecycleOwner) {
             when (it) {
                 true -> model.refreshPills()

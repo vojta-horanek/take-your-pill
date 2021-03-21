@@ -49,6 +49,5 @@ class HistoryItemViewHolder(
             textHistoryConfirmed.setVerticalBias(0.5f)
             textDate.isInvisible = !isFirstOfDate
         }
-
     }
 }

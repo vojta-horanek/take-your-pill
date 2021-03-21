@@ -1,22 +1,23 @@
 package eu.vojtechh.takeyourpill.adapter.viewholder
 
 import android.content.Context
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
 import eu.vojtechh.takeyourpill.klass.*
+import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
 import java.util.*
 
-
 class PillViewHolder(
     private val binding: ItemPillBinding,
-    private val listener: AppRecyclerAdapter.ItemListener // TODO Don't use interface
+    private val onPillClick: (View, BaseModel) -> Unit,
+    private val onConfirmClick: (History) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(pill: Pill) = binding.run {
@@ -24,10 +25,9 @@ class PillViewHolder(
         cardPill.apply {
             cardPill.transitionName = "${pill.id}"
             cardPill.onClick {
-                listener.onItemClicked(it, pill)
+                onPillClick(it, pill)
             }
         }
-
 
         imagePillColor.setBackgroundColorShaped(pill.colorResource(context))
 
@@ -42,7 +42,6 @@ class PillViewHolder(
             text = getFormattedDescription(pill)
             isVisible = text.isBlank()
         }
-
 
         setupReminders(pill.reminders)
         setupIntake(pill, context)
@@ -109,29 +108,28 @@ class PillViewHolder(
         }
     }
 
-    private fun setupConfirm(latestHistory: History?, context: Context) {
-        binding.pillConfirm.isVisible = false
+    private fun setupConfirm(latestHistory: History?, context: Context) = binding.run {
+        pillConfirm.isVisible = false
         latestHistory?.let { history ->
-            binding.pillConfirm.isVisible = true
-            binding.textQuestionTake.text = binding.root.context.getString(
+            pillConfirm.isVisible = true
+            textQuestionTake.text = binding.root.context.getString(
                 R.string.pill_taken_question,
                 history.amount,
                 history.reminded.time.getTimeString(context)
             )
 
-            binding.buttonTaken.onClick {
-                listener.onPillConfirmClicked(binding.pillConfirm, history)
+            buttonTaken.onClick {
+                onConfirmClick(history)
             }
         }
     }
 
-    private fun getFormattedDescription(pill: Pill): CharSequence {
-        return pill.description?.let { desc ->
+    private fun getFormattedDescription(pill: Pill) =
+        pill.description?.let { desc ->
             var oneLineDesc = desc.split("\n")[0]
             if (desc.contains("\n")) {
                 oneLineDesc += "…"
             }
             oneLineDesc
         } ?: ""
-    }
 }

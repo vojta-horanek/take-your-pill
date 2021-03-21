@@ -23,7 +23,8 @@ object DatabaseModule {
         app,
         Database::class.java,
         Constants.PILL_DATABASE_NAME
-    ).fallbackToDestructiveMigration()
+    )
+        .fallbackToDestructiveMigration() // TODO Remove for release
         .build()
 
     @Singleton

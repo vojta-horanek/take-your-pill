@@ -19,5 +19,4 @@ class ColorViewHolder(
         check.isVisible = pillColor.isChecked
         pillColorFrame.onClick { view -> listener(view, pillColor) }
     }
-
 }
