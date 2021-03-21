@@ -10,7 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 
-open class RoundedDialogFragment : BottomSheetDialogFragment() {
+open class RoundedDialogFragment() : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?) =
         (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
             behavior.addBottomSheetCallback(

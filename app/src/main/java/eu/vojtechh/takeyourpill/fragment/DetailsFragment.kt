@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -17,6 +15,7 @@ import androidx.transition.Slide
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
@@ -28,20 +27,17 @@ import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 import java.util.*
 
 @AndroidEntryPoint
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private val model: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
-    private lateinit var binding: FragmentDetailsBinding
+    private val binding by viewBinding(FragmentDetailsBinding::bind)
     private val reminderAdapter = ReminderAdapter(showDelete = false, showRipple = false)
 
     var launchedFromNotification = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.navHostFragment
@@ -49,13 +45,6 @@ class DetailsFragment : Fragment() {
             setAllContainerColors(requireContext().themeColor(R.attr.colorSurface))
         }
 
-        binding = FragmentDetailsBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
         launchedFromNotification =
@@ -67,7 +56,6 @@ class DetailsFragment : Fragment() {
         model.getPillById(pillId).observe(viewLifecycleOwner) { pill ->
             pill?.let {
                 model.pill = it
-                binding.pill = it
                 initViews()
             }
         }
@@ -78,69 +66,79 @@ class DetailsFragment : Fragment() {
     private fun initViews() {
 
         binding.run {
+
+            textPillName.text = model.pill.name
+            viewPillColor.setBackgroundColorShaped(model.pill.colorResource(requireContext()))
+
+            textPillDescription.apply {
+                text = model.pill.description
+                isVisible = model.pill.isDescriptionVisible
+            }
+
+            val photoDrawable = model.pill.getPhotoDrawable(requireContext())
+            imagePillPhoto.setImageDrawable(photoDrawable)
+            imageViewFullScreen.setImageDrawable(photoDrawable)
+
             cardPhoto.isVisible = model.pill.isPhotoVisible
 
             recyclerReminders.adapter = reminderAdapter
             recyclerReminders.disableAnimations()
 
-            pill?.let { pill ->
+            val accent = model.pill.colorResource(requireContext())
+            val accentList = ColorStateList.valueOf(accent)
+            listOf(buttonDelete, buttonHistory).forEach {
+                it.setTextColor(accent)
+                it.rippleColor = accentList
+            }
+            buttonEdit.backgroundTintList = accentList
+            buttonTaken.backgroundTintList = accentList
 
-                val accent = pill.colorResource(requireContext())
-                val accentList = ColorStateList.valueOf(accent)
-                listOf(buttonDelete, buttonHistory).forEach {
-                    it.setTextColor(accent)
-                    it.rippleColor = accentList
+            buttonEdit.onClick { navigateToEdit() }
+            buttonHistory.onClick { navigateToHistory() }
+            buttonDelete.onClick { navigateToDelete() }
+
+            // If last reminder date is null, then this is the first reminder
+            model.pill.lastReminderDate?.let { lastDate ->
+                // Only add next cycle if this is the first reminder today
+                if (lastDate.DayOfYear != Calendar.getInstance().DayOfYear) {
+                    model.pill.options.nextCycleIteration()
                 }
-                buttonEdit.backgroundTintList = accentList
-                buttonTaken.backgroundTintList = accentList
+            }
 
-                buttonEdit.onClick { navigateToEdit() }
-                buttonHistory.onClick { navigateToHistory() }
-                buttonDelete.onClick { navigateToDelete() }
-
-                // If last reminder date is null, then this is the first reminder
-                pill.lastReminderDate?.let { lastDate ->
-                    // Only add next cycle if this is the first reminder today
-                    if (lastDate.DayOfYear != Calendar.getInstance().DayOfYear) {
-                        pill.options.nextCycleIteration()
+            with(model.pill.options) {
+                when {
+                    isIndefinite() -> {
+                        textIntakeOptions.isVisible = false
+                        intakeDaysActive.isVisible = false
+                        intakeDaysInactive.isVisible = false
                     }
-                }
-
-                with(pill.options) {
-                    when {
-                        isIndefinite() -> {
-                            textIntakeOptions.isVisible = false
-                            intakeDaysActive.isVisible = false
-                            intakeDaysInactive.isVisible = false
+                    isFinite() -> {
+                        intakeDaysInactive.isVisible = false
+                        if (isInactive()) {
+                            infoDayLimit.text = getString(R.string.inactive)
+                        } else {
+                            infoDayLimit.text = getString(
+                                R.string.day_limit_format,
+                                todayCycle,
+                                daysActive
+                            )
                         }
-                        isFinite() -> {
-                            intakeDaysInactive.isVisible = false
-                            if (isInactive()) {
-                                infoDayLimit.text = getString(R.string.inactive)
-                            } else {
-                                infoDayLimit.text = getString(
-                                    R.string.day_limit_format,
-                                    todayCycle,
-                                    daysActive
-                                )
-                            }
-                        }
-                        isCycle() -> {
-                            if (isInactive()) {
-                                infoDayLimit.text = daysActive.toString()
-                                infoResumeAfter.text = getString(
-                                    R.string.resume_after_format,
-                                    todayCycle - daysActive,
-                                    daysInactive
-                                )
-                            } else {
-                                infoDayLimit.text = getString(
-                                    R.string.day_limit_format,
-                                    todayCycle,
-                                    daysActive
-                                )
-                                infoResumeAfter.text = daysInactive.toString()
-                            }
+                    }
+                    isCycle() -> {
+                        if (isInactive()) {
+                            infoDayLimit.text = daysActive.toString()
+                            infoResumeAfter.text = getString(
+                                R.string.resume_after_format,
+                                todayCycle - daysActive,
+                                daysInactive
+                            )
+                        } else {
+                            infoDayLimit.text = getString(
+                                R.string.day_limit_format,
+                                todayCycle,
+                                daysActive
+                            )
+                            infoResumeAfter.text = daysInactive.toString()
                         }
                     }
                 }
@@ -155,6 +153,7 @@ class DetailsFragment : Fragment() {
                 imageFullscreen.isVisible = false
             }
 
+
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
                 if (imageFullscreen.isVisible) {
                     imageFullscreen.isVisible = false
@@ -162,8 +161,8 @@ class DetailsFragment : Fragment() {
                     findNavController().popBackStack()
                 }
             }
-
         }
+
 
         model.setReminders(model.pill.reminders)
 
@@ -173,25 +172,27 @@ class DetailsFragment : Fragment() {
             }
         }
 
-        model.getLatestHistory(!launchedFromNotification).observe(viewLifecycleOwner) { history ->
-            if (history == null) {
-                binding.layoutConfirm.isVisible = false
-            } else {
-                binding.textQuestionTake.text = binding.root.context.getString(
-                    R.string.pill_taken_question,
-                    history.amount,
-                    history.reminded.time.getTimeString(requireContext())
-                )
-                binding.buttonTaken.onClick {
-                    model.confirmPill(requireContext(), history).observe(viewLifecycleOwner) {
-                        when (it) {
-                            true -> binding.layoutConfirm.isVisible = false
-                            false -> showMessage(getString(R.string.error))
-                        }
+        model.getLatestHistory(!launchedFromNotification)
+            .observe(viewLifecycleOwner) { history ->
+                if (history == null) {
+                    binding.layoutConfirm.isVisible = false
+                } else {
+                    binding.textQuestionTake.text = binding.root.context.getString(
+                        R.string.pill_taken_question,
+                        history.amount,
+                        history.reminded.time.getTimeString(requireContext())
+                    )
+                    binding.buttonTaken.onClick {
+                        model.confirmPill(requireContext(), history)
+                            .observe(viewLifecycleOwner) {
+                                when (it) {
+                                    true -> binding.layoutConfirm.isVisible = false
+                                    false -> showMessage(getString(R.string.error))
+                                }
+                            }
                     }
                 }
             }
-        }
     }
 
     private fun navigateToEdit() {
@@ -214,22 +215,20 @@ class DetailsFragment : Fragment() {
         DeleteDialog().apply {
             setUserListener { what ->
                 when (what) {
-                    true -> {
-                        model.deletePillWithHistory(model.pill)
-                        exitOnDelete()
-                    }
-                    false -> {
-                        model.deletePill(model.pill.pillEntity)
-                        exitOnDelete()
-                    }
+                    true -> model.deletePillWithHistory(model.pill)
+                    false -> model.deletePill(model.pill.pillEntity)
                 }
+                exitOnDelete()
             }
         }.show(childFragmentManager, "confirm_delete")
     }
 
 
     private fun exitOnDelete() {
-        NotificationManager.removeNotificationChannel(requireContext(), model.pill.id.toString())
+        NotificationManager.removeNotificationChannel(
+            requireContext(),
+            model.pill.id.toString()
+        )
         exitTransition = Slide().apply {
             addTarget(R.id.detailsView)
         }

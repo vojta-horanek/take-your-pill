@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources.Theme
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.os.Build
 import android.text.format.DateFormat
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -27,7 +31,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
-import eu.vojtechh.takeyourpill.adapter.BindingAdapters
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,10 +41,10 @@ import java.util.*
 @ColorInt
 @SuppressLint("Recycle")
 fun Context.themeColor(
-        @AttrRes themeAttrId: Int
+    @AttrRes themeAttrId: Int
 ): Int {
     return obtainStyledAttributes(
-            intArrayOf(themeAttrId)
+        intArrayOf(themeAttrId)
     ).use {
         it.getColor(0, Color.MAGENTA)
     }
@@ -143,8 +146,19 @@ fun View.setVerticalBias(bias: Float) {
     }
 }
 
-fun View.setBackgroundColorShaped(color: Int) =
-    BindingAdapters.setBackgroundColorShaped(this, color)
+fun View.setBackgroundColorShaped(color: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        this.background.colorFilter = BlendModeColorFilter(
+            color, BlendMode.SRC_ATOP
+        )
+    } else {
+        @Suppress("DEPRECATION")
+        this.background.setColorFilter(
+            color,
+            PorterDuff.Mode.SRC_ATOP
+        )
+    }
+}
 
 fun View.onClick(click: (View) -> Unit) = setOnClickListener { click(it) }
 
