@@ -24,7 +24,7 @@ class DetailsViewModel @Inject constructor(
     private val reminderRepository: ReminderRepository,
     private val historyRepository: HistoryRepository
 ) : ViewModel() {
-    fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
+    fun getPillById(pillId: Long) = pillRepository.getPillFlow(pillId).asLiveData()
 
     fun deletePillWithHistory(pill: Pill) =
         viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePillAndReminder(pill) }

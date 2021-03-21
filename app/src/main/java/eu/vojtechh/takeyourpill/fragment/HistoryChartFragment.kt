@@ -11,8 +11,10 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryChartBinding
+import eu.vojtechh.takeyourpill.klass.applicationContext
 import eu.vojtechh.takeyourpill.klass.getAttrColor
 import eu.vojtechh.takeyourpill.viewmodel.history.HistoryChartViewModel
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -45,26 +47,25 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
         }
 
         model.run {
-
-            allHistory.observe(viewLifecycleOwner) {
-                if (it.isNotEmpty()) {
-                    binding.cardCharts.isVisible = true
-                    model.getStatsData(it, binding.pieChartAll, requireActivity().applicationContext).observe(viewLifecycleOwner) { data ->
-                        processData(data)
+            model.getStatsData(binding.pieChartAll, applicationContext)
+                .observe(viewLifecycleOwner) { data ->
+                    Timber.d(data.toString())
+                    data?.let {
+                        binding.cardCharts.isVisible = true
+                        processData(it)
                         binding.layoutChartContent.isVisible = true
                         binding.progressCharts.hide()
                     }
                 }
-            }
         }
     }
 
     private fun processData(data: List<PieData>) {
         binding.run {
             listOf(
-                    Pair(pieChartAll, titleGraphAll),
-                    Pair(pieChartMissed, titleGraphMissed),
-                    Pair(pieChartAllConfirmed, titleGraphAllMissed)
+                Pair(pieChartAll, titleGraphAll),
+                Pair(pieChartMissed, titleGraphMissed),
+                Pair(pieChartAllConfirmed, titleGraphAllMissed)
             ).forEachIndexed { index, chart ->
                 if (data[index].entryCount == 0) {
                     chart.first.isVisible = false

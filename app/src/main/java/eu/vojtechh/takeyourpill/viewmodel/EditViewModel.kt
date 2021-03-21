@@ -4,10 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillColor
@@ -37,16 +34,16 @@ class EditViewModel @Inject constructor(
         setReminding(newPill, applicationContext)
     }
 
-    private fun setReminding(pill: Pill, context: Context) {
+    private fun setReminding(pill: Pill, applicationContext: Context) {
         NotificationManager.createNotificationChannel(
-            context,
+            applicationContext,
             pill.id.toString(),
             pill.name
         )
-        ReminderManager.planNextPillReminder(context, pill)
+        ReminderManager.planNextPillReminder(applicationContext, pill)
     }
 
-    fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
+    fun getPillById(pillId: Long) = pillRepository.getPillFlow(pillId).asLiveData()
 
     fun getNewEmptyPill() = Pill.new()
 

@@ -1,21 +1,43 @@
 package eu.vojtechh.takeyourpill.repository
 
+import eu.vojtechh.takeyourpill.database.HistoryDao
 import eu.vojtechh.takeyourpill.database.PillDao
 import eu.vojtechh.takeyourpill.database.ReminderDao
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillEntity
+import kotlinx.coroutines.flow.map
+import java.util.*
 import javax.inject.Inject
 
 class PillRepository @Inject constructor(
     private val pillDao: PillDao,
-    private val reminderDao: ReminderDao
+    private val reminderDao: ReminderDao,
+    private val historyDao: HistoryDao
 ) {
-    fun getAllPills() = pillDao.getEverythingFlow()
-    suspend fun getAllPillsSync() = pillDao.getEverything()
-    fun getAllPillsIncludingDeleted() = pillDao.getEverythingIncludingDeletedFlow()
-    suspend fun getAllPillsIncludingDeletedSync() = pillDao.getEverythingIncludingDeleted()
-    fun getPill(pillId: Long) = pillDao.getWithIdFlow(pillId)
-    suspend fun getPillSync(pillId: Long) = pillDao.getWitId(pillId)
+    fun getAllPillsWithHistoryFlow() = pillDao.getEverythingFlow().map { pillList ->
+        val now = Calendar.getInstance()
+        val timeOffset = (30 /* minutes */ * 60 * 1000)
+        pillList.forEach { pill ->
+            val latestHistory = historyDao.getLatestWithPillId(pill.id)
+            pill.closeHistory = null
+            latestHistory?.let { history ->
+                if (!history.hasBeenConfirmed) {
+                    if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
+                        pill.closeHistory = history
+                    }
+                }
+            }
+        }
+        pillList
+    }
+
+    suspend fun getAllPills() = pillDao.getEverything()
+
+    suspend fun getAllPillsIncludingDeleted() = pillDao.getEverythingIncludingDeleted()
+
+    fun getPillFlow(pillId: Long) = pillDao.getWithIdFlow(pillId)
+
+    suspend fun getPill(pillId: Long) = pillDao.getWitId(pillId)
 
     suspend fun deletePillAndReminder(pill: Pill) {
         pillDao.deletePillEntity(pill.pillEntity)

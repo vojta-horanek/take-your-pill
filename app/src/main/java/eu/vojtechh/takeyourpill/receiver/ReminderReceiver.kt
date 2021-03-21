@@ -45,7 +45,7 @@ class ReminderReceiver : BroadcastReceiver() {
             runBlocking {
 
                 val reminder = reminderRepository.getReminder(reminderId)
-                val pill = pillRepository.getPillSync(reminder.pillId)
+                val pill = pillRepository.getPill(reminder.pillId)
 
                 Timber.d("Pill before change: %s", pill.options.toString())
                 Timber.d("Pill before change: %s", pill.lastReminderDate.toString())

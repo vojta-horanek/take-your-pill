@@ -18,7 +18,7 @@ class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == "android.intent.action.BOOT_COMPLETED") {
             runBlocking {
-                val pills = pillRepository.getAllPillsSync()
+                val pills = pillRepository.getAllPills()
                 pills.forEach {
                     ReminderManager.planNextPillReminder(context, it)
                 }

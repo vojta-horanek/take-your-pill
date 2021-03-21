@@ -1,6 +1,7 @@
 package eu.vojtechh.takeyourpill.viewmodel.history
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,11 +17,14 @@ class HistoryItemViewModel @Inject constructor(
         private val pillRepository: PillRepository,
         private val historyRepository: HistoryRepository
 ) : ViewModel() {
-    fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
-    fun getHistory() = historyRepository.getHistory()
-    fun getHistoryForPill(pillId: Long) = historyRepository.getHistoryForPill(pillId)
+    fun getPillById(pillId: Long) = pillRepository.getPillFlow(pillId).asLiveData()
+    fun getHistory() = historyRepository.getHistoryFlow().asLiveData()
+    fun getHistoryForPill(pillId: Long) =
+        historyRepository.getHistoryForPillFlow(pillId).asLiveData()
+
     fun confirmHistory(item: History) = viewModelScope.launch {
-        val historyEntity = History(item.id, item.reminded, Calendar.getInstance(), item.amount, item.pillId)
+        val historyEntity =
+            History(item.id, item.reminded, Calendar.getInstance(), item.amount, item.pillId)
         historyRepository.updateHistoryItem(historyEntity)
     }
 
@@ -52,7 +56,7 @@ class HistoryItemViewModel @Inject constructor(
      *                            false means only history deleted
      */
     fun deletePillHistory(pillId: Long) = liveData {
-        val pill = pillRepository.getPillSync(pillId)
+        val pill = pillRepository.getPill(pillId)
         if (pill.deleted) {
             pillRepository.deletePillAndReminder(pill)
             emit(true)
@@ -65,7 +69,7 @@ class HistoryItemViewModel @Inject constructor(
 
     fun addNames(history: List<History>?) = liveData {
         history?.let { history ->
-            val pills = pillRepository.getAllPillsIncludingDeletedSync()
+            val pills = pillRepository.getAllPillsIncludingDeleted()
             emit(history.map { hist ->
                 hist.pillName = pills.find {
                     it.id == hist.pillId

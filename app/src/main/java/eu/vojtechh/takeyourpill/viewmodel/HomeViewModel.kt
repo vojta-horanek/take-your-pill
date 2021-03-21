@@ -1,34 +1,36 @@
 package eu.vojtechh.takeyourpill.viewmodel
 
 import android.content.Context
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.klass.hour
 import eu.vojtechh.takeyourpill.klass.minute
 import eu.vojtechh.takeyourpill.model.History
-import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
-import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
-import timber.log.Timber
+import kotlinx.coroutines.Dispatchers
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     pillRepository: PillRepository,
-    private val historyRepository: HistoryRepository,
     private val reminderRepository: ReminderRepository
 ) : ViewModel() {
     var isReturningFromPillDetails = false
-    val allPills = pillRepository.getAllPills()
 
-    var lastPills = listOf<Pill>()
+    private val refreshTrigger = MutableLiveData(Unit)
+    val allPills = refreshTrigger.switchMap {
+        pillRepository.getAllPillsWithHistoryFlow().asLiveData()
+    }
+
+    fun refreshPills() {
+        refreshTrigger.value = Unit
+    }
 
     fun confirmPill(applicationContext: Context, history: History) =
-        liveData {
+        liveData(Dispatchers.IO) {
             val reminderTime = Calendar.getInstance().apply {
                 clear()
                 hour = history.reminded.hour
@@ -48,31 +50,4 @@ class HomeViewModel @Inject constructor(
                     emit(true)
                 } ?: emit(false)
         }
-
-    fun addConfirmCards(pills: List<Pill>) = liveData {
-
-        if (pills.isEmpty()) {
-            emit(pills)
-            return@liveData
-        }
-
-        val now = Calendar.getInstance()
-        val timeOffset = (30 /* minutes */ * 60 * 1000)
-
-        pills.forEach { pill ->
-            val latestHistory = historyRepository.getLatestWithPillIdSync(pill.id)
-
-            pill.closeHistory = null
-            latestHistory?.let { history ->
-                if (!history.hasBeenConfirmed) {
-                    if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
-                        pill.closeHistory = history
-                    }
-                }
-            }
-            Timber.d(pill.closeHistory.toString())
-        }
-        emit(pills)
-    }
-
 }

@@ -54,7 +54,7 @@ class FullscreenService : Service() {
 
         runBlocking {
             val reminder = reminderRepository.getReminder(reminderId)
-            val pill = pillRepository.getPillSync(reminder.pillId)
+            val pill = pillRepository.getPill(reminder.pillId)
             val notification =
                 ReminderUtil.getFullscreenNotification(this@FullscreenService, pill, reminder)
             startForeground(reminderId.toInt(), notification)

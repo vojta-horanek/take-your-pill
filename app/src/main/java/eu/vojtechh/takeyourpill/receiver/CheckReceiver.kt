@@ -49,7 +49,7 @@ class CheckReceiver : BroadcastReceiver() {
             runBlocking {
 
                 val reminder = reminderRepository.getReminder(reminderId)
-                val pill = pillRepository.getPillSync(reminder.pillId)
+                val pill = pillRepository.getPill(reminder.pillId)
 
                 ReminderUtil.createReminderNotification(context, pill, reminder)
 

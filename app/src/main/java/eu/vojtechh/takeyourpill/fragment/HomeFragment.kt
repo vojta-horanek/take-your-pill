@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -44,6 +43,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
         if (model.isReturningFromPillDetails) {
             exitTransition = MaterialFadeThrough()
             postponeEnterTransition()
+            view.doOnPreDraw { startPostponedEnterTransition() }
             model.isReturningFromPillDetails = false
         }
 
@@ -69,14 +69,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
             }
         }
 
-
-
         model.allPills.observe(viewLifecycleOwner) { pills ->
-            model.addConfirmCards(pills).observe(viewLifecycleOwner) { allPills ->
-                appAdapter.submitList(allPills)
-                view.doOnPreDraw { startPostponedEnterTransition() }
-                model.lastPills = allPills
-            }
+            appAdapter.submitList(pills)
         }
     }
 
@@ -102,13 +96,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
     override fun onPillConfirmClicked(confirmCard: View, history: History) {
         model.confirmPill(applicationContext, history).observe(viewLifecycleOwner) {
             when (it) {
-                true -> {
-                    confirmCard.isVisible = false
-                    // Fixes card still visible after next observe
-                    model.addConfirmCards(model.lastPills).observe(viewLifecycleOwner) { pills ->
-                        appAdapter.submitList(pills)
-                    }
-                }
+                true -> model.refreshPills()
                 false -> showMessage(getString(R.string.error))
             }
         }

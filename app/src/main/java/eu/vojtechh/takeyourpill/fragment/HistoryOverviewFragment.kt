@@ -19,7 +19,7 @@ import eu.vojtechh.takeyourpill.viewmodel.history.HistoryOverviewViewModel
 
 @AndroidEntryPoint
 class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
-        AppRecyclerAdapter.ItemListener {
+    AppRecyclerAdapter.ItemListener {
 
     private val model: HistoryOverviewViewModel by viewModels()
 
@@ -37,14 +37,12 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview),
 
         binding.recyclerHistory.adapter = appAdapter
 
-        model.history.observe(viewLifecycleOwner) { history ->
-            model.getStatsData(history).observe(viewLifecycleOwner) { result ->
-                result.onSuccess {
-                    appAdapter.submitList(it)
-                }.onFailure {
-                    tryIgnore { (requireParentFragment() as HistoryFragment).disableTabs() }
-                    appAdapter.submitList(listOf()) // Submit an empty list to show the adapter
-                }
+        model.historyStats.observe(viewLifecycleOwner) { result ->
+            result.onSuccess {
+                appAdapter.submitList(it)
+            }.onFailure {
+                tryIgnore { (requireParentFragment() as HistoryFragment).disableTabs() }
+                appAdapter.submitList(listOf()) // Submit an empty list to show the adapter
             }
         }
     }
