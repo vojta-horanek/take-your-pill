@@ -51,15 +51,16 @@ class PillViewHolder(
     private fun setupReminders(reminders: List<Reminder>) {
         binding.chipsLayout.removeAllViews()
         reminders.sortedBy { rem -> rem.time.time }.forEach { reminder ->
-            val chip = Chip(binding.root.context)
-            chip.text = reminder.getAmountTimeString(binding.root.context)
-            chip.isFocusable = false
-            chip.isClickable = false
-            chip.isCheckable = false
-            chip.foreground = null
-            chip.setChipStrokeColorResource(R.color.stroke_color)
-            chip.setChipStrokeWidthResource(R.dimen.stroke_width)
-            chip.chipBackgroundColor = null
+            val chip = Chip(binding.context).apply {
+                text = reminder.getAmountTimeString(binding.context)
+                isFocusable = false
+                isClickable = false
+                stateListAnimator = null
+                rippleColor = null
+                setChipStrokeColorResource(R.color.stroke_color)
+                setChipStrokeWidthResource(R.dimen.stroke_width)
+                chipBackgroundColor = null
+            }
             binding.chipsLayout.addView(chip)
         }
     }
