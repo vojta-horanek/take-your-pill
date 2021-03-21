@@ -182,9 +182,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         model.getLatestHistory(!launchedFromNotification)
             .observe(viewLifecycleOwner) { history ->
-                if (history == null) {
-                    binding.layoutConfirm.isVisible = false
-                } else {
+                if (history != null) {
+                    binding.layoutConfirm.isVisible = true
                     binding.textQuestionTake.text = binding.root.context.getString(
                         R.string.pill_taken_question,
                         history.amount,

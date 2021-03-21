@@ -21,7 +21,6 @@
         android:clipToPadding="false"
         android:focusable="true"
         app:cardCornerRadius="@dimen/standard_corner_radius"
-        app:cardElevation="@dimen/standard_card_elevation"
         app:cardPreventCornerOverlap="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -8,13 +8,11 @@
     android:layout_marginHorizontal="@dimen/screen_margin_horizontal_small"
     android:layout_marginBottom="@dimen/screen_margin_vertical"
     android:animateLayoutChanges="true"
-    android:background="?attr/colorBackgroundFloating"
     android:clickable="true"
     android:clipChildren="true"
     android:clipToPadding="false"
     android:focusable="true"
     app:cardCornerRadius="@dimen/standard_corner_radius"
-    app:cardElevation="@dimen/standard_card_elevation"
     app:cardPreventCornerOverlap="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -14,11 +14,13 @@
         android:clipToPadding="false"
         android:fillViewport="true"
         android:overScrollMode="never"
+        android:animateLayoutChanges="true"
         android:paddingBottom="64dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:clipChildren="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +28,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?colorSurface"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:animateLayoutChanges="true"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

@@ -29,7 +29,6 @@
             android:clipToPadding="false"
             android:transitionName="@{@string/pill_item_transition_name(transition_id)}"
             app:cardCornerRadius="@dimen/standard_corner_radius"
-            app:cardElevation="@dimen/standard_card_elevation"
             android:visibility="gone"
             tools:visibility="visible"
             app:cardPreventCornerOverlap="true">
