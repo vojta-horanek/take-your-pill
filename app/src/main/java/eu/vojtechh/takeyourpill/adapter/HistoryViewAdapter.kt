@@ -18,13 +18,15 @@ import eu.vojtechh.takeyourpill.model.History
 import java.util.*
 
 class HistoryViewAdapter(
-        private val listener: ItemListener,
-        private val emptyDrawable: Drawable?,
-        private val showNames: Boolean
+    private val emptyDrawable: Drawable?,
+    private val showNames: Boolean
 ) : ListAdapter<BaseModel, RecyclerView.ViewHolder>(BaseModel.DiffCallback) {
 
-    interface ItemListener {
-        fun onItemOptionsClick(view: View, item: BaseModel, position: Int)
+
+    private var itemOptionsClickListener: (View, History, Int) -> Unit = { _, _, _ -> }
+
+    fun setItemOptionsClickListener(listener: (View, History, Int) -> Unit) {
+        itemOptionsClickListener = listener
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -63,7 +65,7 @@ class HistoryViewAdapter(
             )
             ItemTypes.HISTORY_ITEM.ordinal -> HistoryItemViewHolder(
                 ItemHistoryBinding.inflate(layoutInflater, parent, false),
-                listener
+                itemOptionsClickListener
             )
             else -> throw RuntimeException("Unknown ViewHolder")
         }

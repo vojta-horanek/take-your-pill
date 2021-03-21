@@ -8,17 +8,27 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoryItemViewModel @Inject constructor(
-        private val pillRepository: PillRepository,
-        private val historyRepository: HistoryRepository
+    private val pillRepository: PillRepository,
+    private val historyRepository: HistoryRepository
 ) : ViewModel() {
     fun getPillById(pillId: Long) = pillRepository.getPillFlow(pillId).asLiveData()
-    fun getHistory() = historyRepository.getHistoryFlow().asLiveData()
+    val namedHistory = historyRepository.getHistoryFlow().map { historyList ->
+        val pills = pillRepository.getAllPillsIncludingDeleted()
+        return@map historyList.map { history ->
+            history.pillName = pills.find {
+                it.id == history.pillId
+            }?.name ?: "N/A"
+            history
+        }
+    }.asLiveData()
+
     fun getHistoryForPill(pillId: Long) =
         historyRepository.getHistoryForPillFlow(pillId).asLiveData()
 
@@ -34,7 +44,8 @@ class HistoryItemViewModel @Inject constructor(
     }
 
     fun setHistoryConfirmTime(item: History, newConfirmTime: Calendar) = viewModelScope.launch {
-        val historyEntity = History(item.id, item.reminded, newConfirmTime, item.amount, item.pillId)
+        val historyEntity =
+            History(item.id, item.reminded, newConfirmTime, item.amount, item.pillId)
         historyRepository.updateHistoryItem(historyEntity)
     }
 
@@ -65,17 +76,5 @@ class HistoryItemViewModel @Inject constructor(
             emit(false)
 
         }
-    }
-
-    fun addNames(history: List<History>?) = liveData {
-        history?.let { history ->
-            val pills = pillRepository.getAllPillsIncludingDeleted()
-            emit(history.map { hist ->
-                hist.pillName = pills.find {
-                    it.id == hist.pillId
-                }?.name ?: "N/A"
-                hist
-            })
-        } ?: emit(history)
     }
 }

@@ -22,18 +22,19 @@ import java.util.*
 
 @AndroidEntryPoint
 class HistoryViewDialog :
-        RoundedDialogFragment(), HistoryViewAdapter.ItemListener {
+    RoundedDialogFragment() {
+
     private lateinit var binding: DialogHistoryBinding
+
     private val args: HistoryViewDialogArgs by navArgs()
     private val model: HistoryItemViewModel by viewModels()
 
-    private var itemJustRemoved = false
     private var itemRemovedPosition = 0
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = DialogHistoryBinding.inflate(inflater, container, false)
         return binding.root
@@ -46,70 +47,70 @@ class HistoryViewDialog :
             binding.historyViewTitle.text = getString(R.string.stat_overall)
             initViews()
         } else {
-            model.getPillById(args.pillId).observe(viewLifecycleOwner, {
+            model.getPillById(args.pillId).observe(viewLifecycleOwner) {
                 if (it != null) {
                     binding.historyViewTitle.text = it.name
                     initViews()
                 }
-            })
+            }
         }
     }
 
     private fun initViews() {
         val adapter = HistoryViewAdapter(
-                this,
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_history),
-                args.isOverall
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_history),
+            args.isOverall
         )
-
+        adapter.setItemOptionsClickListener(::onItemOptionsClick)
         binding.recyclerHistoryView.adapter = adapter
+
         if (args.isOverall) {
-            model.getHistory().observe(viewLifecycleOwner) { history ->
-                model.addNames(history).observe(viewLifecycleOwner) { namedHistory ->
-                    onListObserve(adapter, namedHistory, false)
-                }
+            model.namedHistory.observe(viewLifecycleOwner) { history ->
+                onListObserve(adapter, history, false)
             }
         } else {
             model.getHistoryForPill(args.pillId).observe(viewLifecycleOwner) { history ->
                 onListObserve(adapter, history, true)
             }
         }
+
         binding.buttonDeleteHistory.onClick {
             showDeleteDialog()
         }
     }
 
-    private fun onListObserve(adapter: HistoryViewAdapter, history: List<History>?,
-                              deleteVisibility: Boolean) {
+    private fun onListObserve(
+        adapter: HistoryViewAdapter, history: List<History>?,
+        deleteVisibility: Boolean
+    ) {
         history?.let {
             binding.buttonDeleteHistory.isVisible = if (deleteVisibility) it.isNotEmpty() else false
             adapter.submitList(it) {
                 // Handle item removal correctly (don't remove the date)
-                if (itemJustRemoved) {
+                if (itemRemovedPosition != -1) {
                     adapter.notifyItemRangeChanged(itemRemovedPosition - 1, 3)
-                    itemJustRemoved = false
+                    itemRemovedPosition = -1
                 }
             }
         }
     }
 
-    private fun showDeleteDialog() {
+    private fun showDeleteDialog() =
         MaterialAlertDialogBuilder(requireContext())
-                .setTitle(getString(R.string.confirm_delete_history))
-                .setMessage(getString(R.string.confirm_delete_history_description))
-                .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
-                    model.deletePillHistory(args.pillId).observe(viewLifecycleOwner, {
-                        dialog.dismiss()
-                        this.dismiss()
-                    })
-                }
-                .setNegativeButton(getString(R.string.no)) { dialog, _ ->
+            .setTitle(getString(R.string.confirm_delete_history))
+            .setMessage(getString(R.string.confirm_delete_history_description))
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                model.deletePillHistory(args.pillId).observe(viewLifecycleOwner, {
                     dialog.dismiss()
-                }
-                .show()
-    }
+                    this.dismiss()
+                })
+            }
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
 
-    override fun onItemOptionsClick(view: View, item: BaseModel, position: Int) {
+    private fun onItemOptionsClick(view: View, item: BaseModel, position: Int) {
         if (item is History) {
             val popup = PopupMenu(requireContext(), view)
             popup.inflate(R.menu.item_history_menu)
@@ -132,7 +133,6 @@ class HistoryViewDialog :
                     }
                     R.id.historyDelete -> {
                         model.deleteHistory(item)
-                        itemJustRemoved = true
                         itemRemovedPosition = position
                         true
                     }
@@ -152,8 +152,7 @@ class HistoryViewDialog :
 
     }
 
-    private fun showChangeAmountDialog(item: History) {
-
+    private fun showChangeAmountDialog(item: History) =
         Builders.getAmountPickerDialog(
             requireContext(),
             binding.root as ViewGroup,
@@ -162,9 +161,7 @@ class HistoryViewDialog :
             model.setHistoryAmount(item, it)
         }.show()
 
-    }
-
-    private fun showChangeConfirmTimeDialog(item: History) {
+    private fun showChangeConfirmTimeDialog(item: History) =
         item.confirmed?.let {
             val timePicker = Builders.getTimePicker(requireContext(), it.hour, it.minute)
             timePicker.addOnPositiveButtonClickListener {
@@ -172,12 +169,12 @@ class HistoryViewDialog :
             }
             timePicker.show(childFragmentManager, Constants.TAG_TIME_PICKER_HISTORY_VIEW)
         }
-    }
+
 
     private fun onTimePickerConfirmed(
-            hour: Int,
-            minute: Int,
-            item: History
+        hour: Int,
+        minute: Int,
+        item: History
     ) {
         val calendar = Calendar.getInstance()
         calendar.hour = hour

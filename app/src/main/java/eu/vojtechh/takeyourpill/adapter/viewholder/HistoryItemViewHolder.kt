@@ -1,9 +1,9 @@
 package eu.vojtechh.takeyourpill.adapter.viewholder
 
+import android.view.View
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryBinding
 import eu.vojtechh.takeyourpill.klass.onClick
 import eu.vojtechh.takeyourpill.klass.setDateText
@@ -12,8 +12,8 @@ import eu.vojtechh.takeyourpill.klass.setVerticalBias
 import eu.vojtechh.takeyourpill.model.History
 
 class HistoryItemViewHolder(
-        private val binding: ItemHistoryBinding,
-        private val listener: HistoryViewAdapter.ItemListener
+    private val binding: ItemHistoryBinding,
+    private val optionsClickListener: (View, History, Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
         history: History, isFirstInList: Boolean, isFirstOfDate: Boolean, position: Int,
@@ -22,7 +22,7 @@ class HistoryItemViewHolder(
 
         textHistoryAmount.text = history.amount
         buttonShowMore.onClick {
-            listener.onItemOptionsClick(it, history, position)
+            optionsClickListener(it, history, position)
         }
 
         textHistoryReminded.setTimeText(history.reminded.time)

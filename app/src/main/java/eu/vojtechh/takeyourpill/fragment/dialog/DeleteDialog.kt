@@ -10,7 +10,7 @@ import eu.vojtechh.takeyourpill.klass.onClick
 class DeleteDialog : RoundedDialogFragment() {
     private lateinit var binding: DialogDeleteBinding
 
-    var listener: (what: Boolean) -> Unit = {}
+    var listener: (Boolean) -> Unit = {}
 
     fun setUserListener(listener: (Boolean) -> Unit) {
         this.listener = listener

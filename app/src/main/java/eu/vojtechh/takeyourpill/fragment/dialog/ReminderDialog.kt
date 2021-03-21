@@ -40,33 +40,40 @@ class ReminderDialog : RoundedDialogFragment() {
         }
 
         binding = DialogNewReminderBinding.inflate(inflater, container, false)
-        snackbar = Snackbar.make(binding.coordinatorNewReminder, "", Snackbar.LENGTH_SHORT)
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setTexts()
-
         binding.run {
+            snackbar = Snackbar.make(coordinatorNewReminder, "", Snackbar.LENGTH_SHORT)
 
             textTime.onClick {
                 snackbar.dismiss()
                 showTimeDialog()
             }
 
-            textAmount.onClick {
-                Builders.getAmountPickerDialog(
-                    requireContext(),
-                    binding.root as ViewGroup,
-                    reminder.amount
-                ) {
-                    reminder.amount = it
-                    setTexts()
-                }.show()
-            }
+            textAmount.onClick { showAmountDialog() }
             textConfirm.onClick { confirmListener(reminder, isEditing) }
 
         }
 
-        return binding.root
     }
+
+    private fun showAmountDialog() =
+        Builders.getAmountPickerDialog(
+            requireContext(),
+            binding.root as ViewGroup,
+            reminder.amount
+        ) {
+            reminder.amount = it
+            setTexts()
+        }.show()
+
 
     private fun showTimeDialog() {
         val timePicker = Builders.getTimePicker(requireContext(), reminder.hour, reminder.minute)
