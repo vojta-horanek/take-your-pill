@@ -21,6 +21,7 @@ import androidx.core.content.res.use
 import androidx.core.os.ConfigurationCompat
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.TextViewCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -172,3 +173,6 @@ inline fun <T : ViewBinding> AppCompatActivity.viewBinding(
     lazy(LazyThreadSafetyMode.NONE) {
         bindingInflater.invoke(layoutInflater)
     }
+
+val Fragment.applicationContext: Context
+    get() = requireActivity().applicationContext

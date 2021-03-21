@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
 
     var lastPills = listOf<Pill>()
 
-    fun confirmPill(context: Context, history: History) =
+    fun confirmPill(applicationContext: Context, history: History) =
         liveData {
             val reminderTime = Calendar.getInstance().apply {
                 clear()
@@ -39,12 +39,12 @@ class HomeViewModel @Inject constructor(
                 .firstOrNull { it.pillId == history.pillId }
                 ?.let { reminder ->
                     val confirmIntent = ReminderUtil.getConfirmIntent(
-                        context,
+                        applicationContext,
                         reminder.id,
                         history.pillId,
                         history.reminded.timeInMillis
                     )
-                    context.sendBroadcast(confirmIntent)
+                    applicationContext.sendBroadcast(confirmIntent)
                     emit(true)
                 } ?: emit(false)
         }

@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
+import eu.vojtechh.takeyourpill.klass.applicationContext
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
@@ -99,7 +100,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AppRecyclerAdapter.ItemLi
     }
 
     override fun onPillConfirmClicked(confirmCard: View, history: History) {
-        model.confirmPill(requireContext(), history).observe(viewLifecycleOwner) {
+        model.confirmPill(applicationContext, history).observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
                     confirmCard.isVisible = false
