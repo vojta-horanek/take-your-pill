@@ -11,10 +11,10 @@
         android:id="@+id/detailsView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:clipToPadding="false"
         android:fillViewport="true"
         android:overScrollMode="never"
-        android:animateLayoutChanges="true"
         android:paddingBottom="64dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,13 +27,13 @@
                 android:id="@+id/layoutConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:background="?colorSurface"
                 android:visibility="gone"
-                tools:visibility="visible"
-                android:animateLayoutChanges="true"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/textConfirm"
@@ -197,9 +197,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/screen_margin_vertical_small"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textIntakeOptions">
+                app:layout_constraintTop_toBottomOf="@+id/textIntakeOptions"
+                tools:visibility="visible">
 
                 <TextView
                     style="@style/AppTheme.Text.BodyNormal"
@@ -222,9 +224,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/intakeDaysActive">
+                app:layout_constraintTop_toBottomOf="@+id/intakeDaysActive"
+                tools:visibility="visible">
 
                 <TextView
                     style="@style/AppTheme.Text.BodyNormal"
@@ -247,6 +251,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/intakeDaysInactive">

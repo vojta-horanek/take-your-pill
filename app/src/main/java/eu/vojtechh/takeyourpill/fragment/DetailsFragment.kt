@@ -18,6 +18,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.activity.MainActivity
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.DeleteDialog
@@ -108,11 +109,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             with(model.pill.options) {
                 when {
                     isIndefinite() -> {
-                        intakeDaysActive.isVisible = false
-                        intakeDaysInactive.isVisible = false
                     }
                     isFinite() -> {
-                        intakeDaysInactive.isVisible = false
+                        intakeDaysActive.isVisible = true
                         if (isInactive()) {
                             infoDayLimit.text = getString(R.string.inactive)
                         } else {
@@ -124,6 +123,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                         }
                     }
                     isCycle() -> {
+                        intakeDaysActive.isVisible = true
+                        intakeDaysInactive.isVisible = true
                         if (isInactive()) {
                             infoDayLimit.text = daysActive.toString()
                             infoResumeAfter.text = getString(
@@ -145,10 +146,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
             model.getLastReminded(model.pill.id).observe(viewLifecycleOwner) { history ->
                 history?.let {
+                    intakeLastReminded.isVisible = true
                     infoLastReminded.text = history.reminded.time.getDateTimeString()
                 } ?: run {
                     textIntakeOptions.isVisible = intakeDaysActive.isVisible
-                    intakeLastReminded.isVisible = false
                 }
             }
 
@@ -193,7 +194,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                         model.confirmPill(requireContext(), history)
                             .observe(viewLifecycleOwner) {
                                 when (it) {
-                                    true -> binding.layoutConfirm.isVisible = false
+                                    true -> {
+                                        binding.layoutConfirm.isVisible = false
+                                        (requireActivity() as MainActivity).confirmedPillId =
+                                            history.pillId
+                                    }
                                     false -> showMessage(getString(R.string.error))
                                 }
                             }

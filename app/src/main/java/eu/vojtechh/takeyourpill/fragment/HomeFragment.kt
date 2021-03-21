@@ -14,6 +14,7 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.activity.MainActivity
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.applicationContext
@@ -45,7 +46,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             exitTransition = MaterialFadeThrough()
             postponeEnterTransition()
             view.doOnPreDraw { startPostponedEnterTransition() }
-            model.refreshPills()
             model.isReturningFromPillDetails = false
         }
 
@@ -59,9 +59,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.run {
 
-            floatingActionButton.onClick {
-                openNewPill()
-            }
+            floatingActionButton.onClick { openNewPill() }
 
             recyclerHome.adapter = appAdapter
 
@@ -77,12 +75,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         model.allPills.observe(viewLifecycleOwner) { pills ->
             appAdapter.submitList(pills)
         }
+
+        if ((requireActivity() as MainActivity).confirmedPillId != -1L) {
+            model.refreshPills((requireActivity() as MainActivity).confirmedPillId)
+            (requireActivity() as MainActivity).confirmedPillId = -1L
+        }
     }
 
     private fun openNewPill() {
-        exitTransition = null
+        exitTransition = MaterialElevationScale(false)
         reenterTransition = MaterialElevationScale(true)
-        model.isReturningFromPillDetails = true
         findNavController().navigate(R.id.edit)
     }
 

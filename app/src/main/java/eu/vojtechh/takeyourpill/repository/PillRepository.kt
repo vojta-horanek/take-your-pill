@@ -14,21 +14,31 @@ class PillRepository @Inject constructor(
     private val reminderDao: ReminderDao,
     private val historyDao: HistoryDao
 ) {
-    fun getAllPillsWithHistoryFlow() = pillDao.getEverythingFlow().map { pillList ->
-        val now = Calendar.getInstance()
-        val timeOffset = (30 /* minutes */ * 60 * 1000)
-        pillList.forEach { pill ->
-            val latestHistory = historyDao.getLatestWithPillId(pill.id)
-            pill.closeHistory = null
-            latestHistory?.let { history ->
-                if (!history.hasBeenConfirmed) {
-                    if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
-                        pill.closeHistory = history
-                    }
-                }
+    fun getAllPillsWithHistoryFlow(pillId: Long?) = pillDao.getEverythingFlow().map { pillList ->
+        pillId?.let { id ->
+            pillList.find { it.id == id }?.let { pill ->
+                getLatestHistoryForPill(pill)
+            }
+        } ?: run {
+            pillList.forEach { pill ->
+                getLatestHistoryForPill(pill)
             }
         }
         pillList
+    }
+
+    private suspend fun getLatestHistoryForPill(pill: Pill) {
+        val now = Calendar.getInstance()
+        val timeOffset = (30 /* minutes */ * 60 * 1000)
+        val latestHistory = historyDao.getLatestWithPillId(pill.id)
+        pill.closeHistory = null
+        latestHistory?.let { history ->
+            if (!history.hasBeenConfirmed) {
+                if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
+                    pill.closeHistory = history
+                }
+            }
+        }
     }
 
     suspend fun getAllPills() = pillDao.getEverything()

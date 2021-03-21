@@ -20,13 +20,13 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     var isReturningFromPillDetails = false
 
-    private val refreshTrigger = MutableLiveData(Unit)
+    private val refreshTrigger: MutableLiveData<Long?> = MutableLiveData(null)
     val allPills = refreshTrigger.switchMap {
-        pillRepository.getAllPillsWithHistoryFlow().asLiveData()
+        pillRepository.getAllPillsWithHistoryFlow(it).asLiveData()
     }
 
-    fun refreshPills() {
-        refreshTrigger.value = Unit
+    fun refreshPills(confirmedPillId: Long? = null) {
+        refreshTrigger.value = confirmedPillId
     }
 
     fun confirmPill(applicationContext: Context, history: History) =
