@@ -94,9 +94,9 @@ class DetailsFragment : Fragment() {
                 buttonEdit.backgroundTintList = accentList
                 buttonTaken.backgroundTintList = accentList
 
-                buttonEdit.setOnClickListener { navigateToEdit() }
-                buttonHistory.setOnClickListener { navigateToHistory() }
-                buttonDelete.setOnClickListener { navigateToDelete() }
+                buttonEdit.onClick { navigateToEdit() }
+                buttonHistory.onClick { navigateToHistory() }
+                buttonDelete.onClick { navigateToDelete() }
 
                 // If last reminder date is null, then this is the first reminder
                 pill.lastReminderDate?.let { lastDate ->
@@ -151,7 +151,7 @@ class DetailsFragment : Fragment() {
                 true
             }
 
-            imageFullscreen.setOnClickListener {
+            imageFullscreen.onClick {
                 imageFullscreen.isVisible = false
             }
 
@@ -182,7 +182,7 @@ class DetailsFragment : Fragment() {
                     history.amount,
                     history.reminded.time.getTimeString(requireContext())
                 )
-                binding.buttonTaken.setOnClickListener {
+                binding.buttonTaken.onClick {
                     model.confirmPill(requireContext(), history).observe(viewLifecycleOwner) {
                         when (it) {
                             true -> binding.layoutConfirm.isVisible = false

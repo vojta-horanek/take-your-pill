@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
+import eu.vojtechh.takeyourpill.adapter.BindingAdapters
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -141,6 +142,14 @@ fun View.setVerticalBias(bias: Float) {
         layoutParams = params
     }
 }
+
+fun View.setBackgroundColorShaped(color: Int) =
+    BindingAdapters.setBackgroundColorShaped(this, color)
+
+fun View.onClick(click: (View) -> Unit) = setOnClickListener { click(it) }
+
+val ViewBinding.context: Context
+    get() = root.context
 
 fun TextView.setDateText(date: Date, pattern: String = "dd. MM.") {
     val primaryLocale = ConfigurationCompat.getLocales(context.resources.configuration).get(0)

@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             introResult.launch(intent)
         }
 
-        setTheme(R.style.AppTheme)
+        setTheme(R.style.AppTheme) // Switch from splash theme
         setContentView(binding.root)
 
         Utils.setTheme(Pref.theme)
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnNavigationItemReselectedListener { }
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
 
-        model.planReminders(this)
+        model.planReminders(applicationContext)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -61,12 +61,11 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    val introResult =
+    private val introResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == RESULT_OK) {
-                Pref.firstRun = false
-            } else {
-                finish()
+            when (result.resultCode) {
+                RESULT_OK -> Pref.firstRun = false
+                else -> finish()
             }
         }
 

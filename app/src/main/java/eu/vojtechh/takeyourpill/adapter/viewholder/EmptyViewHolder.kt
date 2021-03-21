@@ -9,9 +9,8 @@ class EmptyViewHolder(
     val description: String,
     val drawable: Drawable?
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind() {
-        binding.description = description
-        binding.imageEmpty.setImageDrawable(drawable)
-        binding.executePendingBindings()
+    fun bind() = binding.run {
+        textEmptyDescription.text = description
+        imageEmpty.setImageDrawable(drawable)
     }
 }

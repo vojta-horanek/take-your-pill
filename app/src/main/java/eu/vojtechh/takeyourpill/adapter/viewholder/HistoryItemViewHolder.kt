@@ -5,6 +5,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryBinding
+import eu.vojtechh.takeyourpill.klass.onClick
 import eu.vojtechh.takeyourpill.klass.setDateText
 import eu.vojtechh.takeyourpill.klass.setTimeText
 import eu.vojtechh.takeyourpill.klass.setVerticalBias
@@ -14,39 +15,40 @@ class HistoryItemViewHolder(
         private val binding: ItemHistoryBinding,
         private val listener: HistoryViewAdapter.ItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(history: History, isFirstInList: Boolean, isFirstOfDate: Boolean, position: Int,
-             showNames: Boolean) {
-        binding.history = history
-        binding.listener = listener
-        binding.position = position
-        with(binding) {
+    fun bind(
+        history: History, isFirstInList: Boolean, isFirstOfDate: Boolean, position: Int,
+        showNames: Boolean
+    ) = binding.run {
 
-            textHistoryReminded.setTimeText(history.reminded.time)
-            history.confirmed?.let {
-                textHistoryConfirmed.setTimeText(it.time)
-            } ?: run {
-                textHistoryConfirmed.setTimeText(history.reminded.time)
-                textHistoryConfirmed.isInvisible = true
-            }
-
-            textDate.setDateText(history.reminded.time)
-
-            textPillName.text = history.pillName
-            textPillName.isVisible = showNames
-
-            // Should this item show a divider
-            divider.isVisible = isFirstOfDate && !isFirstInList
-            dividerPill.isVisible = !isFirstOfDate
-
-            if (showNames) {
-                textHistoryConfirmed.setVerticalBias(1.0f)
-                textDate.isVisible = isFirstOfDate
-            } else {
-                textHistoryConfirmed.setVerticalBias(0.5f)
-                textDate.isInvisible = !isFirstOfDate
-            }
-
-            executePendingBindings()
+        textHistoryAmount.text = history.amount
+        buttonShowMore.onClick {
+            listener.onItemOptionsClick(it, history, position)
         }
+
+        textHistoryReminded.setTimeText(history.reminded.time)
+        history.confirmed?.let {
+            textHistoryConfirmed.setTimeText(it.time)
+        } ?: run {
+            textHistoryConfirmed.setTimeText(history.reminded.time)
+            textHistoryConfirmed.isInvisible = true
+        }
+
+        textDate.setDateText(history.reminded.time)
+
+        textPillName.text = history.pillName
+        textPillName.isVisible = showNames
+
+        // Should this item show a divider
+        divider.isVisible = isFirstOfDate && !isFirstInList
+        dividerPill.isVisible = !isFirstOfDate
+
+        if (showNames) {
+            textHistoryConfirmed.setVerticalBias(1.0f)
+            textDate.isVisible = isFirstOfDate
+        } else {
+            textHistoryConfirmed.setVerticalBias(0.5f)
+            textDate.isInvisible = !isFirstOfDate
+        }
+
     }
 }

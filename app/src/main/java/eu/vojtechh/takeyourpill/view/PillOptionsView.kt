@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.shawnlin.numberpicker.NumberPicker
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.klass.onClick
 import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 
 class PillOptionsView @JvmOverloads constructor(
@@ -92,7 +93,7 @@ class PillOptionsView @JvmOverloads constructor(
             onCheckedChange(checkedId)
         }
 
-        layoutXDaysDuration.setOnClickListener {
+        layoutXDaysDuration.onClick {
             showChangeItemDialog(
                 context.getString(R.string.duration),
                 1,
@@ -105,7 +106,7 @@ class PillOptionsView @JvmOverloads constructor(
             }
         }
 
-        layoutCycleActive.setOnClickListener {
+        layoutCycleActive.onClick {
             showChangeItemDialog(
                 context.getString(R.string.days_active),
                 1,
@@ -118,7 +119,7 @@ class PillOptionsView @JvmOverloads constructor(
             }
         }
 
-        layoutCycleInactive.setOnClickListener {
+        layoutCycleInactive.onClick {
             showChangeItemDialog(
                 context.getString(R.string.days_inactive),
                 1,
@@ -131,7 +132,7 @@ class PillOptionsView @JvmOverloads constructor(
             }
         }
 
-        layoutCycleToday.setOnClickListener {
+        layoutCycleToday.onClick {
             showChangeItemDialog(
                 context.getString(R.string.today_is_cycle_day),
                 1,

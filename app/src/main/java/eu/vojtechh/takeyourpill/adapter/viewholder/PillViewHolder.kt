@@ -7,8 +7,7 @@ import com.google.android.material.chip.Chip
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
-import eu.vojtechh.takeyourpill.klass.DayOfYear
-import eu.vojtechh.takeyourpill.klass.getTimeString
+import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.Reminder
@@ -17,30 +16,40 @@ import java.util.*
 
 class PillViewHolder(
     private val binding: ItemPillBinding,
-    private val listener: AppRecyclerAdapter.ItemListener
+    private val listener: AppRecyclerAdapter.ItemListener // TODO Don't use interface
 ) : RecyclerView.ViewHolder(binding.root) {
-    init {
-        binding.listener = listener
-    }
 
-    fun bind(pill: Pill) {
-        binding.pill = pill
-        binding.transitionId = "${pill.id}"
-        val description = getFormattedDescription(pill)
+    fun bind(pill: Pill) = binding.run {
 
-        if (description.isBlank()) {
-            binding.pillDescription.isVisible = false
-        } else {
-            binding.pillDescription.text = description
+        cardPill.apply {
+            cardPill.transitionName = "${pill.id}"
+            cardPill.onClick {
+                listener.onItemClicked(it, pill)
+            }
         }
 
-        addReminderChips(pill.reminders)
-        setIntakeOptions(pill, binding.root.context)
-        setCardConfirm(pill.closeHistory, binding.root.context)
-        binding.executePendingBindings()
+
+        imagePillColor.setBackgroundColorShaped(pill.colorResource(context))
+
+        textPillName.text = pill.name
+
+        imagePillPhoto.apply {
+            setImageDrawable(pill.getPhotoDrawable(context))
+            isVisible = pill.isPhotoVisible
+        }
+
+        pillDescription.apply {
+            text = getFormattedDescription(pill)
+            isVisible = text.isBlank()
+        }
+
+
+        setupReminders(pill.reminders)
+        setupIntake(pill, context)
+        setupConfirm(pill.closeHistory, context)
     }
 
-    private fun addReminderChips(reminders: List<Reminder>) {
+    private fun setupReminders(reminders: List<Reminder>) {
         binding.chipsLayout.removeAllViews()
         reminders.sortedBy { rem -> rem.time.time }.forEach { reminder ->
             val chip = Chip(binding.root.context)
@@ -56,7 +65,7 @@ class PillViewHolder(
         }
     }
 
-    private fun setIntakeOptions(pill: Pill, context: Context) {
+    private fun setupIntake(pill: Pill, context: Context) {
 
         // If last reminder date is null, then this is the first reminder
         pill.lastReminderDate?.let { lastDate ->
@@ -100,7 +109,7 @@ class PillViewHolder(
         }
     }
 
-    private fun setCardConfirm(latestHistory: History?, context: Context) {
+    private fun setupConfirm(latestHistory: History?, context: Context) {
         binding.pillConfirm.isVisible = false
         latestHistory?.let { history ->
             binding.pillConfirm.isVisible = true
@@ -110,7 +119,7 @@ class PillViewHolder(
                 history.reminded.time.getTimeString(context)
             )
 
-            binding.buttonTaken.setOnClickListener { v ->
+            binding.buttonTaken.onClick {
                 listener.onPillConfirmClicked(binding.pillConfirm, history)
             }
         }

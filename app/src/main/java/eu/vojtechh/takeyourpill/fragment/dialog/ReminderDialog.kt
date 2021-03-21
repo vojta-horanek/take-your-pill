@@ -9,6 +9,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.DialogNewReminderBinding
 import eu.vojtechh.takeyourpill.klass.Builders
 import eu.vojtechh.takeyourpill.klass.getAttrColor
+import eu.vojtechh.takeyourpill.klass.onClick
 import eu.vojtechh.takeyourpill.klass.setDrawableTint
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
@@ -45,12 +46,12 @@ class ReminderDialog : RoundedDialogFragment() {
 
         binding.run {
 
-            textTime.setOnClickListener {
+            textTime.onClick {
                 snackbar.dismiss()
                 showTimeDialog()
             }
 
-            textAmount.setOnClickListener {
+            textAmount.onClick {
                 Builders.getAmountPickerDialog(
                     requireContext(),
                     binding.root as ViewGroup,
@@ -60,7 +61,7 @@ class ReminderDialog : RoundedDialogFragment() {
                     setTexts()
                 }.show()
             }
-            textConfirm.setOnClickListener { confirmListener(reminder, isEditing) }
+            textConfirm.onClick { confirmListener(reminder, isEditing) }
 
         }
 

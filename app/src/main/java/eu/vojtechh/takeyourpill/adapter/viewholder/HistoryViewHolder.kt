@@ -5,28 +5,35 @@ import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryPillBinding
-import eu.vojtechh.takeyourpill.klass.isNull
+import eu.vojtechh.takeyourpill.klass.context
+import eu.vojtechh.takeyourpill.klass.onClick
+import eu.vojtechh.takeyourpill.klass.setBackgroundColorShaped
 import eu.vojtechh.takeyourpill.model.HistoryOverallItem
 import eu.vojtechh.takeyourpill.model.HistoryPillItem
 import eu.vojtechh.takeyourpill.model.Pill
 
 class HistoryViewHolder(
-        private val binding: ItemHistoryPillBinding,
-        private val listener: AppRecyclerAdapter.ItemListener
+    private val binding: ItemHistoryPillBinding,
+    private val listener: AppRecyclerAdapter.ItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(historyPill: HistoryPillItem) {
-        if (historyPill.context is HistoryOverallItem) {
-            binding.viewPillColor.isVisible = false
-            binding.textHistoryName.text = binding.root.context.getString(R.string.stat_overall)
-        } else if (historyPill.context is Pill) {
-            binding.pill = historyPill.context
-            binding.textHistoryName.text = historyPill.context.name
+    fun bind(historyPill: HistoryPillItem) = binding.run {
+
+        when (historyPill.historyType) {
+            is HistoryOverallItem -> {
+                viewPillColor.isVisible = false
+                textHistoryName.text = binding.root.context.getString(R.string.stat_overall)
+            }
+            is Pill -> {
+                viewPillColor.setBackgroundColorShaped(historyPill.historyType.colorResource(context))
+                textHistoryName.text = historyPill.historyType.name
+            }
         }
-        binding.cardHistoryPill.setOnClickListener { v -> listener.onItemClicked(v, historyPill.context) }
+        cardHistoryPill.onClick { v ->
+            listener.onItemClicked(v, historyPill.historyType)
+        }
 
-        binding.stat = historyPill.stat
-        binding.textHistoryDescription.isVisible = historyPill.stat.isNull()
-
-        binding.executePendingBindings()
+        textHistoryDescription.text = historyPill.stat.getSummaryText(context)
+        //textHistoryDescription.isVisible = historyPill.stat.isNull()
+        textHistoryDescription.isVisible = historyPill.stat.hasStats
     }
 }

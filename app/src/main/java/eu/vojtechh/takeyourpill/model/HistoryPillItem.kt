@@ -1,13 +1,13 @@
 package eu.vojtechh.takeyourpill.model
 
 data class HistoryPillItem(
-        val context: BaseModel,
-        val stat: StatItem
+    val historyType: BaseModel,
+    val stat: StatItem
 ) : BaseModel() {
-    override fun isSame(newItem: BaseModel) = context.isSame(newItem)
-    override fun isContentSame(newItem: BaseModel) = context.isContentSame(newItem)
+    override fun isSame(newItem: BaseModel) = historyType.isSame(newItem)
+    override fun isContentSame(newItem: BaseModel) = historyType.isContentSame(newItem)
     override val itemType: ItemTypes
-        get() = context.itemType
+        get() = historyType.itemType
 }
 
 class HistoryOverallItem : BaseModel() {

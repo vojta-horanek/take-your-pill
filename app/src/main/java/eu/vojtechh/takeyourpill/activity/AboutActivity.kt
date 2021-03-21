@@ -9,6 +9,7 @@ import com.mikepenz.aboutlibraries.LibsBuilder
 import eu.vojtechh.takeyourpill.BuildConfig
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityAboutBinding
+import eu.vojtechh.takeyourpill.klass.onClick
 import eu.vojtechh.takeyourpill.klass.viewBinding
 
 
@@ -18,38 +19,21 @@ class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.buttonClose.setOnClickListener {
-            finish()
-        }
-        binding.buttonGithub.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://github.com/vojta-horanek/take-your-pill")
-            )
-            startActivity(browserIntent)
-        }
+        binding.run {
+            buttonClose.onClick { finish() }
 
-        binding.buttonIcons.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://github.com/ShimonHoranek/material-icons")
-            )
-            startActivity(browserIntent)
-        }
+            buttonGithub.onClick {
+                openUrl("https://github.com/vojta-horanek/take-your-pill")
+            }
 
-        binding.buttonLicence.setOnClickListener {
-            val isVisible = binding.fragmentLibs.isVisible
-            binding.fragmentLibs.isVisible = !isVisible
-            val drawable = if (isVisible) R.drawable.ic_expand_more else R.drawable.ic_expand_less
-            binding.buttonLicence.setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.ic_article,
-                0,
-                drawable,
-                0
-            )
-        }
+            buttonIcons.onClick {
+                openUrl("https://github.com/ShimonHoranek/material-icons")
+            }
 
-        binding.textVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+            buttonLicence.onClick { switchLicenceFragment() }
+
+            textVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+        }
 
         val fragment = LibsBuilder()
             .withAboutIconShown(false)
@@ -61,5 +45,26 @@ class AboutActivity : AppCompatActivity() {
             .beginTransaction()
             .add(R.id.fragmentLibs, fragment, "fragment_libs")
             .commit()
+    }
+
+    private fun openUrl(url: String) {
+        val browserIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(url)
+        )
+        startActivity(browserIntent)
+    }
+
+    private fun switchLicenceFragment() {
+        val isVisible = binding.fragmentLibs.isVisible
+        binding.fragmentLibs.isVisible = !isVisible
+        val drawable =
+            if (isVisible) R.drawable.ic_expand_more else R.drawable.ic_expand_less
+        binding.buttonLicence.setCompoundDrawablesWithIntrinsicBounds(
+            R.drawable.ic_article,
+            0,
+            drawable,
+            0
+        )
     }
 }

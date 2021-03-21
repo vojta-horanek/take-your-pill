@@ -28,10 +28,7 @@ import eu.vojtechh.takeyourpill.adapter.ColorAdapter
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.ReminderDialog
-import eu.vojtechh.takeyourpill.klass.Constants
-import eu.vojtechh.takeyourpill.klass.disableAnimations
-import eu.vojtechh.takeyourpill.klass.showError
-import eu.vojtechh.takeyourpill.klass.themeColor
+import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
@@ -180,8 +177,8 @@ class EditFragment : Fragment() {
                 )
             }
             inputDescription.doOnTextChanged { text, _, _, _ -> model.onDescriptionChanged(text) }
-            buttonSave.setOnClickListener { onPillSave() }
-            buttonAddReminder.setOnClickListener { showReminderDialog() }
+            buttonSave.onClick { onPillSave() }
+            buttonAddReminder.onClick { showReminderDialog() }
             imageChooser.setOnImageClickListener { onPickImage() }
             imageChooser.setOnDeleteClickListener { onImageDelete() }
 

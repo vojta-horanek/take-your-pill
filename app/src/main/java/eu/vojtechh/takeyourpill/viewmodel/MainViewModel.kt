@@ -16,10 +16,9 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Plan all pills when opened, maybe wasteful?
-    fun planReminders(context: Context) = viewModelScope.launch(Dispatchers.IO) {
-        val pills = pillRepository.getAllPills()
-        pills.forEach {
-            ReminderManager.planNextPillReminder(context, it)
+    fun planReminders(applicationContext: Context) = viewModelScope.launch(Dispatchers.IO) {
+        pillRepository.getAllPills().forEach {
+            ReminderManager.planNextPillReminder(applicationContext, it)
         }
     }
 

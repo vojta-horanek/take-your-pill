@@ -74,7 +74,7 @@ class HistoryViewDialog :
                 onListObserve(adapter, history, true)
             }
         }
-        binding.buttonDeleteHistory.setOnClickListener {
+        binding.buttonDeleteHistory.onClick {
             showDeleteDialog()
         }
     }
