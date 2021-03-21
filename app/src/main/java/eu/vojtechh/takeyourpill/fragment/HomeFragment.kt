@@ -45,6 +45,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             exitTransition = MaterialFadeThrough()
             postponeEnterTransition()
             view.doOnPreDraw { startPostponedEnterTransition() }
+            model.refreshPills()
             model.isReturningFromPillDetails = false
         }
 
