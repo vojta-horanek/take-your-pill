@@ -108,8 +108,6 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             ImagePicker.RESULT_ERROR -> {
                 showSnackbar(ImagePicker.getError(data))
             }
-            else -> {
-            }
         }
     }
 

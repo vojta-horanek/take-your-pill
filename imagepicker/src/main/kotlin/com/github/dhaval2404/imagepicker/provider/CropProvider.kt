@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.ImagePickerActivity
 import com.github.dhaval2404.imagepicker.R
@@ -151,10 +152,21 @@ class CropProvider(activity: ImagePickerActivity) : BaseProvider(activity) {
      */
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == UCrop.REQUEST_CROP) {
-            if (resultCode == Activity.RESULT_OK) {
-                handleResult(mCropImageFile)
-            } else {
-                setResultCancel()
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    handleResult(mCropImageFile)
+                }
+                UCrop.RESULT_ERROR -> {
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.unknown_file_format),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    setResultCancel()
+                }
+                else -> {
+                    setResultCancel()
+                }
             }
         }
     }

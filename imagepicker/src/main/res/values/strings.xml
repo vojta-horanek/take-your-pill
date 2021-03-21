@@ -19,6 +19,8 @@
     <string name="error_failed_to_compress_image">Failed to compress image</string>
     <string name="error_task_cancelled">Task Cancelled</string>
     <string name="error_camera_app_not_found">Camera app not found</string>
+    <string name="unknown_file_format">An unknown error has occurred. This is most likely cause by an unsupported image format (ex. heic)</string>
+
 
     <!-- identifier used to reference this library -->
     <string name="define_plu_myLibrary">2021;dhaval2404</string>
