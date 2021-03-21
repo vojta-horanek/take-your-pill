@@ -8,6 +8,7 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -18,19 +19,21 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.activity.MainActivity
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.DeleteDialog
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
+import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 import java.util.*
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private val model: DetailsViewModel by viewModels()
+    private val mainModel: MainViewModel by activityViewModels()
+
     private val args: DetailsFragmentArgs by navArgs()
     private val binding by viewBinding(FragmentDetailsBinding::bind)
     private val reminderAdapter = ReminderAdapter(showDelete = false, showRipple = false)
@@ -196,8 +199,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                                 when (it) {
                                     true -> {
                                         binding.layoutConfirm.isVisible = false
-                                        (requireActivity() as MainActivity).confirmedPillId =
-                                            history.pillId
+                                        mainModel.confirmedPillId = history.pillId
                                     }
                                     false -> showMessage(getString(R.string.error))
                                 }

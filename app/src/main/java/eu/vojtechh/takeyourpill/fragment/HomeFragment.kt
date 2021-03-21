@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -14,7 +15,6 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.activity.MainActivity
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.applicationContext
@@ -23,11 +23,14 @@ import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.viewmodel.HomeViewModel
+import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val model: HomeViewModel by viewModels()
+    private val mainModel: MainViewModel by activityViewModels()
+
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
 
@@ -76,9 +79,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             appAdapter.submitList(pills)
         }
 
-        if ((requireActivity() as MainActivity).confirmedPillId != -1L) {
-            model.refreshPills((requireActivity() as MainActivity).confirmedPillId)
-            (requireActivity() as MainActivity).confirmedPillId = -1L
+        if (mainModel.confirmedPillId != -1L) {
+            model.refreshPills(mainModel.confirmedPillId)
+            mainModel.confirmedPillId = -1L
         }
     }
 

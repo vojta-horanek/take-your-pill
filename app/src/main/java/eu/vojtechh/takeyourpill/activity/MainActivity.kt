@@ -21,8 +21,6 @@ import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    var confirmedPillId = -1L // Not the most elegant way but hmm :D
-
     private val binding by viewBinding(ActivityMainBinding::inflate)
     private val model: MainViewModel by viewModels()
 
