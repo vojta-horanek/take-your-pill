@@ -10,7 +10,8 @@ class HistoryRepository @Inject constructor(
     fun getHistoryFlow() = historyDao.getEverythingFlow()
     fun getHistoryOrderedByIdFlow() = historyDao.getEverythingOrderedByIdFlow()
     fun getHistoryForPillFlow(pillId: Long) = historyDao.getWithPillIdFlow(pillId)
-    suspend fun getLatestWithPillIdSync(pillId: Long) = historyDao.getLatestWithPillId(pillId)
+    suspend fun getLatestWithPillId(pillId: Long) = historyDao.getLatestWithPillId(pillId)
+    fun getLatestWithPillIdFlow(pillId: Long) = historyDao.getLatestWithPillIdFlow(pillId)
     suspend fun getByPillIdAndTime(pillId: Long, remindedTime: Long) =
         historyDao.getWithPillIdAndTime(pillId, remindedTime)
 

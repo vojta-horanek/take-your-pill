@@ -144,5 +144,6 @@
     <string name="day">Day</string>
     <string name="night">Night</string>
     <string name="save">Save</string>
+    <string name="last_reminded">Last reminded</string>
 
 </resources>

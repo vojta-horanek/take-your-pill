@@ -43,6 +43,15 @@ interface HistoryDao {
     )
     suspend fun getLatestWithPillId(pillId: Long): History?
 
+    @Query(
+        """
+        SELECT * FROM history
+        WHERE 
+            history.pillId = (:pillId)
+        ORDER BY history.reminded DESC LIMIT 1"""
+    )
+    fun getLatestWithPillIdFlow(pillId: Long): Flow<History?>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(history: List<History>)

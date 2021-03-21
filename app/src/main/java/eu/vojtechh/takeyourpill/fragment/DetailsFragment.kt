@@ -108,7 +108,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             with(model.pill.options) {
                 when {
                     isIndefinite() -> {
-                        textIntakeOptions.isVisible = false
                         intakeDaysActive.isVisible = false
                         intakeDaysInactive.isVisible = false
                     }
@@ -141,6 +140,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                             infoResumeAfter.text = daysInactive.toString()
                         }
                     }
+                }
+            }
+
+            model.getLastReminded(model.pill.id).observe(viewLifecycleOwner) { history ->
+                history?.let {
+                    infoLastReminded.text = history.reminded.time.getDateTimeString()
+                } ?: run {
+                    textIntakeOptions.isVisible = false
+                    intakeLastReminded.isVisible = false
                 }
             }
 

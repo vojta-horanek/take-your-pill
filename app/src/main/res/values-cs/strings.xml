@@ -146,6 +146,7 @@
     <string name="day">Den</string>
     <string name="night">Noc</string>
     <string name="save">Uložit</string>
+    <string name="last_reminded">Naposledy připomenuto</string>
 
 
 </resources>

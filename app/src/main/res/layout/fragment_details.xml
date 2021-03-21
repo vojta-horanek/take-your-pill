@@ -236,6 +236,31 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/intakeLastReminded"
+                style="@style/AppTheme.Widget.ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/intakeDaysInactive">
+
+                <TextView
+                    style="@style/AppTheme.Text.BodyNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_reminded" />
+
+                <TextView
+                    android:id="@+id/infoLastReminded"
+                    style="@style/AppTheme.Text.Description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="12:00 12.03.2021" />
+
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

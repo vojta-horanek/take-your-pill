@@ -32,6 +32,8 @@ class DetailsViewModel @Inject constructor(
     fun deletePill(pillEntity: PillEntity) =
         viewModelScope.launch(Dispatchers.IO) { pillRepository.markPillDeleted(pillEntity) }
 
+    fun getLastReminded(pillId: Long) =
+        historyRepository.getLatestWithPillIdFlow(pillId).asLiveData()
     lateinit var pill: Pill
 
     private val _reminders = MutableLiveData(listOf<Reminder>())
@@ -49,7 +51,7 @@ class DetailsViewModel @Inject constructor(
         val now = Calendar.getInstance()
         val timeOffset = (30 /* minutes */ * 60 * 1000)
 
-        val latestHistory = historyRepository.getLatestWithPillIdSync(pill.id)
+        val latestHistory = historyRepository.getLatestWithPillId(pill.id)
 
         latestHistory?.let { history ->
             if (!history.hasBeenConfirmed) {

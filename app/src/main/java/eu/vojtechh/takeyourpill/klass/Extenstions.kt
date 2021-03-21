@@ -182,6 +182,16 @@ fun Date.getTimeString(context: Context): String {
     return dateFormat.format(this)
 }
 
+fun Date.getDateTimeString(): String {
+    val format =
+        java.text.DateFormat.getDateTimeInstance(
+            java.text.DateFormat.SHORT,
+            java.text.DateFormat.SHORT,
+            Locale.getDefault()
+        )
+    return format.format(this)
+}
+
 // Inline functions
 inline fun tryIgnore(action: () -> Unit) {
     try {
