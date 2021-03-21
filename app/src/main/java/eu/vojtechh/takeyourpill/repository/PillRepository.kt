@@ -10,20 +10,20 @@ class PillRepository @Inject constructor(
     private val pillDao: PillDao,
     private val reminderDao: ReminderDao
 ) {
-    fun getAllPills() = pillDao.getAll()
-    suspend fun getAllPillsSync() = pillDao.getAllSync()
-    fun getAllPillsIncludingDeleted() = pillDao.getAllIncludingDeleted()
-    suspend fun getAllPillsIncludingDeletedSync() = pillDao.getAllIncludingDeletedSync()
-    fun getPill(pillId: Long) = pillDao.getById(pillId)
-    suspend fun getPillSync(pillId: Long) = pillDao.getByIdSync(pillId)
+    fun getAllPills() = pillDao.getEverythingFlow()
+    suspend fun getAllPillsSync() = pillDao.getEverything()
+    fun getAllPillsIncludingDeleted() = pillDao.getEverythingIncludingDeletedFlow()
+    suspend fun getAllPillsIncludingDeletedSync() = pillDao.getEverythingIncludingDeleted()
+    fun getPill(pillId: Long) = pillDao.getWithIdFlow(pillId)
+    suspend fun getPillSync(pillId: Long) = pillDao.getWitId(pillId)
 
     suspend fun deletePillAndReminder(pill: Pill) {
-        pillDao.deletePill(pill.pillEntity)
+        pillDao.deletePillEntity(pill.pillEntity)
         reminderDao.delete(pill.reminders)
     }
 
     suspend fun insertPill(pill: Pill): Long {
-        val id = pillDao.insertPill(pill.pillEntity)
+        val id = pillDao.insertPillEntity(pill.pillEntity)
         pill.reminders.forEach {
             it.pillId = id
         }
@@ -32,36 +32,36 @@ class PillRepository @Inject constructor(
     }
 
     suspend fun insertPillReturn(pill: Pill): Pill {
-        val id = pillDao.insertPill(pill.pillEntity)
+        val id = pillDao.insertPillEntity(pill.pillEntity)
         pill.reminders.forEach {
             it.pillId = id
         }
         reminderDao.insert(pill.reminders)
-        return pillDao.getByIdSync(id)
+        return pillDao.getWitId(id)
     }
 
     suspend fun updatePill(pill: Pill): Long {
         // Delete all reminders based on pill (removes orphaned)
-        reminderDao.deleteByPillId(pill.id)
+        reminderDao.deleteWithPillId(pill.id)
         // Add all reminders (new, updated)
         reminderDao.insert(pill.reminders)
-        pillDao.updatePill(pill.pillEntity)
+        pillDao.updatePillEntity(pill.pillEntity)
         return pill.id
     }
 
     suspend fun updatePillReturn(pill: Pill): Pill {
         // Delete all reminders based on pill (removes orphaned)
-        reminderDao.deleteByPillId(pill.id)
+        reminderDao.deleteWithPillId(pill.id)
         // Add all reminders (new, updated)
         reminderDao.insert(pill.reminders)
-        pillDao.updatePill(pill.pillEntity)
-        return pillDao.getByIdSync(pill.id)
+        pillDao.updatePillEntity(pill.pillEntity)
+        return pillDao.getWitId(pill.id)
     }
 
     suspend fun markPillDeleted(pillEntity: PillEntity) {
         // Delete all reminders based on pill (removes orphaned)
-        reminderDao.deleteByPillId(pillEntity.id)
+        reminderDao.deleteWithPillId(pillEntity.id)
         pillEntity.deleted = true
-        pillDao.updatePill(pillEntity)
+        pillDao.updatePillEntity(pillEntity)
     }
 }

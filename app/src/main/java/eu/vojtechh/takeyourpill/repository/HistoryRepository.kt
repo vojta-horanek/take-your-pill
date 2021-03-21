@@ -7,10 +7,10 @@ import javax.inject.Inject
 class HistoryRepository @Inject constructor(
     private val historyDao: HistoryDao
 ) {
-    fun getHistory() = historyDao.getAll()
-    fun getHistoryOrderedById() = historyDao.getAllOrderedById()
-    fun getHistoryForPill(pillId: Long) = historyDao.getWithPillId(pillId)
-    suspend fun getLatestWithPillIdSync(pillId: Long) = historyDao.getLatestWithPillIdSync(pillId)
+    fun getHistory() = historyDao.getEverythingFlow()
+    fun getHistoryOrderedById() = historyDao.getEverythingOrderedByIdFlow()
+    fun getHistoryForPill(pillId: Long) = historyDao.getWithPillIdFlow(pillId)
+    suspend fun getLatestWithPillIdSync(pillId: Long) = historyDao.getLatestWithPillId(pillId)
     suspend fun getByPillIdAndTime(pillId: Long, remindedTime: Long) =
         historyDao.getWithPillIdAndTime(pillId, remindedTime)
 
@@ -18,5 +18,5 @@ class HistoryRepository @Inject constructor(
     suspend fun insertHistoryItem(history: History) = historyDao.insert(history)
     suspend fun insertHistories(histories: List<History>) = historyDao.insert(histories)
     suspend fun deleteHistoryItem(history: History) = historyDao.delete(history)
-    suspend fun deleteHistoryForPill(pillId: Long) = historyDao.deleteByPillId(pillId)
+    suspend fun deleteHistoryForPill(pillId: Long) = historyDao.deleteWithPillId(pillId)
 }
