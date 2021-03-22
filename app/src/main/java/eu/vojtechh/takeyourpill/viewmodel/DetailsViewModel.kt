@@ -86,7 +86,8 @@ class DetailsViewModel @Inject constructor(
         }
 
     private val loadedDataCount = MutableLiveData(0)
-    val loadedData = loadedDataCount
+    val loadedData: LiveData<Int>
+        get() = loadedDataCount
 
     fun loadedData() {
         loadedDataCount.value = loadedDataCount.value?.plus(1)
