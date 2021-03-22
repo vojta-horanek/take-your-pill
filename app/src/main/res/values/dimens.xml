@@ -13,6 +13,8 @@
     <dimen name="screen_margin_vertical">16dp</dimen>
     <dimen name="screen_margin_vertical_big">32dp</dimen>
     <dimen name="fab_margins">16dp</dimen>
+    <dimen name="standard_card_elevation">2dp</dimen>
+    <dimen name="max_card_elevation">8dp</dimen>
     <dimen name="screen_margin_vertical_small">8dp</dimen>
     <dimen name="screen_margin_vertical_little">4dp</dimen>
     <dimen name="standard_corner_radius">8dp</dimen>

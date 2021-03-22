@@ -20,6 +20,8 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:focusable="true"
+        app:cardElevation="@dimen/standard_card_elevation"
+        app:cardMaxElevation="@dimen/max_card_elevation"
         app:cardCornerRadius="@dimen/standard_corner_radius"
         app:cardPreventCornerOverlap="true">
 

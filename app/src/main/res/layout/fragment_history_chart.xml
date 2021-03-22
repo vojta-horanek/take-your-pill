@@ -23,6 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/card_charts"
+            app:cardElevation="@dimen/standard_card_elevation"
+            app:cardMaxElevation="@dimen/max_card_elevation"
             android:layout_marginBottom="@dimen/screen_margin_vertical"
             android:background="?attr/colorBackgroundFloating"
             android:clipChildren="false"
