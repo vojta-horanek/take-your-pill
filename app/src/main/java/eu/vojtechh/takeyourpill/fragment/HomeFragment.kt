@@ -44,11 +44,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Only postpone when returning from Details
+
+        postponeEnterTransition()
+
         if (model.isReturningFromPillDetails) {
             exitTransition = MaterialFadeThrough()
-            postponeEnterTransition()
-            view.doOnPreDraw { startPostponedEnterTransition() }
             model.isReturningFromPillDetails = false
         }
 
@@ -77,6 +77,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         model.allPills.observe(viewLifecycleOwner) { pills ->
             appAdapter.submitList(pills)
+            view.doOnPreDraw { startPostponedEnterTransition() }
         }
 
         if (mainModel.confirmedPillId != -1L) {
