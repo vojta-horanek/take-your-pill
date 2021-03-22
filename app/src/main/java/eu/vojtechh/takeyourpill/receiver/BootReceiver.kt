@@ -1,5 +1,6 @@
 package eu.vojtechh.takeyourpill.receiver
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -17,12 +18,11 @@ class BootReceiver : BroadcastReceiver() {
     @Inject
     lateinit var pillRepository: PillRepository
 
+    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
-            goAsync(GlobalScope, Dispatchers.IO) {
-                pillRepository.getAllPills().forEach {
-                    ReminderManager.planNextPillReminder(context, it)
-                }
+        goAsync(GlobalScope, Dispatchers.IO) {
+            pillRepository.getAllPills().forEach {
+                ReminderManager.planNextPillReminder(context, it)
             }
         }
     }
