@@ -15,7 +15,7 @@ class MainViewModel @Inject constructor(
     private val pillRepository: PillRepository
 ) : ViewModel() {
 
-    var confirmedPillId = -1L
+    var wasInDetails = false
 
     // Plan all pills when opened, maybe wasteful?
     fun planReminders(applicationContext: Context) = viewModelScope.launch(Dispatchers.Main) {

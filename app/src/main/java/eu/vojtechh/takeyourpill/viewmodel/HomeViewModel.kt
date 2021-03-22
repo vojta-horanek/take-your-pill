@@ -10,6 +10,7 @@ import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import java.util.*
 import javax.inject.Inject
 
@@ -18,15 +19,13 @@ class HomeViewModel @Inject constructor(
     pillRepository: PillRepository,
     private val reminderRepository: ReminderRepository
 ) : ViewModel() {
-    var isReturningFromPillDetails = false
-
-    private val refreshTrigger: MutableLiveData<Long?> = MutableLiveData(null)
+    private val refreshTrigger = MutableLiveData(Unit)
     val allPills = refreshTrigger.switchMap {
-        pillRepository.getAllPillsWithHistoryFlow(it).asLiveData()
+        pillRepository.getAllPillsWithHistoryFlow().asLiveData()
     }
 
-    fun refreshPills(confirmedPillId: Long? = null) {
-        refreshTrigger.value = confirmedPillId
+    fun refreshPills() {
+        refreshTrigger.value = Unit
     }
 
     fun confirmPill(applicationContext: Context, history: History) =
@@ -47,6 +46,7 @@ class HomeViewModel @Inject constructor(
                         history.reminded.timeInMillis
                     )
                     applicationContext.sendBroadcast(confirmIntent)
+                    delay(200) // Wait for broadcast to finish
                     emit(true)
                 } ?: emit(false)
         }

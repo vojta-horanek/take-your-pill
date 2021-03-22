@@ -195,10 +195,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                         model.confirmPill(requireContext(), history)
                             .observe(viewLifecycleOwner) {
                                 when (it) {
-                                    true -> {
-                                        binding.layoutConfirm.isVisible = false
-                                        mainModel.confirmedPillId = history.pillId
-                                    }
+                                    true -> binding.layoutConfirm.isVisible = false
                                     false -> showMessage(getString(R.string.error))
                                 }
                             }

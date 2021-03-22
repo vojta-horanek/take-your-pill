@@ -110,12 +110,11 @@ data class Pill(
             this.name == newItem.name &&
                     this.description == newItem.description &&
                     this.photo == newItem.photo &&
-                    this.color == newItem.color &&
+                    this.color.resource == newItem.color.resource &&
                     this.deleted == newItem.deleted &&
                     this.options == newItem.options &&
                     this.reminders == newItem.reminders &&
                     this.closeHistory == newItem.closeHistory
-
         } else false
 
 

@@ -31,7 +31,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val model: HomeViewModel by viewModels()
     private val mainModel: MainViewModel by activityViewModels()
 
-
     private val binding by viewBinding(FragmentHomeBinding::bind)
 
     private lateinit var appAdapter: AppRecyclerAdapter
@@ -46,11 +45,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         postponeEnterTransition()
-
-        if (model.isReturningFromPillDetails) {
-            exitTransition = MaterialFadeThrough()
-            model.isReturningFromPillDetails = false
-        }
 
         appAdapter = AppRecyclerAdapter(
             getString(R.string.pills), getString(R.string.try_to_add_a_pill_first),
@@ -81,9 +75,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         // If we confirmed this pill from the details, we should refresh it's state
-        if (mainModel.confirmedPillId != -1L) {
-            model.refreshPills(mainModel.confirmedPillId)
-            mainModel.confirmedPillId = -1L
+        if (mainModel.wasInDetails) {
+            model.refreshPills()
+            mainModel.wasInDetails = false
+            exitTransition = MaterialFadeThrough()
         }
     }
 
@@ -95,12 +90,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun onPillClicked(view: View, item: BaseModel) {
         if (item is Pill) {
-            model.isReturningFromPillDetails = true
             exitTransition = MaterialElevationScale(false)
             reenterTransition = MaterialElevationScale(true)
             val pillDetailTransitionName = getString(R.string.pill_details_transition_name)
             val extras = FragmentNavigatorExtras(view to pillDetailTransitionName)
             val directions = HomeFragmentDirections.actionHomescreenToDetails(item.id)
+            mainModel.wasInDetails = true
             findNavController().navigate(directions, extras)
         }
     }

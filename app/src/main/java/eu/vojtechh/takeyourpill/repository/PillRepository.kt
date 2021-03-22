@@ -14,10 +14,8 @@ class PillRepository @Inject constructor(
     private val reminderDao: ReminderDao,
     private val historyDao: HistoryDao
 ) {
-    fun getAllPillsWithHistoryFlow(pillId: Long?) = pillDao.getEverythingFlow().map { pillList ->
-        pillList.onEach { pill ->
-            if (pillId == null || pillId == pill.id) addLatestHistoryToPill(pill)
-        }
+    fun getAllPillsWithHistoryFlow() = pillDao.getEverythingFlow().map { pillList ->
+        pillList.onEach { pill -> addLatestHistoryToPill(pill) }
     }
 
     private suspend fun addLatestHistoryToPill(pill: Pill) {
