@@ -18,13 +18,13 @@ class HistoryViewHolder(
     private val clickListener: (View, BaseModel) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(historyPill: HistoryPillItem) = binding.run {
-
         when (historyPill.historyType) {
             is HistoryOverallItem -> {
                 viewPillColor.isVisible = false
                 textHistoryName.text = binding.root.context.getString(R.string.stat_overall)
             }
             is Pill -> {
+                viewPillColor.isVisible = true
                 viewPillColor.setBackgroundColorShaped(historyPill.historyType.colorResource(context))
                 textHistoryName.text = historyPill.historyType.name
             }
