@@ -80,6 +80,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             view.doOnPreDraw { startPostponedEnterTransition() }
         }
 
+        // If we confirmed this pill from the details, we should refresh it's state
         if (mainModel.confirmedPillId != -1L) {
             model.refreshPills(mainModel.confirmedPillId)
             mainModel.confirmedPillId = -1L
@@ -89,7 +90,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun openNewPill() {
         exitTransition = MaterialElevationScale(false)
         reenterTransition = MaterialElevationScale(true)
-        findNavController().navigate(R.id.edit)
+        findNavController().navigate(HomeFragmentDirections.actionHomescreenToEditFragment())
     }
 
     private fun onPillClicked(view: View, item: BaseModel) {

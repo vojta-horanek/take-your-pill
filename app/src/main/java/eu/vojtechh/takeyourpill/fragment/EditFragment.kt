@@ -16,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
@@ -37,7 +36,6 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class EditFragment : Fragment(R.layout.fragment_edit) {
 
-    // Can't use delegate because of transition endView
     private val binding by viewBinding(FragmentEditBinding::bind)
 
     private val model: EditViewModel by viewModels()
@@ -99,6 +97,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     /**
      * Called when imagepicker finishes
      */
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (resultCode) {
@@ -111,6 +110,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -160,7 +160,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
             inputName.doOnTextChanged { text, _, _, _ ->
                 inputNameLayout.showError(
-                    if (model.onNameChanged(text)) getString(R.string.enter_field) else null
+                    if (model.onNameChanged(text)) getString(R.string.enter_field_name) else null
                 )
             }
             inputDescription.doOnTextChanged { text, _, _, _ -> model.onDescriptionChanged(text) }
@@ -210,33 +210,30 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
     private fun onBackPressed() {
         if (model.hasPillBeenEdited) {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(getString(R.string.confirm_exit_edit))
-                .setMessage(getString(R.string.confirm_exit_edit_description))
-                .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
-                .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+            Builders.getConfirmDialog(
+                requireContext(),
+                getString(R.string.confirm_exit_edit),
+                getString(R.string.confirm_exit_edit_description),
+                {
                     findNavController().popBackStack()
-
-                    dialog.dismiss()
+                    it.dismiss()
                 }
-                .show()
-
+            )
         } else {
             findNavController().popBackStack()
         }
     }
 
-    private fun onImageDelete() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.confirm_delete_photo))
-            .setMessage(getString(R.string.confirm_delete_photo_description))
-            .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+    private fun onImageDelete() =
+        Builders.getConfirmDialog(
+            requireContext(),
+            getString(R.string.confirm_delete_photo),
+            getString(R.string.confirm_delete_photo_description),
+            {
                 model.deleteImage()
-                dialog.dismiss()
+                it.dismiss()
             }
-            .show()
-    }
+        )
 
     private fun showReminderDialog(
         reminder: Reminder = Reminder.create(pillId = model.pill.id),
@@ -299,7 +296,8 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     private fun onPillSave() = binding.run {
         // Does Pill have a name?
         if (model.pill.name.isBlank()) {
-            inputNameLayout.error = getString(R.string.enter_field)
+            inputNameLayout.error = getString(R.string.enter_field_name)
+            scrollEdit.smoothScrollTo(0, 0)
             return@run
         }
 
@@ -319,7 +317,6 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
         }
         findNavController().popBackStack()
-
     }
 
 

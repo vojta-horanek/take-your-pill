@@ -1,5 +1,6 @@
 package eu.vojtechh.takeyourpill.klass
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources.Theme
@@ -30,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -194,6 +196,22 @@ val ViewBinding.context: Context
 
 val Fragment.applicationContext: Context
     get() = requireActivity().applicationContext
+
+fun BroadcastReceiver.goAsync(
+    coroutineScope: CoroutineScope = GlobalScope,
+    coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    block: suspend () -> Unit
+) {
+    val result = goAsync()
+    coroutineScope.launch(coroutineDispatcher) {
+        try {
+            block()
+        } finally {
+            // Always call finish(), even if the coroutineScope was cancelled
+            result.finish()
+        }
+    }
+}
 
 // ---- INLINES ----
 

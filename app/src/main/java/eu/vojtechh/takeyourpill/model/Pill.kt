@@ -7,7 +7,6 @@ import androidx.room.Embedded
 import androidx.room.Ignore
 import androidx.room.Relation
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 
 data class Pill(
     @Embedded val pillEntity: PillEntity,
@@ -19,7 +18,7 @@ data class Pill(
 ) : BaseModel() {
 
     @Ignore
-    override var itemType: ItemTypes = ItemTypes.PILL
+    override var itemType: ItemType = ItemType.PILL
 
     companion object {
 

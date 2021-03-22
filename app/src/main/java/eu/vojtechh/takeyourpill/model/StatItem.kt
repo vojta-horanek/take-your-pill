@@ -10,15 +10,19 @@ data class StatItem(
         val missed: Int
 ) {
 
-    fun getRemindedText(context: Context) = context.getString(R.string.stat_reminded, reminded)
-    fun getConfirmedText(context: Context) = context.getString(R.string.stat_confirmed, confirmed)
-    fun getMissedText(context: Context) = context.getString(R.string.stat_missed, missed)
+    private fun getRemindedText(context: Context) =
+        context.getString(R.string.stat_reminded, reminded)
+
+    private fun getConfirmedText(context: Context) =
+        context.getString(R.string.stat_confirmed, confirmed)
+
+    private fun getMissedText(context: Context) = context.getString(R.string.stat_missed, missed)
     fun getSummaryText(context: Context) =
-            listOf(
-                    getRemindedText(context),
-                    getConfirmedText(context),
-                    getMissedText(context)
-            ).joinToString(separator = System.lineSeparator())
+        listOf(
+            getRemindedText(context),
+            getConfirmedText(context),
+            getMissedText(context)
+        ).joinToString(separator = System.lineSeparator())
 
     val hasStats
         get() = reminded != 0

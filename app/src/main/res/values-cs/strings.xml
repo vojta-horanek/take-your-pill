@@ -17,7 +17,7 @@
     <string name="name">Název</string>
     <string name="photo">Fotografie</string>
     <string name="edit_pill">Upravit lék</string>
-    <string name="enter_field">Prosím, zadejte hodnotu</string>
+    <string name="enter_field_name">Prosím, zadejte název</string>
     <string name="reminders">Připomínky</string>
     <string name="limit_to_x_days">Omezit na počet dní</string>
     <string name="number_of_days">Počet dní na který omezit</string>

@@ -5,8 +5,7 @@ import androidx.room.Ignore
 
 abstract class BaseModel {
 
-
-    enum class ItemTypes {
+    enum class ItemType {
         PILL,
         HEADER,
         EMPTY,
@@ -15,7 +14,7 @@ abstract class BaseModel {
     }
 
     @Ignore
-    open val itemType = ItemTypes.PILL
+    open val itemType = ItemType.PILL
 
     abstract fun isSame(newItem: BaseModel): Boolean
     abstract fun isContentSame(newItem: BaseModel): Boolean

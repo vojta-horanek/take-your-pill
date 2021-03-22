@@ -24,6 +24,7 @@
         app:np_textColor="?attr/colorOnSurface"
         app:np_textSize="16sp"
         app:np_value="1"
+        android:layout_marginTop="8dp"
         app:np_wheelItemCount="5" />
 
 

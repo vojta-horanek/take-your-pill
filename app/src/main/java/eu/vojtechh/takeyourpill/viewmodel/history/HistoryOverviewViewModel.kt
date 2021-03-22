@@ -50,7 +50,7 @@ class HistoryOverviewViewModel @Inject constructor(
         val mergedList = sequence {
             yield(HistoryPillItem(HistoryOverallItem(), overallStat))
             pills.forEach { pill ->
-                pill.itemType = BaseModel.ItemTypes.HISTORY
+                pill.itemType = BaseModel.ItemType.HISTORY
                 statList.find { statItem -> statItem.pillId == pill.id }?.let { statItem ->
                     yield(HistoryPillItem(pill, statItem))
                 }

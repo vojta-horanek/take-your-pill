@@ -3,11 +3,9 @@ package eu.vojtechh.takeyourpill.viewmodel.history
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
@@ -21,7 +19,7 @@ class HistoryChartViewModel @Inject constructor(
     private val pillRepository: PillRepository
 ) : ViewModel() {
 
-    fun getStatsData(pieChart: PieChart, applicationContext: Context) =
+    fun getStatsData(applicationContext: Context) =
         historyRepository.getHistoryFlow().map { history ->
 
             if (history.isEmpty()) {
@@ -69,20 +67,18 @@ class HistoryChartViewModel @Inject constructor(
             val dataSetMissed = getDataSet(missedEntries, colorsMissed, applicationContext)
             val dataSetConfirmed = getDataSet(confirmedEntries, colorsConfirmed, applicationContext)
 
-            val dataAll = getData(dataSetAll, pieChart)
-            val dataMissed = getData(dataSetMissed, pieChart)
-            val dataConfirmed = getData(dataSetConfirmed, pieChart)
+            val dataAll = getData(dataSetAll)
+            val dataMissed = getData(dataSetMissed)
+            val dataConfirmed = getData(dataSetConfirmed)
 
             return@map (listOf(dataAll, dataMissed, dataConfirmed))
         }.asLiveData()
 
     private fun getData(
         pieDataSet: PieDataSet,
-        pieChart: PieChart
     ) =
         PieData(pieDataSet).apply {
             setDrawValues(true)
-            setValueFormatter(PercentFormatter(pieChart))
         }
 
     private fun getDataSet(

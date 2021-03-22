@@ -38,12 +38,12 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview) {
         binding.recyclerHistory.adapter = appAdapter
 
         model.historyStats.observe(viewLifecycleOwner) { result ->
-            result.onSuccess {
-                appAdapter.submitList(it)
-            }.onFailure {
-                tryIgnore { (requireParentFragment() as HistoryFragment).disableTabs() }
-                appAdapter.submitList(listOf()) // Submit an empty list to show the adapter
-            }
+            result
+                .onSuccess { appAdapter.submitList(it) }
+                .onFailure {
+                    tryIgnore { (requireParentFragment() as HistoryFragment).disableTabs() }
+                    appAdapter.submitList(listOf()) // Submit an empty list to show the adapter
+                }
         }
     }
 

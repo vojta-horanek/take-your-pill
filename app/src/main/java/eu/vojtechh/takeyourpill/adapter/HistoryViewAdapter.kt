@@ -12,7 +12,7 @@ import eu.vojtechh.takeyourpill.databinding.ItemHistoryBinding
 import eu.vojtechh.takeyourpill.databinding.LayoutViewEmptyBinding
 import eu.vojtechh.takeyourpill.klass.getItemOrNull
 import eu.vojtechh.takeyourpill.model.BaseModel
-import eu.vojtechh.takeyourpill.model.BaseModel.ItemTypes
+import eu.vojtechh.takeyourpill.model.BaseModel.ItemType
 import eu.vojtechh.takeyourpill.model.EmptyItem
 import eu.vojtechh.takeyourpill.model.History
 import java.util.*
@@ -31,7 +31,7 @@ class HistoryViewAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            ItemTypes.HISTORY_ITEM.ordinal -> {
+            ItemType.HISTORY_ITEM.ordinal -> {
                 if (holder is HistoryItemViewHolder) {
                     val currentHistoryItem = getItem(position) as History
                     var isFirstOfDate = true
@@ -52,18 +52,18 @@ class HistoryViewAdapter(
                     )
                 }
             }
-            ItemTypes.EMPTY.ordinal -> if (holder is EmptyViewHolder) holder.bind()
+            ItemType.EMPTY.ordinal -> if (holder is EmptyViewHolder) holder.bind()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            ItemTypes.EMPTY.ordinal -> EmptyViewHolder(
+            ItemType.EMPTY.ordinal -> EmptyViewHolder(
                 LayoutViewEmptyBinding.inflate(layoutInflater, parent, false),
                 "", emptyDrawable
             )
-            ItemTypes.HISTORY_ITEM.ordinal -> HistoryItemViewHolder(
+            ItemType.HISTORY_ITEM.ordinal -> HistoryItemViewHolder(
                 ItemHistoryBinding.inflate(layoutInflater, parent, false),
                 itemOptionsClickListener
             )

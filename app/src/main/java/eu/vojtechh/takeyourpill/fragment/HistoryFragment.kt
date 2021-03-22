@@ -35,19 +35,21 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 1 -> getString(R.string.charts)
                 else -> getString(R.string.history)
             }
-            tab.icon = ResourcesCompat.getDrawable(resources, when (position) {
-                0 -> R.drawable.ic_list_alt
-                1 -> R.drawable.ic_pie_chart
-                else -> R.drawable.ic_history
-            }, context?.theme)
+            tab.icon = ResourcesCompat.getDrawable(
+                resources, when (position) {
+                    0 -> R.drawable.ic_list_alt
+                    1 -> R.drawable.ic_pie_chart
+                    else -> R.drawable.ic_history
+                }, context?.theme
+            )
         }.attach()
 
     }
 
-    fun disableTabs() {
-        binding.pager.isUserInputEnabled = false // Disable sliding
-        binding.tabLayout.isVisible = false // Hide tabs
-        binding.tabContentDivider.isVisible = false // Hide divider bellow tabs
+    fun disableTabs() = binding.run {
+        pager.isUserInputEnabled = false // Disable sliding
+        tabLayout.isVisible = false // Hide tabs
+        tabContentDivider.isVisible = false // Hide divider bellow tabs
     }
 
 }

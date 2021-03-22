@@ -26,7 +26,7 @@
     <string name="description">Description</string>
     <string name="name">Name</string>
     <string name="photo">Photo</string>
-    <string name="enter_field">Please enter a value</string>
+    <string name="enter_field_name">Please enter a name</string>
     <string name="edit_pill">Edit pill</string>
     <string name="reminders">Reminders</string>
     <string name="limit_to_x_days">Limit to number of days</string>

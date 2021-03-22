@@ -9,12 +9,12 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.shawnlin.numberpicker.NumberPicker
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.klass.onClick
-import eu.vojtechh.takeyourpill.reminder.ReminderOptions
+import eu.vojtechh.takeyourpill.model.ReminderOptions
 
 class PillOptionsView @JvmOverloads constructor(
     context: Context,
@@ -243,7 +243,7 @@ class PillOptionsView @JvmOverloads constructor(
         var amount: Int = value
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_change_amount, this, false)
 
-        val dialog = MaterialAlertDialogBuilder(context).apply {
+        val dialog = AlertDialog.Builder(context).apply {
             setView(view)
             setTitle(title)
             setPositiveButton(android.R.string.ok) { dialog, _ ->

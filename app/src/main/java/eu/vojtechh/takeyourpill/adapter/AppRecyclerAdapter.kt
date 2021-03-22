@@ -15,7 +15,7 @@ import eu.vojtechh.takeyourpill.databinding.ItemHistoryPillBinding
 import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
 import eu.vojtechh.takeyourpill.databinding.LayoutViewEmptyBinding
 import eu.vojtechh.takeyourpill.model.*
-import eu.vojtechh.takeyourpill.model.BaseModel.ItemTypes
+import eu.vojtechh.takeyourpill.model.BaseModel.ItemType
 
 class AppRecyclerAdapter(
     private val headerText: String?,
@@ -36,36 +36,36 @@ class AppRecyclerAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            ItemTypes.PILL.ordinal -> if (holder is PillViewHolder) holder.bind(
+            ItemType.PILL.ordinal -> if (holder is PillViewHolder) holder.bind(
                 getItem(position) as Pill
             )
-            ItemTypes.HEADER.ordinal -> if (holder is HeaderViewHolder) holder.bind(
+            ItemType.HEADER.ordinal -> if (holder is HeaderViewHolder) holder.bind(
                 (getItem(position) as HeaderItem).title
             )
-            ItemTypes.HISTORY.ordinal -> if (holder is HistoryViewHolder) holder.bind(
+            ItemType.HISTORY.ordinal -> if (holder is HistoryViewHolder) holder.bind(
                 getItem(position) as HistoryPillItem
             )
-            ItemTypes.EMPTY.ordinal -> if (holder is EmptyViewHolder) holder.bind()
+            ItemType.EMPTY.ordinal -> if (holder is EmptyViewHolder) holder.bind()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            ItemTypes.PILL.ordinal -> PillViewHolder(
+            ItemType.PILL.ordinal -> PillViewHolder(
                 ItemPillBinding.inflate(layoutInflater, parent, false),
                 onItemClickListener,
                 onPillConfirmClickListener
             )
-            ItemTypes.HEADER.ordinal -> HeaderViewHolder(
+            ItemType.HEADER.ordinal -> HeaderViewHolder(
                 ItemHeaderBinding.inflate(layoutInflater, parent, false)
             )
-            ItemTypes.EMPTY.ordinal -> EmptyViewHolder(
+            ItemType.EMPTY.ordinal -> EmptyViewHolder(
                 LayoutViewEmptyBinding.inflate(layoutInflater, parent, false),
                 emptyDescription,
                 emptyDrawable
             )
-            ItemTypes.HISTORY.ordinal -> HistoryViewHolder(
+            ItemType.HISTORY.ordinal -> HistoryViewHolder(
                 ItemHistoryPillBinding.inflate(layoutInflater, parent, false),
                 onItemClickListener
             )

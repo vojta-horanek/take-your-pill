@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
@@ -96,19 +95,16 @@ class HistoryViewDialog :
     }
 
     private fun showDeleteDialog() =
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.confirm_delete_history))
-            .setMessage(getString(R.string.confirm_delete_history_description))
-            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+        Builders.getConfirmDialog(
+            requireContext(),
+            getString(R.string.confirm_delete_history),
+            getString(R.string.confirm_delete_history_description),
+            { dialog ->
                 model.deletePillHistory(args.pillId).observe(viewLifecycleOwner, {
                     dialog.dismiss()
                     this.dismiss()
                 })
-            }
-            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+            })
 
     private fun onItemOptionsClick(view: View, item: BaseModel, position: Int) {
         if (item is History) {

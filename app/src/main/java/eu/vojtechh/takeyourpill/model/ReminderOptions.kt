@@ -1,4 +1,4 @@
-package eu.vojtechh.takeyourpill.reminder
+package eu.vojtechh.takeyourpill.model
 
 import java.util.*
 

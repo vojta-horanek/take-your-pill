@@ -58,10 +58,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         if (pillId == -1L) pillId = args.pillId
 
         model.getPillById(pillId).observe(viewLifecycleOwner) { pill ->
-            pill?.let {
-                model.pill = it
-                initViews()
-            }
+            model.pill = pill
+            initViews()
         }
 
     }
@@ -212,17 +210,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun navigateToEdit() {
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
         findNavController().navigate(
-            DetailsFragmentDirections.actionDetailsFragmentToEditFragment(
-                model.pill.id
-            )
+            DetailsFragmentDirections.actionDetailsFragmentToEditFragment(model.pill.id)
         )
     }
 
-    private fun navigateToHistory() {
-        val directions =
+    private fun navigateToHistory() =
+        findNavController().navigate(
             DetailsFragmentDirections.actionDetailsToFragmentHistoryView(model.pill.id)
-        findNavController().navigate(directions)
-    }
+        )
 
 
     private fun navigateToDelete() {
@@ -243,6 +238,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             requireContext(),
             model.pill.id.toString()
         )
+
+        model.pill.reminders.forEach {
+            NotificationManager.cancelNotification(requireContext(), it.id)
+        }
+
         exitTransition = Slide().apply {
             addTarget(R.id.detailsView)
         }
@@ -250,7 +250,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         findNavController().navigateUp()
     }
 
-    private fun showMessage(msg: String) {
+    private fun showMessage(msg: String) =
         Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
-    }
 }

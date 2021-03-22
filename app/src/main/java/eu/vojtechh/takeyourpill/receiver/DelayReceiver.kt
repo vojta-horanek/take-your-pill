@@ -17,37 +17,33 @@ import timber.log.Timber
 class DelayReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        intent.let {
+        val reminderId = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1L)
+        val remindedTime = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDED_TIME, -1L)
+        val delayByMillis = intent.getLongExtra(Constants.INTENT_EXTRA_TIME_DELAY, -1L)
 
-            val reminderId = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDER_ID, -1L)
-            val remindedTime = intent.getLongExtra(Constants.INTENT_EXTRA_REMINDED_TIME, -1L)
-            val delayByMillis = intent.getLongExtra(Constants.INTENT_EXTRA_TIME_DELAY, -1L)
-
-            if (delayByMillis == -1L || remindedTime == -1L || reminderId == -1L) {
-                Timber.e("Invalid number of extras passed, exiting...")
-                return
-            }
-
-            if (Pref.alertStyle) {
-                FullscreenService.stopService(context)
-            } else {
-                // Cancel check reminder
-                ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
-            }
-
-            ReminderManager.createCheckAlarm(
-                context,
-                reminderId,
-                remindedTime,
-                0, // Reset check counter
-                delayByMillis
-            )
-            Timber.d(
-                "Check alarm has been set to start in %s minutes",
-                delayByMillis.getTimeString()
-            )
-            NotificationManager.cancelNotification(context, reminderId)
-
+        if (delayByMillis == -1L || remindedTime == -1L || reminderId == -1L) {
+            Timber.e("Invalid number of extras passed, exiting...")
+            return
         }
+
+        if (Pref.alertStyle) {
+            FullscreenService.stopService(context)
+        } else {
+            // Cancel check reminder
+            ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
+        }
+
+        ReminderManager.createCheckAlarm(
+            context,
+            reminderId,
+            remindedTime,
+            0, // Reset check counter
+            delayByMillis
+        )
+        Timber.d(
+            "Check alarm has been set to start in %s minutes",
+            delayByMillis.getTimeString()
+        )
+        NotificationManager.cancelNotification(context, reminderId)
     }
 }

@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
+import eu.vojtechh.takeyourpill.klass.goAsync
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.repository.PillRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -17,7 +19,7 @@ class BootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == "android.intent.action.BOOT_COMPLETED") {
-            runBlocking {
+            goAsync(GlobalScope, Dispatchers.IO) {
                 pillRepository.getAllPills().forEach {
                     ReminderManager.planNextPillReminder(context, it)
                 }

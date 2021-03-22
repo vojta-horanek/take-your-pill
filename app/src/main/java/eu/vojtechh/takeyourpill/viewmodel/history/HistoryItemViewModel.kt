@@ -22,11 +22,10 @@ class HistoryItemViewModel @Inject constructor(
     fun getPillById(pillId: Long) = pillRepository.getPillFlow(pillId).asLiveData()
     val namedHistory = historyRepository.getHistoryFlow().map { historyList ->
         val pills = pillRepository.getAllPillsIncludingDeleted()
-        return@map historyList.map { history ->
+        return@map historyList.onEach { history ->
             history.pillName = pills.find {
                 it.id == history.pillId
             }?.name ?: "N/A"
-            history
         }
     }.asLiveData()
 

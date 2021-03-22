@@ -23,14 +23,16 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listView.clipToPadding = false
-        listView.overScrollMode = OVER_SCROLL_NEVER
-        listView.setPadding(
-            0,
-            0,
-            0,
-            view.context.resources.getDimension(R.dimen.list_with_navigation_padding).toInt()
-        )
+        listView.apply {
+            clipToPadding = false
+            overScrollMode = OVER_SCROLL_NEVER
+            setPadding(
+                0,
+                0,
+                0,
+                view.context.resources.getDimension(R.dimen.list_with_navigation_padding).toInt()
+            )
+        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

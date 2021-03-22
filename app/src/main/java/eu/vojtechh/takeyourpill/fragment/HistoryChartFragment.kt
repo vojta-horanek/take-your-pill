@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
@@ -33,7 +34,7 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
         }
 
         model.run {
-            model.getStatsData(binding.pieChartAll, applicationContext)
+            model.getStatsData(applicationContext)
                 .observe(viewLifecycleOwner) { data ->
                     data?.let {
                         binding.cardCharts.isVisible = true
@@ -74,6 +75,7 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
                     chart.first.isVisible = false
                     chart.second.isVisible = false
                 }
+                data[index].setValueFormatter(PercentFormatter(chart.first))
                 chart.first.data = data[index]
                 chart.first.invalidate()
             }
