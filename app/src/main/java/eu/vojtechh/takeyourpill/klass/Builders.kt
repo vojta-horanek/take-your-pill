@@ -70,6 +70,9 @@ object Builders {
         }.create()
         val numberPickerAmount = view.findViewById<NumberPicker>(R.id.numberPickerAmount)
 
+        val params = numberPickerAmount.layoutParams as ViewGroup.MarginLayoutParams
+        params.topMargin = 0
+
         numberPickerAmount.minValue = 1
         numberPickerAmount.maxValue = NumberPickerHelper.getDisplayValues().size
         numberPickerAmount.displayedValues = NumberPickerHelper.getDisplayValues().toTypedArray()
