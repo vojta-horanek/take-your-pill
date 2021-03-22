@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
@@ -13,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
@@ -30,6 +32,7 @@ import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 import java.util.*
 
+
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
@@ -40,7 +43,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private val binding by viewBinding(FragmentDetailsBinding::bind)
     private val reminderAdapter = ReminderAdapter(showDelete = false, showRipple = false)
 
-    var launchedFromNotification = false
+    private var launchedFromNotification = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -111,8 +114,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
             with(model.pill.options) {
                 when {
-                    isIndefinite() -> {
-                    }
                     isFinite() -> {
                         intakeDaysActive.isVisible = true
                         if (isInactive()) {
@@ -151,9 +152,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 history?.let {
                     intakeLastReminded.isVisible = true
                     infoLastReminded.text = history.reminded.time.getDateTimeString()
+                    textIntakeOptions.isVisible = true
                 } ?: run {
+                    intakeLastReminded.isVisible = false
                     textIntakeOptions.isVisible = intakeDaysActive.isVisible
                 }
+                model.loadedData()
             }
 
             cardPhoto.setOnLongClickListener {
@@ -175,19 +179,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             }
         }
 
-
         model.setReminders(model.pill.reminders)
 
         model.reminders.observe(viewLifecycleOwner) {
             reminderAdapter.submitList(it) {
-                startPostponedEnterTransition()
+                model.loadedData()
             }
         }
 
         model.getLatestHistory(!launchedFromNotification)
             .observe(viewLifecycleOwner) { history ->
                 if (history != null) {
-                    binding.layoutConfirm.isVisible = true
+                    showConfirmLayout(true)
                     binding.textQuestionTake.text = binding.root.context.getString(
                         R.string.pill_taken_question,
                         history.amount,
@@ -197,29 +200,51 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                         model.confirmPill(requireContext(), history)
                             .observe(viewLifecycleOwner) {
                                 when (it) {
-                                    true -> binding.layoutConfirm.isVisible = false
+                                    true -> showConfirmLayout(false)
                                     false -> showMessage(getString(R.string.error))
                                 }
                             }
                     }
                 } else {
-                    binding.layoutConfirm.isVisible = false
+                    showConfirmLayout(false)
                 }
+                model.loadedData()
             }
+
+        model.loadedData.observe(viewLifecycleOwner) {
+            if (it == 3) { // We observe on 3 things, wait for all of them load :D
+                startPostponedEnterTransition()
+            }
+        }
+    }
+
+    private fun showConfirmLayout(visible: Boolean) {
+        if (binding.layoutConfirm.isVisible == visible) return
+
+        val duration = resources.getInteger(android.R.integer.config_shortAnimTime)
+
+        val transition = Slide(Gravity.TOP).apply {
+            setDuration(duration.toLong())
+            addTarget(binding.layoutConfirm)
+        }
+
+        TransitionManager.beginDelayedTransition(binding.detailsParent, transition)
+        binding.layoutConfirm.isVisible = visible
     }
 
     private fun navigateToEdit() {
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-        findNavController().navigate(
-            DetailsFragmentDirections.actionDetailsFragmentToEditFragment(model.pill.id)
+        findNavController().navigateSafe(
+            DetailsFragmentDirections.actionDetailsFragmentToEditFragment(model.pill.id),
+            R.id.details
         )
     }
 
     private fun navigateToHistory() =
-        findNavController().navigate(
-            DetailsFragmentDirections.actionDetailsToFragmentHistoryView(model.pill.id)
+        findNavController().navigateSafe(
+            DetailsFragmentDirections.actionDetailsToFragmentHistoryView(model.pill.id),
+            R.id.details
         )
-
 
     private fun navigateToDelete() {
         DeleteDialog().apply {

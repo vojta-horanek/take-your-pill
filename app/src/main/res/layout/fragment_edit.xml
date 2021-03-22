@@ -5,7 +5,7 @@
     android:id="@+id/layoutEdit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
+    android:background="?colorSurface"
     android:clipToPadding="false">
 
     <androidx.core.widget.NestedScrollView
@@ -20,7 +20,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorSurface"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical">

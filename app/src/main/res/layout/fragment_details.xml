@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
+    android:id="@+id/detailsParent"
     android:transitionName="@string/pill_details_transition_name">
 
     <ScrollView
         android:id="@+id/detailsView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
         android:clipToPadding="false"
         android:fillViewport="true"
         android:overScrollMode="never"
@@ -27,7 +26,6 @@
                 android:id="@+id/layoutConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
                 android:background="?colorSurface"
                 android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="parent"
@@ -185,6 +183,8 @@
                 android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
                 android:layout_marginTop="@dimen/screen_margin_vertical"
                 android:text="@string/intake"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:textAppearance="@style/AppTheme.Text.BodyTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

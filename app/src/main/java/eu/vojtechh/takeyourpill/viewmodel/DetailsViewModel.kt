@@ -14,6 +14,7 @@ import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
@@ -79,7 +80,15 @@ class DetailsViewModel @Inject constructor(
                         history.reminded.timeInMillis
                     )
                     context.sendBroadcast(confirmIntent)
+                    delay(200) // Wait for broadcast to finish
                     emit(true)
                 } ?: emit(false)
         }
+
+    private val loadedDataCount = MutableLiveData(0)
+    val loadedData = loadedDataCount
+
+    fun loadedData() {
+        loadedDataCount.value = loadedDataCount.value?.plus(1)
+    }
 }

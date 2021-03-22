@@ -17,6 +17,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +27,9 @@ import androidx.core.os.ConfigurationCompat
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigator
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -196,6 +200,25 @@ val ViewBinding.context: Context
 
 val Fragment.applicationContext: Context
     get() = requireActivity().applicationContext
+
+fun NavController.navigateSafe(
+    navDirections: NavDirections,
+    @IdRes currentDestinationId: Int,
+) {
+    if (currentDestination?.id == currentDestinationId) {
+        navigate(navDirections)
+    }
+}
+
+fun NavController.navigateSafe(
+    navDirections: NavDirections,
+    extras: Navigator.Extras,
+    @IdRes currentDestinationId: Int,
+) {
+    if (currentDestination?.id == currentDestinationId) {
+        navigate(navDirections, extras)
+    }
+}
 
 fun BroadcastReceiver.goAsync(
     coroutineScope: CoroutineScope = GlobalScope,

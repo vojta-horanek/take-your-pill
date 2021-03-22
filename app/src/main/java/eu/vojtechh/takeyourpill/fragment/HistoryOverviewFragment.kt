@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryOverviewBinding
+import eu.vojtechh.takeyourpill.klass.navigateSafe
 import eu.vojtechh.takeyourpill.klass.tryIgnore
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.HistoryOverallItem
@@ -50,10 +51,10 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview) {
     private fun onHistoryClicked(item: BaseModel) {
         if (item is Pill) {
             val directions = HistoryFragmentDirections.actionHistoryToFragmentHistoryView(item.id)
-            findNavController().navigate(directions)
+            findNavController().navigateSafe(directions, R.id.history)
         } else if (item is HistoryOverallItem) {
             val directions = HistoryFragmentDirections.actionHistoryToFragmentHistoryView(-1, true)
-            findNavController().navigate(directions)
+            findNavController().navigateSafe(directions, R.id.history)
         }
     }
 }

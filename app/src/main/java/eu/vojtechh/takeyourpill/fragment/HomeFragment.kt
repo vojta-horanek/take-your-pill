@@ -18,6 +18,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.AppRecyclerAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentHomeBinding
 import eu.vojtechh.takeyourpill.klass.applicationContext
+import eu.vojtechh.takeyourpill.klass.navigateSafe
 import eu.vojtechh.takeyourpill.klass.onClick
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.History
@@ -90,7 +91,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         exitTransition = MaterialElevationScale(false)
         reenterTransition = MaterialElevationScale(true)
         mainModel.wasInNewPill = true
-        findNavController().navigate(HomeFragmentDirections.actionHomescreenToEditFragment())
+        findNavController().navigateSafe(
+            HomeFragmentDirections.actionHomescreenToEditFragment(),
+            R.id.homescreen
+        )
     }
 
     private fun onPillClicked(view: View, item: BaseModel) {
@@ -101,7 +105,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             val extras = FragmentNavigatorExtras(view to pillDetailTransitionName)
             val directions = HomeFragmentDirections.actionHomescreenToDetails(item.id)
             mainModel.wasInDetails = true
-            findNavController().navigate(directions, extras)
+            findNavController().navigateSafe(directions, extras, R.id.homescreen)
         }
     }
 
