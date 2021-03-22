@@ -14,6 +14,7 @@ import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -34,6 +35,7 @@ class DetailsViewModel @Inject constructor(
 
     fun getLastReminded(pillId: Long) =
         historyRepository.getLatestWithPillIdFlow(pillId).asLiveData()
+
     lateinit var pill: Pill
 
     private val _reminders = MutableLiveData(listOf<Reminder>())
@@ -47,28 +49,17 @@ class DetailsViewModel @Inject constructor(
         _reminders.value = reminders
     }
 
-    fun getLatestHistory(validTimeOffset: Boolean) = liveData(Dispatchers.IO) {
-        val now = Calendar.getInstance()
-        val timeOffset = (30 /* minutes */ * 60 * 1000)
+    fun getLatestHistory(respectTimeOffset: Boolean) =
+        historyRepository.getLatestWithPillIdFlow(pill.id).map { history ->
+            val now = Calendar.getInstance()
+            val timeOffset = (30 /* minutes */ * 60 * 1000)
 
-        val latestHistory = historyRepository.getLatestWithPillId(pill.id)
-
-        latestHistory?.let { history ->
-            if (!history.hasBeenConfirmed) {
-                if (validTimeOffset) {
-                    if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
-                        emit(history)
-                    } else {
-                        emit(null)
-                    }
-                } else {
-                    emit(history)
-                }
-            } else {
-                emit(null)
-            }
-        } ?: emit(null)
-    }
+            if (history != null &&
+                !history.hasBeenConfirmed &&
+                (!respectTimeOffset ||
+                        now.timeInMillis - history.reminded.timeInMillis <= timeOffset)
+            ) history else null
+        }.asLiveData()
 
     fun confirmPill(context: Context, history: History) =
         liveData(Dispatchers.Default) {
