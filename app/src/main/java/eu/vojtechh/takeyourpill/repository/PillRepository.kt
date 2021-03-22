@@ -15,24 +15,16 @@ class PillRepository @Inject constructor(
     private val historyDao: HistoryDao
 ) {
     fun getAllPillsWithHistoryFlow(pillId: Long?) = pillDao.getEverythingFlow().map { pillList ->
-        pillId?.let { id ->
-            pillList.find { it.id == id }?.let { pill ->
-                getLatestHistoryForPill(pill)
-            }
-        } ?: run {
-            pillList.forEach { pill ->
-                getLatestHistoryForPill(pill)
-            }
+        pillList.onEach { pill ->
+            if (pillId == null || pillId == pill.id) addLatestHistoryToPill(pill)
         }
-        pillList
     }
 
-    private suspend fun getLatestHistoryForPill(pill: Pill) {
+    private suspend fun addLatestHistoryToPill(pill: Pill) {
         val now = Calendar.getInstance()
         val timeOffset = (30 /* minutes */ * 60 * 1000)
-        val latestHistory = historyDao.getLatestWithPillId(pill.id)
         pill.closeHistory = null
-        latestHistory?.let { history ->
+        historyDao.getLatestWithPillId(pill.id)?.let { history ->
             if (!history.hasBeenConfirmed) {
                 if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
                     pill.closeHistory = history
@@ -55,20 +47,14 @@ class PillRepository @Inject constructor(
     }
 
     suspend fun insertPill(pill: Pill): Long {
-        val id = pillDao.insertPillEntity(pill.pillEntity)
-        pill.reminders.forEach {
-            it.pillId = id
-        }
-        reminderDao.insert(pill.reminders)
-        return id
+        val pillId = pillDao.insertPillEntity(pill.pillEntity)
+        reminderDao.insert(pill.reminders.onEach { it.pillId = pillId })
+        return pillId
     }
 
     suspend fun insertPillReturn(pill: Pill): Pill {
         val id = pillDao.insertPillEntity(pill.pillEntity)
-        pill.reminders.forEach {
-            it.pillId = id
-        }
-        reminderDao.insert(pill.reminders)
+        reminderDao.insert(pill.reminders.onEach { it.pillId = id })
         return pillDao.getWitId(id)
     }
 
