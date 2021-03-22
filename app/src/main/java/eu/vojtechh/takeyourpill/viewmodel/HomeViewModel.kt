@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun confirmPill(applicationContext: Context, history: History) =
-        liveData(Dispatchers.IO) {
+        liveData(Dispatchers.Default) {
             val reminderTime = Calendar.getInstance().apply {
                 clear()
                 hour = history.reminded.hour

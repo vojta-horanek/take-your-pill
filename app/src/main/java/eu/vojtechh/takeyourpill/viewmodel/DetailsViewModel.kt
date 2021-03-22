@@ -47,7 +47,7 @@ class DetailsViewModel @Inject constructor(
         _reminders.value = reminders
     }
 
-    fun getLatestHistory(validTimeOffset: Boolean) = liveData {
+    fun getLatestHistory(validTimeOffset: Boolean) = liveData(Dispatchers.IO) {
         val now = Calendar.getInstance()
         val timeOffset = (30 /* minutes */ * 60 * 1000)
 
@@ -71,7 +71,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun confirmPill(context: Context, history: History) =
-        liveData {
+        liveData(Dispatchers.Default) {
             val reminderTime = Calendar.getInstance().apply {
                 clear()
                 hour = history.reminded.hour

@@ -18,7 +18,7 @@ class MainViewModel @Inject constructor(
     var confirmedPillId = -1L // Not the most elegant way but hmm :D
 
     // Plan all pills when opened, maybe wasteful?
-    fun planReminders(applicationContext: Context) = viewModelScope.launch(Dispatchers.IO) {
+    fun planReminders(applicationContext: Context) = viewModelScope.launch(Dispatchers.Main) {
         pillRepository.getAllPills().forEach {
             ReminderManager.planNextPillReminder(applicationContext, it)
         }

@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
@@ -66,7 +67,7 @@ class HistoryItemViewModel @Inject constructor(
      * @return LiveData Boolean - true means pill deleted
      *                            false means only history deleted
      */
-    fun deletePillHistory(pillId: Long) = liveData {
+    fun deletePillHistory(pillId: Long) = liveData(Dispatchers.IO) {
         val pill = pillRepository.getPill(pillId)
         if (pill.deleted) {
             pillRepository.deletePillAndReminder(pill)
