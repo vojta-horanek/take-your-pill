@@ -33,17 +33,13 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
 
         binding.run {
             listOf(pieChartAll, pieChartMissed, pieChartAllConfirmed).forEach { setupPieChart(it) }
-            progressCharts.setVisibilityAfterHide(View.INVISIBLE)
         }
 
         model.run {
             model.getStatsData(applicationContext)
                 .observe(viewLifecycleOwner) { data ->
                     data?.let {
-                        binding.cardCharts.isVisible = true
                         processData(it)
-                        binding.layoutChartContent.isVisible = true
-                        binding.progressCharts.hide()
                     }
                 }
         }
@@ -60,6 +56,7 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
             dragDecelerationFrictionCoef = 0.8f
             animateY(1400, Easing.EaseInOutQuad)
             holeRadius = 25f
+            isDrawHoleEnabled = false
             transparentCircleRadius = 30f
             setDrawEntryLabels(true)
         }
@@ -74,13 +71,16 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
     private fun processData(data: List<PieData>) {
         binding.run {
             listOf(
-                Pair(pieChartAll, titleGraphAll),
-                Pair(pieChartMissed, titleGraphMissed),
-                Pair(pieChartAllConfirmed, titleGraphAllMissed)
+                Pair(pieChartAll, cardChartAll),
+                Pair(pieChartMissed, cardChartMissed),
+                Pair(pieChartAllConfirmed, cardChartAllMissed)
             ).forEachIndexed { index, chart ->
                 if (data[index].entryCount == 0) {
                     chart.first.isVisible = false
                     chart.second.isVisible = false
+                } else {
+                    chart.first.isVisible = true
+                    chart.second.isVisible = true
                 }
                 data[index].setValueFormatter(PercentFormatter(chart.first))
                 chart.first.data = data[index]
