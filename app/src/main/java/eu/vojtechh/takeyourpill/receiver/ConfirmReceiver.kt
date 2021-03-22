@@ -10,6 +10,7 @@ import eu.vojtechh.takeyourpill.klass.Constants
 import eu.vojtechh.takeyourpill.klass.Pref
 import eu.vojtechh.takeyourpill.klass.goAsync
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
+import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.service.FullscreenService
@@ -54,7 +55,10 @@ class ConfirmReceiver : BroadcastReceiver() {
             withContext(Dispatchers.Main) {
                 if (success) {
                     // Cancel check alarm
-                    ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
+                    val again =
+                        ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0)
+                    again.cancel()
+                    ReminderManager.getAlarmManager(context).cancel(again)
                     // Hide notification
                     NotificationManager.cancelNotification(context, reminderId)
                     Toast.makeText(

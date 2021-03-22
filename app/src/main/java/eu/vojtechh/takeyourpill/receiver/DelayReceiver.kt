@@ -30,7 +30,9 @@ class DelayReceiver : BroadcastReceiver() {
             FullscreenService.stopService(context)
         } else {
             // Cancel check reminder
-            ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0).cancel()
+            val again = ReminderUtil.getAlarmAgainIntent(context, reminderId, remindedTime, 0)
+            again.cancel()
+            ReminderManager.getAlarmManager(context).cancel(again)
         }
 
         ReminderManager.createCheckAlarm(

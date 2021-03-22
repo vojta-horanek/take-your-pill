@@ -109,6 +109,6 @@ object ReminderManager {
             reminder.getTodayMillis(),
         )
 
-    private fun getAlarmManager(context: Context) =
+    fun getAlarmManager(context: Context) =
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 }

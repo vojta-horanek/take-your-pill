@@ -24,6 +24,8 @@ import eu.vojtechh.takeyourpill.databinding.FragmentDetailsBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.DeleteDialog
 import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
+import eu.vojtechh.takeyourpill.reminder.ReminderManager
+import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
 import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 import java.util.*
@@ -240,6 +242,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         model.pill.reminders.forEach {
             NotificationManager.cancelNotification(requireContext(), it.id)
+            val alarmAgain = ReminderUtil.getAlarmAgainIntent(requireContext(), it.id, 0, 0)
+            val alarm = ReminderUtil.getAlarmIntent(requireContext(), it.id)
+            alarmAgain.cancel()
+            alarm.cancel()
+            ReminderManager.getAlarmManager(requireContext()).cancel(alarm)
+            ReminderManager.getAlarmManager(requireContext()).cancel(alarmAgain)
         }
 
         exitTransition = Slide().apply {
