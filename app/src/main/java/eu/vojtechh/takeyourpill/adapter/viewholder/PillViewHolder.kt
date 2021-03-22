@@ -40,7 +40,7 @@ class PillViewHolder(
 
         pillDescription.apply {
             text = getFormattedDescription(pill)
-            isVisible = text.isBlank()
+            isVisible = !text.isBlank()
         }
 
         setupReminders(pill.reminders)
