@@ -1,6 +1,5 @@
 package eu.vojtechh.takeyourpill.klass
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources.Theme
@@ -39,7 +38,6 @@ import java.util.*
  * Retrieve a color from the current [android.content.res.Resources.Theme].
  */
 @ColorInt
-@SuppressLint("Recycle")
 fun Context.themeColor(
     @AttrRes themeAttrId: Int
 ): Int {
@@ -50,38 +48,15 @@ fun Context.themeColor(
     }
 }
 
-fun EditText.getNumber() = this.text.toString().toInt()
-fun EditText.getString() = this.text.toString()
-
-fun TextInputLayout.showError(message: String?) {
-    isErrorEnabled = message != null
-    error = message
-}
-
-fun TextView.setDrawableTint(color: Int) {
-    TextViewCompat.setCompoundDrawableTintList(this, ColorStateList.valueOf(color))
-}
-
-fun NestedScrollView.scrollToBottom() {
-    smoothScrollBy(0, this.getChildAt(0).height)
-}
-
 fun Long.getDateTimeString(): String {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = this
     return SimpleDateFormat.getDateTimeInstance().format(calendar.time)
 }
 
-fun Calendar.getDateTimeString(): String {
-    return SimpleDateFormat.getDateTimeInstance().format(this.time)
-}
 
 fun Long.getTimeString(): String {
     return (this / 60L / 1000L).toString()
-}
-
-fun <T, VH : RecyclerView.ViewHolder> ListAdapter<T, VH>.getItemOrNull(position: Int): T? {
-    return this.currentList.elementAtOrNull(position)
 }
 
 var Calendar.hour: Int
@@ -96,16 +71,37 @@ var Calendar.minute: Int
         this.set(Calendar.MINUTE, value)
     }
 
-fun Calendar.addDay(amount: Int): Calendar {
-    this.add(Calendar.DAY_OF_YEAR, amount)
-    return this
-}
-
 var Calendar.DayOfYear: Int
     get() = this.get(Calendar.DAY_OF_YEAR)
     set(value) {
         this.set(Calendar.DAY_OF_YEAR, value)
     }
+
+fun Calendar.addDay(amount: Int): Calendar {
+    this.add(Calendar.DAY_OF_YEAR, amount)
+    return this
+}
+
+fun Calendar.getDateTimeString(): String {
+    return SimpleDateFormat.getDateTimeInstance().format(this.time)
+}
+
+fun Date.getTimeString(context: Context): String {
+    val pattern = if (DateFormat.is24HourFormat(context)) "HH:mm" else "hh:mm a"
+    val primaryLocale = ConfigurationCompat.getLocales(context.resources.configuration).get(0)
+    val dateFormat = SimpleDateFormat(pattern, primaryLocale)
+    return dateFormat.format(this)
+}
+
+fun Date.getDateTimeString(): String {
+    val format =
+        java.text.DateFormat.getDateTimeInstance(
+            java.text.DateFormat.SHORT,
+            java.text.DateFormat.SHORT,
+            Locale.getDefault()
+        )
+    return format.format(this)
+}
 
 fun PopupMenu.forcePopUpMenuToShowIcons() {
     try {
@@ -120,15 +116,6 @@ fun PopupMenu.forcePopUpMenuToShowIcons() {
     }
 }
 
-fun RecyclerView.disableAnimations() {
-    (itemAnimator as SimpleItemAnimator).apply {
-        changeDuration = 0
-        removeDuration = 0
-        addDuration = 0
-        moveDuration = 0
-    }
-}
-
 fun Context.getAttrColor(res: Int): Int {
     val typedValue = TypedValue()
     val theme: Theme = this.theme
@@ -137,6 +124,10 @@ fun Context.getAttrColor(res: Int): Int {
 }
 
 fun Any?.isNull() = this == null
+
+fun <T, VH : RecyclerView.ViewHolder> ListAdapter<T, VH>.getItemOrNull(position: Int): T? {
+    return this.currentList.elementAtOrNull(position)
+}
 
 fun View.setVerticalBias(bias: Float) {
     val params = layoutParams
@@ -162,8 +153,14 @@ fun View.setBackgroundColorShaped(color: Int) {
 
 fun View.onClick(click: (View) -> Unit) = setOnClickListener { click(it) }
 
-val ViewBinding.context: Context
-    get() = root.context
+fun RecyclerView.disableAnimations() {
+    (itemAnimator as SimpleItemAnimator).apply {
+        changeDuration = 0
+        removeDuration = 0
+        addDuration = 0
+        moveDuration = 0
+    }
+}
 
 fun TextView.setDateText(date: Date, pattern: String = "dd. MM.") {
     val primaryLocale = ConfigurationCompat.getLocales(context.resources.configuration).get(0)
@@ -175,24 +172,31 @@ fun TextView.setTimeText(date: Date) {
     text = date.getTimeString(context)
 }
 
-fun Date.getTimeString(context: Context): String {
-    val pattern = if (DateFormat.is24HourFormat(context)) "HH:mm" else "hh:mm a"
-    val primaryLocale = ConfigurationCompat.getLocales(context.resources.configuration).get(0)
-    val dateFormat = SimpleDateFormat(pattern, primaryLocale)
-    return dateFormat.format(this)
+fun EditText.getNumber() = this.text.toString().toInt()
+fun EditText.getString() = this.text.toString()
+
+fun TextInputLayout.showError(message: String?) {
+    isErrorEnabled = message != null
+    error = message
 }
 
-fun Date.getDateTimeString(): String {
-    val format =
-        java.text.DateFormat.getDateTimeInstance(
-            java.text.DateFormat.SHORT,
-            java.text.DateFormat.SHORT,
-            Locale.getDefault()
-        )
-    return format.format(this)
+fun TextView.setDrawableTint(color: Int) {
+    TextViewCompat.setCompoundDrawableTintList(this, ColorStateList.valueOf(color))
 }
 
-// Inline functions
+fun NestedScrollView.scrollToBottom() {
+    smoothScrollBy(0, this.getChildAt(0).height)
+}
+
+val ViewBinding.context: Context
+    get() = root.context
+
+
+val Fragment.applicationContext: Context
+    get() = requireActivity().applicationContext
+
+// ---- INLINES ----
+
 inline fun tryIgnore(action: () -> Unit) {
     try {
         action()
@@ -206,6 +210,3 @@ inline fun <T : ViewBinding> AppCompatActivity.viewBinding(
     lazy(LazyThreadSafetyMode.NONE) {
         bindingInflater.invoke(layoutInflater)
     }
-
-val Fragment.applicationContext: Context
-    get() = requireActivity().applicationContext
