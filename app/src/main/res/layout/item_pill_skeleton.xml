@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardPill"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/screen_margin_horizontal_little"
+    android:layout_marginBottom="14dp"
+    android:animateLayoutChanges="true"
+    android:clickable="true"
+    android:clipChildren="true"
+    android:clipToPadding="false"
+    android:focusable="true"
+    app:cardCornerRadius="@dimen/standard_corner_radius"
+    app:cardElevation="@dimen/standard_card_elevation"
+    app:cardMaxElevation="@dimen/max_card_elevation"
+    app:cardPreventCornerOverlap="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/pillHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="76dp"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/imagePillColor"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/shape_oval"
+                android:foreground="@drawable/ic_pill"
+                android:foregroundGravity="center"
+                android:foregroundTint="?colorSurface"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textPillName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/AppTheme.Text.Header6"
+                app:layout_constraintBottom_toTopOf="@id/pillDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagePillColor"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Xyzal" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/pillDescription"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingTop="0dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagePillColor"
+                app:layout_constraintTop_toBottomOf="@id/textPillName"
+                tools:text="For certain issues" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/titleReminders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="bottom"
+            android:layout_marginTop="8dp"
+            android:text="@string/reminders"
+            android:textAppearance="@style/AppTheme.Text.BodyTitleSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pillHeader" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleReminders">
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="2 v 5:00"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="2 v 5:00"
+                tools:ignore="HardcodedText" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
