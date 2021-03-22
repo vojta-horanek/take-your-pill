@@ -109,11 +109,12 @@ data class Pill(
         if (newItem is Pill) {
             this.name == newItem.name &&
                     this.description == newItem.description &&
-                    this.photo == newItem.photo &&
+                    this.photo?.sameAs(newItem.photo) ?: true &&
                     this.color.resource == newItem.color.resource &&
                     this.deleted == newItem.deleted &&
                     this.options == newItem.options &&
-                    this.reminders == newItem.reminders &&
+                    this.reminders.containsAll(newItem.reminders) &&
+                    newItem.reminders.containsAll(this.reminders) &&
                     this.closeHistory == newItem.closeHistory
         } else false
 

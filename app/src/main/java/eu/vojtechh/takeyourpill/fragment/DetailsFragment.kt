@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import androidx.activity.addCallback
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -29,7 +29,6 @@ import eu.vojtechh.takeyourpill.reminder.NotificationManager
 import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.reminder.ReminderUtil
 import eu.vojtechh.takeyourpill.viewmodel.DetailsViewModel
-import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 import java.util.*
 
 
@@ -37,7 +36,6 @@ import java.util.*
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private val model: DetailsViewModel by viewModels()
-    private val mainModel: MainViewModel by activityViewModels()
 
     private val args: DetailsFragmentArgs by navArgs()
     private val binding by viewBinding(FragmentDetailsBinding::bind)
@@ -65,6 +63,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         model.getPillById(pillId).observe(viewLifecycleOwner) { pill ->
             model.pill = pill
             initViews()
+            model.loadedData()
         }
 
     }
@@ -212,8 +211,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             }
 
         model.loadedData.observe(viewLifecycleOwner) {
-            if (it == 3) { // We observe on 3 things, wait for all of them load :D
-                startPostponedEnterTransition()
+            if (it == 4) { // We observe on 3 things + init layout, wait for all of them load :D
+                view?.doOnPreDraw { startPostponedEnterTransition() }
             }
         }
     }

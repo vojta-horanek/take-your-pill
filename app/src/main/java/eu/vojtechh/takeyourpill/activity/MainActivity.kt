@@ -42,16 +42,23 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.bottomNavigation.isVisible = when (destination.id) {
-                R.id.homescreen, R.id.history, R.id.settings -> true
-                else -> false
-            }
+            showBottomBar(
+                when (destination.id) {
+                    R.id.homescreen, R.id.history, R.id.settings -> true
+                    else -> false
+                }
+            )
         }
 
         binding.bottomNavigation.setOnNavigationItemReselectedListener { }
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
 
         model.planReminders(applicationContext)
+    }
+
+    private fun showBottomBar(visible: Boolean) {
+        if (binding.bottomNavigation.isVisible == visible) return
+        binding.bottomNavigation.isVisible = visible
     }
 
     override fun onSupportNavigateUp(): Boolean {
