@@ -49,7 +49,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     fun disableTabs() = binding.run {
         pager.isUserInputEnabled = false // Disable sliding
         tabLayout.isVisible = false // Hide tabs
-        tabContentDivider.isVisible = false // Hide divider bellow tabs
+        historyHeaderLayout.elevation = 0F // Hide elevation
     }
 
 }
