@@ -5,11 +5,9 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.databinding.ItemHistoryBinding
-import eu.vojtechh.takeyourpill.klass.onClick
-import eu.vojtechh.takeyourpill.klass.setDateText
-import eu.vojtechh.takeyourpill.klass.setTimeText
-import eu.vojtechh.takeyourpill.klass.setVerticalBias
+import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.History
+import timber.log.Timber
 
 class HistoryItemViewHolder(
     private val binding: ItemHistoryBinding,
@@ -20,18 +18,17 @@ class HistoryItemViewHolder(
         showNames: Boolean
     ) = binding.run {
 
+        Timber.d("Binding %s", history.confirmed?.getDateTimeString())
+
         textHistoryAmount.text = history.amount
         buttonShowMore.onClick {
             optionsClickListener(it, history, position)
         }
 
         textHistoryReminded.setTimeText(history.reminded.time)
-        history.confirmed?.let {
-            textHistoryConfirmed.setTimeText(it.time)
-        } ?: run {
-            textHistoryConfirmed.setTimeText(history.reminded.time)
-            textHistoryConfirmed.isInvisible = true
-        }
+
+        textHistoryConfirmed.isInvisible = !history.hasBeenConfirmed
+        textHistoryConfirmed.setTimeText(history.confirmed?.time ?: history.reminded.time)
 
         textDate.setDateText(history.reminded.time)
 
