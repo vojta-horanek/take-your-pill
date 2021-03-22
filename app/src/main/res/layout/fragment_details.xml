@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/detailsParent"
+    android:animateLayoutChanges="true"
     android:transitionName="@string/pill_details_transition_name">
 
     <ScrollView
