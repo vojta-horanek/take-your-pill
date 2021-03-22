@@ -11,6 +11,7 @@ abstract class BaseModel {
         EMPTY,
         HISTORY,
         HISTORY_ITEM,
+        CHART,
     }
 
     @Ignore

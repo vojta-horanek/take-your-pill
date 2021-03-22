@@ -6,14 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import eu.vojtechh.takeyourpill.adapter.viewholder.EmptyViewHolder
-import eu.vojtechh.takeyourpill.adapter.viewholder.HeaderViewHolder
-import eu.vojtechh.takeyourpill.adapter.viewholder.HistoryViewHolder
-import eu.vojtechh.takeyourpill.adapter.viewholder.PillViewHolder
-import eu.vojtechh.takeyourpill.databinding.ItemHeaderBinding
-import eu.vojtechh.takeyourpill.databinding.ItemHistoryPillBinding
-import eu.vojtechh.takeyourpill.databinding.ItemPillBinding
-import eu.vojtechh.takeyourpill.databinding.LayoutViewEmptyBinding
+import eu.vojtechh.takeyourpill.adapter.viewholder.*
+import eu.vojtechh.takeyourpill.databinding.*
 import eu.vojtechh.takeyourpill.model.*
 import eu.vojtechh.takeyourpill.model.BaseModel.ItemType
 
@@ -45,6 +39,9 @@ class AppRecyclerAdapter(
             ItemType.HISTORY.ordinal -> if (holder is HistoryViewHolder) holder.bind(
                 getItem(position) as HistoryPillItem
             )
+            ItemType.CHART.ordinal -> if (holder is ChartViewHolder) holder.bind(
+                getItem(position) as ChartItem
+            )
             ItemType.EMPTY.ordinal -> if (holder is EmptyViewHolder) holder.bind()
         }
     }
@@ -68,6 +65,9 @@ class AppRecyclerAdapter(
             ItemType.HISTORY.ordinal -> HistoryViewHolder(
                 ItemHistoryPillBinding.inflate(layoutInflater, parent, false),
                 onItemClickListener
+            )
+            ItemType.CHART.ordinal -> ChartViewHolder(
+                ItemChartBinding.inflate(layoutInflater, parent, false),
             )
             else -> throw RuntimeException("Unknown ViewHolder")
         }
