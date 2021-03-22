@@ -85,6 +85,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             model.refreshPills()
             mainModel.wasInDetails = false
         }
+
+        mainModel.shouldScrollUp.observe(viewLifecycleOwner) {
+            binding.recyclerHome.smoothScrollToPosition(0)
+        }
+
     }
 
     private fun openNewPill() {

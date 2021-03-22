@@ -1,6 +1,8 @@
 package eu.vojtechh.takeyourpill.viewmodel
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +25,14 @@ class MainViewModel @Inject constructor(
         pillRepository.getAllPills().forEach {
             ReminderManager.planNextPillReminder(applicationContext, it)
         }
+    }
+
+    private val _shouldScrollUp = MutableLiveData(Unit)
+    val shouldScrollUp: LiveData<Unit>
+        get() = _shouldScrollUp
+
+    fun scrollUp() {
+        _shouldScrollUp.value = Unit
     }
 
 }

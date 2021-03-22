@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -16,12 +17,14 @@ import eu.vojtechh.takeyourpill.klass.tryIgnore
 import eu.vojtechh.takeyourpill.model.BaseModel
 import eu.vojtechh.takeyourpill.model.HistoryOverallItem
 import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 import eu.vojtechh.takeyourpill.viewmodel.history.HistoryOverviewViewModel
 
 @AndroidEntryPoint
 class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview) {
 
     private val model: HistoryOverviewViewModel by viewModels()
+    private val mainModel: MainViewModel by activityViewModels()
 
     private val binding by viewBinding(FragmentHistoryOverviewBinding::bind)
 
@@ -46,6 +49,11 @@ class HistoryOverviewFragment : Fragment(R.layout.fragment_history_overview) {
                     appAdapter.submitList(listOf()) // Submit an empty list to show the adapter
                 }
         }
+
+        mainModel.shouldScrollUp.observe(viewLifecycleOwner) {
+            if (isVisible) binding.recyclerHistory.smoothScrollToPosition(0)
+        }
+
     }
 
     private fun onHistoryClicked(item: BaseModel) {

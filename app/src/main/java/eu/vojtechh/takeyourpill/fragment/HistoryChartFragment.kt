@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -15,6 +16,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.FragmentHistoryChartBinding
 import eu.vojtechh.takeyourpill.klass.applicationContext
 import eu.vojtechh.takeyourpill.klass.getAttrColor
+import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 import eu.vojtechh.takeyourpill.viewmodel.history.HistoryChartViewModel
 
 
@@ -22,6 +24,7 @@ import eu.vojtechh.takeyourpill.viewmodel.history.HistoryChartViewModel
 class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
 
     private val model: HistoryChartViewModel by viewModels()
+    private val mainModel: MainViewModel by activityViewModels()
 
     private val binding by viewBinding(FragmentHistoryChartBinding::bind)
 
@@ -43,6 +46,10 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
                         binding.progressCharts.hide()
                     }
                 }
+        }
+
+        mainModel.shouldScrollUp.observe(viewLifecycleOwner) {
+            if (isVisible) binding.chartsScrollView.smoothScrollTo(0, 0)
         }
     }
 

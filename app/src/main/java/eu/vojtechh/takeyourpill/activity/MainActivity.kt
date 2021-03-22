@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        binding.bottomNavigation.setOnNavigationItemReselectedListener { }
+        binding.bottomNavigation.setOnNavigationItemReselectedListener { model.scrollUp() }
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
 
         model.planReminders(applicationContext)
