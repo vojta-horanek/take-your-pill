@@ -46,6 +46,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         postponeEnterTransition()
 
+        if (mainModel.wasInDetails || mainModel.wasInNewPill) {
+            exitTransition = MaterialFadeThrough()
+            if (mainModel.wasInNewPill) mainModel.wasInNewPill = false
+        }
+
         appAdapter = AppRecyclerAdapter(
             getString(R.string.pills), getString(R.string.try_to_add_a_pill_first),
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_empty_view)
@@ -78,13 +83,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         if (mainModel.wasInDetails) {
             model.refreshPills()
             mainModel.wasInDetails = false
-            exitTransition = MaterialFadeThrough()
         }
     }
 
     private fun openNewPill() {
         exitTransition = MaterialElevationScale(false)
         reenterTransition = MaterialElevationScale(true)
+        mainModel.wasInNewPill = true
         findNavController().navigate(HomeFragmentDirections.actionHomescreenToEditFragment())
     }
 

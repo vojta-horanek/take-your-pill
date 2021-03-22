@@ -16,6 +16,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     var wasInDetails = false
+    var wasInNewPill = false
 
     // Plan all pills when opened, maybe wasteful?
     fun planReminders(applicationContext: Context) = viewModelScope.launch(Dispatchers.Main) {
