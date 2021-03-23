@@ -1,6 +1,7 @@
 package eu.vojtechh.takeyourpill.adapter.viewholder
 
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import eu.vojtechh.takeyourpill.databinding.ItemReminderBinding
 import eu.vojtechh.takeyourpill.klass.context
@@ -15,18 +16,11 @@ class ReminderViewHolder(
 
     fun bind(reminder: Reminder, showDelete: Boolean, showRipple: Boolean) = binding.run {
         textReminderTime.text = reminder.formattedString(context)
-        if (!showDelete) {
-            buttonDeleteReminder.visibility = View.GONE
-        }
-        if (!showRipple) {
-            reminderContainer.background = null
-        }
+
+        buttonDeleteReminder.isVisible = showDelete
+        if (!showRipple) reminderContainer.background = null
+
         reminderContainer.onClick { view -> clickListener(view, reminder) }
-        buttonDeleteReminder.onClick { view ->
-            deleteListener(
-                view,
-                reminder
-            )
-        }
+        buttonDeleteReminder.onClick { view -> deleteListener(view, reminder) }
     }
 }
