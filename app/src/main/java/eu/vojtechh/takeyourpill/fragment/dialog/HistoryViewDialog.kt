@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.faltenreich.skeletonlayout.Skeleton
+import com.faltenreich.skeletonlayout.applySkeleton
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
@@ -27,6 +29,8 @@ class HistoryViewDialog :
 
     private val args: HistoryViewDialogArgs by navArgs()
     private val model: HistoryItemViewModel by viewModels()
+
+    private lateinit var skeleton: Skeleton
 
     private var itemRemovedPosition = 0
 
@@ -63,6 +67,11 @@ class HistoryViewDialog :
         adapter.setItemOptionsClickListener(::onItemOptionsClick)
         binding.recyclerHistoryView.adapter = adapter
 
+        skeleton = binding.recyclerHistoryView.applySkeleton(R.layout.item_history_skeleton)
+        skeleton.showShimmer = true
+        skeleton.maskCornerRadius = resources.getDimension(R.dimen.standard_corner_radius)
+        skeleton.showSkeleton()
+
         if (args.isOverall) {
             model.namedHistory.observe(viewLifecycleOwner) { history ->
                 onListObserve(adapter, history, false)
@@ -85,6 +94,7 @@ class HistoryViewDialog :
         history?.let {
             binding.buttonDeleteHistory.isVisible = if (deleteVisibility) it.isNotEmpty() else false
             adapter.submitList(it) {
+                skeleton.showOriginal()
                 // Handle item removal correctly (don't remove the date)
                 if (itemRemovedPosition != -1) {
                     adapter.notifyItemRangeChanged(itemRemovedPosition - 1, 3)
