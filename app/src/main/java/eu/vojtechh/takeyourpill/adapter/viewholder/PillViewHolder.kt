@@ -23,10 +23,8 @@ class PillViewHolder(
     fun bind(pill: Pill) = binding.run {
 
         cardPill.apply {
-            cardPill.transitionName = "${pill.id}"
-            cardPill.onClick {
-                onPillClick(it, pill)
-            }
+            transitionName = "${pill.id}"
+            onClick { onPillClick(it, pill) }
         }
 
         imagePillColor.setBackgroundColorShaped(pill.colorResource(context))
@@ -48,21 +46,23 @@ class PillViewHolder(
         setupConfirm(pill.closeHistory, context)
     }
 
-    private fun setupReminders(reminders: List<Reminder>) {
-        binding.chipsLayout.removeAllViews()
-        reminders.sortedBy { rem -> rem.time.time }.forEach { reminder ->
-            val chip = Chip(binding.context).apply {
-                text = reminder.getAmountTimeString(binding.context)
-                isFocusable = false
-                isClickable = false
-                stateListAnimator = null
-                rippleColor = null
-                setChipStrokeColorResource(R.color.stroke_color)
-                setChipStrokeWidthResource(R.dimen.stroke_width)
-                chipBackgroundColor = null
-            }
-            binding.chipsLayout.addView(chip)
+    private fun setupReminders(reminders: List<Reminder>) = binding.chipsLayout.run {
+        removeAllViews()
+        reminders.sortedBy { rem -> rem.time.timeInMillis }.forEach { reminder ->
+            val chip = getChip(reminder.getAmountTimeString(binding.context))
+            addView(chip)
         }
+    }
+
+    private fun getChip(chipText: String) = Chip(binding.context).apply {
+        text = chipText
+        isFocusable = false
+        isClickable = false
+        stateListAnimator = null
+        rippleColor = null
+        chipBackgroundColor = null
+        setChipStrokeColorResource(R.color.stroke_color)
+        setChipStrokeWidthResource(R.dimen.stroke_width)
     }
 
     private fun setupIntake(pill: Pill, context: Context) {
@@ -79,11 +79,10 @@ class PillViewHolder(
         with(options) {
             when {
                 isIndefinite() -> {
-                    binding.textIntakeTitle.isVisible = false
-                    binding.textIntakeOptions.isVisible = false
-                    binding.divider.isVisible = false
+                    showIntakeOptions(false)
                 }
                 isFinite() -> {
+                    showIntakeOptions(true)
                     binding.textIntakeTitle.text =
                         context.getString(R.string.intake_options_x_days)
                     if (isActive()) {
@@ -97,6 +96,7 @@ class PillViewHolder(
                     }
                 }
                 isCycle() -> {
+                    showIntakeOptions(true)
                     binding.textIntakeTitle.text = context.getString(R.string.cycle)
                     binding.textIntakeOptions.text =
                         context.getString(
@@ -110,6 +110,12 @@ class PillViewHolder(
         }
     }
 
+    private fun showIntakeOptions(visible: Boolean) = binding.run {
+        textIntakeTitle.isVisible = visible
+        textIntakeOptions.isVisible = visible
+        divider.isVisible = visible
+    }
+
     private fun setupConfirm(latestHistory: History?, context: Context) = binding.run {
         pillConfirm.isVisible = false
         latestHistory?.let { history ->
@@ -119,10 +125,7 @@ class PillViewHolder(
                 history.amount,
                 history.reminded.time.getTimeString(context)
             )
-
-            buttonTaken.onClick {
-                onConfirmClick(history)
-            }
+            buttonTaken.onClick { onConfirmClick(history) }
         }
     }
 
