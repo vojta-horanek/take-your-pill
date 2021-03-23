@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialElevationScale
@@ -39,7 +38,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private lateinit var appAdapter: AppRecyclerAdapter
 
-    private lateinit var skeleton: Skeleton
+    private var isFirstScrollUp = true
+    private var shouldShowSkeleton = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +50,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        isFirstScrollUp = true
         postponeEnterTransition()
 
         if (mainModel.wasInDetails || mainModel.wasInNewPill) {
@@ -66,7 +67,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         appAdapter.setOnPillConfirmClickListener(::onConfirmClicked)
 
         binding.run {
-
             floatingActionButton.onClick { openNewPill() }
 
             recyclerHome.adapter = appAdapter
@@ -80,18 +80,33 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
-        skeleton = binding.recyclerHome.applySkeleton(R.layout.item_pill_skeleton)
-        skeleton.showShimmer = true
-        skeleton.maskCornerRadius = resources.getDimension(R.dimen.big_corner_radius)
-        skeleton.showSkeleton()
+        mainModel.shouldScrollUp.observe(viewLifecycleOwner) {
+            if (isFirstScrollUp) isFirstScrollUp = false
+            else binding.recyclerHome.smoothScrollToPosition(0)
+        }
 
-        binding.recyclerHome.isEnabled = false
+        val skeleton = binding.recyclerHome.applySkeleton(R.layout.item_pill_skeleton).apply {
+            showShimmer = true
+            maskCornerRadius = resources.getDimension(R.dimen.big_corner_radius)
+        }
+
+        if (shouldShowSkeleton) {
+            skeleton.showSkeleton()
+            binding.recyclerHome.isEnabled = false
+            binding.textTitle.isVisible = true
+        }
 
         model.allPills.observe(viewLifecycleOwner) { pills ->
             appAdapter.submitList(pills) {
-                binding.textTitle.isVisible = false
-                skeleton.showOriginal()
-                binding.recyclerHome.isEnabled = true
+
+                if (shouldShowSkeleton) {
+                    binding.textTitle.isVisible = false
+                    skeleton.showOriginal()
+                    shouldShowSkeleton =
+                        false // Do not show skeleton other than the first time the app launches
+                    binding.recyclerHome.isEnabled = true
+                }
+
                 view.doOnPreDraw { startPostponedEnterTransition() }
             }
         }
@@ -100,10 +115,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         if (mainModel.wasInDetails) {
             model.refreshPills()
             mainModel.wasInDetails = false
-        }
-
-        mainModel.shouldScrollUp.observe(viewLifecycleOwner) {
-            binding.recyclerHome.smoothScrollToPosition(0)
         }
 
     }

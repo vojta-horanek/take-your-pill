@@ -40,7 +40,7 @@ class PillViewHolder(
 
         pillDescription.apply {
             text = getFormattedDescription(pill)
-            isVisible = !text.isBlank()
+            isVisible = text.isNotBlank()
         }
 
         setupReminders(pill.reminders)
@@ -66,16 +66,17 @@ class PillViewHolder(
     }
 
     private fun setupIntake(pill: Pill, context: Context) {
-
+        // Don't modify original pill options
+        val options = pill.options.copy()
         // If last reminder date is null, then this is the first reminder
         pill.lastReminderDate?.let { lastDate ->
             // Only add next cycle if this is the first reminder today
             if (lastDate.DayOfYear != Calendar.getInstance().DayOfYear) {
-                pill.options.nextCycleIteration()
+                options.nextCycleIteration()
             }
         }
 
-        with(pill.options) {
+        with(options) {
             when {
                 isIndefinite() -> {
                     binding.textIntakeTitle.isVisible = false

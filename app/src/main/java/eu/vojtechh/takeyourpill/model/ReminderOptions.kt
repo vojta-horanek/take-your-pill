@@ -28,6 +28,15 @@ data class ReminderOptions(
         fun empty() = ReminderOptions()
     }
 
+    fun isSame(other: ReminderOptions): Boolean {
+        if (this.isIndefinite() && other.isIndefinite()) return true
+        return daysActive == other.daysActive &&
+                daysInactive == other.daysInactive &&
+                todayCycle == other.todayCycle &&
+                lastReminderDate == other.lastReminderDate
+    }
+
+
     fun isIndefinite() = daysActive == NO_DAY_LIMIT && daysInactive == NO_BREAK
     fun isFinite() = daysActive != NO_DAY_LIMIT && daysInactive == NO_BREAK
     fun isCycle() = daysActive != NO_DAY_LIMIT && daysInactive != NO_BREAK
@@ -40,6 +49,7 @@ data class ReminderOptions(
     fun isInactive() = !isActive()
 
     fun nextCycleIteration() {
+        if (isIndefinite()) return
         todayCycle++
         if (isCycle()) {
             if (todayCycle > daysActive + daysInactive) {

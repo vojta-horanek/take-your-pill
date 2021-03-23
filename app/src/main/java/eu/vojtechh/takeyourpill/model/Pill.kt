@@ -80,9 +80,17 @@ data class Pill(
         }
 
     var lastReminderDate
-        get() = pillEntity.options.lastReminderDate
+        get() = if (pillEntity.options.isIndefinite()) {
+            null
+        } else {
+            pillEntity.options.lastReminderDate
+        }
         set(value) {
-            pillEntity.options.lastReminderDate = value
+            if (pillEntity.options.isIndefinite()) {
+                pillEntity.options.lastReminderDate = null
+            } else {
+                pillEntity.options.lastReminderDate = value
+            }
         }
 
     val isPhotoVisible
@@ -112,11 +120,9 @@ data class Pill(
                     this.photo?.sameAs(newItem.photo) ?: true &&
                     this.color.resource == newItem.color.resource &&
                     this.deleted == newItem.deleted &&
-                    this.options == newItem.options &&
+                    this.options.isSame(newItem.options) &&
                     this.reminders.containsAll(newItem.reminders) &&
                     newItem.reminders.containsAll(this.reminders) &&
                     this.closeHistory == newItem.closeHistory
         } else false
-
-
 }
