@@ -92,4 +92,8 @@ class DetailsViewModel @Inject constructor(
     fun loadedData() {
         loadedDataCount.value = loadedDataCount.value?.plus(1)
     }
+
+    fun finishedLoading() {
+        loadedDataCount.value = 0
+    }
 }

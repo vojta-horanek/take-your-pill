@@ -213,6 +213,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         model.loadedData.observe(viewLifecycleOwner) {
             if (it == 4) { // We observe on 3 things + init layout, wait for all of them load :D
                 view?.doOnPreDraw { startPostponedEnterTransition() }
+                model.finishedLoading()
             }
         }
     }
