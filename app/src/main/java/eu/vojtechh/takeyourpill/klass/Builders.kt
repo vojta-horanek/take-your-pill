@@ -21,7 +21,9 @@ object Builders {
             .setTimeFormat(format)
             .setHour(hour)
             .setMinute(minute)
-            .build()
+            .build().apply {
+                isCancelable = false
+            }
     }
 
     fun getConfirmDialog(
@@ -33,8 +35,7 @@ object Builders {
         positiveText: String = context.getString(R.string.yes),
         negativeText: String = context.getString(R.string.no)
     ): AlertDialog = AlertDialog.Builder(context)
-        .setTitle(title)
-        .setMessage(message)
+        .setTitle(title).setMessage(message)
         .setPositiveButton(positiveText) { dialog, _ ->
             onPositive(dialog)
         }
@@ -42,6 +43,7 @@ object Builders {
             onNegative(dialog)
             dialog.dismiss()
         }
+        .setCancelable(false)
         .show()
 
     fun getAmountPickerDialog(
@@ -67,6 +69,7 @@ object Builders {
             setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
+            setCancelable(false)
         }.create()
         val numberPickerAmount = view.findViewById<NumberPicker>(R.id.numberPickerAmount)
 
