@@ -9,6 +9,7 @@ import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.DialogNewReminderBinding
 import eu.vojtechh.takeyourpill.klass.Builders
 import eu.vojtechh.takeyourpill.klass.getAttrColor
+import eu.vojtechh.takeyourpill.klass.onClick
 import eu.vojtechh.takeyourpill.klass.setDrawableTint
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
@@ -39,33 +40,40 @@ class ReminderDialog : RoundedDialogFragment() {
         }
 
         binding = DialogNewReminderBinding.inflate(inflater, container, false)
-        snackbar = Snackbar.make(binding.coordinatorNewReminder, "", Snackbar.LENGTH_SHORT)
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setTexts()
-
         binding.run {
+            snackbar = Snackbar.make(coordinatorNewReminder, "", Snackbar.LENGTH_SHORT)
 
-            textTime.setOnClickListener {
+            textTime.onClick {
                 snackbar.dismiss()
                 showTimeDialog()
             }
 
-            textAmount.setOnClickListener {
-                Builders.getAmountPickerDialog(
-                    requireContext(),
-                    binding.root as ViewGroup,
-                    reminder.amount
-                ) {
-                    reminder.amount = it
-                    setTexts()
-                }.show()
-            }
-            textConfirm.setOnClickListener { confirmListener(reminder, isEditing) }
+            textAmount.onClick { showAmountDialog() }
+            textConfirm.onClick { confirmListener(reminder, isEditing) }
 
         }
 
-        return binding.root
     }
+
+    private fun showAmountDialog() =
+        Builders.getAmountPickerDialog(
+            requireContext(),
+            binding.root as ViewGroup,
+            reminder.amount
+        ) {
+            reminder.amount = it
+            setTexts()
+        }.show()
+
 
     private fun showTimeDialog() {
         val timePicker = Builders.getTimePicker(requireContext(), reminder.hour, reminder.minute)

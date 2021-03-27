@@ -137,7 +137,6 @@
                 android:text="@string/open_source_libraries"
                 android:textAppearance="@style/AppTheme.Text.BodyNormal"
                 app:drawableStartCompat="@drawable/ic_article"
-                app:drawableEndCompat="@drawable/ic_expand_more"
                 app:drawableTint="?attr/colorOnSurface"
                 app:layout_constraintEnd_toEndOf="@+id/buttonIcons"
                 app:layout_constraintStart_toStartOf="@+id/buttonIcons"

@@ -7,7 +7,6 @@ import androidx.room.Embedded
 import androidx.room.Ignore
 import androidx.room.Relation
 import eu.vojtechh.takeyourpill.R
-import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 
 data class Pill(
     @Embedded val pillEntity: PillEntity,
@@ -19,7 +18,7 @@ data class Pill(
 ) : BaseModel() {
 
     @Ignore
-    override var itemType: ItemTypes = ItemTypes.PILL
+    override var itemType: ItemType = ItemType.PILL
 
     companion object {
 
@@ -81,9 +80,17 @@ data class Pill(
         }
 
     var lastReminderDate
-        get() = pillEntity.options.lastReminderDate
+        get() = if (pillEntity.options.isIndefinite()) {
+            null
+        } else {
+            pillEntity.options.lastReminderDate
+        }
         set(value) {
-            pillEntity.options.lastReminderDate = value
+            if (pillEntity.options.isIndefinite()) {
+                pillEntity.options.lastReminderDate = null
+            } else {
+                pillEntity.options.lastReminderDate = value
+            }
         }
 
     val isPhotoVisible
@@ -110,14 +117,12 @@ data class Pill(
         if (newItem is Pill) {
             this.name == newItem.name &&
                     this.description == newItem.description &&
-                    this.photo == newItem.photo &&
-                    this.color == newItem.color &&
+                    this.photo?.sameAs(newItem.photo) ?: true &&
+                    this.color.resource == newItem.color.resource &&
                     this.deleted == newItem.deleted &&
-                    this.options == newItem.options &&
-                    this.reminders == newItem.reminders &&
+                    this.options.isSame(newItem.options) &&
+                    this.reminders.containsAll(newItem.reminders) &&
+                    newItem.reminders.containsAll(this.reminders) &&
                     this.closeHistory == newItem.closeHistory
-
         } else false
-
-
 }

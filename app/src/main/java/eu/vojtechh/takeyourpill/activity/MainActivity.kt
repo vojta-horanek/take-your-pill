@@ -2,6 +2,8 @@ package eu.vojtechh.takeyourpill.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -19,8 +21,6 @@ import eu.vojtechh.takeyourpill.viewmodel.MainViewModel
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val requestCodeIntro = 22
-
     private val binding by viewBinding(ActivityMainBinding::inflate)
     private val model: MainViewModel by viewModels()
 
@@ -29,10 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         if (Pref.firstRun) {
             val intent = Intent(this, AppIntroActivity::class.java)
-            startActivityForResult(intent, requestCodeIntro)
+            introResult.launch(intent)
         }
 
-        setTheme(R.style.AppTheme)
+        setTheme(R.style.AppTheme) // Switch from splash theme
         setContentView(binding.root)
 
         Utils.setTheme(Pref.theme)
@@ -42,16 +42,23 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.bottomNavigation.isVisible = when (destination.id) {
-                R.id.homescreen, R.id.history, R.id.settings -> true
-                else -> false
-            }
+            showBottomBar(
+                when (destination.id) {
+                    R.id.homescreen, R.id.history, R.id.settings -> true
+                    else -> false
+                }
+            )
         }
 
-        binding.bottomNavigation.setOnNavigationItemReselectedListener { }
+        binding.bottomNavigation.setOnNavigationItemReselectedListener { model.scrollUp() }
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
 
-        model.planReminders(this)
+        model.planReminders(applicationContext)
+    }
+
+    private fun showBottomBar(visible: Boolean) {
+        if (binding.bottomNavigation.isVisible == visible) return
+        binding.bottomNavigation.isVisible = visible
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -59,15 +66,12 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == requestCodeIntro) {
-            if (resultCode == RESULT_OK) {
-                Pref.firstRun = false
-            } else {
-                finish()
+    private val introResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            when (result.resultCode) {
+                RESULT_OK -> Pref.firstRun = false
+                else -> finish()
             }
         }
-    }
 
 }

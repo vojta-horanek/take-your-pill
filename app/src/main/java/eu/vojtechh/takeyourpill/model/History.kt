@@ -37,18 +37,18 @@ data class History(
     val hasBeenConfirmed: Boolean
         get() = confirmed?.let { true } ?: false
 
-    override val itemType: ItemTypes
-        get() = ItemTypes.HISTORY_ITEM
+    override val itemType: ItemType
+        get() = ItemType.HISTORY_ITEM
 
     override fun isSame(newItem: BaseModel) =
-            if (newItem is History) {
-                this.id == newItem.id
-            } else false
+        if (newItem is History) {
+            this.id == newItem.id
+        } else false
 
     override fun isContentSame(newItem: BaseModel) =
-            if (newItem is History) {
-                this.hasBeenConfirmed == newItem.hasBeenConfirmed &&
-                        this.confirmed?.timeInMillis == newItem.confirmed?.timeInMillis &&
-                        this.amount == newItem.amount
-            } else false
+        if (newItem is History) {
+            this.hasBeenConfirmed == newItem.hasBeenConfirmed &&
+                    this.confirmed?.timeInMillis == newItem.confirmed?.timeInMillis &&
+                    this.amount == newItem.amount
+        } else false
 }

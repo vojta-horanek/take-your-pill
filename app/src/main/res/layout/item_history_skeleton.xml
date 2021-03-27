@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:minHeight="48dp">
+
+    <View
+        android:id="@+id/divider"
+        style="@style/AppTheme.Widget.Divider"
+        android:layout_width="0dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginTop="0dp" />
+
+    <View
+        android:id="@+id/dividerPill"
+        style="@style/AppTheme.Widget.Divider"
+        android:layout_width="0dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/textHistoryConfirmed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textHistoryConfirmed"
+        app:layout_goneMarginTop="0dp"
+        tools:visibility="visible" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/jost_medium"
+        android:gravity="center"
+        android:minHeight="32dp"
+        android:textAppearance="@style/AppTheme.Text.BodyNormal"
+        android:textSize="22sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/textPillName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_goneMarginBottom="16dp"
+        tools:text="21. 12." />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textPillName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:minHeight="32dp"
+        android:textAppearance="@style/AppTheme.Text.BodyNormal"
+        android:textSize="18sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textHistoryConfirmed"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textDate"
+        app:layout_constraintTop_toBottomOf="@+id/textDate"
+        app:layout_goneMarginStart="16dp"
+        tools:text="Xyzal" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textHistoryReminded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:minWidth="48dp"
+        android:minHeight="32dp"
+        android:textAppearance="@style/AppTheme.Text.BodyNormal"
+        app:layout_constraintBottom_toBottomOf="@+id/textHistoryConfirmed"
+        app:layout_constraintEnd_toStartOf="@+id/textHistoryAmount"
+        app:layout_constraintTop_toTopOf="@+id/textHistoryConfirmed"
+        tools:text="16:00" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textHistoryConfirmed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:minWidth="48dp"
+        android:minHeight="32dp"
+        android:textAppearance="@style/AppTheme.Text.BodyNormal"
+        app:layout_constraintBottom_toBottomOf="@+id/textPillName"
+        app:layout_constraintEnd_toStartOf="@+id/textHistoryReminded"
+        app:layout_constraintTop_toTopOf="@+id/textDate"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_goneMarginBottom="16dp"
+        tools:text="16:33" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textHistoryAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:minWidth="48dp"
+        android:minHeight="32dp"
+        android:textAppearance="@style/AppTheme.Text.BodyNormal"
+        app:layout_constraintBottom_toBottomOf="@+id/textHistoryReminded"
+        app:layout_constraintEnd_toStartOf="@+id/buttonShowMore"
+        app:layout_constraintTop_toTopOf="@+id/textHistoryReminded"
+        tools:text="1" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:visibility="gone"
+        android:id="@+id/buttonShowMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toBottomOf="@+id/textHistoryAmount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textHistoryAmount"
+        app:srcCompat="@drawable/ic_more" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

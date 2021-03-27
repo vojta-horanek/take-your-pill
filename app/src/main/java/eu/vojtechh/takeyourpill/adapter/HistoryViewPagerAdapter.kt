@@ -9,11 +9,11 @@ class HistoryViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragmen
 
     override fun getItemCount(): Int = 2
 
-    override fun createFragment(position: Int): Fragment {
-        return when (position) {
+    override fun createFragment(position: Int) =
+        when (position) {
             0 -> HistoryOverviewFragment()
             1 -> HistoryChartFragment()
-            else -> throw IllegalStateException("How did you get here?")
+            else -> throw IllegalStateException("Unknown ViewPagerAdapter Fragment")
         }
-    }
+
 }

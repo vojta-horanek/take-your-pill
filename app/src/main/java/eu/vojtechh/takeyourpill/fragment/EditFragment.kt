@@ -7,50 +7,36 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.liveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.ColorAdapter
 import eu.vojtechh.takeyourpill.adapter.ReminderAdapter
 import eu.vojtechh.takeyourpill.databinding.FragmentEditBinding
 import eu.vojtechh.takeyourpill.fragment.dialog.ReminderDialog
-import eu.vojtechh.takeyourpill.klass.Constants
-import eu.vojtechh.takeyourpill.klass.disableAnimations
-import eu.vojtechh.takeyourpill.klass.showError
-import eu.vojtechh.takeyourpill.klass.themeColor
-import eu.vojtechh.takeyourpill.model.Pill
+import eu.vojtechh.takeyourpill.klass.*
 import eu.vojtechh.takeyourpill.model.PillColor
 import eu.vojtechh.takeyourpill.model.Reminder
-import eu.vojtechh.takeyourpill.reminder.NotificationManager
-import eu.vojtechh.takeyourpill.reminder.ReminderManager
 import eu.vojtechh.takeyourpill.viewmodel.EditViewModel
-import kotlinx.coroutines.Dispatchers
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import timber.log.Timber
 
 @AndroidEntryPoint
-class EditFragment : Fragment() {
+class EditFragment : Fragment(R.layout.fragment_edit) {
 
-    // Can't use delegate because of transition endView
-    private var _binding: FragmentEditBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentEditBinding::bind)
 
     private val model: EditViewModel by viewModels()
     private val args: EditFragmentArgs by navArgs()
@@ -61,12 +47,9 @@ class EditFragment : Fragment() {
     private val isCreatingNewPill
         get() = args.pillId == -1L
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentEditBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         if (isCreatingNewPill) {
             enterTransition = MaterialContainerTransform().apply {
                 startView = requireActivity().findViewById(R.id.floatingActionButton)
@@ -82,16 +65,6 @@ class EditFragment : Fragment() {
             enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
             returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
         }
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             onBackPressed()
@@ -124,6 +97,7 @@ class EditFragment : Fragment() {
     /**
      * Called when imagepicker finishes
      */
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (resultCode) {
@@ -133,11 +107,10 @@ class EditFragment : Fragment() {
             ImagePicker.RESULT_ERROR -> {
                 showSnackbar(ImagePicker.getError(data))
             }
-            else -> {
-            }
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -174,7 +147,11 @@ class EditFragment : Fragment() {
             recyclerColor.adapter = colorAdapter
             recyclerColor.disableAnimations()
 
-            colorAdapter.onColorClicked { _, pillColor -> model.setActivePillColor(pillColor) }
+            colorAdapter.setOnColorClickedListener { _, pillColor ->
+                model.setActivePillColor(
+                    pillColor
+                )
+            }
 
             pillOptionsView.setOptions(model.pill.options)
             pillOptionsView.onChange {
@@ -183,14 +160,23 @@ class EditFragment : Fragment() {
 
             inputName.doOnTextChanged { text, _, _, _ ->
                 inputNameLayout.showError(
-                    if (model.onNameChanged(text)) getString(R.string.enter_field) else null
+                    if (model.onNameChanged(text)) getString(R.string.enter_field_name) else null
                 )
             }
             inputDescription.doOnTextChanged { text, _, _, _ -> model.onDescriptionChanged(text) }
-            buttonSave.setOnClickListener { onPillSave() }
-            buttonAddReminder.setOnClickListener { showReminderDialog() }
+            buttonSave.onClick { onPillSave() }
+            buttonAddReminder.onClick { showReminderDialog() }
             imageChooser.setOnImageClickListener { onPickImage() }
             imageChooser.setOnDeleteClickListener { onImageDelete() }
+
+            scrollEdit.setOnScrollChangeListener { _, _, _, _, _ ->
+                val offset = scrollEdit.scrollY
+                when (buttonSave.isExtended) {
+                    true -> if (offset > 0) buttonSave.shrink()
+                    false -> if (offset == 0) buttonSave.extend()
+                }
+            }
+
         }
 
     }
@@ -218,40 +204,36 @@ class EditFragment : Fragment() {
             buttonAddReminder.rippleColor = colorStateList
             buttonAddReminder.setTextColor(color)
 
-            progress.setIndicatorColor(color)
             pillOptionsView.setButtonTint(color)
         }
     }
 
     private fun onBackPressed() {
         if (model.hasPillBeenEdited) {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(getString(R.string.confirm_exit_edit))
-                .setMessage(getString(R.string.confirm_exit_edit_description))
-                .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
-                .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+            Builders.getConfirmDialog(
+                requireContext(),
+                getString(R.string.confirm_exit_edit),
+                getString(R.string.confirm_exit_edit_description),
+                {
                     findNavController().popBackStack()
-
-                    dialog.dismiss()
+                    it.dismiss()
                 }
-                .show()
-
+            )
         } else {
             findNavController().popBackStack()
         }
     }
 
-    private fun onImageDelete() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.confirm_delete_photo))
-            .setMessage(getString(R.string.confirm_delete_photo_description))
-            .setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+    private fun onImageDelete() =
+        Builders.getConfirmDialog(
+            requireContext(),
+            getString(R.string.confirm_delete_photo),
+            getString(R.string.confirm_delete_photo_description),
+            {
                 model.deleteImage()
-                dialog.dismiss()
+                it.dismiss()
             }
-            .show()
-    }
+        )
 
     private fun showReminderDialog(
         reminder: Reminder = Reminder.create(pillId = model.pill.id),
@@ -314,53 +296,29 @@ class EditFragment : Fragment() {
     private fun onPillSave() = binding.run {
         // Does Pill have a name?
         if (model.pill.name.isBlank()) {
-            inputNameLayout.error = getString(R.string.enter_field)
-            return
+            inputNameLayout.error = getString(R.string.enter_field_name)
+            scrollEdit.smoothScrollTo(0, 0)
+            return@run
         }
 
         // Does Pill have at least one reminder?
         if (model.pill.reminders.isEmpty()) {
             showSnackbar(getString(R.string.no_reminders_set))
-            return
+            return@run
         }
-
-        // TODO Use WorkManager for saving
-        layoutLoading.isVisible = true
 
         model.pill.options = pillOptionsView.getOptions()
 
         if (isCreatingNewPill) {
-            model.addAndGetPill(model.pill).observe(viewLifecycleOwner) {
-                setReminding(it) {
-                    exitTransition = Slide().addTarget(R.id.layoutEdit)
-                    findNavController().popBackStack()
-                }
-            }
+            model.addPill(model.pill, requireActivity().applicationContext)
+            exitTransition = Slide().addTarget(R.id.layoutEdit)
         } else {
-            model.updateAndGetPill(model.pill).observe(viewLifecycleOwner) {
-                setReminding(it) {
-                    returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
-                    findNavController().popBackStack()
-                }
-            }
+            model.updatePill(model.pill, requireActivity().applicationContext)
+            returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
         }
+        findNavController().popBackStack()
     }
 
-    private fun setReminding(pill: Pill, action: () -> Unit) {
-        Timber.d("lastRemindTime: %s", pill.lastReminderDate)
-        liveData(Dispatchers.IO) {
-            NotificationManager.createNotificationChannel(
-                requireContext(),
-                pill.id.toString(),
-                pill.name
-            )
-            ReminderManager.planNextPillReminder(requireContext(), pill)
-            emit(true)
-        }.observe(viewLifecycleOwner) {
-            Timber.d("lastRemindTime: %s", pill.lastReminderDate)
-            action()
-        }
-    }
 
     private fun showSnackbar(msg: String) =
         Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()

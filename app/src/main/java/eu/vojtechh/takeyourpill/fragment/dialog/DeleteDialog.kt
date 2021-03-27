@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import eu.vojtechh.takeyourpill.databinding.DialogDeleteBinding
+import eu.vojtechh.takeyourpill.klass.onClick
 
 class DeleteDialog : RoundedDialogFragment() {
     private lateinit var binding: DialogDeleteBinding
 
-    var listener: (what: Boolean) -> Unit = {}
+    var listener: (Boolean) -> Unit = {}
 
     fun setUserListener(listener: (Boolean) -> Unit) {
         this.listener = listener
@@ -27,7 +28,9 @@ class DeleteDialog : RoundedDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonPillOnly.setOnClickListener { listener(false) }
-        binding.buttonPillHistory.setOnClickListener { listener(true) }
+        binding.run {
+            buttonPillOnly.onClick { listener(false) }
+            buttonPillHistory.onClick { listener(true) }
+        }
     }
 }

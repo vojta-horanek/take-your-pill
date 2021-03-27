@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:overScrollMode="never"
     android:transitionGroup="true"
+    android:id="@+id/settingsScrollView"
     tools:context=".fragment.HistoryFragment">
 
     <LinearLayout

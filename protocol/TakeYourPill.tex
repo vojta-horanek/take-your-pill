@@ -1,29 +1,58 @@
 \documentclass[a4paper,12pt]{report}
 \usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 \usepackage[czech]{babel}
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{bibliography.bib}
 \usepackage{setspace}
 \usepackage{lmodern}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage[htt]{hyphenat}
 \usepackage{amsthm}
 \usepackage{graphicx}
+\usepackage{wrapfig}
 \usepackage{color}
-\usepackage{xcolor}
 \usepackage{url}
 \usepackage{textcomp}
 \usepackage{parskip}
 \usepackage{tocloft}
-\usepackage[bottom]{footmisc}
-
-
+\usepackage[bottom, perpage]{footmisc}
 \usepackage[autostyle]{csquotes}
+\usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{inconsolata}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+
+\emergencystretch=1em
+\chardef\_=`_
+
+\lstdefinelanguage{Kotlin}{
+  comment=[l]{//},
+  commentstyle={\color{gray}\ttfamily},
+  emph={filter, first, firstOrNull, forEach, lazy, map, mapNotNull, println, groupBy, count},
+  emphstyle={\color{OrangeRed}},
+  identifierstyle=\color{black},
+  keywords={!in, !is, abstract, actual, annotation, as, as?, break, by, catch, class, companion, const, constructor, continue, crossinline, data, delegate, do, dynamic, else, enum, expect, external, false, field, file, final, finally, for, fun, get, if, import, in, infix, init, inline, inner, interface, internal, is, lateinit, noinline, null, object, open, operator, out, override, package, param, private, property, protected, public, receiveris, reified, return, return@, sealed, set, setparam, super, suspend, tailrec, this, throw, true, try, typealias, typeof, val, var, vararg, when, where, while},
+  keywordstyle={\color{NavyBlue}\bfseries},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[s]{"""*}{*"""},
+  ndkeywords={@Deprecated, @JvmField, @JvmName, @JvmOverloads, @JvmStatic, @JvmSynthetic, Array, ArrayList, Byte, Double, Float, Int, Integer, Iterable, Long, Runnable, Short, String},
+  ndkeywordstyle={\color{BurntOrange}\bfseries},
+  sensitive=true,
+  stringstyle={\color{ForestGreen}\ttfamily},
+}
 
 \usepackage{fontspec}
 \setmainfont{Linux Libertine O}
 
 \usepackage[ddmmyyyy]{datetime}
 \renewcommand{\dateseparator}{.}
+
+\usepackage{subfiles}
 
 \setmainfont{Latin Modern Roman}
 \setsansfont{Latin Modern Sans}
@@ -34,58 +63,26 @@
 
 \title{Take Your Pill}
 \author{Vojtěch Hořánek}
+\graphicspath{{images/}}
 
 \renewcommand{\baselinestretch}{1.5}
-
 \pagenumbering{gobble}
+
+% boxík na vysvětlení termínů
+\newcommand{\boxik}[1]{
+\fbox{\begin{minipage}{\linewidth}#1
+\end{minipage}}}
 
 \begin{document}
 
-% Uzlabina title page
-\begin{titlepage}
-    \large
-    \centering
-    \vspace*{\fill}
-    {\LARGE Take Your Pill}
-    \vskip 1mm
-    {\Large mobilní aplikace}
-    \vskip1cm
-    {\large SPŠE V Úžlabině}
-    \vskip 20pt
-    \includegraphics[width=4cm]{uzlabina.png}
-    \vskip 40pt
-    Vojtěch Hořánek \\
-    I4.D
-    \vskip 15pt
-    \today
-    \vfill
-\end{titlepage}
+% Úžlabina titulní strana
+\subfile{sections/title-page}
 
-
-% Cestne prohlaseni
-\vspace*{\fill}
-\enquote{Prohlašuji, že jsem tuto práci vypracoval samostatně a použil jsem literárnı́ch pramenů a informacı́, které cituji a uvádı́m v seznamu použité literatury a zdrojů informacı́.}\hfill \break
-V Praze dne
-{
-  \addfontfeature{LetterSpace=20.0}
-  ....................\hfill....................
-}
-\begin{flushright}
-    \setstretch{0.5}
-    podpis autora
-\end{flushright} 
-
-% konec podpisu
+% Čestné prohlášení
+\subfile{sections/signature}
 
 % anotace
-\newpage
-\section*{Anotace}
-Předložená práce je mobilní aplikace pro systém Android, která slouží k připomínání užití léků. V aplikaci je implementovaná historie připomínání a užívání léků, statistiky a grafy. Uživatel snadno získá přehled, jaké a kdy léky vynechává a může si nastavit opakované připomínání, aby již lék nezmeškal. Design aplikace je udělán tak, aby odpovídal material designu a jeho nejnovějším trendům. Aplikace je napsána v jazyce Kotlin a využívá moderních knihoven a technologií.
-\vspace*{\fill}
-\section*{Anotation}
-The presented work is a mobile application for the Android operating system which reminds its users to take their pills. History, statistics, and graphs are implemented in the application. The user can effortlessly get an overview of which pills at what time did they miss and can set repeating reminders, so they do not forget them the next time. The application follows the material design guidelines and its latest trends. Kotlin was used as the programming language and utilizes modern libraries and technologies.
-
-% konec anotace
+\subfile{sections/anotation}
 
 \renewcommand\cftsecafterpnum{\vskip10pt}
 \renewcommand\cftsubsecafterpnum{\vskip10pt}
@@ -95,67 +92,57 @@ The presented work is a mobile application for the Android operating system whic
 
 \chapter*{Úvod}
 \addcontentsline{toc}{chapter}{Úvod}  
-
-Cílem této práce bylo vytvořit aplikaci, která uživatelům usnadní pravidelné užívání léků jejich připomínáním, sledováním historie a statistik. Pro každý lék lze nastavit počet dní, po který se má připomínat, popř. počet dní, které vynechat, než se začne připomínat znovu a počet takovýchto cyklů.
-
-Práce se skládá z mobilní aplikace pro systém android. Aplikace je navržena co nejjednodušeji a rozdělena do dvou hlavních sekcí: léky a historie. V sekci \enquote{léky} uživatel nalezne léky, které si do aplikace přidal. V jejich seznamu je zobrazen jejich název, popis, barva, fotografie a časy připomínek. V sekci \enquote{historie} může uživatel sledovat užití svých léku, zobrazí se mu kompletní historie (včetně kdy a jestli si lék vzal, kdy mu byla poslána připomínka a kolik prášků si vzal) a grafy zobrazující souhrnné informace. Součástí práce je i propagační a informační plakát. 
+\subfile{sections/introduction}
 
 \pagenumbering{arabic} % start page numbering on Úvod
 
-
 \chapter{Návrh aplikace}
+\subfile{sections/design}
 
-Rozhraní jsem upravil pomocí vlastních stylů, které vycházejí ze stylů Material Design \cite{materialdesign}.
 \chapter{Implementace aplikace}
-
-Při vytváření aplikace jsem vycházel ze zadání a využil jsem vlastních znalostní a zkušeností. Na naprogramování aplikace jsem použil programovací jazyk Kotlin. Zvolil jsem ho proto, že je preferovaný společností Google a oproti jazyku Java má mnoho výhod. Mnoho android knihoven vychází právě pro jazyk Kotlin a tak mi jeho použití ulehčilo mnoho práce při programování. Jmenovitě knihovny z rodiny Android Jetpack \cite{jetpack} jsem použil hojně.
-
-Uživatelské rozhraní aplikace je napsáno v jazyce XML. Pro jeho manipulaci jsem použil knihovny \emph{ViewBinding} \cite{viewbinding} a \emph{DataBinding} \cite{databinding}.
-
-Při samotném vývoji jsem používal vývojové prostředí \emph{Android Studio} \cite{studio} a emulátor \emph{Android Emulator}.
+\subfile{sections/implementation}
 
 \section{Uživatelské rozhraní}
-
-Hlavní obrazovka\footnote{MainActivity} aplikace je rozdělena na tři části: \emph{Léky}, \emph{Historie} a \emph{Nastavení}. Uživatel mezi těmito sekcemi přepíná pomocí prvku \emph{BottomNavigationView}. Do sekce \emph{Historie} a na obrazovku \emph{Přidat lék} se může uživatel dostat i pomocí zkratky\footnote{App Shortcuts} z domovské obrazovky.
+\subfile{sections/user-interface}
 
 \subsection{Úvodní obrazovka}
+\subfile{sections/intro-screen}
+
 \subsection{Domovská obrazovka}
-\subsubsection{Nový lék}
+\subfile{sections/homescreen}
+
 \subsubsection{Detail léku}
+\subfile{sections/pill-detail}
+
+\subsubsection{Nový lék}
+\subfile{sections/new-pill}
+
 \subsection{Historie}
+\subfile{sections/history}
+
+
 \subsubsection{Přehled}
+\label{sec:overview}
+\subfile{sections/overview}
+
 \subsubsection{Grafy}
+\subfile{sections/graphs}
+
 \subsection{Nastavení}
+\subfile{sections/settings}
+\subsubsection{O aplikaci}
+\subfile{sections/about}
+
 \section{Programová implementace}
 \subsection{Databáze}
 \subsection{Připomínání}
+\label{sec:reminder}
 
 \chapter*{Závěr}
 \addcontentsline{toc}{chapter}{Závěr}  
 
-\renewcommand\bibname{Bibliografie}
-\begin{thebibliography}{9}
+\subfile{sections/screenshots}
 
-\bibitem{viewbinding} 
-View Binding
-\\\texttt{https://developer.android.com/topic/libraries/view-binding}
-
-\bibitem{databinding} 
-Data Binding Library
-\\\texttt{https://developer.android.com/topic/libraries/data-binding}
-
-\bibitem{materialdesign} 
-Material Design
-\\\texttt{https://material.io/design}
-
-\bibitem{jetpack} 
-Android Jetpack
-\\\texttt{https://developer.android.com/jetpack}
-
-\bibitem{studio} 
-Android Studio
-\\\texttt{https://developer.android.com/studio}
-
-\end{thebibliography}
+\printbibliography
 
 \end{document}

@@ -10,21 +10,21 @@ import java.util.*
 
 class Converters {
     @TypeConverter
-    fun toBitmap(bytes: ByteArray?): Bitmap? {
-        return bytes?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
-    }
+    fun toBitmap(bytes: ByteArray?) =
+        bytes?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+
 
     @TypeConverter
-    fun fromBitmap(bmp: Bitmap?): ByteArray? {
-        if (bmp == null) return null
-        val outputStream = ByteArrayOutputStream()
-        bmp.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
-        return outputStream.toByteArray()
-    }
+    fun fromBitmap(bmp: Bitmap?) =
+        bmp?.let {
+            val outputStream = ByteArrayOutputStream()
+            it.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+            outputStream.toByteArray()
+        }
 
     @TypeConverter
-    fun fromPillColor(pillColor: PillColor): Int {
-        return when (pillColor.resource) {
+    fun fromPillColor(pillColor: PillColor) =
+        when (pillColor.resource) {
             R.color.colorBlue -> PillColor.BLUE
             R.color.colorDarkBlue -> PillColor.DARK_BLUE
             R.color.colorGreen -> PillColor.GREEN
@@ -34,11 +34,10 @@ class Converters {
             R.color.colorYellow -> PillColor.YELLOW
             else -> PillColor.BLUE
         }
-    }
 
     @TypeConverter
-    fun toPillColor(pillColor: Int): PillColor {
-        return PillColor(
+    fun toPillColor(pillColor: Int) =
+        PillColor(
             when (pillColor) {
                 PillColor.BLUE -> R.color.colorBlue
                 PillColor.DARK_BLUE -> R.color.colorDarkBlue
@@ -50,19 +49,14 @@ class Converters {
                 else -> R.color.colorBlue
             }
         )
+
+    @TypeConverter
+    fun toCalendar(millis: Long?) = millis?.let {
+        Calendar.getInstance().apply {
+            timeInMillis = it
+        }
     }
 
     @TypeConverter
-    fun toCalendar(l: Long?): Calendar? {
-        l?.let {
-            val c: Calendar = Calendar.getInstance()
-            c.timeInMillis = it
-            return c
-        } ?: run { return null }
-    }
-
-    @TypeConverter
-    fun fromCalendar(c: Calendar?): Long? {
-        return c?.time?.time
-    }
+    fun fromCalendar(calendar: Calendar?) = calendar?.timeInMillis
 }

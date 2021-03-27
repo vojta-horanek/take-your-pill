@@ -14,6 +14,8 @@ import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import eu.vojtechh.takeyourpill.repository.ReminderRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -24,13 +26,16 @@ class DetailsViewModel @Inject constructor(
     private val reminderRepository: ReminderRepository,
     private val historyRepository: HistoryRepository
 ) : ViewModel() {
-    fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
+    fun getPillById(pillId: Long) = pillRepository.getPillFlow(pillId).asLiveData()
 
     fun deletePillWithHistory(pill: Pill) =
         viewModelScope.launch(Dispatchers.IO) { pillRepository.deletePillAndReminder(pill) }
 
     fun deletePill(pillEntity: PillEntity) =
         viewModelScope.launch(Dispatchers.IO) { pillRepository.markPillDeleted(pillEntity) }
+
+    fun getLastReminded(pillId: Long) =
+        historyRepository.getLatestWithPillIdFlow(pillId).asLiveData()
 
     lateinit var pill: Pill
 
@@ -45,31 +50,20 @@ class DetailsViewModel @Inject constructor(
         _reminders.value = reminders
     }
 
-    fun getLatestHistory(validTimeOffset: Boolean) = liveData {
-        val now = Calendar.getInstance()
-        val timeOffset = (30 /* minutes */ * 60 * 1000)
+    fun getLatestHistory(respectTimeOffset: Boolean) =
+        historyRepository.getLatestWithPillIdFlow(pill.id).map { history ->
+            val now = Calendar.getInstance()
+            val timeOffset = (30 /* minutes */ * 60 * 1000)
 
-        val latestHistory = historyRepository.getLatestWithPillIdSync(pill.id)
-
-        latestHistory?.let { history ->
-            if (!history.hasBeenConfirmed) {
-                if (validTimeOffset) {
-                    if (now.timeInMillis - history.reminded.timeInMillis <= timeOffset) {
-                        emit(history)
-                    } else {
-                        emit(null)
-                    }
-                } else {
-                    emit(history)
-                }
-            } else {
-                emit(null)
-            }
-        } ?: emit(null)
-    }
+            if (history != null &&
+                !history.hasBeenConfirmed &&
+                (!respectTimeOffset ||
+                        now.timeInMillis - history.reminded.timeInMillis <= timeOffset)
+            ) history else null
+        }.asLiveData()
 
     fun confirmPill(context: Context, history: History) =
-        liveData {
+        liveData(Dispatchers.Default) {
             val reminderTime = Calendar.getInstance().apply {
                 clear()
                 hour = history.reminded.hour
@@ -86,7 +80,20 @@ class DetailsViewModel @Inject constructor(
                         history.reminded.timeInMillis
                     )
                     context.sendBroadcast(confirmIntent)
+                    delay(200) // Wait for broadcast to finish
                     emit(true)
                 } ?: emit(false)
         }
+
+    private val loadedDataCount = MutableLiveData(0)
+    val loadedData: LiveData<Int>
+        get() = loadedDataCount
+
+    fun loadedData() {
+        loadedDataCount.value = loadedDataCount.value?.plus(1)
+    }
+
+    fun finishedLoading() {
+        loadedDataCount.value = 0
+    }
 }

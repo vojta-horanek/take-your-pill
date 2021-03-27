@@ -17,7 +17,7 @@
     <string name="name">Název</string>
     <string name="photo">Fotografie</string>
     <string name="edit_pill">Upravit lék</string>
-    <string name="enter_field">Prosím, zadejte hodnotu</string>
+    <string name="enter_field_name">Prosím, zadejte název</string>
     <string name="reminders">Připomínky</string>
     <string name="limit_to_x_days">Omezit na počet dní</string>
     <string name="number_of_days">Počet dní na který omezit</string>
@@ -80,11 +80,11 @@
     <string name="confirm_exit_edit_description">Toto zahodí všechny Vaše úpravy.</string>
     <string name="overview">Přehled</string>
     <string name="charts">Grafy</string>
-    <string name="all_pills_chart">Všechny prášky</string>
-    <string name="missed_pills">Vynechané prášky</string>
-    <string name="stat_reminded">\u2022 Připomenuto %1$dkrát</string>
-    <string name="stat_confirmed">\u2022 Potvrzeno %1$dkrát</string>
-    <string name="stat_missed">\u2022 Vynecháno %1$dkrát</string>
+    <string name="all_pills_chart">Všechny připomínky</string>
+    <string name="missed_pills">Vynechané připomínky</string>
+    <string name="stat_reminded">Připomenuto %1$d×</string>
+    <string name="stat_confirmed">Potvrzeno %1$d×</string>
+    <string name="stat_missed">Vynecháno %1$d×</string>
     <string name="no_history">Vypadá to, že jste zatím neobdrželi žádnou připomínku, statistiky a grafy pro Vás zatím nebudou dostupné.</string>
     <string name="stat_overall">Všechny léky</string>
     <string name="error_opening_image">Nastala chyba při otevírání obrázku</string>
@@ -128,7 +128,7 @@
     <string name="error">Chyba</string>
     <string name="intake">Příjem</string>
 
-    <string name="cycle_today_info">Pokud lék nastavíte po jeho poslední připomínce, dnešní den cyklu de facto začně až zítra. Toto je normální chování a při nastavování léku by se na něj mělo myslet.</string>
+    <string name="cycle_today_info">Pokud lék nastavíte po jeho poslední připomínce, dnešní den cyklu je de facto zítřek. Toto je normální chování a při nastavování léku by se na něj mělo myslet.</string>
     <string name="cycle_x_days_info">Pokud lék nastavíte po jeho poslední připomínce, doba trvání se začne odečítat až zítra. Toto je normální chování a při nastavování léku by se na něj mělo myslet.</string>
 
     <string name="cycle">Cyklus</string>
@@ -145,6 +145,8 @@
     <string name="auto">Automaticky</string>
     <string name="day">Den</string>
     <string name="night">Noc</string>
+    <string name="save">Uložit</string>
+    <string name="last_reminded">Naposledy připomenuto</string>
 
 
 </resources>

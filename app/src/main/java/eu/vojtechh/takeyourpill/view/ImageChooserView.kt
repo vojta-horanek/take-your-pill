@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.klass.onClick
 
 class ImageChooserView @JvmOverloads constructor(
     context: Context,
@@ -23,10 +24,10 @@ class ImageChooserView @JvmOverloads constructor(
     private lateinit var imageChooserDelete: AppCompatImageView
 
     init {
-        init(attrs)
+        init()
     }
 
-    private fun init(attrs: AttributeSet?) {
+    private fun init() {
         val view = View.inflate(context, R.layout.layout_image_chooser, this)
 
         orientation = VERTICAL
@@ -35,8 +36,8 @@ class ImageChooserView @JvmOverloads constructor(
         imageChooserPhoto = view.findViewById(R.id.image_chooser_photo)
         imageChooserDelete = view.findViewById(R.id.image_chooser_delete)
 
-        imageChooserPhoto.setOnClickListener { imageListener() }
-        imageChooserDelete.setOnClickListener { deleteListener() }
+        imageChooserPhoto.onClick { imageListener() }
+        imageChooserDelete.onClick { deleteListener() }
 
     }
 

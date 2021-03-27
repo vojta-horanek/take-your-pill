@@ -1,13 +1,13 @@
 package eu.vojtechh.takeyourpill.viewmodel.history
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.klass.CallResult
 import eu.vojtechh.takeyourpill.model.*
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,31 +16,26 @@ class HistoryOverviewViewModel @Inject constructor(
     historyRepository: HistoryRepository
 ) : ViewModel() {
 
-    val history = historyRepository.getHistoryOrderedById()
-
-    fun getStatsData(_history: List<History>) = liveData(Dispatchers.IO) {
-
-        if (_history.isEmpty()) {
-            emit(CallResult.failure<List<BaseModel>>())
-            return@liveData
+    val historyStats = historyRepository.getHistoryOrderedByIdFlow().map { history ->
+        if (history.isEmpty()) {
+            return@map (CallResult.failure<List<BaseModel>>())
         }
 
-        val pills = pillRepository.getAllPillsIncludingDeletedSync()
+        val pills = pillRepository.getAllPillsIncludingDeleted()
 
         if (pills.isEmpty()) {
-            emit(CallResult.failure<List<BaseModel>>())
-            return@liveData
+            return@map (CallResult.failure<List<BaseModel>>())
         }
 
         val statList = mutableListOf<StatItem>()
 
-        val totalReminded = _history.size
-        val totalConfirmed = _history.count { it.hasBeenConfirmed }
+        val totalReminded = history.size
+        val totalConfirmed = history.count { it.hasBeenConfirmed }
         val totalMissed = totalReminded - totalConfirmed
 
         val overallStat = StatItem(null, totalReminded, totalConfirmed, totalMissed)
 
-        val pillsHistory = _history.groupBy { it.pillId }.values
+        val pillsHistory = history.groupBy { it.pillId }.values
         // Iterate over each pill
         pillsHistory.forEach { pillHistory ->
 
@@ -55,13 +50,13 @@ class HistoryOverviewViewModel @Inject constructor(
         val mergedList = sequence {
             yield(HistoryPillItem(HistoryOverallItem(), overallStat))
             pills.forEach { pill ->
-                pill.itemType = BaseModel.ItemTypes.HISTORY
+                pill.itemType = BaseModel.ItemType.HISTORY
                 statList.find { statItem -> statItem.pillId == pill.id }?.let { statItem ->
                     yield(HistoryPillItem(pill, statItem))
                 }
             }
         }.toList()
 
-        emit(CallResult.success(mergedList))
-    }
+        return@map (CallResult.success(mergedList))
+    }.asLiveData()
 }

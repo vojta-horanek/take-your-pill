@@ -43,9 +43,11 @@
         <receiver android:name=".receiver.ConfirmReceiver" />
         <receiver
             android:name=".receiver.BootReceiver"
+            android:exported="true"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
 

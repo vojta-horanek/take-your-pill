@@ -9,5 +9,4 @@ object Pref : PreferenceHolder() {
     var remindAgainAfter: Int by bindToPreferenceField(10)
     var firstRun: Boolean by bindToPreferenceField(true)
     var theme: String by bindToPreferenceField("0")
-
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/screen_margin_vertical"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="@dimen/screen_margin_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/card_chart_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="true"
+        android:clipToPadding="false"
+        app:cardCornerRadius="@dimen/standard_corner_radius"
+        app:cardElevation="@dimen/standard_card_elevation"
+        app:cardMaxElevation="@dimen/max_card_elevation"
+        app:cardPreventCornerOverlap="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
+
+            <TextView
+                android:id="@+id/chartTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/all_pills_chart"
+                android:textAppearance="@style/AppTheme.Text.BodySecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/chart_height"
+                android:layout_marginTop="@dimen/screen_margin_vertical_little"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chartTitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

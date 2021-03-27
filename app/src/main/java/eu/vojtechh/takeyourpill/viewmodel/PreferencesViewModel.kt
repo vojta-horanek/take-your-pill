@@ -7,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.klass.addDay
 import eu.vojtechh.takeyourpill.model.*
 import eu.vojtechh.takeyourpill.reminder.NotificationManager
-import eu.vojtechh.takeyourpill.reminder.ReminderOptions
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
 import kotlinx.coroutines.launch
@@ -24,7 +23,7 @@ class PreferencesViewModel @Inject constructor(
                 PillEntity(
                     name = "Xyzal",
                     description = "Na alergii, ve skříni",
-                    photo = null, /* TODO Add a photo */
+                    photo = null,
                     color = PillColor.default(),
                     deleted = false,
                     options = ReminderOptions.indefinite()
@@ -39,7 +38,7 @@ class PreferencesViewModel @Inject constructor(
                 PillEntity(
                     name = "Nasivin",
                     description = "Na rýmu, na poličce",
-                    photo = null, /* TODO Add a photo */
+                    photo = null,
                     color = PillColor.teal(),
                     deleted = false,
                     options = ReminderOptions.indefinite(),
@@ -54,7 +53,7 @@ class PreferencesViewModel @Inject constructor(
                 PillEntity(
                     name = "Vitamín C",
                     description = null,
-                    photo = null, /* TODO Add a photo */
+                    photo = null,
                     color = PillColor.red(),
                     deleted = false,
                     options = ReminderOptions.finite(7),

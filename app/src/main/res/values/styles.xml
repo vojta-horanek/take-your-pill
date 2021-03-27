@@ -5,7 +5,6 @@
     </style>
 
     <style name="AppTheme.Intro" parent="Theme.Intro">
-        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
     <style name="AppTheme.Splash" parent="BaseTheme">

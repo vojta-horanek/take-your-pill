@@ -1,0 +1,35 @@
+\documentclass[../TakeYourPill.tex]{subfiles}
+\graphicspath{{\subfix{images/}}}
+
+\begin{document}
+
+Při vytváření aplikace jsem vycházel ze zadání a využil jsem vlastních znalostní a zkušeností. Na naprogramování aplikace jsem použil programovací jazyk Kotlin. Zvolil jsem ho proto, že je preferovaný společností Google a oproti jazyku Java má mnoho výhod. Mnoho Android knihoven vychází právě pro Kotlin a tak mi jeho použití ulehčilo mnoho práce při programování. Jmenovitě knihovny z rodiny Android Jetpack \cite{jetpack} jsem použil hojně.
+
+Uživatelské rozhraní aplikace je napsáno v jazyce XML. Pro jeho manipulaci jsem použil knihovny \textit{ViewBinding} \cite{viewbinding} a \textit{DataBinding} \cite{databinding}. Pro snadnější práci s ViewBindingy jsem využil knihovnu \textit{FragmentViewBindingDelegate-KT} \cite{delegate}\cite{delegate2}, která mi zpřístupnila \enquote{delegát} \texttt{by viewBinding()} s jehož pomocí jsem mohl layout inicializovat (a zahodit) jen jednou řádkou kódu.
+
+Při samotném vývoji jsem používal vývojové prostředí \textit{Android Studio} \cite{studio} a emulátor \textit{Android Emulator}.
+
+Aplikace je napsána tak, aby odpovídala architektuře \textbf{Model-View-ViewModel}. Znamená to, že každá obrazovka má svůj \textit{ViewModel} a každá datová sekce má svůj \textit{Repozitář}. Tyto třídy jsou odděleny od samotných fragmentů a aktivit. Pro získávání dat asynchronně používá aplikace třídu \texttt{LiveData} \cite{livedata}.
+
+
+\boxik{
+\textbf{ViewModel} je třída obsahující data a metody pro její fragment/aktivitu, která má vlastní životní cyklus. Díky ViewModelu data přežijí změnu konfigurace jako například otočení obrazovky.
+}
+
+
+\boxik{
+\textbf{Repozitář} (repository) je třída, která shromažďuje data z různých zdrojů a nabízí je ve vhodné formě ostatním třídám (například může data uchovat v mezipaměti). V této aplikaci přistupuje repozitář pouze do databáze a ve většině případů přímo volá metody implementované v databázové vrstvě.
+}
+
+
+Aby se aplikace snáze programovala a byla více škálovatelná, rozhodl jsem se použít tvz. \enquote{automated dependency injection} \cite{di}. Doporučená knihovna pro automated dependency injection \texttt{Hilt} \cite{hilt} je sice v beta verzi, avšak já jsem se ji rozhodl využít, jelikož mně u předchozích projektů fungovala bezproblémově.
+
+
+\boxik{
+\textbf{Automated dependency injection} (česky automatizované vkládání závislostí) je technika, která zajistí, že třídy, které k činnosti potřebují ostatní třídy, tyto třídy dostanou automaticky a v jakémkoli podporovaném kontextu. Když například repozitář potřebuje ke své funkci třídu, která přistupuje do databáze, automated dependency injection zařídí, že tuto třídu automaticky dostane a programátor ji nemusí explicitně vytvářet. V připadě hiltu je možné využít i vytváření \textit{singletonů}, což zajistí, že instance třídy existuje v aplikaci pouze jednou a jiné třídy dostanou právě tuto instanci.
+}
+
+
+
+
+\end{document}

@@ -17,5 +17,6 @@
     <string name="error_failed_to_compress_image">Komprimování se nezdařilo</string>
     <string name="error_task_cancelled">Úloha zrušena</string>
     <string name="error_camera_app_not_found">Nebyla nalezene aplikace kamery</string>
+    <string name="unknown_file_format">Nastala neznámá chyba. Toto je pravděpodobně způsobeno použitím nepodporovaného formátu fotografie.</string>
 
 </resources>

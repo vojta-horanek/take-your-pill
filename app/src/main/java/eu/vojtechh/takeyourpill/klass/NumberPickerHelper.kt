@@ -23,7 +23,6 @@ object NumberPickerHelper {
         return values
     }
 
-
     fun convertToString(numberPickerValue: Int) = getDisplayValues().getOrElse(numberPickerValue - 1) { "1" }
     fun convertToPosition(value: String) = getDisplayValues().indexOfFirst { it == value } + 1
 }

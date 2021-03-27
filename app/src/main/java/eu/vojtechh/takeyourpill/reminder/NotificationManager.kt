@@ -115,11 +115,8 @@ object NotificationManager {
 
     }
 
-    fun cancelNotification(context: Context, notificationId: Long) {
-        with(NotificationManagerCompat.from(context)) {
-            cancel(notificationId.toInt())
-        }
-    }
+    fun cancelNotification(context: Context, notificationId: Long) =
+        NotificationManagerCompat.from(context).cancel(notificationId.toInt())
 
     fun createNotificationChannel(context: Context, id: String, name: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

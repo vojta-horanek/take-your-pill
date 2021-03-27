@@ -413,13 +413,6 @@ public class UCrop {
         }
 
         /**
-         * @param color - desired color of crop grid/guidelines corner
-         */
-        public void setCropGridCornerColor(@ColorInt int color) {
-            mOptionBundle.putInt(EXTRA_CROP_GRID_CORNER_COLOR, color);
-        }
-
-        /**
          * @param width - desired width of crop grid lines in pixels
          */
         public void setCropGridStrokeWidth(@IntRange(from = 0) int width) {

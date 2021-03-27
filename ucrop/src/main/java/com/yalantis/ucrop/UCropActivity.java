@@ -24,6 +24,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -31,7 +32,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yalantis.ucrop.callback.BitmapCropCallback;
 import com.yalantis.ucrop.model.AspectRatio;
 import com.yalantis.ucrop.view.CropImageView;
@@ -52,7 +52,6 @@ import java.util.Locale;
  * Created by Oleksii Shliama (https://github.com/shliama).
  */
 
-@SuppressWarnings("ConstantConditions")
 public class UCropActivity extends AppCompatActivity {
 
     public static final int DEFAULT_COMPRESS_QUALITY = 90;
@@ -152,7 +151,7 @@ public class UCropActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new MaterialAlertDialogBuilder(this)
+        new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.ucrop_confirm_discard_photo))
                 .setMessage(getString(R.string.ucrop_confirm_discard_photo_description))
                 .setNegativeButton(getString(R.string.ucrop_no), new DialogInterface.OnClickListener() {
@@ -240,7 +239,6 @@ public class UCropActivity extends AppCompatActivity {
         mOverlayView.setCropGridRowCount(intent.getIntExtra(UCrop.Options.EXTRA_CROP_GRID_ROW_COUNT, OverlayView.DEFAULT_CROP_GRID_ROW_COUNT));
         mOverlayView.setCropGridColumnCount(intent.getIntExtra(UCrop.Options.EXTRA_CROP_GRID_COLUMN_COUNT, OverlayView.DEFAULT_CROP_GRID_COLUMN_COUNT));
         mOverlayView.setCropGridColor(intent.getIntExtra(UCrop.Options.EXTRA_CROP_GRID_COLOR, getResources().getColor(R.color.ucrop_color_default_crop_grid)));
-        mOverlayView.setCropGridCornerColor(intent.getIntExtra(UCrop.Options.EXTRA_CROP_GRID_CORNER_COLOR, getResources().getColor(R.color.ucrop_color_default_crop_grid)));
         mOverlayView.setCropGridStrokeWidth(intent.getIntExtra(UCrop.Options.EXTRA_CROP_GRID_STROKE_WIDTH, getResources().getDimensionPixelSize(R.dimen.ucrop_default_crop_grid_stoke_width)));
 
         // Aspect ratio options

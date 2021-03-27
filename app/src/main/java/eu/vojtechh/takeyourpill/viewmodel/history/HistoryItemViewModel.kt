@@ -1,26 +1,40 @@
 package eu.vojtechh.takeyourpill.viewmodel.history
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.vojtechh.takeyourpill.model.History
 import eu.vojtechh.takeyourpill.repository.HistoryRepository
 import eu.vojtechh.takeyourpill.repository.PillRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoryItemViewModel @Inject constructor(
-        private val pillRepository: PillRepository,
-        private val historyRepository: HistoryRepository
+    private val pillRepository: PillRepository,
+    private val historyRepository: HistoryRepository
 ) : ViewModel() {
-    fun getPillById(pillId: Long) = pillRepository.getPill(pillId)
-    fun getHistory() = historyRepository.getHistory()
-    fun getHistoryForPill(pillId: Long) = historyRepository.getHistoryForPill(pillId)
+    fun getPillById(pillId: Long) = pillRepository.getPillFlow(pillId).asLiveData()
+    val namedHistory = historyRepository.getHistoryFlow().map { historyList ->
+        val pills = pillRepository.getAllPillsIncludingDeleted()
+        return@map historyList.onEach { history ->
+            history.pillName = pills.find {
+                it.id == history.pillId
+            }?.name ?: "N/A"
+        }
+    }.asLiveData()
+
+    fun getHistoryForPill(pillId: Long) =
+        historyRepository.getHistoryForPillFlow(pillId).asLiveData()
+
     fun confirmHistory(item: History) = viewModelScope.launch {
-        val historyEntity = History(item.id, item.reminded, Calendar.getInstance(), item.amount, item.pillId)
+        val historyEntity =
+            History(item.id, item.reminded, Calendar.getInstance(), item.amount, item.pillId)
         historyRepository.updateHistoryItem(historyEntity)
     }
 
@@ -30,7 +44,8 @@ class HistoryItemViewModel @Inject constructor(
     }
 
     fun setHistoryConfirmTime(item: History, newConfirmTime: Calendar) = viewModelScope.launch {
-        val historyEntity = History(item.id, item.reminded, newConfirmTime, item.amount, item.pillId)
+        val historyEntity =
+            History(item.id, item.reminded, newConfirmTime, item.amount, item.pillId)
         historyRepository.updateHistoryItem(historyEntity)
     }
 
@@ -51,8 +66,8 @@ class HistoryItemViewModel @Inject constructor(
      * @return LiveData Boolean - true means pill deleted
      *                            false means only history deleted
      */
-    fun deletePillHistory(pillId: Long) = liveData {
-        val pill = pillRepository.getPillSync(pillId)
+    fun deletePillHistory(pillId: Long) = liveData(Dispatchers.IO) {
+        val pill = pillRepository.getPill(pillId)
         if (pill.deleted) {
             pillRepository.deletePillAndReminder(pill)
             emit(true)
@@ -61,17 +76,5 @@ class HistoryItemViewModel @Inject constructor(
             emit(false)
 
         }
-    }
-
-    fun addNames(history: List<History>?) = liveData {
-        history?.let { history ->
-            val pills = pillRepository.getAllPillsIncludingDeletedSync()
-            emit(history.map { hist ->
-                hist.pillName = pills.find {
-                    it.id == hist.pillId
-                }?.name ?: "N/A"
-                hist
-            })
-        } ?: emit(history)
     }
 }

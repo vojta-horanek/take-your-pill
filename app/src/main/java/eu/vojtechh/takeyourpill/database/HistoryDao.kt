@@ -1,19 +1,19 @@
 package eu.vojtechh.takeyourpill.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import eu.vojtechh.takeyourpill.model.History
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HistoryDao {
     @Query("SELECT * FROM history ORDER BY history.reminded DESC")
-    fun getAll(): LiveData<List<History>>
+    fun getEverythingFlow(): Flow<List<History>>
 
     @Query("SELECT * FROM history ORDER BY pillId ASC")
-    fun getAllOrderedById(): LiveData<List<History>>
+    fun getEverythingOrderedByIdFlow(): Flow<List<History>>
 
     @Query("SELECT * FROM history WHERE historyId = (:historyId)")
-    fun getWithId(historyId: Long): LiveData<History?>
+    fun getWithIdFlow(historyId: Long): Flow<History?>
 
     @Query(
         """
@@ -32,7 +32,7 @@ interface HistoryDao {
             history.pillId = (:pillId)
         ORDER BY history.reminded DESC"""
     )
-    fun getWithPillId(pillId: Long): LiveData<List<History>>
+    fun getWithPillIdFlow(pillId: Long): Flow<List<History>>
 
     @Query(
         """
@@ -41,27 +41,36 @@ interface HistoryDao {
             history.pillId = (:pillId)
         ORDER BY history.reminded DESC LIMIT 1"""
     )
-    suspend fun getLatestWithPillIdSync(pillId: Long): History?
+    suspend fun getLatestWithPillId(pillId: Long): History?
+
+    @Query(
+        """
+        SELECT * FROM history
+        WHERE 
+            history.pillId = (:pillId)
+        ORDER BY history.reminded DESC LIMIT 1"""
+    )
+    fun getLatestWithPillIdFlow(pillId: Long): Flow<History?>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(historyEntity: List<History>)
+    suspend fun insert(history: List<History>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(historyEntityItem: History)
+    suspend fun insert(history: History)
 
     @Update
-    suspend fun update(historyEntityItem: History)
+    suspend fun update(history: History)
 
     @Update
-    suspend fun update(historyEntity: List<History>)
+    suspend fun update(history: List<History>)
 
     @Delete
-    suspend fun delete(historyEntityItem: History)
+    suspend fun delete(history: History)
 
     @Delete
-    suspend fun delete(historyEntity: List<History>)
+    suspend fun delete(history: List<History>)
 
     @Query("DELETE FROM history WHERE history.pillId = (:pillId)")
-    suspend fun deleteByPillId(pillId: Long)
+    suspend fun deleteWithPillId(pillId: Long)
 }

@@ -1,6 +1,5 @@
 package eu.vojtechh.takeyourpill.fragment.dialog
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
@@ -11,10 +10,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 
-open class RoundedDialogFragment : BottomSheetDialogFragment() {
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-        return (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
+open class RoundedDialogFragment() : BottomSheetDialogFragment() {
+    override fun onCreateDialog(savedInstanceState: Bundle?) =
+        (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
             behavior.addBottomSheetCallback(
                 getBottomSheetCallback({ bottomSheet, newState ->
                     if (newState == BottomSheetBehavior.STATE_EXPANDED) {
@@ -22,7 +20,6 @@ open class RoundedDialogFragment : BottomSheetDialogFragment() {
                     }
                 }) { _, _ -> })
         }
-    }
 
     private fun createRoundDrawable(
         bottomSheet: View

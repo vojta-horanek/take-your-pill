@@ -10,7 +10,6 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
-import eu.vojtechh.takeyourpill.BuildConfig
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.activity.AboutActivity
 import eu.vojtechh.takeyourpill.klass.Pref
@@ -24,14 +23,16 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listView.clipToPadding = false
-        listView.overScrollMode = OVER_SCROLL_NEVER
-        listView.setPadding(
-            0,
-            0,
-            0,
-            view.context.resources.getDimension(R.dimen.list_with_navigation_padding).toInt()
-        )
+        listView.apply {
+            clipToPadding = false
+            overScrollMode = OVER_SCROLL_NEVER
+            setPadding(
+                0,
+                0,
+                0,
+                view.context.resources.getDimension(R.dimen.list_with_navigation_padding).toInt()
+            )
+        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -57,7 +58,8 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             true
         }
 
-        findPreference<Preference>("addTestData")?.isVisible = BuildConfig.DEBUG
+        // Uncomment after dlouhodobka
+        // findPreference<Preference>("addTestData")?.isVisible = BuildConfig.DEBUG
 
         findPreference<Preference>("addTestData")?.setOnPreferenceClickListener {
             model.addTestData(requireContext())

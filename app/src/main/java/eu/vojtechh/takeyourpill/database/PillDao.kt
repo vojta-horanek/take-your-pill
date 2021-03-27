@@ -1,43 +1,43 @@
 package eu.vojtechh.takeyourpill.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import eu.vojtechh.takeyourpill.model.Pill
 import eu.vojtechh.takeyourpill.model.PillEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PillDao {
     @Transaction
     @Query("SELECT * FROM pill WHERE deleted = 0 ORDER BY pillId ASC")
-    fun getAll(): LiveData<List<Pill>>
+    fun getEverythingFlow(): Flow<List<Pill>>
 
     @Transaction
     @Query("SELECT * FROM pill WHERE deleted = 0 ORDER BY pillId ASC")
-    suspend fun getAllSync(): List<Pill>
+    suspend fun getEverything(): List<Pill>
 
     @Transaction
     @Query("SELECT * FROM pill ORDER BY pillId ASC")
-    fun getAllIncludingDeleted(): LiveData<List<Pill>>
+    fun getEverythingIncludingDeletedFlow(): Flow<List<Pill>>
 
     @Transaction
     @Query("SELECT * FROM pill ORDER BY pillId ASC")
-    suspend fun getAllIncludingDeletedSync(): List<Pill>
+    suspend fun getEverythingIncludingDeleted(): List<Pill>
 
     @Transaction
     @Query("SELECT * FROM pill WHERE pillId = (:pillId)")
-    fun getById(pillId: Long): LiveData<Pill>
+    fun getWithIdFlow(pillId: Long): Flow<Pill>
 
     @Transaction
     @Query("SELECT * FROM pill WHERE pillId = (:pillId)")
-    suspend fun getByIdSync(pillId: Long): Pill
+    suspend fun getWitId(pillId: Long): Pill
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPill(pillEntity: PillEntity): Long
+    suspend fun insertPillEntity(pillEntity: PillEntity): Long
 
     @Update
-    suspend fun updatePill(pillEntity: PillEntity)
+    suspend fun updatePillEntity(pillEntity: PillEntity)
 
     @Delete
-    suspend fun deletePill(pillEntity: PillEntity)
+    suspend fun deletePillEntity(pillEntity: PillEntity)
 
 }

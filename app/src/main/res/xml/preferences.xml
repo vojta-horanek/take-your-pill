@@ -2,8 +2,10 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="@string/reminders">
+        <!-- TODO Decide if I want to enable this -->
         <SwitchPreferenceCompat
             app:icon="@drawable/ic_vibration"
+            app:isPreferenceVisible="false"
             app:key="alertStyleKey"
             app:summary="@string/alert_style_summary"
             app:title="@string/alarm_settings" />
@@ -15,6 +17,11 @@
             app:showSeekBarValue="true"
             app:summary="@string/settings_delay_summary"
             app:title="@string/settings_delay_by" />
+<!--
+If the user disables this option, the scheduled reminders won't be affected.
+This is due to the fact that we can't determine between a check reminder and a delay reminder.
+This means that if we cancelled all of the scheduled CheckReceivers we would also cancel delay alarms.
+-->
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:icon="@drawable/ic_alarm"
@@ -37,13 +44,13 @@
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/miscellaneous">
         <ListPreference
-            app:title="@string/app_theme"
-            app:summary="@string/set_app_theme"
-            app:key="themeKey"
-            app:icon="@drawable/ic_paint"
-            app:entries="@array/pref_theme"
             app:defaultValue="0"
-            app:entryValues="@array/pref_theme_values" />
+            app:entries="@array/pref_theme"
+            app:entryValues="@array/pref_theme_values"
+            app:icon="@drawable/ic_paint"
+            app:key="themeKey"
+            app:summary="@string/set_app_theme"
+            app:title="@string/app_theme" />
         <Preference
             app:icon="@drawable/ic_info"
             app:key="showAbout"
