@@ -17,6 +17,11 @@
             app:showSeekBarValue="true"
             app:summary="@string/settings_delay_summary"
             app:title="@string/settings_delay_by" />
+<!--
+If the user disables this option, the scheduled reminders won't be affected.
+This is due to the fact that we can't determine between a check reminder and a delay reminder.
+This means that if we cancelled all of the scheduled CheckReceivers we would also cancel delay alarms.
+-->
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:icon="@drawable/ic_alarm"
