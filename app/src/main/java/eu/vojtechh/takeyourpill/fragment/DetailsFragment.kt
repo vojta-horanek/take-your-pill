@@ -70,7 +70,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initViews() {
-
         binding.run {
 
             textPillName.text = model.pill.name
@@ -81,14 +80,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 isVisible = model.pill.isDescriptionVisible
             }
 
+            recyclerReminders.adapter = reminderAdapter
+            recyclerReminders.disableAnimations()
+
+            cardPhoto.isVisible = model.pill.isPhotoVisible
             val photoDrawable = model.pill.getPhotoDrawable(requireContext())
             imagePillPhoto.setImageDrawable(photoDrawable)
             imageViewFullScreen.setImageDrawable(photoDrawable)
-
-            cardPhoto.isVisible = model.pill.isPhotoVisible
-
-            recyclerReminders.adapter = reminderAdapter
-            recyclerReminders.disableAnimations()
 
             val accent = model.pill.colorResource(requireContext())
             val accentList = ColorStateList.valueOf(accent)

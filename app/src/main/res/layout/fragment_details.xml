@@ -129,7 +129,6 @@
                 android:clipToPadding="false"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:visibility="gone"
                 app:cardCornerRadius="@dimen/standard_corner_radius"
                 app:cardElevation="0dp"
                 app:cardPreventCornerOverlap="true"
@@ -138,8 +137,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textPillDescription"
                 app:layout_goneMarginTop="@dimen/appbar_margin_vertical"
                 app:strokeColor="@color/stroke_color"
-                app:strokeWidth="1dp"
-                tools:visibility="visible">
+                app:strokeWidth="1dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imagePillPhoto"
