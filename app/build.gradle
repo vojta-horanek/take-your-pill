@@ -88,7 +88,6 @@ dependencies {
     // Hilt
     implementation 'com.google.dagger:hilt-android:2.33-beta'
     kapt 'com.google.dagger:hilt-android-compiler:2.33-beta'
-    //noinspection GradleDependency
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
     kapt 'androidx.hilt:hilt-compiler:1.0.0-beta01'
 
@@ -117,10 +116,13 @@ dependencies {
     //charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    //Custom image picker
+    // Custom image picker
     implementation project(path: ':imagepicker')
 
-    //ViewBinding delegate
+    // Licences dialog
+    implementation 'de.psdev.licensesdialog:licensesdialog:2.1.0'
+
+    // ViewBinding delegate
     implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
 
     implementation 'com.faltenreich:skeletonlayout:4.0.0'

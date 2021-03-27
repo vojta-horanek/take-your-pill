@@ -1,10 +1,12 @@
 package eu.vojtechh.takeyourpill.activity
 
 //import com.mikepenz.aboutlibraries.LibsBuilder
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import de.psdev.licensesdialog.LicensesDialogFragment
 import eu.vojtechh.takeyourpill.BuildConfig
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.databinding.ActivityAboutBinding
@@ -45,6 +47,11 @@ class AboutActivity : AppCompatActivity() {
     }
 
     private fun openLicencesDialog() {
-
+        LicensesDialogFragment.Builder(this)
+            .setNotices(R.raw.notices)
+            .setShowFullLicenseText(false)
+            .setIncludeOwnLicense(true)
+            .build()
+            .show(supportFragmentManager, null)
     }
 }
