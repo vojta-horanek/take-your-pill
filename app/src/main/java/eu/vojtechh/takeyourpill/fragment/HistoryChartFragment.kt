@@ -38,13 +38,15 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
 
         Utils.init(requireContext())
 
-        val titles = mutableListOf(
-            getString(R.string.all_pills_chart),
-            getString(R.string.missed_pills),
-            getString(R.string.confirmed_missed_pills),
-        )
 
         model.getStatsData(applicationContext).observe(viewLifecycleOwner) { data ->
+
+            val titles = mutableListOf(
+                getString(R.string.all_pills_chart),
+                getString(R.string.missed_pills),
+                getString(R.string.confirmed_missed_pills),
+            )
+
             data?.let { list ->
                 val chartList = list.map { ChartItem(it, titles.removeFirst()) }
                 appAdapter.submitList(chartList)
