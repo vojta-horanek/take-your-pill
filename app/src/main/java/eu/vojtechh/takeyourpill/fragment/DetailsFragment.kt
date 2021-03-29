@@ -157,9 +157,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 model.loadedData()
             }
 
-            cardPhoto.setOnLongClickListener {
+            cardPhoto.onClick {
                 imageFullscreen.isVisible = true
-                true
             }
 
             imageFullscreen.onClick {
