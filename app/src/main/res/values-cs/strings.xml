@@ -61,6 +61,7 @@
     <string name="settings_remind_again_after_summary">Nastavte, po kolika minutách se připomene znova, pokud nepotvrdíte připomínku</string>
     <string name="settings_notification_options">Nastavit možnosti oznámení</string>
     <string name="settings_notification_options_summary">Otevře android nastavení a umožní nastavit možnosti oznámení, například zvuk nebo priorita, pro každý lék zvlášť</string>
+    <string name="settings_notification_options_summary_legacy">Otevře android nastavení a umožní nastavit možnosti oznámení</string>
     <string name="settings_delay_by">Čas odložení</string>
     <string name="settings_delay_summary">Nastavte o kolik minut se připomínka odloží při kliknutí na tlačítko v oznámení</string>
     <string name="alarm_settings">Maximální priorita připomínání</string>
