@@ -126,5 +126,9 @@ dependencies {
     // ViewBinding delegate
     implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
 
+    // Recycler loading skeletons
     implementation 'com.faltenreich:skeletonlayout:4.0.0'
+
+    // Popup Menu
+    implementation 'com.github.zawadz88.materialpopupmenu:material-popup-menu:4.1.0'
 }
