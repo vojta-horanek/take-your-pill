@@ -48,7 +48,9 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
             )
 
             data?.let { list ->
-                val chartList = list.map { ChartItem(it, titles.removeFirst()) }
+                val chartList = list
+                    .map { ChartItem(it, titles.removeFirst()) }
+                    .filter { it.pieData.entryCount != 0 }
                 appAdapter.submitList(chartList)
             }
         }
