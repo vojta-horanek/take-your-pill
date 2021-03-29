@@ -120,7 +120,8 @@ class HistoryViewDialog :
         if (item is History) {
             val popup = PopupMenu(requireContext(), view)
             popup.inflate(R.menu.item_history_menu)
-            popup.forcePopUpMenuToShowIcons()
+            /* This is not working with minify, leaving it off
+            popup.forcePopUpMenuToShowIcons() */
             if (item.hasBeenConfirmed) {
                 popup.menu.findItem(R.id.historyConfirm).isVisible = false
             } else {
