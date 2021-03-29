@@ -38,18 +38,17 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
 
         Utils.init(requireContext())
 
+        val titles = mutableListOf(
+            getString(R.string.all_pills_chart),
+            getString(R.string.missed_pills),
+            getString(R.string.confirmed_missed_pills),
+        )
 
         model.getStatsData(applicationContext).observe(viewLifecycleOwner) { data ->
-
-            val titles = mutableListOf(
-                getString(R.string.all_pills_chart),
-                getString(R.string.missed_pills),
-                getString(R.string.confirmed_missed_pills),
-            )
-
+            val titleIterator = titles.iterator()
             data?.let { list ->
                 val chartList = list
-                    .map { ChartItem(it, titles.removeFirst()) }
+                    .map { ChartItem(it, titleIterator.next()) }
                     .filter { it.pieData.entryCount != 0 }
                 appAdapter.submitList(chartList)
             }
