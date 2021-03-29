@@ -38,8 +38,11 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        findPreference<Preference>("notificationOptions")?.isVisible =
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+        // If we are running on older than oreo, set summary to represent the available options in android settings
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            findPreference<Preference>("notificationOptions")?.summary =
+                getString(R.string.settings_notification_options_summary_legacy)
+        }
         findPreference<Preference>("notificationOptions")?.setOnPreferenceClickListener {
             val intent = Intent()
             intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"

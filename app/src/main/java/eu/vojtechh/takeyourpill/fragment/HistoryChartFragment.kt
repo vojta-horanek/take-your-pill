@@ -45,8 +45,11 @@ class HistoryChartFragment : Fragment(R.layout.fragment_history_chart) {
         )
 
         model.getStatsData(applicationContext).observe(viewLifecycleOwner) { data ->
+            val titleIterator = titles.iterator()
             data?.let { list ->
-                val chartList = list.map { ChartItem(it, titles.removeFirst()) }
+                val chartList = list
+                    .map { ChartItem(it, titleIterator.next()) }
+                    .filter { it.pieData.entryCount != 0 }
                 appAdapter.submitList(chartList)
             }
         }

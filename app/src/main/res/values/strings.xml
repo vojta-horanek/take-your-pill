@@ -76,6 +76,7 @@
     <string name="settings_delay_by">Delay by</string>
     <string name="settings_notification_options">Set notification options</string>
     <string name="settings_notification_options_summary">Open android settings and set notification options like sound and priority for each pill</string>
+    <string name="settings_notification_options_summary_legacy">Open android settings and set notification options</string>
     <string name="settings_remind_again_after">Remind again after</string>
     <string name="settings_remind_again_after_summary">Chose how many minutes to remind after if you did not confirm taking the pill</string>
     <string name="settings_remind_again">Remind until confirmed</string>
@@ -145,5 +146,6 @@
     <string name="night">Night</string>
     <string name="save">Save</string>
     <string name="last_reminded">Last reminded</string>
+    <string name="other">Other</string>
 
 </resources>

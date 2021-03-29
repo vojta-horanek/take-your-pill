@@ -77,4 +77,10 @@
         <copyright>Copyright 2020 Philipp Fahlteich</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
+    <notice>
+        <name>Material Popup Menu</name>
+        <url>https://github.com/zawadz88/MaterialPopupMenu</url>
+        <copyright>Copyright 2017 Piotr Zawadzki</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
 </notices>
