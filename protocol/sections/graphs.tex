@@ -3,7 +3,7 @@
 
 \begin{document}
 
-Druhou sekcí historie je fragment \texttt{HistoryChartFragment}, který se stará o zobrazení grafů. Fragment obsahuje kartu se třemi koláčovými grafy, touto kartou lze posouvat pro zobrazení i těch grafů, které se na obrazovku nevešly. Pro grafy jsem využil knihovnu \textit{MPAndroidChart} \cite{chart} dovolující vytvoření velkého množství typů grafů. Já jsem použil jen graf koláčový, protože ostatní grafy by v této aplikaci nedávaly smysl. Všechny grafy v aplikaci jsou procentuální a knihovna si procenta vypočítá sama, aplikace počítá pouze počet položek, nikoliv jejich procentuální množství. Pokud se v grafu zobrazují jednotlivé léky (první a druhý graf), barva výseče souhlasí s barvou léku. 
+Druhou sekcí historie je fragment \texttt{HistoryChartFragment}, který se stará o zobrazení grafů. Fragment obsahuje \texttt{RecyclerView} se třemi kartami s koláčovými grafy. Pro grafy jsem využil knihovnu \textit{MPAndroidChart} \cite{chart} dovolující vytvoření velkého množství typů grafů. Já jsem použil jen graf koláčový, protože ostatní grafy by v této aplikaci nedávaly smysl. Všechny grafy v aplikaci jsou procentuální a knihovna si procenta vypočítá sama, aplikace počítá pouze počet položek, nikoliv jejich procentuální zastoupení. Pokud se v grafu zobrazují jednotlivé léky (první a druhý graf), barva výseče souhlasí s barvou léku. Pokud některý z grafů nemá žádná data, nezobrazí se.
 
 \paragraph{Graf 1} Prvním grafem je graf s názvem \enquote{všechny připomínky}. Graf zobrazuje procentuální poměr připomínek jednotlivých léků. Data se získávají následujícím způsobem:
 
@@ -21,7 +21,7 @@ pillsHistory.forEach { pillHistory ->
 Tento kód vypočítá délku každé skupinu historie indikovanou podle ID léku a přidá ji do seznamu používaném pro vykreslení grafu.
 
 
-\paragraph{Graf 2} Druhý graf na obrazovce pod názvem \enquote{vynechané připomínky} zobrazuje procentuální poměr vynechaných připomínek pro jednotlivé léky. Pokud neexistují žádné vynechané připomínky, graf se nezobrazí. Data pro tento graf se získávají následovně (kód upraven pro snazší orientaci):
+\paragraph{Graf 2} Druhý graf na obrazovce pod názvem \enquote{vynechané připomínky} zobrazuje procentuální poměr vynechaných připomínek pro jednotlivé léky. Data pro tento graf se získávají následovně (kód upraven pro snazší orientaci):
 
 \setmonofont{JetBrains Mono}
 \begin{lstlisting}[language=Kotlin]
