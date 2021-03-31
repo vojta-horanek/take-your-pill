@@ -98,3 +98,5 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 /app/schemas/eu.vojtechh.takeyourpill.database.PillDatabase/
+
+*.aux
