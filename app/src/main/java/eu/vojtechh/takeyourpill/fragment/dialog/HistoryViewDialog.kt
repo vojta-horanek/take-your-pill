@@ -1,6 +1,5 @@
 package eu.vojtechh.takeyourpill.fragment.dialog
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -120,9 +119,7 @@ class HistoryViewDialog :
     private fun onItemOptionsClick(view: View, historyItem: BaseModel, position: Int) {
         if (historyItem is History) {
             popupMenu {
-                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-                    == Configuration.UI_MODE_NIGHT_YES
-                ) {
+                if (requireContext().isDarkThemeOn()) {
                     style = R.style.Widget_MPM_Menu_Dark
                 }
                 section {
