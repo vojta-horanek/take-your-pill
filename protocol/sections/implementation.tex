@@ -3,13 +3,13 @@
 
 \begin{document}
 
-Při vytváření aplikace jsem vycházel ze zadání a využil jsem vlastních znalostní a zkušeností. Na naprogramování aplikace jsem použil programovací jazyk Kotlin. Zvolil jsem ho proto, že je preferovaný společností Google a oproti jazyku Java má podle mého nespočet výhod. Mnoho Android knihoven vychází právě pro Kotlin a tak mi jeho použití ulehčilo mnoho práce při programování. Jmenovitě knihovny z rodiny Android Jetpack \cite{jetpack} jsem použil hojně.
+Při vytváření aplikace jsem vycházel ze zadání a využil jsem vlastních znalostní a zkušeností. Na naprogramování aplikace jsem použil programovací jazyk Kotlin. Zvolil jsem ho, jelikož je preferovaný společností Google a oproti jazyku Java má podle mého nespočet výhod. Mnoho Android knihoven vychází právě pro Kotlin a tak mi jeho použití ulehčilo mnoho práce při programování. Jmenovitě knihovny z rodiny Android Jetpack \cite{jetpack} jsem použil hojně.
 
-Uživatelské rozhraní aplikace je napsáno v jazyce XML a pro jeho manipulaci jsem použil knihovnu \textit{ViewBinding} \cite{viewbinding}. Pro snadnější práci s ViewBindingy jsem využil další knihovnu s názvem \textit{FragmentViewBindingDelegate-KT} \cite{delegate}\cite{delegate2}, která mi zpřístupnila \enquote{delegát} \texttt{by viewBinding()} s jehož pomocí jsem mohl layout inicializovat (a automaticky zahodit) jen pomocí jedné řádky kódu.
+Uživatelské rozhraní aplikace je napsáno v jazyce XML a pro jeho manipulaci jsem použil knihovnu \textit{ViewBinding} \cite{viewbinding}. Pro snadnější práci s ViewBindingy jsem využil další knihovnu s názvem \textit{FragmentViewBindingDelegate-KT} \cite{delegate}\cite{delegate2}, která mi zpřístupnila \enquote{delegát} \texttt{by viewBinding()} s jehož pomocí jsem mohl layout (rozložení) inicializovat (a automaticky zahodit) jen pomocí jedné řádky kódu.
 
-Při samotném vývoji jsem používal vývojové prostředí \textit{Android Studio} \cite{studio} a emulátor \textit{Android Emulator}.
+Při samotném vývoji jsem používal vývojové prostředí \textit{Android Studio} \cite{studio} a emulátor \textit{Android Emulator} integrovaný do zmíněného vývojového prostředí.
 
-Aplikace je napsána tak, aby odpovídala architektuře \textbf{Model-View-ViewModel}. Znamená to, že každá obrazovka má svůj \textit{ViewModel} a každá datová sekce má svůj \textit{Repozitář}. Tyto třídy jsou odděleny od samotných fragmentů a aktivit. Pro asynchronní práci s daty používá databázová vrstva spolu s repozitáři \texttt{Flow} \cite{flow}, které se ve ViewModelu mění na \texttt{LiveData} \cite{livedata} pomocí funkce \texttt{asLiveData()}.
+Aplikace je napsána tak, aby odpovídala architektuře \textbf{Model-View-ViewModel}. Znamená to, že každá obrazovka má svůj \textit{ViewModel} a každá datová sekce má svůj \textit{Repozitář}. Tyto třídy jsou odděleny od samotných fragmentů a aktivit. Pro asynchronní práci s daty používá databázová vrstva spolu s repozitáři \texttt{Flow} \cite{flow} (vysvětlení v kapitole \ref{sec:database}), které se ve ViewModelu mění na \texttt{LiveData} \cite{livedata} pomocí funkce \texttt{asLiveData()}.
 
 
 \boxik{

@@ -3,7 +3,7 @@
 
 \begin{document}
 
-Pro přidání úvodní obrazovky jsem použil knihovnu \textit{material-intro} \cite{intro}. Tato knihovna se postará o všechen layout a logiku úvodní obrazovky. Má jednoduché API, a tak jediné, co jsem do aplikace přidal, byla aktivita \texttt{AppIntroActivity} dědící ze třídy \texttt{IntroActivity}. V této třídě jsem přidal slidy pomocí metody \texttt{addSlide()}. Obrázky ve slidech jsem vyfotil v android emulátoru a upravil v programu \textit{GIMP}. Úvodní obrazovka se zobrazí, pouze pokud uživatel aplikaci spustí poprvé. Toto je zajištěno tak, že do trvalé paměti aplikace\footnote{trvalou pamětí je myšleno úložiště SharedPrefs} se po ukončení této aktivity uloží proměnná \texttt{firstRun} s hodnotou \texttt{false}. Snímek obrazovky výsledku lze vidět na straně \pageref{fig:intro} (\ref{fig:intro}).
+Pro přidání úvodní obrazovky jsem použil knihovnu \textit{material-intro} \cite{intro}. Tato knihovna se postará o rozložení a logiku úvodní obrazovky. Má jednoduché API, a tak jediné, co jsem do aplikace přidal, byla aktivita \texttt{AppIntroActivity} dědící ze třídy \texttt{IntroActivity}. V této třídě jsem přidal slidy pomocí metody \texttt{addSlide()}. Obrázky ve slidech jsem vyfotil v android emulátoru a upravil v programu \textit{GIMP}. Úvodní obrazovka se zobrazí, pouze pokud uživatel aplikaci spustí poprvé. Toto je zajištěno tak, že do trvalé paměti aplikace\footnote{Trvalou pamětí je myšleno úložiště SharedPrefs.} se po ukončení této aktivity uloží proměnná \texttt{firstRun} s hodnotou \texttt{false}. Snímek obrazovky výsledku lze vidět na straně \pageref{fig:intro} (\ref{fig:intro}).
 
 
 \end{document}
