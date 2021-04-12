@@ -138,6 +138,8 @@ fun Context.isDarkThemeOn(): Boolean {
 
 fun Any?.isNull() = this == null
 
+fun Any?.isNotNull() = this != null
+
 fun <T, VH : RecyclerView.ViewHolder> ListAdapter<T, VH>.getItemOrNull(position: Int): T? {
     return this.currentList.elementAtOrNull(position)
 }

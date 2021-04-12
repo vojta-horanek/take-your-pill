@@ -7,6 +7,8 @@ import androidx.room.Embedded
 import androidx.room.Ignore
 import androidx.room.Relation
 import eu.vojtechh.takeyourpill.R
+import eu.vojtechh.takeyourpill.klass.isNotNull
+import eu.vojtechh.takeyourpill.klass.isNull
 
 data class Pill(
     @Embedded val pillEntity: PillEntity,
@@ -115,9 +117,20 @@ data class Pill(
 
     override fun isContentSame(newItem: BaseModel) =
         if (newItem is Pill) {
+            val isPhotoSame =
+                if (this.photo.isNull() && newItem.photo.isNotNull()) {
+                    false
+                } else if (this.photo.isNotNull() && newItem.photo.isNull()) {
+                    false
+                } else if (this.photo.isNotNull() && newItem.photo.isNotNull()) {
+                    this.photo?.sameAs(newItem.photo) ?: false
+                } else {
+                    true
+                }
+
             this.name == newItem.name &&
                     this.description == newItem.description &&
-                    this.photo?.sameAs(newItem.photo) ?: true &&
+                    isPhotoSame &&
                     this.color.resource == newItem.color.resource &&
                     this.deleted == newItem.deleted &&
                     this.options.isSame(newItem.options) &&
