@@ -141,7 +141,7 @@
     <string name="add_test_data">Add test data</string>
     <string name="app_theme">Application theme</string>
     <string name="set_app_theme">Set the application theme</string>
-    <string name="auto">Automatically</string>
+    <string name="theme_system">Follow system</string>
     <string name="day">Day</string>
     <string name="night">Night</string>
     <string name="save">Save</string>

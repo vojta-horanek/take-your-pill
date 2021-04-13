@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="pref_theme">
-        <item>@string/auto</item>
+        <item>@string/theme_system</item>
         <item>@string/day</item>
         <item>@string/night</item>
     </string-array>
