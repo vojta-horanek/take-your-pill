@@ -20,7 +20,7 @@
     <string name="enter_field_name">Prosím, zadejte název</string>
     <string name="reminders">Připomínky</string>
     <string name="limit_to_x_days">Omezit na počet dní</string>
-    <string name="number_of_days">Počet dní na který omezit</string>
+    <string name="number_of_days">Počet dní, na který omezit</string>
     <string name="start_from_day">Začit ode dne</string>
     <string name="restore_after">Obnovit po počtu dní</string>
     <string name="how_many_days_to_restore">Po kolika dnech obnovit</string>
@@ -76,7 +76,7 @@
     <string name="confirm_delete_history">Doopravdy to chcete udělat?</string>
     <string name="confirm_delete_history_description">Toto smaže celou historii pro tento lék.</string>
     <string name="confirm_delete_photo">Doopravdy chcete smazat fotografii?</string>
-    <string name="confirm_delete_photo_description">Toto smaže fotogragii u tohoto léku.</string>
+    <string name="confirm_delete_photo_description">Toto smaže fotografii u tohoto léku.</string>
     <string name="confirm_exit_edit">Doopravdy chcete odejít?</string>
     <string name="confirm_exit_edit_description">Toto zahodí všechny Vaše úpravy.</string>
     <string name="overview">Přehled</string>
@@ -86,27 +86,19 @@
     <string name="stat_reminded">Připomenuto %1$d×</string>
     <string name="stat_confirmed">Potvrzeno %1$d×</string>
     <string name="stat_missed">Vynecháno %1$d×</string>
-    <string name="no_history">Vypadá to, že jste zatím neobdrželi žádnou připomínku, statistiky a grafy pro Vás zatím nebudou dostupné.</string>
+    <string name="no_history">Vypadá to, že jste zatím neobdrželi žádnou připomínku.</string>
     <string name="stat_overall">Všechny léky</string>
     <string name="error_opening_image">Nastala chyba při otevírání obrázku</string>
     <string name="confirmed_missed_pills">Potvrzené ✕ Vynechané</string>
     <string name="missed">Vynecháno</string>
     <string name="limit_cycle_count">Omezit počet cyklů</string>
-    <string name="day_limit_description">Pokud chcete, aby se lék připomínal pouze určitý počet dní, zaškrtněte následující políčko.</string>
-    <string name="day_number_description">Do tohoto políčka napište počet dní, po který se má lék připomínat.</string>
-    <string name="cycle_today_description">Do tohoto políčka napište, kolikáty den z počtu dní, kdy se lék připomíná, je dnes.</string>
-    <string name="restore_after_description">Pokud chcete, aby se po skončení připomínání léku začalo znovu připomínat, zaškrtnětě následující políčko.</string>
-    <string name="cycle_count_description">Pokud chcete omezit počet cylků připomínání a pozastavování, zašktněte následující políčko.</string>
-    <string name="input_cycle_count_description">Do tohoto políčka napište počet cyklů (připomínání ✕ nepřipomínání) na který chcete lék omezit.</string>
-    <string name="input_restore_description">Do tohoto políčka napište, kolik dní se lék nebude po skončení připomínání připomínat, než se znovu připomínat začne.</string>
-
     <string name="intro">Úvodní obrazovka</string>
 
     <string name="intro_welcome_description">Tato aplikace Vám bude připomínat užívání léků. Od této chvíle si už nezapomenete vzít žádný prášek. Budete moci sledovat Vaši historii užití, grafy a statistiky.</string>
     <string name="intro_new_pill">Začněte přidáním léku</string>
     <string name="intro_new_pill_description">Klikněte na tlačítko \"Přidat lék\", zadejte informace, nastavte barvu, přidejte fotografii a hlavně nastavte připomínky.</string>
     <string name="intro_reminder">Přestantě si dělat starosti s léky</string>
-    <string name="intro_reminder_description">Aplikace Vám pošle připomínky, takže na kontrolování čašu a užívání léků můžete zapomenout a myslet na důležitější věci.</string>
+    <string name="intro_reminder_description">Aplikace Vám automaticky pošle připomínky, můžete tak myslet na důležitější věci, než je kontolování času.</string>
     <string name="intro_history">Podívejte se na historii užívání</string>
     <string name="intro_history_description">V sekci \"Historie\" uvidíte statistiky, grafy a Vaší kompletní historii užívání léků včetně času připomenutí, času potvrzení a množstí léku.</string>
 
@@ -149,6 +141,5 @@
     <string name="save">Uložit</string>
     <string name="last_reminded">Naposledy připomenuto</string>
     <string name="other">Ostatní</string>
-
-
+    
 </resources>
