@@ -3,7 +3,7 @@
 
 \begin{document}
 
-Druhou sekcí historie je fragment \texttt{HistoryChartFragment}, který se stará o zobrazení grafů. Fragment obsahuje \texttt{RecyclerView} se třemi kartami s koláčovými grafy. Pro grafy jsem využil knihovnu \textit{MPAndroidChart} \cite{chart} dovolující vytvoření velkého množství typů grafů. Já jsem použil jen graf koláčový, protože ostatní grafy by v této aplikaci nedávaly smysl. Všechny grafy v aplikaci jsou procentuální a knihovna si procenta vypočítá sama, aplikace počítá pouze počet položek, nikoliv jejich procentuální zastoupení. Pokud se v grafu zobrazují jednotlivé léky (první a druhý graf), barva výseče souhlasí s barvou léku. Pokud některý z grafů nemá žádná data, nezobrazí se.
+Druhou sekcí historie je fragment \texttt{HistoryChartFragment}, který se stará o zobrazení grafů. Fragment obsahuje \texttt{RecyclerView} se třemi kartami s koláčovými grafy. Pro grafy jsem využil knihovnu \textit{MPAndroidChart} \cite{chart} dovolující vytvoření velkého množství typů grafů. Já jsem použil jen graf koláčový, protože ostatní grafy by v této aplikaci nedávaly smysl. Všechny grafy v aplikaci jsou procentuální a knihovna si procenta vypočítá sama. Aplikace počítá pouze počet položek, nikoliv jejich procentuální zastoupení. Pokud se v grafu zobrazují jednotlivé léky (první a druhý graf), barva výseče souhlasí s barvou léku. Pokud některý z grafů nemá žádná data, nezobrazí se.
 
 \paragraph{Graf 1} Prvním grafem je graf s názvem \enquote{všechny připomínky}. Graf zobrazuje procentuální poměr připomínek jednotlivých léků. Data se získávají následujícím způsobem:
 
@@ -18,7 +18,7 @@ pillsHistory.forEach { pillHistory ->
 \end{lstlisting}
 \setmonofont{Latin Modern Mono}
 
-Tento kód vypočítá délku každé skupinu historie indikovanou podle ID léku a přidá ji do seznamu používaném pro vykreslení grafu.
+Tento kód vypočítá délku každé skupiny historie indikovanou podle ID léku a přidá ji do seznamu používaném pro vykreslení grafu.
 
 
 \paragraph{Graf 2} Druhý graf na obrazovce pod názvem \enquote{vynechané připomínky} zobrazuje procentuální poměr vynechaných připomínek pro jednotlivé léky. Data pro tento graf se získávají následovně (kód upraven pro snazší orientaci):
@@ -37,7 +37,7 @@ pillsHistory.forEach { pillHistory ->
 \end{lstlisting}
 \setmonofont{Latin Modern Mono}
 
-Tento kód vypočítá počet nepotvrzených připomínek každé skupinu historie indikovanou podle ID léku a pokud je větší než nula, přidá jej do seznamu používaném pro vykreslení grafu.
+Tento kód vypočítá počet nepotvrzených připomínek každé skupinu historie indikovanou podle ID léku, a pokud je větší než nula, přidá jej do seznamu používaném pro vykreslení grafu.
 
 
 \paragraph{Graf 3} Poslední graf s názvem \enquote{potvrzené x vynechané} zobrazuje procentuální poměr potvrzených a vynechaných připomínek. Data pro poslední graf se získávají tímto způsobem (kód upraven pro snazší orientaci):
