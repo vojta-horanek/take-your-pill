@@ -98,7 +98,7 @@
     <string name="intro_new_pill">Začněte přidáním léku</string>
     <string name="intro_new_pill_description">Klikněte na tlačítko \"Přidat lék\", zadejte informace, nastavte barvu, přidejte fotografii a hlavně nastavte připomínky.</string>
     <string name="intro_reminder">Přestantě si dělat starosti s léky</string>
-    <string name="intro_reminder_description">Aplikace Vám automaticky pošle připomínky, můžete tak myslet na důležitější věci, než je kontolování času.</string>
+    <string name="intro_reminder_description">Aplikace Vám automaticky pošle připomínky. Můžete tak myslet na důležitější věci, než je kontolování času.</string>
     <string name="intro_history">Podívejte se na historii užívání</string>
     <string name="intro_history_description">V sekci \"Historie\" uvidíte statistiky, grafy a Vaší kompletní historii užívání léků včetně času připomenutí, času potvrzení a množstí léku.</string>
 
@@ -141,5 +141,5 @@
     <string name="save">Uložit</string>
     <string name="last_reminded">Naposledy připomenuto</string>
     <string name="other">Ostatní</string>
-    
+
 </resources>
