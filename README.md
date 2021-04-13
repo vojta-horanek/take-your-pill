@@ -1,5 +1,6 @@
 # Take your Pill
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Latest release](https://img.shields.io/github/v/release/vojta-horanek/take-your-pill.svg)](https://github.com/vojta-horanek/take-your-pill/releases/latest)
 
 An app that reminds you to take your pills. Developed as my long-term graduation work.
 
