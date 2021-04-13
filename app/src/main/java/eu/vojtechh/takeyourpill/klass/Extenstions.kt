@@ -3,6 +3,8 @@ package eu.vojtechh.takeyourpill.klass
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.content.res.Resources.Theme
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
@@ -129,7 +131,14 @@ fun Context.getAttrColor(res: Int): Int {
     return ContextCompat.getColor(this, typedValue.resourceId)
 }
 
+fun Context.isDarkThemeOn(): Boolean {
+    return resources.configuration.uiMode and
+            Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
+}
+
 fun Any?.isNull() = this == null
+
+fun Any?.isNotNull() = this != null
 
 fun <T, VH : RecyclerView.ViewHolder> ListAdapter<T, VH>.getItemOrNull(position: Int): T? {
     return this.currentList.elementAtOrNull(position)

@@ -61,9 +61,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         if (pillId == -1L) pillId = args.pillId
 
         model.getPillById(pillId).observe(viewLifecycleOwner) { pill ->
-            model.pill = pill
-            initViews()
-            model.loadedData()
+            pill?.let {
+                model.pill = it
+                initViews()
+                model.loadedData()
+            }
         }
 
     }

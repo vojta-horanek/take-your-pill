@@ -1,0 +1,57 @@
+\documentclass[../TakeYourPill.tex]{subfiles}
+\graphicspath{{\subfix{images/}}}
+
+\begin{document}
+
+Připomínání léků je provedeno standardními oznámeními v systému Android. Pomocí tříd \texttt{NotificationCompat} a \texttt{NotificationManagerCompat} jsem vytvořil oznámení s nejvyšší možnou prioritou, které obsahuje název léku, popis, říkající jaké množství léku si má uživatel vzít a případnou fotografii. Oznámení má také barvu shodnou s barvou léku. Pod tímto obsahem jsou tlačítka \enquote{Potvrdit} a \enquote{Odložit}. Tlačítka mají každé přiřazené svůj \texttt{PendingIntent}, který se pošle tzv. \textit{broadcastem} (vysvětleno níže). Při kliknutí na oznámení se uživatel dostane do aplikace, kde je otevřený lék jemuž patří daná připomínka. Pokud uživatel připomínku nepotvrdí, aplikace na lék připomene znovu po nastaveném počtu minut (ve výchozím nastavení 10 minut), maximálně však 6krát (jedno hlavní připomenutí + pět opakovaných připomenutí).
+
+
+Broadcasty jsou důležitou součástí celého systému připomínání. V aplikaci existuje celkem 5 tříd, které broadcasty přijímají. Broadcast může být poslán přímo specificky jedné naší třídě (přijímači) nebo jako systémový broadcast (např. spuštění operačního systému). Pro rozesílání broadcastů se používá objekt třídy \texttt{PendingIntent}, který v sobě navíc obsahuje \texttt{Intent}. Do intentu je možné vložit vlastní hodnoty, které lze v přijímačích broadcastů získat. Tímto způsobem lze například poslat ID připomínky. Každý z takových to přijímačů broadcastů musí dědit ze třídy \texttt{BroadcastReceiver} a přepsat metodu \texttt{onReceive()}. Tato metoda se zavolá pokaždé, když přijímač přijme broadcast. Následuje přehled tříd, které jsou v aplikaci používány na příjímání broadcastů:
+
+
+\begin{table}[h]
+  \begin{tabular}{ |p{0.25\linewidth} | p{0.70\linewidth}| }
+    \hline
+    \texttt{BootReceiver} & Speciální přijímač, který se zavolá při spuštění operačního systému. Stará se o naplánování připomínek ke všem lékům.\\
+    \hline
+    \texttt{CheckReceiver} & Přijímač, který plánuje a zobrazuje oznámení, pokud uživatel připomínku nepotvrdil. \\
+    \hline
+    \texttt{ConfirmReceiver} & Přijímač volaný při stisknutí tlačítka \textit{Přijmout} v oznámení, potvrdí přijmutí léku v danou chvíli. \\
+    \hline
+    \texttt{DelayReceiver} & Přijímač volaný při stisknutí tlačítka \textit{Odložit} v oznámení, odloží oznámení o nastavený počet minut (ve výchozím stavu 30 minut). \\
+    \hline
+    \texttt{ReminderReceiver} & Nejdůležitější přijímač, který je volán systémem android v naplánovaný čas. Stará se o zobrazení oznámení, naplánování přijímače \texttt{CheckReceiver} a naplánování sama sebe na další připomínku u léku. \\
+    \hline
+  \end{tabular}
+  \caption{Třídy dědící z \texttt{BroadcastReceiver}}
+\end{table}
+
+
+Pokud bych měl stručně popsat kroky, které vedou k plánování a zobrazení připomínek, budou následující:
+
+\begin{enumerate}
+  \item Při ukládání léku, spuštění operačního systému nebo spuštění aplikace se zavolá metoda \texttt{ReminderManager.planNextPillReminder()}, která plánuje připomínky pro jeden lék.
+  \item V této metodě:
+  \begin{itemize}
+    \item Seřadíme připomínky léku podle času vzestupně.
+    \item Procházíme jednotlivé připomínky.
+    \item Pokud narazíme na připomínku, která má dnes teprve nastat, naplánujeme ji a metodu ukončíme.
+    \item Pokud nenarazíme na žádnou připomínku, která nastane ještě dnes, naplánujeme první připomínku zítra a metodu ukončíme.
+    \item Pokud neexistuje připomínka ani zítra, metodu ukončíme a neplánujeme nic.
+  \end{itemize}
+  \item Pro naplánování používáme metodu \texttt{ReminderManager.createAlarm()}. Metoda použije systémovou službu \texttt{AlarmManager} a naplánuje s ní \enquote{alarm}, který spustí \texttt{ReminderReceiver} v čase dané připomínky.
+  \item V metodě \texttt{onReceive} třídy \texttt{ReminderReceiver}:
+  \begin{itemize}
+    \item Pokud toto není první připomenutí léku a zároveň je v daný den připomenutí první, posuneme jeho iteraci cyklu.
+    \item Zkontrolujeme, zda je lék aktivní (kvůli omezení na počet dní, nebo kvůli cyklu).
+    \item Pokud lék aktivní je, přidáme do historie toto připomenutí, naplánujeme \texttt{CheckReminder} a zobrazíme oznámení.
+    \item Pokud lék aktivní není a zároveň je omezený na počet dní (tj. už nebude připomínat), odejdeme z metody.
+    \item Jinak naplánujeme další připomínku a z metody odejdeme.
+  \end{itemize}
+\end{enumerate}
+
+Původně bylo v plánu do aplikace implementovat více varovný režim, kde by se připomínka zobrazila na celou obrazovku. Ukázalo se však, že díky restrikcím, které novější systémy Android obsahují, je toto velice těžko dosažitelné. V aplikaci existují části kódu, které toto zobrazení umožňují, režim jako takový ale není spolehlivý a je proto vypnutý.
+
+Někdy se také může stát, že připomínka dorazí o něco déle, než by měla. V mém testování to bylo maximálně 5 minut. Toto je zapříčiněno uspáním mobilního telefonu, když je obrazovka vypnutá. Android automaticky seskupuje \textit{alarmy} a šetří tak baterii, proto se náš broadcast rozešle o něco později. Usuzuji, že je to až moc krátká doba na to, aby to někomu vadilo, pokud by ale někdo přece jen chtěl, aby připomínky chodili přesně na čas, existuje \enquote{řešení}. V informacích o aplikaci v Android nastavení stačí vypnout úsporu baterie pro tuto aplikaci. Má to svůj háček; skoro každý výrobce mobilních telefonů má toto nastavení jinde, někdy jej má dokonce duplicitně, a ne vždy je toto nastavení spolehlivé. Proto jsem do aplikace nedával žádný dialog vyzývající k úpravě tohoto nastavení ve prospěch přesnějšího připomínání.
+
+\end{document}

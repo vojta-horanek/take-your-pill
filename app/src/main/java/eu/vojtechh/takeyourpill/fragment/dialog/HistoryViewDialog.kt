@@ -119,6 +119,9 @@ class HistoryViewDialog :
     private fun onItemOptionsClick(view: View, historyItem: BaseModel, position: Int) {
         if (historyItem is History) {
             popupMenu {
+                if (requireContext().isDarkThemeOn()) {
+                    style = R.style.Widget_MPM_Menu_Dark
+                }
                 section {
                     title = getString(R.string.edit)
                     if (historyItem.hasBeenConfirmed) {

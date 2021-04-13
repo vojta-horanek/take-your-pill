@@ -4,9 +4,17 @@
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
+/.idea/misc.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/protocol/.idea/caches
+/protocol/.idea/libraries
+/protocol/.idea/modules.xml
+/protocol/.idea/misc.xml
+/protocol/.idea/workspace.xml
+/protocol/.idea/navEditor.xml
+/protocol/.idea/assetWizardSettings.xml
 .DS_Store
 /build
 /captures
@@ -51,7 +59,6 @@ proguard/
 captures/
 
 # IntelliJ
-*.iml
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
@@ -70,7 +77,6 @@ captures/
 #*.keystore
 
 # External native build folder generated in Android Studio 2.2 and later
-.externalNativeBuild
 .cxx/
 
 # Google Services (e.g. APIs or Firebase)
@@ -98,3 +104,5 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 /app/schemas/eu.vojtechh.takeyourpill.database.PillDatabase/
+
+*.aux

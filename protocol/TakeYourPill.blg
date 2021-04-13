@@ -1,0 +1,65 @@
+This is BibTeX, Version 0.99d (TeX Live 2020/Arch Linux)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: TakeYourPill.aux
+The style file: biblatex.bst
+Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=8) to 20 items from 10.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Database file #1: TakeYourPill-blx.bib
+Database file #2: bibliography.bib
+Biblatex version: 3.15
+Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+You've used 25 entries,
+            6393 wiz_defined-function locations,
+            1306 strings with 11339 characters,
+and the built_in function-call counts, 85957 in all, are:
+= -- 4410
+> -- 2074
+< -- 586
++ -- 1315
+- -- 684
+* -- 5546
+:= -- 7350
+add.period$ -- 0
+call.type$ -- 25
+change.case$ -- 192
+chr.to.int$ -- 42
+cite$ -- 48
+duplicate$ -- 9784
+empty$ -- 8997
+format.name$ -- 1192
+if$ -- 18690
+int.to.chr$ -- 0
+int.to.str$ -- 72
+missing$ -- 0
+newline$ -- 560
+num.names$ -- 1056
+pop$ -- 7967
+preamble$ -- 1
+purify$ -- 240
+quote$ -- 0
+skip$ -- 3969
+stack$ -- 0
+substring$ -- 5419
+swap$ -- 2678
+text.length$ -- 605
+text.prefix$ -- 24
+top$ -- 1
+type$ -- 838
+warning$ -- 0
+while$ -- 1056
+width$ -- 0
+write$ -- 536

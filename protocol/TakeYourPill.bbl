@@ -1,0 +1,561 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{pill-icon}{online}{}
+    \name{author}{1}{}{%
+      {{hash=AA}{%
+         family={Andrews},
+         familyi={A\bibinitperiod},
+         given={Austin},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{icon,pill}
+    \strng{namehash}{AA1}
+    \strng{fullhash}{AA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{pill}
+    \verb{url}
+    \verb https://materialdesignicons.com/icon/pill
+    \endverb
+  \endentry
+
+  \entry{jetpack}{online}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Developer},
+         familyi={D\bibinitperiod},
+         given={Android},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{jetpack,library}
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{Android Jetpack}
+    \verb{url}
+    \verb https://developer.android.com/jetpack
+    \endverb
+  \endentry
+
+  \entry{resource}{online}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Developer},
+         familyi={D\bibinitperiod},
+         given={Android},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{resource}
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{App resources overview}
+    \verb{url}
+    \verb https://developer.android.com/guide/topics/resources/providing-resour
+    \verb ces
+    \endverb
+  \endentry
+
+  \entry{di}{online}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Developer},
+         familyi={D\bibinitperiod},
+         given={Android},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{di,automated,injection}
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{addendum}{[cit. 14. 03. 2021]}
+    \field{title}{Automated dependency injection}
+    \verb{url}
+    \verb https://developer.android.com/training/dependency-injection#automated
+    \verb -di
+    \endverb
+  \endentry
+
+  \entry{hilt}{online}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Developer},
+         familyi={D\bibinitperiod},
+         given={Android},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{hilt}
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{addendum}{[cit. 14. 03. 2021]}
+    \field{title}{Dependency injection with Hilt}
+    \verb{url}
+    \verb https://developer.android.com/training/dependency-injection/hilt-andr
+    \verb oid
+    \endverb
+  \endentry
+
+  \entry{flow}{online}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Developer},
+         familyi={D\bibinitperiod},
+         given={Android},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{flow}
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{addendum}{[cit. 13. 04. 2021]}
+    \field{title}{Kotlin flows on Android}
+    \verb{url}
+    \verb https://developer.android.com/kotlin/flow
+    \endverb
+  \endentry
+
+  \entry{livedata}{online}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Developer},
+         familyi={D\bibinitperiod},
+         given={Android},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{live,data}
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{LiveData Overview}
+    \verb{url}
+    \verb https://developer.android.com/topic/libraries/architecture/livedata
+    \endverb
+  \endentry
+
+  \entry{navigation}{online}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Developer},
+         familyi={D\bibinitperiod},
+         given={Android},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{navigation,jetpack}
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{Navigation}
+    \verb{url}
+    \verb https://developer.android.com/guide/navigation
+    \endverb
+  \endentry
+
+  \entry{room}{online}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Developer},
+         familyi={D\bibinitperiod},
+         given={Android},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{room}
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{addendum}{[cit. 13. 04. 2021]}
+    \field{title}{Save data in a local database using Room}
+    \verb{url}
+    \verb https://developer.android.com/training/data-storage/room
+    \endverb
+  \endentry
+
+  \entry{viewbinding}{online}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Developer},
+         familyi={D\bibinitperiod},
+         given={Android},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \keyw{view,binding}
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{View Binding}
+    \verb{url}
+    \verb https://developer.android.com/topic/libraries/view-binding
+    \endverb
+  \endentry
+
+  \entry{jost}{online}{}
+    \name{author}{1}{}{%
+      {{hash=FG}{%
+         family={Fonts},
+         familyi={F\bibinitperiod},
+         given={Google},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \keyw{font,jost}
+    \strng{namehash}{FG1}
+    \strng{fullhash}{FG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{Jost}
+    \verb{url}
+    \verb https://fonts.google.com/specimen/Jost
+    \endverb
+  \endentry
+
+  \entry{materialdesign-android}{online}{}
+    \name{author}{1}{}{%
+      {{hash=G}{%
+         family={Google},
+         familyi={G\bibinitperiod},
+      }}%
+    }
+    \keyw{design,material}
+    \strng{namehash}{G1}
+    \strng{fullhash}{G1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{addendum}{[cit. 12. 04. 2021]}
+    \field{title}{Android - Material Design}
+    \verb{url}
+    \verb https://material.io/develop/android
+    \endverb
+  \endentry
+
+  \entry{studio}{online}{}
+    \name{author}{1}{}{%
+      {{hash=G}{%
+         family={Google},
+         familyi={G\bibinitperiod},
+      }}%
+    }
+    \keyw{android,studio}
+    \strng{namehash}{G1}
+    \strng{fullhash}{G1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{Android Studio}
+    \verb{url}
+    \verb https://developer.android.com/studio
+    \endverb
+  \endentry
+
+  \entry{materialdesign}{online}{}
+    \name{author}{1}{}{%
+      {{hash=G}{%
+         family={Google},
+         familyi={G\bibinitperiod},
+      }}%
+    }
+    \keyw{design,material}
+    \strng{namehash}{G1}
+    \strng{fullhash}{G1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{Material Design}
+    \verb{url}
+    \verb https://material.io/design
+    \endverb
+  \endentry
+
+  \entry{icons}{online}{}
+    \name{author}{1}{}{%
+      {{hash=G}{%
+         family={Google},
+         familyi={G\bibinitperiod},
+      }}%
+    }
+    \keyw{icons,material}
+    \strng{namehash}{G1}
+    \strng{fullhash}{G1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{Material Design - Icons}
+    \verb{url}
+    \verb https://material.io/resources/icons/
+    \endverb
+  \endentry
+
+  \entry{easy-permissions}{online}{}
+    \name{author}{1}{}{%
+      {{hash=g}{%
+         family={googlesamples},
+         familyi={g\bibinitperiod},
+      }}%
+    }
+    \keyw{permissions}
+    \strng{namehash}{g1}
+    \strng{fullhash}{g1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{EasyPermissions}
+    \verb{url}
+    \verb https://github.com/googlesamples/easypermissions
+    \endverb
+  \endentry
+
+  \entry{chart}{online}{}
+    \name{author}{1}{}{%
+      {{hash=JP}{%
+         family={Jahoda},
+         familyi={J\bibinitperiod},
+         given={Philipp},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \keyw{chart,mp}
+    \strng{namehash}{JP1}
+    \strng{fullhash}{JP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{addendum}{[cit. 14. 03. 2021]}
+    \field{title}{MPAndroidChart}
+    \verb{url}
+    \verb https://github.com/PhilJay/MPAndroidChart
+    \endverb
+  \endentry
+
+  \entry{imagepicker}{online}{}
+    \name{author}{1}{}{%
+      {{hash=PD}{%
+         family={Patel},
+         familyi={P\bibinitperiod},
+         given={Dhaval},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \keyw{image,picker}
+    \strng{namehash}{PD1}
+    \strng{fullhash}{PD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{Image Picker Library for Android}
+    \verb{url}
+    \verb https://github.com/Dhaval2404/ImagePicker
+    \endverb
+  \endentry
+
+  \entry{licences}{online}{}
+    \name{author}{1}{}{%
+      {{hash=P}{%
+         family={PSDev},
+         familyi={P\bibinitperiod},
+      }}%
+    }
+    \keyw{licences}
+    \strng{namehash}{P1}
+    \strng{fullhash}{P1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{addendum}{[cit. 13. 04. 2021]}
+    \field{title}{LicensesDialog}
+    \verb{url}
+    \verb https://github.com/PSDev/LicensesDialog
+    \endverb
+  \endentry
+
+  \entry{intro}{online}{}
+    \name{author}{1}{}{%
+      {{hash=RJH}{%
+         family={Reimer},
+         familyi={R\bibinitperiod},
+         given={Jan\bibnamedelima Heinrich},
+         giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
+      }}%
+    }
+    \keyw{intro,material}
+    \strng{namehash}{RJH1}
+    \strng{fullhash}{RJH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{material-intro}
+    \verb{url}
+    \verb https://github.com/heinrichreimer/material-intro
+    \endverb
+  \endentry
+
+  \entry{pills-icons}{online}{}
+    \name{author}{1}{}{%
+      {{hash=S}{%
+         family={ShimonHoranek},
+         familyi={S\bibinitperiod},
+      }}%
+    }
+    \keyw{icons,pill}
+    \strng{namehash}{S1}
+    \strng{fullhash}{S1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{material-icons}
+    \verb{url}
+    \verb https://github.com/ShimonHoranek/material-icons
+    \endverb
+  \endentry
+
+  \entry{delegate}{online}{}
+    \name{author}{1}{}{%
+      {{hash=VG}{%
+         family={Varadi},
+         familyi={V\bibinitperiod},
+         given={Gabor},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \keyw{delegate,viewbinding}
+    \strng{namehash}{VG1}
+    \strng{fullhash}{VG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{V}
+    \field{sortinithash}{V}
+    \field{addendum}{[cit. 14. 03. 2021]}
+    \field{title}{FragmentViewBindingDelegate-KT}
+    \verb{url}
+    \verb https://github.com/Zhuinden/fragmentviewbindingdelegate-kt
+    \endverb
+  \endentry
+
+  \entry{delegate2}{online}{}
+    \name{author}{1}{}{%
+      {{hash=VG}{%
+         family={Varadi},
+         familyi={V\bibinitperiod},
+         given={Gabor},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \keyw{delegate,viewbinding}
+    \strng{namehash}{VG1}
+    \strng{fullhash}{VG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{V}
+    \field{sortinithash}{V}
+    \field{addendum}{[cit. 14. 03. 2021]}
+    \field{title}{Simple one-liner ViewBinding in Fragments and Activities with
+  Kotlin}
+    \verb{url}
+    \verb https://zhuinden.medium.com/simple-one-liner-viewbinding-in-fragments
+    \verb -and-activities-with-kotlin-961430c6c07c
+    \endverb
+  \endentry
+
+  \entry{ucrop}{online}{}
+    \name{author}{1}{}{%
+      {{hash=Y}{%
+         family={Yalantis},
+         familyi={Y\bibinitperiod},
+      }}%
+    }
+    \keyw{image,crop}
+    \strng{namehash}{Y1}
+    \strng{fullhash}{Y1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Y}
+    \field{sortinithash}{Y}
+    \field{addendum}{[cit. 13. 03. 2021]}
+    \field{title}{uCrop - Image Cropping Library for Android}
+    \verb{url}
+    \verb https://github.com/Yalantis/uCrop
+    \endverb
+  \endentry
+\enddatalist
+\endinput

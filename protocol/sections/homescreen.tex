@@ -3,12 +3,12 @@
 
 \begin{document}
 
-Domovská obrazovka neboli sekce \enquote{Léky} (\texttt{HomeFragment}) je fragment obsahující pouze \texttt{RecyclerView} (dále jen recycler) a \texttt{ExtendedFloatingActionButton} (dále jen FAB). FAB se při posunutí recycleru zmenší. Zvětší se až když seznam posuneme na začátek. 
+Domovská obrazovka, neboli sekce \enquote{Léky} (\texttt{HomeFragment}), je fragment obsahující pouze \texttt{RecyclerView} (dále jen recycler) a \texttt{ExtendedFloatingActionButton} (dále jen FAB). FAB se při posunutí seznamu v RecyclerView zmenší, zvětší se až když seznam posuneme na začátek. 
 
-Pro zobrazení dat v recycleru je potřeba mít \texttt{RecyclerAdapter}. Tato třída se stará o zobrazování dat s příslušným \texttt{ViewHolderem}. Adaptér, který je nastavený na tomto recycleru se jmenuje \texttt{AppRecyclerAdapter}. Každý \emph{ViewHolder} pro třídy \emph{Pill} obsahuje kartu, jejichž layout je definován v souboru \texttt{item\_pill.xml}. Na kartě se zobrazují všechny potřebné informace o léku: název, popis, barva, fotografie, připomínky a příjem. Pokud uživatel nepotvrdil nejnovější připomínku v posledních 30 minutách, zobrazí se na kartě i výzva k potvrzení. Po kliknutí na kartu se otevře detail příslušného léku. Snímek obrazovky sekce \enquote{Léky} lze vidět na straně \pageref{fig:intro} (\ref{fig:intro}).
+Pro zobrazení dat v recycleru je potřeba mít \texttt{RecyclerAdapter}. Tato třída se stará o zobrazování dat s příslušným \texttt{ViewHolderem}. Adaptér, který je nastavený na tomto recycleru se jmenuje \texttt{AppRecyclerAdapter}. Každý \texttt{ViewHolder} pro objekty třídy \texttt{Pill} obsahuje kartu, jejíž rozložení je definováno v souboru \texttt{item\_pill.xml}. Na kartě se zobrazují všechny potřebné informace o léku: název, popis, barva, fotografie, připomínky a příjem. Pokud uživatel nepotvrdil nejnovější připomínku v posledních 30 minutách, zobrazí se na kartě i výzva k potvrzení. Po kliknutí na kartu se otevře detail příslušného léku. Snímek obrazovky sekce \enquote{Léky} lze vidět na straně \pageref{fig:intro} (\ref{fig:intro}).
 
 \boxik{
-\textbf{ViewHolder} (doslovný překlad \enquote{držitel pohledu}) je třída, která se stará o zobrazení jedné položky v RecyclerView Adaptéru. Má za úkol nastavit layout tak, aby odpovídal vstupním datům (např. jednomu léku). Třídu si musíme definovat sami pro každý typ položky, které chceme zobrazovat.
+\textbf{ViewHolder} (doslovný překlad \enquote{držitel pohledu}) je třída, která se stará o zobrazení jedné položky v RecyclerView adaptéru. Má za úkol nastavit rozložení tak, aby odpovídalo vstupním datům (např. jednomu léku). Třídu si musíme definovat sami pro každý typ položky, které chceme zobrazovat.
 }
 
 

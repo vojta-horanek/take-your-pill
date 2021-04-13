@@ -1,0 +1,42 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {czech}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Úvod}{1}{chapter*.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {1}Návrh aplikace}{2}{chapter.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {2}Implementace aplikace}{3}{chapter.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.1}Uživatelské rozhraní}{4}{section.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.1}Úvodní obrazovka}{4}{subsection.2.1.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.2}Domovská obrazovka}{5}{subsection.2.1.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.1.2.1}Detail léku}{6}{subsubsection.2.1.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.1.2.2}Nový lék}{6}{subsubsection.2.1.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.3}Historie}{8}{subsection.2.1.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.1.3.1}Přehled}{8}{subsubsection.2.1.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.1.3.2}Grafy}{9}{subsubsection.2.1.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{Graf 1}{9}{section*.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{Graf 2}{9}{section*.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{Graf 3}{10}{section*.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.4}Nastavení}{10}{subsection.2.1.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {2.1.4.1}O aplikaci}{11}{subsubsection.2.1.4.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.2}Programová implementace}{12}{section.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.1}Databáze}{12}{subsection.2.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.2}Připomínání}{14}{subsection.2.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Závěr}{18}{chapter*.9}%

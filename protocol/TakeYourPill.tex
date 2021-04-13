@@ -15,8 +15,8 @@
 \usepackage{color}
 \usepackage{url}
 \usepackage{textcomp}
-\usepackage{parskip}
 \usepackage{tocloft}
+\usepackage{parskip}
 \usepackage[bottom, perpage]{footmisc}
 \usepackage[autostyle]{csquotes}
 \usepackage{subcaption}
@@ -61,6 +61,8 @@
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
 
+\setlength{\parskip}{12pt}
+
 \title{Take Your Pill}
 \author{Vojtěch Hořánek}
 \graphicspath{{images/}}
@@ -70,7 +72,7 @@
 
 % boxík na vysvětlení termínů
 \newcommand{\boxik}[1]{
-\fbox{\begin{minipage}{\linewidth}#1
+  \fbox{\begin{minipage}{\textwidth}#1
 \end{minipage}}}
 
 \begin{document}
@@ -120,7 +122,6 @@
 \subsection{Historie}
 \subfile{sections/history}
 
-
 \subsubsection{Přehled}
 \label{sec:overview}
 \subfile{sections/overview}
@@ -134,12 +135,19 @@
 \subfile{sections/about}
 
 \section{Programová implementace}
+\subfile{sections/programming}
+
 \subsection{Databáze}
+\label{sec:database}
+\subfile{sections/database}
+
 \subsection{Připomínání}
 \label{sec:reminder}
+\subfile{sections/reminders}
 
 \chapter*{Závěr}
-\addcontentsline{toc}{chapter}{Závěr}  
+\addcontentsline{toc}{chapter}{Závěr}
+\subfile{sections/conclusion}
 
 \subfile{sections/screenshots}
 
