@@ -14,8 +14,8 @@ android {
         applicationId "eu.vojtechh.takeyourpill"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 20210329
-        versionName "v1.5.rc2"
+        versionCode 20210413
+        versionName "v1.5.rc3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
