@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="eu.vojtechh.takeyourpill">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -20,8 +19,11 @@
 
         <activity
             android:name=".activity.AboutActivity"
+            android:exported="true"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
@@ -34,6 +36,7 @@
         </activity>
         <activity
             android:name=".activity.AppIntroActivity"
+            android:exported="true"
             android:label="@string/intro"
             android:theme="@style/AppTheme.Intro" />
 
@@ -43,8 +46,8 @@
         <receiver android:name=".receiver.ConfirmReceiver" />
         <receiver
             android:name=".receiver.BootReceiver"
-            android:exported="true"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />

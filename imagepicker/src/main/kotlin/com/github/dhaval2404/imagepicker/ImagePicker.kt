@@ -1,16 +1,17 @@
 package com.github.dhaval2404.imagepicker
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.github.dhaval2404.imagepicker.constant.ImageProvider
 import com.github.dhaval2404.imagepicker.listener.DismissListener
 import com.github.dhaval2404.imagepicker.listener.ResultListener
 import com.github.dhaval2404.imagepicker.util.DialogHelper
-import com.github.florent37.inlineactivityresult.kotlin.startForResult
 import java.io.File
 
 /**
@@ -132,7 +133,7 @@ open class ImagePicker {
         /**
          * Call this while picking image for fragment.
          */
-        constructor(fragment: Fragment) : this(fragment.activity!!) {
+        constructor(fragment: Fragment) : this(fragment.requireActivity()) {
             this.fragment = fragment
         }
 
@@ -362,20 +363,24 @@ open class ImagePicker {
         private fun startActivity(completionHandler: ((resultCode: Int, data: Intent?) -> Unit)? = null) {
 
             try {
-                val intent = Intent(activity, ImagePickerActivity::class.java)
-                intent.putExtras(getBundle())
-                if (fragment != null) {
 
-                    fragment?.startForResult(intent) { result ->
-                        completionHandler?.invoke(result.resultCode, result.data)
-                    }?.onFailed { result ->
-                        completionHandler?.invoke(result.resultCode, result.data)
+                val contract = object : ActivityResultContract<Unit, Pair<Int, Intent?>>() {
+                    override fun createIntent(context: Context, nothing: Unit) =
+                        Intent(activity, ImagePickerActivity::class.java).apply {
+                            putExtras(getBundle())
+                        }
+
+                    override fun parseResult(resultCode: Int, result: Intent?): Pair<Int, Intent?> {
+                        return Pair(resultCode, result)
+                    }
+                }
+                if (fragment != null) {
+                    fragment?.registerForActivityResult(contract) {
+                        completionHandler?.invoke(it.first, it.second)
                     }
                 } else {
-                    (activity as AppCompatActivity).startForResult(intent) { result ->
-                        completionHandler?.invoke(result.resultCode, result.data)
-                    }.onFailed { result ->
-                        completionHandler?.invoke(result.resultCode, result.data)
+                    (activity as AppCompatActivity).registerForActivityResult(contract) {
+                        completionHandler?.invoke(it.first, it.second)
                     }
                 }
             } catch (e: Exception) {

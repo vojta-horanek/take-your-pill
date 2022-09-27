@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
-import com.github.zawadz88.materialpopupmenu.popupMenu
+//import com.github.zawadz88.materialpopupmenu.popupMenu
 import dagger.hilt.android.AndroidEntryPoint
 import eu.vojtechh.takeyourpill.R
 import eu.vojtechh.takeyourpill.adapter.HistoryViewAdapter
@@ -118,49 +118,49 @@ class HistoryViewDialog :
 
     private fun onItemOptionsClick(view: View, historyItem: BaseModel, position: Int) {
         if (historyItem is History) {
-            popupMenu {
-                if (requireContext().isDarkThemeOn()) {
-                    style = R.style.Widget_MPM_Menu_Dark
-                }
-                section {
-                    title = getString(R.string.edit)
-                    if (historyItem.hasBeenConfirmed) {
-                        item {
-                            labelRes = R.string.mark_as_skipped
-                            icon = R.drawable.ic_cancel
-                            callback = { model.markHistoryNotConfirmed(historyItem) }
-                        }
-                        item {
-                            labelRes = R.string.change_confirm_time
-                            icon = R.drawable.ic_time
-                            callback = { showChangeConfirmTimeDialog(historyItem) }
-                        }
-                    } else {
-                        item {
-                            labelRes = R.string.mark_as_confirmed
-                            icon = R.drawable.ic_check
-                            callback = { model.confirmHistory(historyItem) }
-                        }
-                    }
-
-                    item {
-                        labelRes = R.string.change_amount
-                        icon = R.drawable.ic_pill
-                        callback = { showChangeAmountDialog(historyItem) }
-                    }
-                }
-                section {
-                    title = getString(R.string.other)
-                    item {
-                        icon = R.drawable.ic_delete
-                        labelRes = R.string.delete
-                        callback = {
-                            model.deleteHistory(historyItem)
-                            itemRemovedPosition = position
-                        }
-                    }
-                }
-            }.show(requireContext(), view)
+//            popupMenu {
+//                if (requireContext().isDarkThemeOn()) {
+//                    style = R.style.Widget_MPM_Menu_Dark
+//                }
+//                section {
+//                    title = getString(R.string.edit)
+//                    if (historyItem.hasBeenConfirmed) {
+//                        item {
+//                            labelRes = R.string.mark_as_skipped
+//                            icon = R.drawable.ic_cancel
+//                            callback = { model.markHistoryNotConfirmed(historyItem) }
+//                        }
+//                        item {
+//                            labelRes = R.string.change_confirm_time
+//                            icon = R.drawable.ic_time
+//                            callback = { showChangeConfirmTimeDialog(historyItem) }
+//                        }
+//                    } else {
+//                        item {
+//                            labelRes = R.string.mark_as_confirmed
+//                            icon = R.drawable.ic_check
+//                            callback = { model.confirmHistory(historyItem) }
+//                        }
+//                    }
+//
+//                    item {
+//                        labelRes = R.string.change_amount
+//                        icon = R.drawable.ic_pill
+//                        callback = { showChangeAmountDialog(historyItem) }
+//                    }
+//                }
+//                section {
+//                    title = getString(R.string.other)
+//                    item {
+//                        icon = R.drawable.ic_delete
+//                        labelRes = R.string.delete
+//                        callback = {
+//                            model.deleteHistory(historyItem)
+//                            itemRemovedPosition = position
+//                        }
+//                    }
+//                }
+//            }.show(requireContext(), view)
         }
     }
 

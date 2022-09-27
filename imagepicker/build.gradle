@@ -8,8 +8,6 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 14
-        versionName "1.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,57 +34,23 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    namespace 'com.github.dhaval2404.imagepicker'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation "androidx.exifinterface:exifinterface:1.3.2"
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.exifinterface:exifinterface:1.3.3'
 
     //Custom version of https://github.com/Yalantis/uCrop
     implementation project(path: ':ucrop')
 
-    //More Info: https://github.com/florent37/InlineActivityResult
-    compileOnly 'com.github.florent37:inline-activity-result-kotlin:1.0.4'
-
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test:core:1.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test:core:1.4.0'
 
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'com.google.android.material:material:1.6.1'
 }
-
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'imagepicker'
-
-    publishedGroupId = 'com.github.dhaval2404'
-    libraryName = 'imagepicker'
-    artifact = 'imagepicker'
-
-    libraryDescription = 'Pick image from Gallery or Capture new image with Camera.'
-
-    siteUrl = 'https://github.com/Dhaval2404/ImagePicker/'
-    gitUrl = 'https://github.com/Dhaval2404/ImagePicker.git'
-
-    libraryVersion = '1.8'
-    //If you are uploading new library try : gradlew install
-    //If you are updating existing library then execute: gradlew bintrayUpload
-    //In both the case don't forgot to put bintray credentials in local.properties file.
-
-    developerId = 'dhaval2404'
-    developerName = 'Dhaval Patel'
-    developerEmail = 'dhavalpatel244@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
-// Place it at the end of the file
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

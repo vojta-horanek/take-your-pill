@@ -1,0 +1,212 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 6,
+    "identityHash": "997c1091325d79599a60ad6ac1446c1c",
+    "entities": [
+      {
+        "tableName": "pill",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT, `photo` BLOB, `color` INTEGER NOT NULL, `deleted` INTEGER NOT NULL, `pillId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `daysActive` INTEGER NOT NULL, `daysInactive` INTEGER NOT NULL, `todayCycle` INTEGER NOT NULL, `lastReminderDate` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "photo",
+            "columnName": "photo",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deleted",
+            "columnName": "deleted",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "pillId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "options.daysActive",
+            "columnName": "daysActive",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "options.daysInactive",
+            "columnName": "daysInactive",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "options.todayCycle",
+            "columnName": "todayCycle",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "options.lastReminderDate",
+            "columnName": "lastReminderDate",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "pillId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "reminder",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`time` INTEGER NOT NULL, `amount` TEXT NOT NULL, `pillId` INTEGER NOT NULL, `reminderId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`pillId`) REFERENCES `pill`(`pillId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pillId",
+            "columnName": "pillId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "reminderId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "reminderId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_reminder_pillId",
+            "unique": false,
+            "columnNames": [
+              "pillId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_reminder_pillId` ON `${TABLE_NAME}` (`pillId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "pill",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "pillId"
+            ],
+            "referencedColumns": [
+              "pillId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "history",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`historyId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `reminded` INTEGER NOT NULL, `confirmed` INTEGER, `amount` TEXT NOT NULL, `pillId` INTEGER NOT NULL, FOREIGN KEY(`pillId`) REFERENCES `pill`(`pillId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "historyId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminded",
+            "columnName": "reminded",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "confirmed",
+            "columnName": "confirmed",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pillId",
+            "columnName": "pillId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "historyId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_history_pillId",
+            "unique": false,
+            "columnNames": [
+              "pillId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_history_pillId` ON `${TABLE_NAME}` (`pillId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "pill",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "pillId"
+            ],
+            "referencedColumns": [
+              "pillId"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '997c1091325d79599a60ad6ac1446c1c')"
+    ]
+  }
+}
