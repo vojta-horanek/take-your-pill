@@ -3,12 +3,12 @@ package eu.vojtechh.takeyourpill.fragment.dialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
-import com.github.dhaval2404.imagepicker.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import eu.vojtechh.takeyourpill.R
 
 open class RoundedDialogFragment() : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?) =

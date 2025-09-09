@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
-import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
@@ -103,9 +102,6 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         when (resultCode) {
             Activity.RESULT_OK -> {
                 onNewImagePicked(data?.data!!)
-            }
-            ImagePicker.RESULT_ERROR -> {
-                showSnackbar(ImagePicker.getError(data))
             }
         }
     }
@@ -270,11 +266,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-            ImagePicker.with(this)
-                .compress(Constants.IMAGE_MAX_SIZE)
-                .maxResultSize(Constants.IMAGE_MAX_WIDTH, Constants.IMAGE_MAX_HEIGHT)
-                .crop()
-                .start()
+
         } else {
             EasyPermissions.requestPermissions(
                 this,

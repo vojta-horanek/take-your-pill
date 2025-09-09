@@ -7,13 +7,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion '30.0.3'
+    compileSdkVersion 36
 
     defaultConfig {
         applicationId "eu.vojtechh.takeyourpill"
         minSdkVersion 23
-        targetSdkVersion 33
+        targetSdkVersion 36
         versionCode 20210414
         versionName "v1.5"
 
@@ -27,12 +26,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -70,7 +69,7 @@ dependencies {
     def fragment_version = '1.5.3'
     def lifecycle_version = '2.5.1'
     def preference_version = '1.2.0'
-    def room_version = '2.4.3'
+    def room_version = '2.7.2'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -93,9 +92,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.1'
 
     // Hilt
-    implementation 'com.google.dagger:hilt-android:2.44'
-    kapt 'com.google.dagger:hilt-android-compiler:2.44'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0'
+    implementation 'com.google.dagger:hilt-android:2.57.1'
+    kapt 'com.google.dagger:hilt-android-compiler:2.57.1'
+    kapt 'androidx.hilt:hilt-compiler:1.2.0'
 
     // LifeCycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -122,8 +121,6 @@ dependencies {
     //charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    // Custom image picker
-    implementation project(path: ':imagepicker')
 
     // Licences dialog
     implementation 'de.psdev.licensesdialog:licensesdialog:2.2.0'
