@@ -80,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
                 android:layout_marginTop="@dimen/screen_margin_vertical_small"
+                android:layout_marginBottom="@dimen/screen_margin_vertical"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_color" />
@@ -91,7 +92,8 @@
                 android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
                 android:layout_marginTop="@dimen/screen_margin_vertical"
                 android:text="@string/photo"
-                android:textAppearance="@style/AppTheme.Text.BodyTitle" />
+                android:textAppearance="@style/AppTheme.Text.BodyTitle"
+                android:visibility="gone" />
 
             <eu.vojtechh.takeyourpill.view.ImageChooserView
                 android:id="@+id/imageChooser"
@@ -99,7 +101,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
                 android:layout_marginTop="@dimen/screen_margin_vertical_small"
-                android:layout_marginBottom="@dimen/screen_margin_vertical" />
+                android:layout_marginBottom="@dimen/screen_margin_vertical"
+                android:visibility="gone" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textReminderTimes"
@@ -151,13 +154,13 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/buttonSave"
+        style="@style/AppTheme.Widgets.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margins"
-        app:icon="@drawable/ic_save"
         android:text="@string/save"
-        app:tint="@android:color/white"
-        style="@style/AppTheme.Widgets.FloatingActionButton" />
+        app:icon="@drawable/ic_save"
+        app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

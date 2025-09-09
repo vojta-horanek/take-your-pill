@@ -50,7 +50,7 @@ object ReminderUtil {
         context,
         reminderId.toInt(),
         getConfirmIntent(context, reminderId, pillId, remindedTime),
-        PendingIntent.FLAG_CANCEL_CURRENT
+        PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
     private fun getNotificationDelayIntent(
@@ -67,7 +67,7 @@ object ReminderUtil {
                 context,
                 reminderId.toInt(),
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
         }
 
@@ -80,7 +80,8 @@ object ReminderUtil {
         intent.putExtra(Constants.INTENT_EXTRA_REMINDER_ID, reminderId)
         intent.putExtra(Constants.INTENT_EXTRA_REMINDED_TIME, remindedTime)
         intent.putExtra(Constants.INTENT_CHECK_COUNT, checkCount)
-        PendingIntent.getBroadcast(context, reminderId.toInt(), intent, PendingIntent.FLAG_ONE_SHOT)
+        PendingIntent.getBroadcast(context, reminderId.toInt(), intent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
     }
 
     fun getAlarmIntent(
@@ -93,7 +94,7 @@ object ReminderUtil {
                 context,
                 reminderId.toInt(),
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
         }
 
